@@ -563,11 +563,32 @@ qpq_term_months_value = {
 	value = scope:qpq_term_months
 }
 
-# Propose-a-Pact panel: order of the capped target lists (most powerful first)
+# Propose-a-Pact panel: order of the capped target lists. Rivals first, then people at either
+# party's court or in their service, then everyone else; within each, the highest-ranked first.
+# (scope:actor is the player, scope:recipient the other party)
 qpq_ui_candidate_order_value = {
 	value = highest_held_title_tier
-	multiply = 100000
-	add = current_military_strength
+	multiply = 10
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:actor
+				has_relation_rival = scope:recipient
+			}
+		}
+		add = 1000
+	}
+	if = {
+		limit = {
+			OR = {
+				is_courtier_of = scope:actor
+				is_courtier_of = scope:recipient
+				liege ?= scope:actor
+				liege ?= scope:recipient
+			}
+		}
+		add = 300
+	}
 }
 
 qpq_ui_title_order_value = {

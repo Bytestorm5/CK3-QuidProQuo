@@ -1940,6 +1940,1167 @@ qpq_ui_kind_still_possible_trigger = {
 	}
 }
 
+qpq_ui_no_same_pact_trigger = {
+	trigger_if = {
+		limit = { var:qpq_ui_kind = flag:chartered_conquest }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = chartered_conquest } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:sanctioned_conquest }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = sanctioned_conquest } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:marcher_charge }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = marcher_charge } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:holy_sponsorship }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = holy_sponsorship } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:development_charter }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = development_charter } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:electoral_purchase }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = electoral_purchase } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:loyal_mole }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = loyal_mole } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:agent_provocateur }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = agent_provocateur } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:licensed_feud }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = licensed_feud } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:dossier }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dossier } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:quiet_removal }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = quiet_removal } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:heir_question }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heir_question } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:snatch }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = snatch } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:dispossession }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dispossession } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:the_cloister }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = the_cloister } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:marriage_by_command }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = marriage_by_command } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:hand_over }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hand_over } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:hand_over_artifact }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hand_over_artifact } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:renunciation }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = renunciation } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:hush_money }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hush_money } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:price_of_loyalty }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = price_of_loyalty } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:blessing_for_a_feud }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = blessing_for_a_feud } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:clemency_bargain }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = clemency_bargain } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:electoral_capitulation }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = electoral_capitulation } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:mutual_defense_league }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = mutual_defense_league } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:faction_pledge }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faction_pledge } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:title_swap }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = title_swap } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:coup_pact }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = coup_pact } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:proxy_war }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = proxy_war } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:partition_pact }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = partition_pact } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:secret_alliance }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = secret_alliance } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:bought_truce }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:faithless_ally }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faithless_ally } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:turncoat }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = turncoat } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:seed_the_separatists }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = seed_the_separatists } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:shelter_the_pretender }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = shelter_the_pretender } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:extradition }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = extradition } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:buy_a_councillor }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = buy_a_councillor } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:stay_home }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = stay_home } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:defection_pact }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = defection_pact } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:secret_clause }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = secret_clause } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:hire_the_hashashin }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hire_the_hashashin } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:excommunication_for_hire }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = excommunication_for_hire } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:dispensation_for_gold }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dispensation_for_gold } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:steer_the_holy_war }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = steer_the_holy_war } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:purchase_a_mitre }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = purchase_a_mitre } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:bought_claim }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_claim } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:absolution_by_concession }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = absolution_by_concession } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:holy_warrant }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = holy_warrant } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:buy_a_bull }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = buy_a_bull } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:conclave_votes }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = conclave_votes } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:council_lobbying }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = council_lobbying } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:caliphal_investiture }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = caliphal_investiture } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:name_in_the_khutba }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = name_in_the_khutba } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:fatwa_for_hire }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = fatwa_for_hire } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:fund_the_dawa }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = fund_the_dawa } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:crowning_the_usurper }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = crowning_the_usurper } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:pliant_patriarch }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = pliant_patriarch } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:favourable_omens }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = favourable_omens } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:consecration_rites }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = consecration_rites } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_kind = flag:temple_patronage }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
+	}
+}
+
+qpq_proposed_kind_still_valid_trigger = {
+	trigger_if = {
+		limit = { scope:qpq_proposed_kind = flag:chartered_conquest }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = {
+			is_landed = yes
+			NOT = { top_liege = scope:actor.top_liege }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = chartered_conquest } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:sanctioned_conquest }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = {
+			is_landed = yes
+			NOT = { top_liege = scope:actor.top_liege }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = sanctioned_conquest } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:marcher_charge }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = yes NOT = { top_liege = scope:actor.top_liege } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = marcher_charge } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:holy_sponsorship }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:target
+		scope:target = { NOT = { faith = scope:actor.faith } }
+		custom_description = {
+			text = qpq_valid_agent_same_faith
+			scope:recipient.faith = scope:actor.faith
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = holy_sponsorship } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:development_charter }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:target
+		scope:target = { tier = tier_county }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = development_charter } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:electoral_purchase }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+		exists = scope:actor.primary_title
+		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:recipient } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = electoral_purchase } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:loyal_mole }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = loyal_mole } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:agent_provocateur }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = agent_provocateur } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:licensed_feud }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = licensed_feud } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:dossier }
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:actor } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dossier } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:quiet_removal }
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = {
+			NOT = { this = scope:actor }
+			NOT = { this = scope:recipient }
+			NOT = { is_child_of = scope:actor }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = quiet_removal } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:heir_question }
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:recipient } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heir_question } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:snatch }
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = snatch } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:dispossession }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_vassal = { is_landed = yes } }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { liege ?= scope:recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dispossession } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:the_cloister }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { has_trait = devoted } NOT = { this = scope:actor } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = the_cloister } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:marriage_by_command }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:recipient } is_married = no }
+		custom_description = {
+			text = qpq_valid_can_marry
+			scope:recipient = { can_marry_character_trigger = { CHARACTER = scope:secondary_recipient } }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = marriage_by_command } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:hand_over }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hand_over } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:hand_over_artifact }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_character_artifact = { always = yes } }
+		exists = scope:target
+		exists = scope:target
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hand_over_artifact } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:renunciation }
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_claim = { always = yes } }
+		exists = scope:target
+		scope:recipient = { has_claim_on = scope:target }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = renunciation } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:hush_money }
+		scope:recipient = { NOT = { this = scope:actor } }
+		scope:actor = {
+			any_secret = { is_known_by = scope:recipient }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hush_money } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:price_of_loyalty }
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		scope:recipient = { is_at_war = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = price_of_loyalty } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:blessing_for_a_feud }
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { liege ?= scope:recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = blessing_for_a_feud } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:clemency_bargain }
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_imprisoned_by = scope:recipient
+			}
+			any_known_secret = {
+				NOT = { secret_owner = scope:actor }
+				NOT = { secret_owner = scope:recipient }
+				NOT = { is_known_by = scope:recipient }
+			}
+		}
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = clemency_bargain } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:electoral_capitulation }
+		exists = scope:recipient.primary_title
+		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+		NOT = { scope:actor = scope:recipient }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:actor } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = electoral_capitulation } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:mutual_defense_league }
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
+		exists = scope:actor.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = mutual_defense_league } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:faction_pledge }
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
+		scope:actor = { exists = joined_faction joined_faction = { faction_target = scope:actor.liege } }
+		exists = scope:actor.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faction_pledge } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:title_swap }
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
+		exists = scope:target
+		scope:target = { tier = tier_county holder ?= scope:recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = title_swap } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:coup_pact }
+		exists = scope:actor.liege
+		scope:recipient = {
+			is_adult = yes
+			NOT = { this = scope:actor }
+			NOT = { this = scope:actor.liege }
+			OR = {
+				is_courtier_of = scope:actor.liege
+				is_courtier_of = scope:actor
+			}
+		}
+		exists = scope:actor.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = coup_pact } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:proxy_war }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = proxy_war } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:partition_pact }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:recipient } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = partition_pact } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:secret_alliance }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = secret_alliance } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:bought_truce }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:faithless_ally }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:recipient = { is_allied_to = scope:secondary_recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faithless_ally } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:turncoat }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:recipient = {
+			exists = liege
+			is_independent_ruler = no
+		}
+		scope:actor = { is_at_war_with = scope:recipient.liege }
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = turncoat } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:seed_the_separatists }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = seed_the_separatists } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:shelter_the_pretender }
+		scope:recipient = {
+			is_adult = yes
+			NOT = { this = scope:actor }
+			any_claim = { tier >= tier_duchy NOT = { holder ?= scope:actor } }
+		}
+		scope:actor = { is_landed = yes }
+		exists = scope:target
+		scope:recipient = { has_claim_on = scope:target }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = shelter_the_pretender } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:extradition }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = extradition } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:buy_a_councillor }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:recipient = {
+			is_councillor = yes
+			exists = liege
+			is_councillor_of = scope:recipient.liege
+		}
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = buy_a_councillor } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:stay_home }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = stay_home } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:defection_pact }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = defection_pact } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:secret_clause }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		exists = scope:actor.house
+		scope:recipient = {
+			is_landed = yes
+			OR = {
+				any_spouse = { house ?= scope:actor.house }
+				any_close_family_member = {
+					OR = {
+						any_spouse = { house ?= scope:actor.house }
+						betrothed.house ?= scope:actor.house
+					}
+				}
+			}
+		}
+		exists = scope:target
+		scope:target = { tier = tier_county holder ?= scope:recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = secret_clause } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:hire_the_hashashin }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:recipient = {
+			any_held_title = { is_holy_order = yes }
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = hire_the_hashashin } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:excommunication_for_hire }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { faith = scope:recipient.faith NOT = { has_trait = excommunicated } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = excommunication_for_hire } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:dispensation_for_gold }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = {
+			OR = {
+				qpq_faith_has_church_trigger = yes
+				has_doctrine = doctrine_divorce_approval
+			}
+		}
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { OR = { is_spouse_of = scope:actor has_trait = bastard } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = dispensation_for_gold } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:steer_the_holy_war }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = yes highest_held_title_tier >= tier_kingdom NOT = { this = scope:actor } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = steer_the_holy_war } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:purchase_a_mitre }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = no faith = scope:recipient.faith }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = purchase_a_mitre } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:bought_claim }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_claim } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:absolution_by_concession }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = absolution_by_concession } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:holy_warrant }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = {
+			is_landed = yes
+			NOT = { faith = scope:recipient.faith }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = holy_warrant } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:buy_a_bull }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+		has_dlc_feature = by_god_alone
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		exists = scope:secondary_recipient
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = buy_a_bull } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:conclave_votes }
+		scope:recipient = {
+			exists = clerical_elector_title
+			NOT = { this = scope:actor }
+		}
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+		has_dlc_feature = by_god_alone
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		exists = scope:secondary_recipient
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = conclave_votes } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:council_lobbying }
+		scope:recipient = {
+			is_clergy = yes
+			NOT = { this = scope:actor }
+		}
+		scope:recipient.faith = scope:actor.faith
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+		has_dlc_feature = by_god_alone
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = council_lobbying } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:caliphal_investiture }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { has_doctrine = muhammad_succession_sunni_doctrine }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = caliphal_investiture } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:name_in_the_khutba }
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
+
+		scope:actor.religion = religion:islam_religion
+		scope:recipient.religion = religion:islam_religion
+		exists = scope:recipient.liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = name_in_the_khutba } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:fatwa_for_hire }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			religion = religion:islam_religion
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				AND = {
+					is_clergy = yes
+					learning >= 15
+				}
+			}
+		}
+		scope:actor.religion = religion:islam_religion
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = yes religion = religion:islam_religion }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = fatwa_for_hire } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:fund_the_dawa }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				AND = { is_clergy = yes learning >= 12 }
+			}
+		}
+		scope:actor.faith = { has_doctrine = muhammad_succession_shia_doctrine }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		scope:secondary_recipient = { is_landed = yes NOT = { faith = scope:actor.faith } }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = fund_the_dawa } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:crowning_the_usurper }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = faith:orthodox
+		scope:actor = {
+			is_independent_ruler = no
+			top_liege = { highest_held_title_tier >= tier_empire }
+		}
+		exists = scope:actor.top_liege
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = crowning_the_usurper } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:pliant_patriarch }
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = faith:orthodox
+		scope:actor = { highest_held_title_tier >= tier_kingdom }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = pliant_patriarch } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:favourable_omens }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				this = scope:actor.realm_priest
+			}
+		}
+		scope:actor.religion = { is_in_family = rf_pagan }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		exists = scope:secondary_recipient
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = favourable_omens } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:consecration_rites }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				this = scope:actor.realm_priest
+			}
+		}
+		scope:actor.religion = { is_in_family = rf_eastern }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = consecration_rites } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:temple_patronage }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				is_clergy = yes
+				government_has_flag = government_is_theocracy
+			}
+		}
+		NOT = { exists = scope:actor.faith.religious_head }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_alive = yes }
+		exists = scope:secondary_recipient
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
+	}
+	trigger_else = {
+		always = no
+	}
+}
+
 qpq_ui_offers_still_possible_trigger = {
 	trigger_if = {
 		limit = {

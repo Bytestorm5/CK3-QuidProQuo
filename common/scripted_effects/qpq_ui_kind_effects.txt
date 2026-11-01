@@ -197,7 +197,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -230,7 +230,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -260,7 +260,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -285,7 +285,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -307,7 +307,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -337,7 +337,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -366,7 +366,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -395,7 +395,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -441,7 +441,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -471,7 +471,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -513,7 +513,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -539,7 +539,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -569,7 +569,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -599,7 +599,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -633,7 +633,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -655,7 +655,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = artifact_rarity
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_artifact_candidates target = prev } }
 		}
@@ -677,7 +677,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -707,7 +707,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -734,7 +734,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -759,7 +759,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -789,7 +789,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -818,7 +818,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -844,7 +844,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -866,7 +866,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -895,7 +895,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -917,7 +917,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_title_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_title_candidates target = prev } }
 		}
@@ -959,7 +959,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1003,7 +1003,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1030,7 +1030,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1068,7 +1068,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1098,7 +1098,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1136,7 +1136,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1177,7 +1177,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1217,7 +1217,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1251,7 +1251,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1289,7 +1289,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1327,7 +1327,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1367,7 +1367,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}
@@ -1405,7 +1405,7 @@ qpq_ui_fill_candidates_effect = {
 		ordered_in_list = {
 			list = qpq_ui_pool
 			order_by = qpq_ui_candidate_order_value
-			max = 40
+			max = 120
 			check_range_bounds = no
 			scope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }
 		}

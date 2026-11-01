@@ -251,6 +251,8 @@ DEMAND_COST = {"gold": -30, "on_delivery": 10, "split": 5, "stipend": 5, "land":
 HUB50_TERMS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "marriage", "release_hook",
                "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
                "restraint", "hook", "charter"]
+# Ask-specific terms (they change the tiers), listed after the offers
+HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]
 
 
 def fmt_shown(s, P, A):
@@ -696,17 +698,49 @@ qpq_hub.1 = {
 			}
 			desc = qpq_hub.50.term_nothing
 		}
-		desc = qpq_hub.50.price
+""" + "".join("""		triggered_desc = {
+			trigger = { scope:%s ?= yes }
+			desc = qpq_hub.50.term_%s
+		}
+""" % (x, x) for x in HUB50_EXTRAS) + """		desc = qpq_hub.50.price
 	}
 	theme = intrigue
 	left_portrait = root
 	right_portrait = scope:actor
 	lower_right_portrait = scope:secondary_recipient
 
+	# Accept only while the deal still stands: the answer may come weeks after it was made
 	option = {
 		name = qpq_hub.50.a
+		trigger = {
+			qpq_proposed_kind_still_valid_trigger = yes
+			qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
+			qpq_proposal_gold_ok_trigger = yes
+		}
 		remove_character_flag = qpq_considering_proposal
 		qpq_seal_proposed_kind_effect = yes
+	}
+	option = {
+		name = qpq_hub.50.c
+		trigger = {
+			NOT = {
+				AND = {
+					qpq_proposed_kind_still_valid_trigger = yes
+					qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
+					qpq_proposal_gold_ok_trigger = yes
+				}
+			}
+		}
+		custom_tooltip = qpq_hub.50.c_tt
+		remove_character_flag = qpq_considering_proposal
+		scope:actor = {
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = qpq_msg_proposal_lapsed_title
+				left_icon = root
+				custom_tooltip = qpq_msg_proposal_lapsed_tt
+			}
+		}
 	}
 	option = {
 		name = qpq_hub.50.b

@@ -72,36 +72,61 @@ qpq_ui_refresh_effect = {
 			NOT = { var:qpq_ui_kind = flag:none }
 		}
 		qpq_ui_fill_candidates_effect = yes
-		# A pick that is no longer on offer (the world moved on) is dropped
+		# A pick stays while it is still eligible (it is in the full, uncapped pool qpq_ui_pool),
+		# and is kept visible even if it falls outside the capped list
 		if = {
-			limit = {
-				exists = var:qpq_ui_pick_char
-				OR = {
-					NOT = { has_variable_list = qpq_ui_candidates }
-					NOT = { is_target_in_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char } }
+			limit = { exists = var:qpq_ui_pick_char }
+			if = {
+				limit = {
+					qpq_ui_kind_needs_char_target_trigger = yes
+					var:qpq_ui_pick_char = { is_in_list = qpq_ui_pool }
+				}
+				if = {
+					limit = {
+						NOT = { is_target_in_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char } }
+					}
+					add_to_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char }
 				}
 			}
-			remove_variable = qpq_ui_pick_char
+			else = {
+				remove_variable = qpq_ui_pick_char
+			}
 		}
 		if = {
-			limit = {
-				exists = var:qpq_ui_target_title
-				OR = {
-					NOT = { has_variable_list = qpq_ui_title_candidates }
-					NOT = { is_target_in_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title } }
+			limit = { exists = var:qpq_ui_target_title }
+			if = {
+				limit = {
+					qpq_ui_kind_needs_title_target_trigger = yes
+					var:qpq_ui_target_title = { is_in_list = qpq_ui_pool }
+				}
+				if = {
+					limit = {
+						NOT = { is_target_in_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title } }
+					}
+					add_to_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title }
 				}
 			}
-			remove_variable = qpq_ui_target_title
+			else = {
+				remove_variable = qpq_ui_target_title
+			}
 		}
 		if = {
-			limit = {
-				exists = var:qpq_ui_target_artifact
-				OR = {
-					NOT = { has_variable_list = qpq_ui_artifact_candidates }
-					NOT = { is_target_in_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact } }
+			limit = { exists = var:qpq_ui_target_artifact }
+			if = {
+				limit = {
+					qpq_ui_kind_needs_artifact_target_trigger = yes
+					var:qpq_ui_target_artifact = { is_in_list = qpq_ui_pool }
+				}
+				if = {
+					limit = {
+						NOT = { is_target_in_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact } }
+					}
+					add_to_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact }
 				}
 			}
-			remove_variable = qpq_ui_target_artifact
+			else = {
+				remove_variable = qpq_ui_target_artifact
+			}
 		}
 		# Filling the pickers reuses the target scopes, so the real pick is loaded after it
 		clear_saved_scope = secondary_recipient
@@ -120,36 +145,38 @@ qpq_ui_refresh_effect = {
 	}
 }
 
-# Send the proposal. AI recipients answer at once; a human recipient gets the proposal event.
+# Send the proposal. Everything is checked once more after a last refresh: if the world moved on
+# while the panel was open, nothing is sent and the panel stays open showing what changed.
+# AI recipients answer at once; a human recipient gets the proposal event.
 qpq_ui_propose_effect = {
 	qpq_ui_refresh_effect = yes
-	qpq_ui_save_proposed_kind_effect = yes
 	if = {
-		limit = { scope:recipient = { is_ai = yes } }
-		if = {
-			limit = { var:qpq_ui_acc_total > 0 }
-			qpq_seal_proposed_kind_effect = yes
-		}
-		else = {
-			send_interface_toast = {
-				type = event_toast_effect_neutral
-				title = qpq_msg_proposal_declined_title
-				left_icon = scope:recipient
-				custom_tooltip = qpq_msg_proposal_declined_tt
-			}
+		limit = { qpq_ui_can_propose_trigger = no }
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = qpq_msg_proposal_changed_title
+			left_icon = scope:recipient
+			custom_tooltip = qpq_msg_proposal_changed_tt
 		}
 	}
 	else = {
-		scope:recipient = {
-			add_character_flag = { flag = qpq_considering_proposal days = 30 }
-			trigger_event = qpq_hub.50
+		qpq_ui_save_proposed_kind_effect = yes
+		if = {
+			limit = { scope:recipient = { is_ai = yes } }
+			qpq_seal_proposed_kind_effect = yes
 		}
-		send_interface_toast = {
-			type = event_toast_effect_neutral
-			title = qpq_msg_proposal_sent_title
-			left_icon = scope:recipient
-			custom_tooltip = qpq_msg_proposal_sent_tt
+		else = {
+			scope:recipient = {
+				add_character_flag = { flag = qpq_considering_proposal days = 30 }
+				trigger_event = qpq_hub.50
+			}
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = qpq_msg_proposal_sent_title
+				left_icon = scope:recipient
+				custom_tooltip = qpq_msg_proposal_sent_tt
+			}
 		}
+		qpq_ui_close_effect = yes
 	}
-	qpq_ui_close_effect = yes
 }

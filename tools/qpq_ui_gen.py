@@ -18,7 +18,7 @@ GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 UI_OFFERS = ["gold", "land", "claim", "office", "marriage", "release_hook", "my_word", "secret", "contract",
              "succession", "clemency", "arms", "artifact", "church", "restraint", "hook", "charter"]
 TIMINGS = ["up_front", "on_delivery", "split", "stipend"]
-CANDIDATE_CAP = 40
+CANDIDATE_CAP = 120
 
 TITLE_SOURCES = {
     "realm_counties": "every_realm_county",
@@ -296,6 +296,35 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
                                                          block(k["rel"], 2), block(k.get("dlc") or "", 2))
         first = False
     trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n\n"
+    # No second pact of the same Ask between the same two characters
+    trg += "qpq_ui_no_same_pact_trigger = {\n"
+    first = True
+    for k in KINDS:
+        trg += "\t%s = {\n\t\tlimit = { %s }\n\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n\t}\n" % (
+            "trigger_if" if first else "trigger_else_if", kind_check(k), k["key"])
+        first = False
+    trg += "}\n\n"
+    # A proposal answered later (event qpq_hub.50): is it still sound? Same scopes as the panel saved.
+    trg += "qpq_proposed_kind_still_valid_trigger = {\n"
+    first = True
+    for k in KINDS:
+        body = block(k["rel"], 2) + block(k.get("dlc") or "", 2)
+        if k["target"] == "char":
+            body += "\t\texists = scope:secondary_recipient\n\t\tscope:secondary_recipient = { is_alive = yes }\n"
+            body += block(k.get("target_valid") or "", 2)
+        elif k["target"] in ("title", "artifact"):
+            body += "\t\texists = scope:target\n" + block(k.get("target_valid") or "", 2)
+        elif k["target"] == "derived":
+            body += "\t\texists = %s\n" % k["derive"]
+        for loc, trig in k.get("valid", []):
+            body += "\t\tcustom_description = {\n\t\t\ttext = %s\n%s\t\t}\n" % (loc, block(trig, 3))
+        if k["key"] != "clemency_bargain":
+            body += "\t\tscope:actor = { is_imprisoned = no }\n\t\tscope:recipient = { is_imprisoned = no }\n"
+        body += "\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n" % k["key"]
+        trg += "\t%s = {\n\t\tlimit = { scope:qpq_proposed_kind = flag:%s }\n%s\t}\n" % (
+            "trigger_if" if first else "trigger_else_if", k["key"], body)
+        first = False
+    trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n\n"
     # Every ticked offer must still be possible (actor, recipient saved)
     trg += "qpq_ui_offers_still_possible_trigger = {\n"
     for o in UI_OFFERS:
@@ -323,10 +352,19 @@ def gen_ui_custom_loc(write):
     # Each side's half: "mine" is the payer's half unless the player is the agent
     mine, theirs = [], []
     for t in range(6):
-        mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier ?= %d" % t, "qpq_tier_%d" % t))
-        mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier ?= %d" % t, "qpq_tier_%d" % t))
-        theirs.append(("has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier ?= %d" % t, "qpq_tier_%d" % t))
-        theirs.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier ?= %d" % t, "qpq_tier_%d" % t))
+        shown = "qpq_tier_%d" % t
+        if t == 0:
+            # a private pact is raised to Tier I when sealed; Tier 0 only as a published Charter
+            for cond, key in ((" has_variable = qpq_ui_o_charter", "qpq_tier_0"), ("", "qpq_tier_1")):
+                mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier <= 0" + cond, key))
+                mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier <= 0" + cond, key))
+                theirs.append(("has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier <= 0" + cond, key))
+                theirs.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier <= 0" + cond, key))
+            continue
+        mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier ?= %d" % t, shown))
+        mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier ?= %d" % t, shown))
+        theirs.append(("has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier ?= %d" % t, shown))
+        theirs.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier ?= %d" % t, shown))
     out += cl("QpqUiMyTier", mine, "qpq_empty")
     out += cl("QpqUiTheirTier", theirs, "qpq_empty")
     # Offer and timing labels: demands when the player is the one doing the deed
@@ -583,10 +621,19 @@ window = {
 				portrait_head_small = {
 					datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_target').Char]"
 				}
-				text_single = {
-					text = "QPQ_UI_TARGET_LABEL"
-					default_format = "#low"
-					align = left|nobaseline
+				vbox = {
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TARGET_LABEL"
+						default_format = "#low"
+						align = left|nobaseline
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TARGET_NAME"
+						default_format = "#high"
+						align = left|nobaseline
+					}
 				}
 			}
 
@@ -622,16 +669,19 @@ window = {
 			button_tab = {
 				text = "QPQ_UI_TAB_ASK"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'ask' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'ask' )]"
 			}
 			button_tab = {
 				text = "QPQ_UI_TAB_OFFER"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'offer' )]"
 			}
 			button_tab = {
 				text = "QPQ_UI_TAB_SEAL"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'seal' )]"
 			}
 		}
@@ -679,13 +729,13 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 530
+						max_width = 500
 						autoresize = yes
 						text = "[GetPlayer.Custom('QpqUiKindDesc')]"
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 530
+						max_width = 500
 						autoresize = yes
 						default_format = "#weak"
 						text = "[GetPlayer.Custom('QpqUiKindHint')]"
@@ -795,6 +845,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					text = "QPQ_UI_NEXT_OFFER"
 					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
+					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
 				}
 			}
 		}
@@ -858,7 +909,7 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 420
+						max_width = 370
 						autoresize = yes
 						text = "QPQ_UI_PRICE_LINE"
 					}
@@ -906,6 +957,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					text = "QPQ_UI_NEXT_SEAL"
 					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
+					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
 				}
 			}
 		}
@@ -944,13 +996,13 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 380
+						max_width = 370
 						autoresize = yes
 						text = "QPQ_UI_SEAL_ASK"
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 380
+						max_width = 370
 						autoresize = yes
 						default_format = "#weak"
 						text = "QPQ_UI_SEAL_DEADLINE"
@@ -996,7 +1048,7 @@ window = {
 				}
 				text_multi = {
 					layoutpolicy_horizontal = expanding
-					max_width = 820
+					max_width = 780
 					autoresize = yes
 					text = "QPQ_UI_SCANDAL_TEXT"
 				}
@@ -1023,7 +1075,7 @@ window = {
 
 			text_multi = {
 				layoutpolicy_horizontal = expanding
-				max_width = 420
+				max_width = 340
 				autoresize = yes
 				align = center|nobaseline
 				text = "[GetPlayer.Custom('QpqUiAcceptance')]"

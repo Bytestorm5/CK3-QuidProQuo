@@ -91,10 +91,19 @@ window = {
 				portrait_head_small = {
 					datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_target').Char]"
 				}
-				text_single = {
-					text = "QPQ_UI_TARGET_LABEL"
-					default_format = "#low"
-					align = left|nobaseline
+				vbox = {
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TARGET_LABEL"
+						default_format = "#low"
+						align = left|nobaseline
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TARGET_NAME"
+						default_format = "#high"
+						align = left|nobaseline
+					}
 				}
 			}
 
@@ -130,16 +139,19 @@ window = {
 			button_tab = {
 				text = "QPQ_UI_TAB_ASK"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'ask' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'ask' )]"
 			}
 			button_tab = {
 				text = "QPQ_UI_TAB_OFFER"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'offer' )]"
 			}
 			button_tab = {
 				text = "QPQ_UI_TAB_SEAL"
 				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'seal' )]"
 			}
 		}
@@ -930,13 +942,13 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 530
+						max_width = 500
 						autoresize = yes
 						text = "[GetPlayer.Custom('QpqUiKindDesc')]"
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 530
+						max_width = 500
 						autoresize = yes
 						default_format = "#weak"
 						text = "[GetPlayer.Custom('QpqUiKindHint')]"
@@ -1046,6 +1058,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					text = "QPQ_UI_NEXT_OFFER"
 					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
+					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 			}
 		}
@@ -1313,7 +1326,7 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 420
+						max_width = 370
 						autoresize = yes
 						text = "QPQ_UI_PRICE_LINE"
 					}
@@ -1445,6 +1458,7 @@ window = {
 					layoutpolicy_horizontal = expanding
 					text = "QPQ_UI_NEXT_SEAL"
 					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
+					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				}
 			}
 		}
@@ -1483,13 +1497,13 @@ window = {
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 380
+						max_width = 370
 						autoresize = yes
 						text = "QPQ_UI_SEAL_ASK"
 					}
 					text_multi = {
 						layoutpolicy_horizontal = expanding
-						max_width = 380
+						max_width = 370
 						autoresize = yes
 						default_format = "#weak"
 						text = "QPQ_UI_SEAL_DEADLINE"
@@ -1644,7 +1658,7 @@ window = {
 				}
 				text_multi = {
 					layoutpolicy_horizontal = expanding
-					max_width = 820
+					max_width = 780
 					autoresize = yes
 					text = "QPQ_UI_SCANDAL_TEXT"
 				}
@@ -1671,7 +1685,7 @@ window = {
 
 			text_multi = {
 				layoutpolicy_horizontal = expanding
-				max_width = 420
+				max_width = 340
 				autoresize = yes
 				align = center|nobaseline
 				text = "[GetPlayer.Custom('QpqUiAcceptance')]"

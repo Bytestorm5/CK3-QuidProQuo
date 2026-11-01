@@ -292,3 +292,54 @@ qpq_pays_penance_to_church_trigger = {
 	exists = faith.religious_head
 	NOT = { faith.religious_head = this }
 }
+
+############################################################
+# Proposals (the pact panel and the proposal event)
+############################################################
+
+# A and B already share a running pact of this Ask (either side of it)
+qpq_has_active_pact_of_kind_with_trigger = {
+	$A$ = {
+		has_variable_list = qpq_pacts
+		any_in_list = {
+			variable = qpq_pacts
+			qpq_story_is_active_trigger = yes
+			var:qpq_kind = flag:$KIND$
+			OR = {
+				var:qpq_agent ?= $B$
+				var:qpq_payer ?= $B$
+			}
+		}
+	}
+}
+
+# The gold due when the pact is sealed (up front, or half for a split) is in the payer's hands.
+# Scopes: actor, recipient, qpq_proposed_kind, qpq_price and the qpq_o_* choices.
+qpq_proposal_gold_ok_trigger = {
+	trigger_if = {
+		limit = {
+			scope:qpq_o_gold ?= yes
+			NOT = { scope:qpq_o_on_delivery ?= yes }
+			NOT = { scope:qpq_o_stipend ?= yes }
+		}
+		trigger_if = {
+			limit = { qpq_proposed_kind_is_agent_init_trigger = yes }
+			trigger_if = {
+				limit = { scope:qpq_o_split ?= yes }
+				scope:recipient = { gold >= { value = scope:qpq_price divide = 2 } }
+			}
+			trigger_else = {
+				scope:recipient = { gold >= scope:qpq_price }
+			}
+		}
+		trigger_else = {
+			trigger_if = {
+				limit = { scope:qpq_o_split ?= yes }
+				scope:actor = { gold >= { value = scope:qpq_price divide = 2 } }
+			}
+			trigger_else = {
+				scope:actor = { gold >= scope:qpq_price }
+			}
+		}
+	}
+}
