@@ -293,7 +293,7 @@ scope:secondary_recipient = {
   invalid=TARGET_GONE_INVALID,
   on_seal=GRANT_LICENCE + """
 if = {
-    limit = { exists = scope:qpq_story.var:qpq_charter }
+    limit = { exists = scope:qpq_is_charter }
     scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_against target = scope:qpq_target } }
     scope:qpq_target = {
         every_realm_county = {
@@ -424,7 +424,7 @@ scope:qpq_agent = {
         limit = { tier = tier_county }
         scope:qpq_story = { add_to_variable_list = { name = qpq_charge_counties target = prev } }
     }
-    add_character_modifier = { modifier = qpq_marcher_charge_modifier months = scope:qpq_story.var:qpq_term }
+    add_character_modifier = { modifier = qpq_marcher_charge_modifier months = scope:qpq_term_months }
 }
 """,
   breach="""
@@ -1861,7 +1861,7 @@ scope:qpq_payer = {
     }
     add_truce_both_ways = {
         character = scope:qpq_agent
-        months = scope:qpq_story.var:qpq_term
+        months = scope:qpq_term_months
     }
 }
 """,
@@ -2143,7 +2143,7 @@ scope:recipient = {
   demand=[("-15", "scope:recipient = { opinion = { target = scope:recipient.liege value >= 40 } }", "QPQ_REASON_LOVES_TARGET")],
   on_seal="""
 scope:qpq_target = {
-    add_character_modifier = { modifier = qpq_council_sabotage_modifier months = scope:qpq_story.var:qpq_term }
+    add_character_modifier = { modifier = qpq_council_sabotage_modifier months = scope:qpq_term_months }
 }
 """,
   tick="""
@@ -2188,7 +2188,7 @@ K(key="stay_home", cat="C", group="abroad", secret="betrayal", icon="military_st
   rel=REL_FOREIGN_VASSAL,
   on_seal="""
 scope:qpq_agent = {
-    add_character_modifier = { modifier = qpq_withholding_levies_modifier months = scope:qpq_story.var:qpq_term }
+    add_character_modifier = { modifier = qpq_withholding_levies_modifier months = scope:qpq_term_months }
 }
 """,
   deliver=PAYER_BEAT_TARGET,

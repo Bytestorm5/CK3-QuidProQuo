@@ -17,6 +17,8 @@
 # Called with the scopes above saved, plus scope values
 #   qpq_payer_tier / qpq_agent_tier (0-5) and qpq_o_* offer flags (yes/no).
 qpq_seal_pact_effect = {
+	# The term as a scope value, so durations show correctly in tooltips before the story exists
+	save_scope_value_as = { name = qpq_term_months value = $TERM$ }
 	# Discretion: a pact with floor 0 may be published as a Charter; anything private is at least Tier I
 	if = {
 		limit = {
@@ -252,6 +254,15 @@ qpq_publish_charter_effect = {
 
 # The fair price in gold, saved by the interaction as scope value qpq_price
 qpq_store_and_pay_offers_effect = {
+	# Gold is paid from scope values, not story variables: the story does not exist yet while the
+	# game builds the option tooltip, so a story variable would show (and could pay) 0.
+	if = {
+		limit = { scope:qpq_o_gold_lavish ?= yes }
+		save_scope_value_as = { name = qpq_gold_total value = { value = scope:qpq_price multiply = 2 } }
+	}
+	else = {
+		save_scope_value_as = { name = qpq_gold_total value = scope:qpq_price }
+	}
 	scope:qpq_story = {
 		# --- Gold ---
 		if = {
@@ -261,19 +272,13 @@ qpq_store_and_pay_offers_effect = {
 					scope:qpq_o_gold_lavish ?= yes
 				}
 			}
-			if = {
-				limit = { scope:qpq_o_gold_lavish ?= yes }
-				set_variable = { name = qpq_gold_total value = { value = scope:qpq_price multiply = 2 } }
-			}
-			else = {
-				set_variable = { name = qpq_gold_total value = scope:qpq_price }
-			}
+			set_variable = { name = qpq_gold_total value = scope:qpq_gold_total }
 			if = {
 				limit = { scope:qpq_o_stipend ?= yes }
 				set_variable = {
 					name = qpq_stipend
 					value = {
-						value = var:qpq_gold_total
+						value = scope:qpq_gold_total
 						divide = { value = var:qpq_term divide = 12 min = 1 }
 						round = yes
 					}
@@ -281,18 +286,18 @@ qpq_store_and_pay_offers_effect = {
 			}
 			else_if = {
 				limit = { scope:qpq_o_on_delivery ?= yes }
-				set_variable = { name = qpq_gold_due value = var:qpq_gold_total }
+				set_variable = { name = qpq_gold_due value = scope:qpq_gold_total }
 			}
 			else_if = {
 				limit = { scope:qpq_o_split ?= yes }
 				set_variable = {
 					name = qpq_gold_due
-					value = { value = var:qpq_gold_total divide = 2 round = yes }
+					value = { value = scope:qpq_gold_total divide = 2 round = yes }
 				}
 				scope:qpq_payer = {
 					pay_short_term_gold = {
 						target = scope:qpq_agent
-						gold = { value = scope:qpq_story.var:qpq_gold_total divide = 2 round = yes }
+						gold = { value = scope:qpq_gold_total divide = 2 round = yes }
 					}
 				}
 			}
@@ -300,7 +305,7 @@ qpq_store_and_pay_offers_effect = {
 				scope:qpq_payer = {
 					pay_short_term_gold = {
 						target = scope:qpq_agent
-						gold = scope:qpq_story.var:qpq_gold_total
+						gold = scope:qpq_gold_total
 					}
 				}
 			}
@@ -438,13 +443,13 @@ qpq_store_and_pay_offers_effect = {
 			scope:qpq_agent = {
 				add_character_modifier = {
 					modifier = qpq_lent_arms_modifier
-					months = scope:qpq_story.var:qpq_term
+					months = scope:qpq_term_months
 				}
 			}
 			scope:qpq_payer = {
 				add_character_modifier = {
 					modifier = qpq_lending_arms_modifier
-					months = scope:qpq_story.var:qpq_term
+					months = scope:qpq_term_months
 				}
 			}
 		}
