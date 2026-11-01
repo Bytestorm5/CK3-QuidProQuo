@@ -1016,19 +1016,19 @@ QpqUiMyTier = {
 	type = character
 	log_loc_errors = no
 	text = {
-		trigger = { has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier <= 0 has_variable = qpq_ui_o_charter }
+		trigger = { has_variable = qpq_ui_agent_init exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0 has_variable = qpq_ui_o_charter }
 		localization_key = qpq_tier_0
 	}
 	text = {
-		trigger = { NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier <= 0 has_variable = qpq_ui_o_charter }
+		trigger = { NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0 has_variable = qpq_ui_o_charter }
 		localization_key = qpq_tier_0
 	}
 	text = {
-		trigger = { has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier <= 0 }
+		trigger = { has_variable = qpq_ui_agent_init exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0 }
 		localization_key = qpq_tier_1
 	}
 	text = {
-		trigger = { NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier <= 0 }
+		trigger = { NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0 }
 		localization_key = qpq_tier_1
 	}
 	text = {
@@ -1081,19 +1081,19 @@ QpqUiTheirTier = {
 	type = character
 	log_loc_errors = no
 	text = {
-		trigger = { has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier <= 0 has_variable = qpq_ui_o_charter }
+		trigger = { has_variable = qpq_ui_agent_init exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0 has_variable = qpq_ui_o_charter }
 		localization_key = qpq_tier_0
 	}
 	text = {
-		trigger = { NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier <= 0 has_variable = qpq_ui_o_charter }
+		trigger = { NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0 has_variable = qpq_ui_o_charter }
 		localization_key = qpq_tier_0
 	}
 	text = {
-		trigger = { has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier <= 0 }
+		trigger = { has_variable = qpq_ui_agent_init exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0 }
 		localization_key = qpq_tier_1
 	}
 	text = {
-		trigger = { NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier <= 0 }
+		trigger = { NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0 }
 		localization_key = qpq_tier_1
 	}
 	text = {

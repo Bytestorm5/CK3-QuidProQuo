@@ -886,7 +886,12 @@ qpq_ui_kind_excommunication_for_hire = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -907,7 +912,18 @@ qpq_ui_kind_dispensation_for_gold = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = {
+			OR = {
+				qpq_faith_has_church_trigger = yes
+				has_doctrine = doctrine_divorce_approval
+			}
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -934,7 +950,12 @@ qpq_ui_kind_steer_the_holy_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -955,7 +976,12 @@ qpq_ui_kind_purchase_a_mitre = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -976,7 +1002,12 @@ qpq_ui_kind_bought_claim = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -997,7 +1028,12 @@ qpq_ui_kind_absolution_by_concession = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1018,7 +1054,12 @@ qpq_ui_kind_holy_warrant = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1040,6 +1081,13 @@ qpq_ui_kind_buy_a_bull = {
 	saved_scopes = { actor recipient }
 	is_shown = {
 		has_dlc_feature = by_god_alone
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1062,6 +1110,11 @@ qpq_ui_kind_conclave_votes = {
 	saved_scopes = { actor recipient }
 	is_shown = {
 		has_dlc_feature = by_god_alone
+		scope:recipient = {
+			exists = clerical_elector_title
+			NOT = { this = scope:actor }
+		}
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1082,6 +1135,12 @@ qpq_ui_kind_council_lobbying = {
 	saved_scopes = { actor recipient }
 	is_shown = {
 		has_dlc_feature = by_god_alone
+		scope:recipient = {
+			is_clergy = yes
+			NOT = { this = scope:actor }
+		}
+		scope:recipient.faith = scope:actor.faith
+		scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1102,7 +1161,12 @@ qpq_ui_kind_caliphal_investiture = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+		scope:recipient.faith = { has_doctrine = muhammad_succession_sunni_doctrine }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1123,7 +1187,17 @@ qpq_ui_kind_name_in_the_khutba = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
+
+		scope:actor.religion = religion:islam_religion
+		scope:recipient.religion = religion:islam_religion
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -1149,7 +1223,18 @@ qpq_ui_kind_fatwa_for_hire = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			religion = religion:islam_religion
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				AND = {
+					is_clergy = yes
+					learning >= 15
+				}
+			}
+		}
+		scope:actor.religion = religion:islam_religion
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1176,7 +1261,15 @@ qpq_ui_kind_fund_the_dawa = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				AND = { is_clergy = yes learning >= 12 }
+			}
+		}
+		scope:actor.faith = { has_doctrine = muhammad_succession_shia_doctrine }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1200,7 +1293,17 @@ qpq_ui_kind_crowning_the_usurper = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = faith:orthodox
+		scope:actor = {
+			is_independent_ruler = no
+			top_liege = { highest_held_title_tier >= tier_empire }
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1226,7 +1329,14 @@ qpq_ui_kind_pliant_patriarch = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			qpq_is_head_of_faith_trigger = yes
+			NOT = { this = scope:actor }
+		}
+		scope:actor.faith = scope:recipient.faith
+
+		scope:recipient.faith = faith:orthodox
+		scope:actor = { highest_held_title_tier >= tier_kingdom }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1249,7 +1359,15 @@ qpq_ui_kind_favourable_omens = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				this = scope:actor.realm_priest
+			}
+		}
+		scope:actor.religion = { is_in_family = rf_pagan }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1273,7 +1391,15 @@ qpq_ui_kind_consecration_rites = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				qpq_is_head_of_faith_trigger = yes
+				this = scope:actor.realm_priest
+			}
+		}
+		scope:actor.religion = { is_in_family = rf_eastern }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1297,7 +1423,15 @@ qpq_ui_kind_temple_patronage = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			faith = scope:actor.faith
+			OR = {
+				is_clergy = yes
+				government_has_flag = government_is_theocracy
+			}
+		}
+		NOT = { exists = scope:actor.faith.religious_head }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -1369,7 +1503,120 @@ qpq_ui_group_church_favours = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+
+				scope:recipient.faith = {
+					OR = {
+						qpq_faith_has_church_trigger = yes
+						has_doctrine = doctrine_divorce_approval
+					}
+				}
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+			}
+			AND = {
+				has_dlc_feature = by_god_alone
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+
+				scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient.faith = { has_doctrine = muhammad_succession_sunni_doctrine }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+
+				scope:recipient.faith = faith:orthodox
+				scope:actor = {
+					is_independent_ruler = no
+					top_liege = { highest_held_title_tier >= tier_empire }
+				}
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+
+				scope:recipient.faith = faith:orthodox
+				scope:actor = { highest_held_title_tier >= tier_kingdom }
+			}
+			AND = {
+				scope:recipient = {
+					NOT = { this = scope:actor }
+					faith = scope:actor.faith
+					OR = {
+						qpq_is_head_of_faith_trigger = yes
+						this = scope:actor.realm_priest
+					}
+				}
+				scope:actor.religion = { is_in_family = rf_pagan }
+			}
+			AND = {
+				scope:recipient = {
+					NOT = { this = scope:actor }
+					faith = scope:actor.faith
+					OR = {
+						qpq_is_head_of_faith_trigger = yes
+						this = scope:actor.realm_priest
+					}
+				}
+				scope:actor.religion = { is_in_family = rf_eastern }
+			}
+			AND = {
+				scope:recipient = {
+					NOT = { this = scope:actor }
+					faith = scope:actor.faith
+					OR = {
+						is_clergy = yes
+						government_has_flag = government_is_theocracy
+					}
+				}
+				NOT = { exists = scope:actor.faith.religious_head }
+			}
+		}
 	}
 }
 
@@ -1377,7 +1624,87 @@ qpq_ui_group_church_weapons = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
+			}
+			AND = {
+				scope:recipient = {
+					qpq_is_head_of_faith_trigger = yes
+					NOT = { this = scope:actor }
+				}
+				scope:actor.faith = scope:recipient.faith
+				scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
+			}
+			AND = {
+				has_dlc_feature = by_god_alone
+				scope:recipient = {
+					exists = clerical_elector_title
+					NOT = { this = scope:actor }
+				}
+				scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+			}
+			AND = {
+				has_dlc_feature = by_god_alone
+				scope:recipient = {
+					is_clergy = yes
+					NOT = { this = scope:actor }
+				}
+				scope:recipient.faith = scope:actor.faith
+				scope:recipient.faith = { has_doctrine_parameter = has_clerical_electors }
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+
+				scope:actor.religion = religion:islam_religion
+				scope:recipient.religion = religion:islam_religion
+			}
+			AND = {
+				scope:recipient = {
+					NOT = { this = scope:actor }
+					religion = religion:islam_religion
+					OR = {
+						qpq_is_head_of_faith_trigger = yes
+						AND = {
+							is_clergy = yes
+							learning >= 15
+						}
+					}
+				}
+				scope:actor.religion = religion:islam_religion
+			}
+			AND = {
+				scope:recipient = {
+					NOT = { this = scope:actor }
+					faith = scope:actor.faith
+					OR = {
+						qpq_is_head_of_faith_trigger = yes
+						AND = { is_clergy = yes learning >= 12 }
+					}
+				}
+				scope:actor.faith = { has_doctrine = muhammad_succession_shia_doctrine }
+			}
+		}
 	}
 }
 
@@ -1901,8 +2228,8 @@ qpq_ui_offer_charter = {
 		OR = {
 			has_variable = qpq_ui_o_charter
 			AND = {
-				var:qpq_ui_payer_tier <= 0
-				var:qpq_ui_agent_tier <= 0
+				exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0
+				exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0
 			}
 		}
 	}

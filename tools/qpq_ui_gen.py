@@ -66,7 +66,7 @@ def offer_shown(block, fmt_shown, OFFER_DEFS, o, level):
     d = OFFER_DEFS[o]
     t = "\t" * level
     if o == "charter":
-        return "%svar:qpq_ui_payer_tier <= 0\n%svar:qpq_ui_agent_tier <= 0\n" % (t, t)
+        return "%sexists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0\n%sexists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0\n" % (t, t)
     s = "%strigger_if = {\n%s\tlimit = { has_variable = qpq_ui_agent_init }\n" % (t, t)
     s += block(fmt_shown(d["shown"], "scope:recipient", "scope:actor"), level + 1)
     s += "%s}\n%strigger_else = {\n" % (t, t)
@@ -82,14 +82,27 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
     for k in KINDS:
         out += "qpq_ui_kind_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n" % k["key"]
         # Every Ask is listed; one that is not open between these two is greyed out and its tooltip says why
-        out += "\tis_shown = {\n%s\t}\n" % (block(k["dlc"], 2) if k.get("dlc") else "\t\talways = yes\n")
+        # Church Asks that cannot apply between these two (no church, wrong faith, not a head of faith) are
+        # not listed at all; every other Ask is listed and greyed out with its reasons.
+        if k["group"].startswith("church_"):
+            shown = block(k.get("dlc") or "", 2) + block(k["rel"], 2)
+        else:
+            shown = block(k["dlc"], 2) if k.get("dlc") else "\t\talways = yes\n"
+        out += "\tis_shown = {\n%s\t}\n" % shown
         out += "\tis_valid = {\n%s\t}\n" % block(k["rel"], 2)
         out += "\teffect = {\n\t\tset_variable = { name = qpq_ui_kind value = flag:%s }\n" % k["key"]
         out += "\t\tqpq_ui_clear_choices_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
     # Group headings
     for g, _name in GROUPS:
         kinds = [k for k in KINDS if k["group"] == g]
-        out += "qpq_ui_group_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n\t\talways = yes\n\t}\n}\n\n" % g
+        if g.startswith("church_"):
+            gs = "\t\tOR = {\n"
+            for k in kinds:
+                gs += "\t\t\tAND = {\n%s%s\t\t\t}\n" % (block(k.get("dlc") or "", 4), block(k["rel"], 4))
+            gs += "\t\t}\n"
+        else:
+            gs = "\t\talways = yes\n"
+        out += "qpq_ui_group_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n%s\t}\n}\n\n" % (g, gs)
     # Offers (or demands, when the player is the one doing the deed). A ticked box always stays visible
     # so it can be unticked.
     for o in UI_OFFERS:
@@ -304,7 +317,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         trg += "\t%s = {\n\t\tlimit = { %s }\n\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n\t}\n" % (
             "trigger_if" if first else "trigger_else_if", kind_check(k), k["key"])
         first = False
-    trg += "}\n\n"
+    trg += "\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
     # A proposal answered later (event qpq_hub.50): is it still sound? Same scopes as the panel saved.
     trg += "qpq_proposed_kind_still_valid_trigger = {\n"
     first = True
@@ -357,10 +370,10 @@ def gen_ui_custom_loc(write):
         if t == 0:
             # a private pact is raised to Tier I when sealed; Tier 0 only as a published Charter
             for cond, key in ((" has_variable = qpq_ui_o_charter", "qpq_tier_0"), ("", "qpq_tier_1")):
-                mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier <= 0" + cond, key))
-                mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier <= 0" + cond, key))
-                theirs.append(("has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier <= 0" + cond, key))
-                theirs.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier <= 0" + cond, key))
+                mine.append(("has_variable = qpq_ui_agent_init exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0" + cond, key))
+                mine.append(("NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0" + cond, key))
+                theirs.append(("has_variable = qpq_ui_agent_init exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0" + cond, key))
+                theirs.append(("NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0" + cond, key))
             continue
         mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier ?= %d" % t, shown))
         mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier ?= %d" % t, shown))

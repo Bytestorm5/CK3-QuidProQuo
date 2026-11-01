@@ -2368,6 +2368,7 @@ qpq_k_bought_truce_on_seal_effect = {
 		}
 		add_truce_both_ways = {
 			character = scope:qpq_agent
+			name = qpq_truce_name
 			months = qpq_term_months_value
 		}
 	}

@@ -1846,8 +1846,17 @@ K(key="bought_truce", cat="C", group="war", secret="bribery", icon="negotiate_se
   payer_base=1, agent_base=1, target="none", mode="restraint", term=60, effort=0,
   rel=REL_FOREIGN + "scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }",
   payer_adj="if = { limit = { scope:actor = { is_at_war_with = scope:recipient } } add = 1 }",
+  # Taking money to stand down is far worse for a priest-king than for a border lord
+  agent_adj="""
+if = { limit = { scope:recipient = { qpq_is_head_of_faith_trigger = yes } } add = 3 }
+else_if = { limit = { scope:recipient = { is_clergy = yes } } add = 1 }
+if = { limit = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } add = 1 }
+""",
   agent_ctx=False,
-  demand=[("-15", "scope:recipient = { is_at_war_with = scope:actor }", "QPQ_REASON_AT_WAR")],
+  # A truce cannot call off a holy war, so it cannot be bought while one is running
+  valid=[("qpq_valid_no_holy_war", "NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }")],
+  demand=[("-15", "scope:recipient = { is_at_war_with = scope:actor }", "QPQ_REASON_AT_WAR"),
+          ("-60", "scope:recipient = { qpq_is_head_of_faith_trigger = yes }", "QPQ_REASON_HEAD_OF_FAITH")],
   on_seal="""
 scope:qpq_payer = {
     every_character_war = {
@@ -1861,6 +1870,7 @@ scope:qpq_payer = {
     }
     add_truce_both_ways = {
         character = scope:qpq_agent
+        name = qpq_truce_name
         months = qpq_term_months_value
     }
 }

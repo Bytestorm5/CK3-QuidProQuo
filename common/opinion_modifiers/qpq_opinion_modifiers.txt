@@ -18,6 +18,20 @@ qpq_declined_pact_opinion = {
 	decaying = yes
 }
 
+# Scaled per exposure: always added with an explicit opinion value
+qpq_distrust_opinion = {
+	opinion = -8
+	years = 6
+	decaying = yes
+	stacking = yes
+}
+
+qpq_oathbreaker_opinion = {
+	opinion = -25
+	years = 10
+	decaying = yes
+}
+
 qpq_played_favourites_opinion = {
 	opinion = -5
 	years = 5

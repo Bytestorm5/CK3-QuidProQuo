@@ -2125,6 +2125,17 @@ qpq_ui_compute_effect = {
 			}
 			set_variable = qpq_ui_target_ok
 		}
+		if = {
+			limit = { has_variable = qpq_ui_target_ok }
+			if = {
+				limit = {
+					NOT = {
+						NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }
+					}
+				}
+				set_variable = qpq_ui_fail_0
+			}
+		}
 	}
 	else_if = {
 		limit = { var:qpq_ui_kind = flag:faithless_ally }

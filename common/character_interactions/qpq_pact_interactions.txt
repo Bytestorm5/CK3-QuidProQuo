@@ -12469,6 +12469,10 @@ qpq_bought_truce_interaction = {
 		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
 		scope:recipient = { is_imprisoned = no }
 		scope:actor = { is_imprisoned = no }
+		custom_description = {
+			text = qpq_valid_no_holy_war
+			NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }
+		}
 	}
 
 	send_option = {
@@ -12812,6 +12816,11 @@ qpq_bought_truce_interaction = {
 			add = -15
 			scope:recipient = { is_at_war_with = scope:actor }
 			desc = QPQ_REASON_AT_WAR
+		}
+		modifier = {
+			add = -60
+			scope:recipient = { qpq_is_head_of_faith_trigger = yes }
+			desc = QPQ_REASON_HEAD_OF_FAITH
 		}
 	}
 

@@ -395,6 +395,7 @@ qpq_confess_pact_interaction = {
 
 	is_shown = {
 		scope:actor = {
+			faith = { qpq_faith_has_church_trigger = yes }
 			any_secret = {
 				qpq_is_pact_secret_trigger = yes
 				secret_target = scope:recipient

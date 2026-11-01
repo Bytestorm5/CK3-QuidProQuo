@@ -1381,6 +1381,87 @@ qpq_apply_pact_fallout_effect = {
 # Root: the party paying for one half. Scope values qpq_f_tier, qpq_f_mult, qpq_f_criminal.
 qpq_apply_half_fallout_effect = {
 	save_scope_as = qpq_f_party
+	# Trust: whoever deals in the dark is known for it. Everyone who serves or rules beside them hears.
+	if = {
+		limit = { scope:qpq_f_tier >= 1 }
+		add_character_modifier = {
+			modifier = qpq_distrusted_modifier
+			years = 6
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = honest
+					has_trait = just
+					has_trait = zealous
+				}
+			}
+			add_stress = medium_stress_gain
+		}
+		if = {
+			limit = { exists = liege }
+			liege = {
+				add_opinion = {
+					target = scope:qpq_f_party
+					modifier = qpq_distrust_opinion
+					opinion = qpq_f_distrust_opinion_value
+				}
+			}
+		}
+		every_vassal = {
+			limit = { is_ai = yes }
+			add_opinion = {
+				target = scope:qpq_f_party
+				modifier = qpq_distrust_opinion
+				opinion = qpq_f_distrust_opinion_value
+			}
+		}
+		every_courtier = {
+			limit = { is_adult = yes }
+			add_opinion = {
+				target = scope:qpq_f_party
+				modifier = qpq_distrust_opinion
+				opinion = qpq_f_distrust_opinion_value
+			}
+		}
+	}
+	# A deal broken on top of it: the wronged party's version of events spreads
+	if = {
+		limit = {
+			exists = scope:qpq_exposed_half
+			scope:qpq_exposed_half = { exists = var:qpq_wronged }
+			NOT = { scope:qpq_exposed_half.var:qpq_wronged ?= scope:qpq_f_party }
+			scope:qpq_f_tier >= 1
+		}
+		add_character_modifier = {
+			modifier = qpq_oathbreaker_modifier
+			years = 10
+		}
+		if = {
+			limit = { exists = liege }
+			liege = {
+				add_opinion = {
+					target = scope:qpq_f_party
+					modifier = qpq_oathbreaker_opinion
+				}
+			}
+		}
+		every_vassal = {
+			limit = { is_ai = yes }
+			add_opinion = {
+				target = scope:qpq_f_party
+				modifier = qpq_oathbreaker_opinion
+			}
+		}
+		every_neighboring_and_across_water_top_liege_realm_owner = {
+			limit = { is_ai = yes }
+			add_opinion = {
+				target = scope:qpq_f_party
+				modifier = qpq_oathbreaker_opinion
+			}
+		}
+		add_piety = qpq_f_oathbreaker_piety_value
+	}
 	if = {
 		limit = { scope:qpq_f_tier >= 1 }
 		# Prestige loss, or Dread for rulers who already lean on it

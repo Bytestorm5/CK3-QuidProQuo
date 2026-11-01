@@ -108,17 +108,18 @@ def gen_values():
         out += tier_value(k, "agent")
         p = payer_scope(k)
         a = agent_scope(k)
-        # Fair price: months of the payer's income, scaled by the agent's tier
-        out += ("qpq_%s_price_value = {\n\tvalue = %s.monthly_character_income\n"
+        # Fair price: what the deed is worth to the other side of the table (their stake, which grows with
+        # their rank and income and is huge for a head of faith), scaled by how risky the deed is for them
+        out += ("qpq_%s_price_value = {\n\tvalue = scope:recipient.qpq_stake_value\n"
                 "\tmultiply = {\n\t\tvalue = qpq_%s_agent_tier_value\n\t\tmultiply = 4\n\t\tadd = 3\n\t}\n"
-                "\tmin = 25\n\tround = yes\n}\n") % (key, p, key)
+                "\tmin = 25\n\tround = yes\n}\n") % (key, key)
         # Acceptance points of that gold to the agent
         out += ("qpq_%s_gold_points_value = {\n\tvalue = 15\n\tadd = {\n\t\tvalue = qpq_%s_price_value\n"
-                "\t\tdivide = {\n\t\t\tvalue = %s.monthly_character_income\n\t\t\tmultiply = 6\n\t\t\tmin = 5\n\t\t}\n"
+                "\t\tdivide = {\n\t\t\tvalue = scope:recipient.qpq_stake_value\n\t\t\tmultiply = 6\n\t\t\tmin = 5\n\t\t}\n"
                 "\t\tmultiply = 20\n\t\tmax = 45\n\t}\n"
                 "\tif = {\n\t\tlimit = { %s = { has_trait = greedy } }\n\t\tmultiply = 1.3\n\t}\n"
                 "\tif = {\n\t\tlimit = { %s = { has_trait = generous } }\n\t\tmultiply = 0.8\n\t}\n"
-                "\tround = yes\n}\n") % (key, key, a, a, a)
+                "\tround = yes\n}\n") % (key, key, a, a)
         # What the Ask costs the agent
         out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
                 "\tadd = %d\n}\n") % (key, key, -k["effort"])

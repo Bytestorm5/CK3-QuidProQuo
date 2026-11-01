@@ -14,6 +14,21 @@ qpq_rumoured_schemer_modifier = {
 	general_opinion = -4
 }
 
+# Caught dealing in the dark, whatever the tier: nobody quite believes the next handshake
+qpq_distrusted_modifier = {
+	icon = diplomacy_negative
+	general_opinion = -5
+	vassal_opinion = -3
+}
+
+# A deal broken and then exposed
+qpq_oathbreaker_modifier = {
+	icon = diplomacy_negative
+	general_opinion = -10
+	independent_ruler_opinion = -10
+	clergy_opinion = -5
+}
+
 qpq_faithless_modifier = {
 	icon = diplomacy_negative
 	general_opinion = -10

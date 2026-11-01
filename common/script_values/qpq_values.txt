@@ -21,6 +21,42 @@ qpq_active_pacts_value = {
 }
 
 ############################################################
+# Stake: what a deal is worth to the other side of the table. Scales with their rank and income, not
+# the proposer's purse. Root: a character.
+############################################################
+
+qpq_stake_rank_value = {
+	value = 0.5
+	if = {
+		limit = { is_landed = yes }
+		value = 1
+		if = {
+			limit = { highest_held_title_tier >= tier_duchy }
+			value = 2
+		}
+		if = {
+			limit = { highest_held_title_tier >= tier_kingdom }
+			value = 4
+		}
+		if = {
+			limit = { highest_held_title_tier >= tier_empire }
+			value = 8
+		}
+	}
+	if = {
+		limit = { qpq_is_head_of_faith_trigger = yes }
+		multiply = 4
+		min = 12
+	}
+}
+
+qpq_stake_value = {
+	value = monthly_character_income
+	min = 8
+	multiply = qpq_stake_rank_value
+}
+
+############################################################
 # Generic context shifts (see qpq_triggers.txt)
 # Interaction scopes: scope:actor = payer, scope:recipient = agent,
 # scope:secondary_recipient = target character, scope:target = target title
@@ -337,6 +373,23 @@ qpq_f_betrayed_opinion_value = {
 	multiply = -1
 	max = -5
 	round = yes
+}
+
+# Everyone who serves under or beside a party caught dealing in the dark thinks less of them
+qpq_f_distrust_opinion_value = {
+	value = scope:qpq_f_tier
+	multiply = 6
+	add = 4
+	multiply = qpq_f_scale_value
+	min = 3
+	multiply = -1
+	round = yes
+}
+
+qpq_f_oathbreaker_piety_value = {
+	value = scope:qpq_f_tier
+	multiply = -40
+	add = -20
 }
 
 qpq_f_favourites_opinion_value = {

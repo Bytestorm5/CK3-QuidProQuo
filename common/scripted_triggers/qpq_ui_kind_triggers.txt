@@ -1343,6 +1343,13 @@ qpq_ui_ask_valid_trigger = {
 			NOT = { has_variable = qpq_ui_fail_0 }
 		}
 	}
+	trigger_if = {
+		limit = { var:qpq_ui_kind = flag:bought_truce }
+		custom_description = {
+			text = qpq_valid_no_holy_war
+			NOT = { has_variable = qpq_ui_fail_0 }
+		}
+	}
 	always = yes
 }
 
@@ -2185,6 +2192,9 @@ qpq_ui_no_same_pact_trigger = {
 		limit = { var:qpq_ui_kind = flag:temple_patronage }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 	}
+	trigger_else = {
+		always = yes
+	}
 }
 
 qpq_proposed_kind_still_valid_trigger = {
@@ -2630,6 +2640,10 @@ qpq_proposed_kind_still_valid_trigger = {
 		limit = { scope:qpq_proposed_kind = flag:bought_truce }
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 		scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
+		custom_description = {
+			text = qpq_valid_no_holy_war
+			NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }
+		}
 		scope:actor = { is_imprisoned = no }
 		scope:recipient = { is_imprisoned = no }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
@@ -3347,8 +3361,8 @@ qpq_ui_offers_still_possible_trigger = {
 			has_variable = qpq_ui_o_charter
 			qpq_ui_kind_allows_offer_charter_trigger = yes
 		}
-		var:qpq_ui_payer_tier <= 0
-		var:qpq_ui_agent_tier <= 0
+		exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0
+		exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0
 	}
 	always = yes
 }
