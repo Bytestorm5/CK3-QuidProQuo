@@ -410,6 +410,13 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
+
+					scope:recipient.faith = {
+						OR = {
+							qpq_faith_has_church_trigger = yes
+							has_doctrine = doctrine_divorce_approval
+						}
+					}
 				}
 				AND = {
 					scope:recipient = {
@@ -417,6 +424,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
+					scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 				}
 				AND = {
 					scope:recipient = {
@@ -424,6 +432,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
+					scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
 				}
 				AND = {
 					scope:recipient = {
@@ -431,7 +440,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
-					scope:actor = { has_trait = excommunicated }
+					scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 				}
 				AND = {
 					scope:recipient = {
@@ -521,6 +530,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
+					scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 				}
 				AND = {
 					scope:recipient = {
@@ -528,6 +538,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
+					scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
 				}
 				AND = {
 					scope:recipient = {
@@ -535,7 +546,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
-					scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county }
+					scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
 				}
 				AND = {
 					scope:recipient = {
@@ -1433,6 +1444,13 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+
+			scope:recipient.faith = {
+				OR = {
+					qpq_faith_has_church_trigger = yes
+					has_doctrine = doctrine_divorce_approval
+				}
+			}
 		}
 		custom_tooltip = qpq_dispensation_for_gold_hub_tt
 		open_interaction_window = {
@@ -1449,6 +1467,7 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		custom_tooltip = qpq_purchase_a_mitre_hub_tt
 		open_interaction_window = {
@@ -1465,6 +1484,7 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
 		}
 		custom_tooltip = qpq_bought_claim_hub_tt
 		open_interaction_window = {
@@ -1481,7 +1501,7 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
-			scope:actor = { has_trait = excommunicated }
+			scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		custom_tooltip = qpq_absolution_by_concession_hub_tt
 		open_interaction_window = {
@@ -1652,6 +1672,7 @@ qpq_hub.17 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		custom_tooltip = qpq_excommunication_for_hire_hub_tt
 		open_interaction_window = {
@@ -1668,6 +1689,7 @@ qpq_hub.17 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
 		}
 		custom_tooltip = qpq_steer_the_holy_war_hub_tt
 		open_interaction_window = {
@@ -1684,7 +1706,7 @@ qpq_hub.17 = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
-			scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county }
+			scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
 		}
 		custom_tooltip = qpq_holy_warrant_hub_tt
 		open_interaction_window = {

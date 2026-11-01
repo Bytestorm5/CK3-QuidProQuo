@@ -190,7 +190,7 @@ OR = {
 """),
     "arms": dict(shown="{P} = { is_landed = yes }"),
     "artifact": dict(shown="{P} = { any_character_artifact = { always = yes } }"),
-    "church": dict(shown="{P} = { qpq_is_head_of_faith_trigger = yes }"),
+    "church": dict(shown="{P} = { qpq_is_head_of_faith_trigger = yes faith = { qpq_faith_has_church_trigger = yes } }"),
     "restraint": dict(shown="{A} = { liege ?= {P} }"),
     "hook": dict(shown="{P} = { has_usable_hook = {A} }"),
     "charter": dict(shown="""

@@ -48,7 +48,10 @@ qpq_yearly_pulse = {
 		if = {
 			limit = {
 				has_variable = qpq_owes_pilgrimage
-				has_trait = pilgrim
+				OR = {
+					has_trait = pilgrim
+					has_trait = hajjaj
+				}
 			}
 			remove_variable = qpq_owes_pilgrimage
 			remove_character_modifier = qpq_owes_pilgrimage_modifier

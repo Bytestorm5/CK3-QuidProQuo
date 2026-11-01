@@ -1822,6 +1822,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		AND = {
 			scope:recipient = {
@@ -1829,6 +1830,13 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+
+			scope:recipient.faith = {
+				OR = {
+					qpq_faith_has_church_trigger = yes
+					has_doctrine = doctrine_divorce_approval
+				}
+			}
 		}
 		AND = {
 			scope:recipient = {
@@ -1836,6 +1844,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }
 		}
 		AND = {
 			scope:recipient = {
@@ -1843,6 +1852,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		AND = {
 			scope:recipient = {
@@ -1850,6 +1860,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
+			scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
 		}
 		AND = {
 			scope:recipient = {
@@ -1857,7 +1868,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
-			scope:actor = { has_trait = excommunicated }
+			scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 		}
 		AND = {
 			scope:recipient = {
@@ -1865,7 +1876,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
-			scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county }
+			scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }
 		}
 		AND = {
 			scope:recipient = {
@@ -2072,8 +2083,9 @@ qpq_k_bought_claim_ai_valid_trigger = {
 	exists = faith.religious_head
 	NOT = { faith.religious_head = root }
 	faith.religious_head = { is_ai = yes }
+	faith = { has_doctrine = doctrine_spiritual_head }
 	any_relation = { type = rival is_landed = yes }
 }
 qpq_k_absolution_by_concession_ai_valid_trigger = {
-	has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes }
+	has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes } faith = { qpq_faith_has_church_trigger = yes }
 }

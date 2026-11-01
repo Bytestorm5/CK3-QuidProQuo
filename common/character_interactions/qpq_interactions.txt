@@ -395,6 +395,17 @@ qpq_confess_pact_interaction = {
 		flag = qpq_penance_gold
 		localization = qpq_penance_gold
 		current_description = qpq_penance_gold_desc
+		is_shown = {
+			scope:actor = { qpq_pays_penance_to_church_trigger = yes }
+		}
+	}
+	send_option = {
+		flag = qpq_penance_alms
+		localization = qpq_penance_alms
+		current_description = qpq_penance_alms_desc
+		is_shown = {
+			scope:actor = { qpq_pays_penance_to_church_trigger = no }
+		}
 	}
 	send_option = {
 		flag = qpq_penance_piety
@@ -420,7 +431,12 @@ qpq_confess_pact_interaction = {
 			}
 			save_scope_value_as = { name = qpq_penance value = flag:pilgrimage }
 			if = {
-				limit = { scope:qpq_penance_gold ?= yes }
+				limit = {
+					OR = {
+						scope:qpq_penance_gold ?= yes
+						scope:qpq_penance_alms ?= yes
+					}
+				}
 				save_scope_value_as = { name = qpq_penance value = flag:gold }
 			}
 			else_if = {

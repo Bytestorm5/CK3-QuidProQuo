@@ -2320,7 +2320,7 @@ K(key="excommunication_for_hire", cat="D1", group="church_weapons", secret="simo
   ask="excommunicate [qpq_target.GetTitledFirstName]",
   desc="Pay the head of faith to excommunicate a rival. If it comes out, the excommunication may be lifted and the head of faith's standing suffers.",
   payer_base=4, agent_base=4, mode="perform", term=24, effort=15,
-  rel=REL_HOF, pick=PICK_SAME_FAITH_RIVALS,
+  rel=REL_HOF + "scope:recipient.faith = { qpq_faith_has_church_trigger = yes }", pick=PICK_SAME_FAITH_RIVALS,
   target_valid="scope:secondary_recipient = { faith = scope:recipient.faith NOT = { has_trait = excommunicated } }",
   can_perform="scope:qpq_target = { is_alive = yes NOT = { has_trait = excommunicated } faith = scope:qpq_agent.faith }",
   invalid="scope:qpq_target = { is_alive = no }",
@@ -2344,7 +2344,14 @@ K(key="dispensation_for_gold", cat="D1", group="church_favours", secret="simony"
   ask="grant a dispensation concerning [qpq_target.GetTitledFirstName]",
   desc="An annulment of your marriage to the chosen spouse, or the legitimisation of your bastard child, for payment. If it comes out, the ruling may be reversed.",
   payer_base=2, agent_base=2, mode="perform", term=24, effort=5,
-  rel=REL_HOF,
+  rel=REL_HOF + """
+scope:recipient.faith = {
+    OR = {
+        qpq_faith_has_church_trigger = yes
+        has_doctrine = doctrine_divorce_approval
+    }
+}
+""",
   pick="""
 scope:actor = {
     every_spouse = { add_to_list = characters }
@@ -2386,7 +2393,7 @@ K(key="steer_the_holy_war", cat="D1", group="church_weapons", secret="simony", i
   ask="aim the next great holy war at [qpq_target.GetTitledFirstName]",
   desc="Aim a holy war at a rival, or away from your own lands. If it comes out, the faith's holy warriors and the faith itself turn on the payer.",
   payer_base=3, agent_base=3, term=120, effort=10,
-  rel=REL_HOF, pick=PICK_RIVALS,
+  rel=REL_HOF + "scope:recipient.faith = { suitable_faith_for_any_ghw_trigger = yes }", pick=PICK_RIVALS,
   target_valid="scope:secondary_recipient = { is_landed = yes highest_held_title_tier >= tier_kingdom NOT = { this = scope:actor } }",
   deliver="has_variable = qpq_ghw_steered",
   invalid="scope:qpq_target = { is_landed = no }",
@@ -2424,7 +2431,7 @@ K(key="purchase_a_mitre", cat="D1", group="church_favours", secret="simony", ico
   desc="Buy a bishopric, temple or other theocratic holding for a relative. The core grievance of the Investiture Controversy.",
   echo="The core grievance of the Investiture Controversy.",
   payer_base=3, agent_base=3, mode="perform", term=36, effort=10,
-  rel=REL_HOF,
+  rel=REL_HOF + "scope:recipient.faith = { qpq_faith_has_church_trigger = yes }",
   pick="""
 scope:actor = {
     every_close_family_member = {
@@ -2509,7 +2516,7 @@ K(key="bought_claim", cat="D1", group="church_favours", secret="simony", icon="c
   ask="grant [qpq_payer.GetShortUIName] a claim on [qpq_target.GetShortUINamePossessive] title",
   desc="The head of faith grants you a claim on a rival's primary title, where the faith allows it. If it comes out, the claim loses its sanctity.",
   payer_base=3, agent_base=3, mode="perform", term=24, effort=10,
-  rel=REL_HOF, pick=PICK_RIVALS,
+  rel=REL_HOF + "scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }", pick=PICK_RIVALS,
   target_valid="scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }",
   can_perform="""
 exists = scope:qpq_target.primary_title
@@ -2533,6 +2540,7 @@ if = {
 exists = faith.religious_head
 NOT = { faith.religious_head = root }
 faith.religious_head = { is_ai = yes }
+faith = { has_doctrine = doctrine_spiritual_head }
 any_relation = { type = rival is_landed = yes }
 """, find="""
 faith.religious_head = { save_scope_as = recipient }
@@ -2550,12 +2558,12 @@ K(key="absolution_by_concession", cat="D1", group="church_favours", secret="simo
   desc="Lift an excommunication in return for land or rights. Mostly public; a hidden price is what stings.",
   echo="Henry IV at Canossa, 1077.",
   payer_base=1, agent_base=1, target="none", mode="perform", term=12, effort=0,
-  rel=REL_HOF + "scope:actor = { has_trait = excommunicated }",
+  rel=REL_HOF + "scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }",
   can_perform="scope:qpq_payer = { has_trait = excommunicated }",
   invalid="NOT = { scope:qpq_payer = { has_trait = excommunicated } }",
   perform="scope:qpq_payer = { remove_trait = excommunicated }",
   exposed="",
-  ai=dict(weight=8, valid="has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes }",
+  ai=dict(weight=8, valid="has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes } faith = { qpq_faith_has_church_trigger = yes }",
           find="faith.religious_head = { save_scope_as = recipient }"))
 
 K(key="holy_warrant", licence=True, cat="D1", group="church_weapons", secret="simony", icon="religious",
@@ -2564,7 +2572,7 @@ K(key="holy_warrant", licence=True, cat="D1", group="church_weapons", secret="si
   ask="declare a holy war on [qpq_target.GetTitledFirstName] on [qpq_payer.GetShortUINamePossessive] behalf",
   desc="Temporal heads only: the head of faith declares a holy war on your behalf, for gold. Stacks with Proxy War fallout, one tier higher.",
   payer_base=3, agent_base=3, term=60, effort=20,
-  rel=REL_HOF + "scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county }",
+  rel=REL_HOF + "scope:recipient = { is_landed = yes highest_held_title_tier >= tier_county } scope:recipient.faith = { has_doctrine = doctrine_temporal_head }",
   pick=PICK_RIVALS,
   target_valid="""
 scope:secondary_recipient = {

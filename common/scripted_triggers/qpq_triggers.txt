@@ -273,3 +273,22 @@ qpq_is_head_of_faith_trigger = {
 	exists = faith.religious_head
 	faith.religious_head = this
 }
+
+############################################################
+# Faith institutions (read from the faith's own doctrines, as vanilla does)
+############################################################
+
+# Faith scope: a church that can excommunicate, absolve and take penance
+# (vanilla gates excommunication, repentance and indulgences on exactly this)
+qpq_faith_has_church_trigger = {
+	faith_has_sacraments_central_trigger = yes
+	has_doctrine = doctrine_spiritual_head
+	NOT = { has_doctrine_parameter = unreformed }
+}
+
+# Character scope: penance in gold goes to this character's church
+qpq_pays_penance_to_church_trigger = {
+	faith = { qpq_faith_has_church_trigger = yes }
+	exists = faith.religious_head
+	NOT = { faith.religious_head = this }
+}

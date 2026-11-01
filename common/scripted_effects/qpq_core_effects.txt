@@ -1526,6 +1526,7 @@ qpq_apply_half_fallout_effect = {
 		if = {
 			limit = {
 				qpq_faith_has_hof_trigger = yes
+				faith = { qpq_faith_has_church_trigger = yes }
 				NOT = { has_trait = excommunicated }
 			}
 			random = {
@@ -1660,12 +1661,14 @@ qpq_confess_pact_effect = {
 	}
 	if = {
 		limit = { scope:qpq_penance = flag:gold }
+		# A church takes penance; every other faith expects alms given to the poor
 		if = {
-			limit = { qpq_faith_has_hof_trigger = yes }
+			limit = { qpq_pays_penance_to_church_trigger = yes }
 			pay_short_term_gold = { target = faith.religious_head gold = qpq_confession_penance_gold_value }
 		}
 		else = {
 			remove_short_term_gold = qpq_confession_penance_gold_value
+			add_piety = minor_piety_gain
 		}
 	}
 	else_if = {
