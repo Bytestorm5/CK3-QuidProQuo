@@ -45,7 +45,9 @@ qpq_seal_pact_effect = {
 			save_scope_as = qpq_story
 		}
 	}
-	scope:qpq_story = {
+	# The story, its mirror and the secrets do not exist while the game builds a tooltip:
+	# everything that touches them is guarded with ?= / exists and kept out of the tooltip.
+	scope:qpq_story ?= {
 		set_variable = { name = qpq_kind value = flag:$KIND$ }
 		set_variable = { name = qpq_payer value = scope:qpq_payer }
 		set_variable = { name = qpq_agent value = scope:qpq_agent }
@@ -71,21 +73,23 @@ qpq_seal_pact_effect = {
 		}
 	}
 
-	scope:qpq_payer = {
-		add_to_variable_list = { name = qpq_pacts target = scope:qpq_story }
-	}
-	scope:qpq_agent = {
-		add_to_variable_list = { name = qpq_pacts target = scope:qpq_story }
-	}
-
-	# Display-only mirror so the agent sees the pact in their Situations window too
-	scope:qpq_agent = {
-		create_story = {
-			type = qpq_pact_mirror_story
-			save_scope_as = qpq_mirror
+	if = {
+		limit = { exists = scope:qpq_story }
+		hidden_effect = {
+			scope:qpq_payer = {
+				add_to_variable_list = { name = qpq_pacts target = scope:qpq_story }
+			}
+			scope:qpq_agent = {
+				add_to_variable_list = { name = qpq_pacts target = scope:qpq_story }
+				# Display-only mirror so the agent sees the pact in their Situations window too
+				create_story = {
+					type = qpq_pact_mirror_story
+					save_scope_as = qpq_mirror
+				}
+			}
 		}
 	}
-	scope:qpq_mirror = {
+	scope:qpq_mirror ?= {
 		set_variable = { name = qpq_main value = scope:qpq_story }
 		set_variable = { name = qpq_kind value = flag:$KIND$ }
 		set_variable = { name = qpq_payer value = scope:qpq_payer }
@@ -100,7 +104,13 @@ qpq_seal_pact_effect = {
 		}
 		set_variable = { name = qpq_months_left value = $TERM$ }
 	}
-	scope:qpq_story = { set_variable = { name = qpq_mirror value = scope:qpq_mirror } }
+	if = {
+		limit = {
+			exists = scope:qpq_story
+			exists = scope:qpq_mirror
+		}
+		scope:qpq_story = { set_variable = { name = qpq_mirror value = scope:qpq_mirror } }
+	}
 
 	if = {
 		limit = { exists = scope:qpq_is_charter }
@@ -112,7 +122,7 @@ qpq_seal_pact_effect = {
 
 	qpq_store_and_pay_offers_effect = yes
 	qpq_k_$KIND$_on_seal_effect = yes
-	scope:qpq_story = { qpq_sync_mirror_effect = yes }
+	scope:qpq_story ?= { qpq_sync_mirror_effect = yes }
 
 	scope:qpq_payer = {
 		send_interface_message = {
@@ -160,7 +170,10 @@ qpq_add_tiered_secret_effect = {
 # Writes the shared pact record onto one half
 qpq_write_secret_record_effect = {
 	set_variable = { name = qpq_kind value = flag:$KIND$ }
-	set_variable = { name = qpq_story value = scope:qpq_story }
+	if = {
+		limit = { exists = scope:qpq_story }
+		set_variable = { name = qpq_story value = scope:qpq_story }
+	}
 	set_variable = { name = qpq_payer value = scope:qpq_payer }
 	set_variable = { name = qpq_agent value = scope:qpq_agent }
 	if = {
@@ -189,33 +202,46 @@ qpq_create_pact_secrets_effect = {
 		SECRET = $SECRET$
 		SAVE = qpq_agent_secret
 	}
-	scope:qpq_payer_secret = {
+	scope:qpq_payer_secret ?= {
 		qpq_write_secret_record_effect = { KIND = $KIND$ }
 		set_variable = { name = qpq_role value = flag:payer }
 		set_variable = { name = qpq_owner value = scope:qpq_payer }
 		set_variable = { name = qpq_tier value = scope:qpq_payer_tier }
-		set_variable = { name = qpq_twin value = scope:qpq_agent_secret }
+		if = {
+			limit = { exists = scope:qpq_agent_secret }
+			set_variable = { name = qpq_twin value = scope:qpq_agent_secret }
+		}
 		if = {
 			limit = { exists = scope:qpq_payer.primary_heir }
 			set_variable = { name = qpq_heir value = scope:qpq_payer.primary_heir }
 		}
 		reveal_to = scope:qpq_agent
 	}
-	scope:qpq_agent_secret = {
+	scope:qpq_agent_secret ?= {
 		qpq_write_secret_record_effect = { KIND = $KIND$ }
 		set_variable = { name = qpq_role value = flag:agent }
 		set_variable = { name = qpq_owner value = scope:qpq_agent }
 		set_variable = { name = qpq_tier value = scope:qpq_agent_tier }
-		set_variable = { name = qpq_twin value = scope:qpq_payer_secret }
+		if = {
+			limit = { exists = scope:qpq_payer_secret }
+			set_variable = { name = qpq_twin value = scope:qpq_payer_secret }
+		}
 		if = {
 			limit = { exists = scope:qpq_agent.primary_heir }
 			set_variable = { name = qpq_heir value = scope:qpq_agent.primary_heir }
 		}
 		reveal_to = scope:qpq_payer
 	}
-	scope:qpq_story = {
-		set_variable = { name = qpq_payer_secret value = scope:qpq_payer_secret }
-		set_variable = { name = qpq_agent_secret value = scope:qpq_agent_secret }
+	if = {
+		limit = {
+			exists = scope:qpq_story
+			exists = scope:qpq_payer_secret
+			exists = scope:qpq_agent_secret
+		}
+		scope:qpq_story = {
+			set_variable = { name = qpq_payer_secret value = scope:qpq_payer_secret }
+			set_variable = { name = qpq_agent_secret value = scope:qpq_agent_secret }
+		}
 	}
 }
 
@@ -258,8 +284,9 @@ qpq_publish_charter_effect = {
 
 # The fair price in gold, saved by the interaction as scope value qpq_price
 qpq_store_and_pay_offers_effect = {
-	# Gold is paid from scope values, not story variables: the story does not exist yet while the
-	# game builds the option tooltip, so a story variable would show (and could pay) 0.
+	# Visible effects come first and never go through the new story: while the game builds the
+	# tooltip the story, secrets and mirror do not exist yet. Bookkeeping uses "?=" so it is
+	# simply skipped then.
 	if = {
 		limit = { scope:qpq_o_gold_lavish ?= yes }
 		save_scope_value_as = { name = qpq_gold_total value = { value = scope:qpq_price multiply = 2 } }
@@ -267,299 +294,261 @@ qpq_store_and_pay_offers_effect = {
 	else = {
 		save_scope_value_as = { name = qpq_gold_total value = scope:qpq_price }
 	}
-	scope:qpq_story = {
-		# --- Gold ---
-		if = {
-			limit = {
-				OR = {
-					scope:qpq_o_gold ?= yes
-					scope:qpq_o_gold_lavish ?= yes
-				}
-			}
-			set_variable = { name = qpq_gold_total value = scope:qpq_gold_total }
-			if = {
-				limit = { scope:qpq_o_stipend ?= yes }
-				set_variable = {
-					name = qpq_stipend
-					value = {
-						value = scope:qpq_gold_total
-						divide = { value = var:qpq_term divide = 12 min = 1 }
-						round = yes
-					}
-				}
-			}
-			else_if = {
-				limit = { scope:qpq_o_on_delivery ?= yes }
-				set_variable = { name = qpq_gold_due value = scope:qpq_gold_total }
-			}
-			else_if = {
-				limit = { scope:qpq_o_split ?= yes }
-				set_variable = {
-					name = qpq_gold_due
-					value = { value = scope:qpq_gold_total divide = 2 round = yes }
-				}
-				scope:qpq_payer = {
-					pay_short_term_gold = {
-						target = scope:qpq_agent
-						gold = { value = scope:qpq_gold_total divide = 2 round = yes }
-					}
-				}
-			}
-			else = {
-				scope:qpq_payer = {
-					pay_short_term_gold = {
-						target = scope:qpq_agent
-						gold = scope:qpq_gold_total
-					}
-				}
+	if = {
+		limit = {
+			OR = {
+				scope:qpq_o_gold ?= yes
+				scope:qpq_o_gold_lavish ?= yes
 			}
 		}
+		save_scope_value_as = { name = qpq_has_gold value = yes }
+	}
 
-		# --- Land: a county you hold, handed over on delivery ---
+	# --- Gold paid now (up front, or the first half) ---
+	if = {
+		limit = {
+			exists = scope:qpq_has_gold
+			NOT = { scope:qpq_o_on_delivery ?= yes }
+			NOT = { scope:qpq_o_stipend ?= yes }
+		}
 		if = {
-			limit = {
-				scope:qpq_o_land ?= yes
+			limit = { scope:qpq_o_split ?= yes }
+			save_scope_value_as = { name = qpq_paid_now value = { value = scope:qpq_gold_total divide = 2 round = yes } }
+		}
+		else = {
+			save_scope_value_as = { name = qpq_paid_now value = scope:qpq_gold_total }
+		}
+		scope:qpq_payer = {
+			pay_short_term_gold = {
+				target = scope:qpq_agent
+				gold = scope:qpq_paid_now
 			}
-			scope:qpq_payer = {
-				ordered_held_title = {
-					limit = {
-						tier = tier_county
-						NOT = { this = scope:qpq_payer.capital_county }
-					}
-					order_by = { value = 0 subtract = development_level }
-					save_scope_as = qpq_offer_title
+		}
+	}
+
+	# --- Claim: fabricated now, so they can pay themselves with a war ---
+	if = {
+		limit = { scope:qpq_o_claim ?= yes }
+		if = {
+			limit = { exists = scope:qpq_target_title }
+			scope:qpq_target_title = { save_scope_as = qpq_claim_title }
+		}
+		else_if = {
+			limit = { exists = scope:qpq_target.capital_county }
+			scope:qpq_target.capital_county = { save_scope_as = qpq_claim_title }
+		}
+		if = {
+			limit = { exists = scope:qpq_claim_title }
+			scope:qpq_agent = { add_unpressed_claim = scope:qpq_claim_title }
+		}
+	}
+
+	# --- Office: a council seat now; dismissing them early is a breach ---
+	if = {
+		limit = { scope:qpq_o_office ?= yes }
+		scope:qpq_payer = {
+			qpq_appoint_best_council_seat_effect = { WHO = scope:qpq_agent }
+		}
+	}
+
+	# --- Marriage: betroth one of your family into theirs ---
+	if = {
+		limit = { scope:qpq_o_marriage ?= yes }
+		qpq_offer_marriage_effect = yes
+	}
+
+	# --- Hooks ---
+	if = {
+		limit = { scope:qpq_o_release_hook ?= yes }
+		scope:qpq_payer = { remove_hook = { target = scope:qpq_agent } }
+	}
+	if = {
+		limit = { scope:qpq_o_my_word ?= yes }
+		scope:qpq_agent = {
+			add_hook = {
+				type = qpq_my_word_hook
+				target = scope:qpq_payer
+			}
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		scope:qpq_payer = { use_hook = scope:qpq_agent }
+	}
+
+	# --- Secrets: hand over dirt you hold ---
+	if = {
+		limit = { scope:qpq_o_secret ?= yes }
+		scope:qpq_payer = {
+			random_known_secret = {
+				limit = {
+					NOT = { secret_owner = scope:qpq_agent }
+					NOT = { is_known_by = scope:qpq_agent }
 				}
+				reveal_to = scope:qpq_agent
+			}
+		}
+	}
+
+	# --- Clemency: release them or their kin, drop the charge ---
+	if = {
+		limit = { scope:qpq_o_clemency ?= yes }
+		qpq_offer_clemency_effect = yes
+	}
+
+	# --- Arms: men lent until the deadline ---
+	if = {
+		limit = { scope:qpq_o_arms ?= yes }
+		scope:qpq_agent = {
+			add_character_modifier = {
+				modifier = qpq_lent_arms_modifier
+				months = qpq_term_months_value
+			}
+		}
+		scope:qpq_payer = {
+			add_character_modifier = {
+				modifier = qpq_lending_arms_modifier
+				months = qpq_term_months_value
+			}
+		}
+	}
+
+	# --- Church favour: indulgence and absolution (Christian heads of faith only) ---
+	if = {
+		limit = { scope:qpq_o_church ?= yes }
+		scope:qpq_agent = {
+			add_piety = medium_piety_gain
+			if = {
+				limit = { has_trait = excommunicated }
+				remove_trait = excommunicated
+			}
+			add_character_modifier = {
+				modifier = qpq_indulgence_modifier
+				years = 10
+			}
+		}
+	}
+
+	# --- Things handed over on delivery are chosen now ---
+	if = {
+		limit = { scope:qpq_o_land ?= yes }
+		scope:qpq_payer = {
+			ordered_held_title = {
+				limit = {
+					tier = tier_county
+					NOT = { this = scope:qpq_payer.capital_county }
+				}
+				order_by = { value = 0 subtract = development_level }
+				save_scope_as = qpq_offer_title
+			}
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_artifact ?= yes }
+		scope:qpq_payer = {
+			ordered_character_artifact = {
+				order_by = artifact_rarity
+				save_scope_as = qpq_offer_artifact
+			}
+		}
+	}
+
+	# --- Bookkeeping on the pact ---
+	scope:qpq_story ?= {
+		hidden_effect = {
+			if = {
+				limit = { exists = scope:qpq_has_gold }
+				set_variable = { name = qpq_gold_total value = scope:qpq_gold_total }
+				if = {
+					limit = { scope:qpq_o_stipend ?= yes }
+					set_variable = {
+						name = qpq_stipend
+						value = {
+							value = scope:qpq_gold_total
+							divide = { value = scope:qpq_term_months divide = 12 min = 1 }
+							round = yes
+						}
+					}
+				}
+				else_if = {
+					limit = { scope:qpq_o_on_delivery ?= yes }
+					set_variable = { name = qpq_gold_due value = scope:qpq_gold_total }
+				}
+				else_if = {
+					limit = { scope:qpq_o_split ?= yes }
+					set_variable = {
+						name = qpq_gold_due
+						value = { value = scope:qpq_gold_total divide = 2 round = yes }
+					}
+				}
+			}
+			if = {
+				limit = { exists = scope:qpq_paid_now }
+				set_variable = { name = qpq_paid_now value = scope:qpq_paid_now }
 			}
 			if = {
 				limit = { exists = scope:qpq_offer_title }
 				set_variable = { name = qpq_offer_title value = scope:qpq_offer_title }
 			}
-		}
-
-		# --- Claim: fabricated now, so they can pay themselves with a war ---
-		if = {
-			limit = {
-				scope:qpq_o_claim ?= yes
-			}
-			if = {
-				limit = { exists = scope:qpq_target_title }
-				scope:qpq_target_title = { save_scope_as = qpq_claim_title }
-			}
-			else_if = {
-				limit = { exists = scope:qpq_target.capital_county }
-				scope:qpq_target.capital_county = { save_scope_as = qpq_claim_title }
-			}
-			if = {
-				limit = { exists = scope:qpq_claim_title }
-				scope:qpq_agent = { add_unpressed_claim = scope:qpq_claim_title }
-			}
-		}
-
-		# --- Office: a council seat now; dismissing them early is a breach ---
-		if = {
-			limit = {
-				scope:qpq_o_office ?= yes
-			}
-			set_variable = qpq_offer_office
-			scope:qpq_payer = {
-				qpq_appoint_best_council_seat_effect = { WHO = scope:qpq_agent }
-			}
-		}
-
-		# --- Marriage: betroth one of your family into theirs ---
-		if = {
-			limit = {
-				scope:qpq_o_marriage ?= yes
-			}
-			qpq_offer_marriage_effect = yes
-		}
-
-		# --- Hooks ---
-		if = {
-			limit = {
-				scope:qpq_o_release_hook ?= yes
-			}
-			scope:qpq_payer = { remove_hook = { target = scope:qpq_agent } }
-		}
-		if = {
-			limit = {
-				scope:qpq_o_my_word ?= yes
-			}
-			scope:qpq_agent = {
-				add_hook = {
-					type = qpq_my_word_hook
-					target = scope:qpq_payer
-				}
-			}
-		}
-		if = {
-			limit = {
-				scope:qpq_o_hook ?= yes
-			}
-			scope:qpq_payer = { use_hook = scope:qpq_agent }
-		}
-
-		# --- Secrets: hand over dirt you hold ---
-		if = {
-			limit = {
-				scope:qpq_o_secret ?= yes
-			}
-			scope:qpq_payer = {
-				random_known_secret = {
-					limit = {
-						NOT = { secret_owner = scope:qpq_agent }
-						NOT = { is_known_by = scope:qpq_agent }
-					}
-					reveal_to = scope:qpq_agent
-				}
-			}
-		}
-
-		# --- Contract terms: permanent, on delivery ---
-		if = {
-			limit = {
-				scope:qpq_o_contract ?= yes
-			}
-			set_variable = qpq_offer_contract
-		}
-
-		# --- Succession: name them your heir on delivery ---
-		if = {
-			limit = {
-				scope:qpq_o_succession ?= yes
-			}
-			set_variable = qpq_offer_succession
-		}
-
-		# --- Clemency: release their kin from your dungeon, or pardon them ---
-		if = {
-			limit = {
-				scope:qpq_o_clemency ?= yes
-			}
-			qpq_offer_clemency_effect = yes
-		}
-
-		# --- Arms: men lent until the deadline ---
-		if = {
-			limit = {
-				scope:qpq_o_arms ?= yes
-			}
-			scope:qpq_agent = {
-				add_character_modifier = {
-					modifier = qpq_lent_arms_modifier
-					months = scope:qpq_term_months
-				}
-			}
-			scope:qpq_payer = {
-				add_character_modifier = {
-					modifier = qpq_lending_arms_modifier
-					months = scope:qpq_term_months
-				}
-			}
-		}
-
-		# --- Artifact: your finest, on delivery ---
-		if = {
-			limit = {
-				scope:qpq_o_artifact ?= yes
-			}
-			scope:qpq_payer = {
-				ordered_character_artifact = {
-					order_by = artifact_rarity
-					save_scope_as = qpq_offer_artifact
-				}
-			}
 			if = {
 				limit = { exists = scope:qpq_offer_artifact }
 				set_variable = { name = qpq_offer_artifact value = scope:qpq_offer_artifact }
 			}
-		}
-
-		# --- Church favour: indulgence, absolution, dispensation ---
-		if = {
-			limit = {
-				scope:qpq_o_church ?= yes
-			}
-			scope:qpq_agent = {
-				add_piety = medium_piety_gain
-				if = {
-					limit = { has_trait = excommunicated }
-					remove_trait = excommunicated
-				}
-				add_character_modifier = {
-					modifier = qpq_indulgence_modifier
-					years = 10
-				}
-			}
-		}
-
-		# --- Restraint: promise not to revoke, imprison or drag them into war ---
-		if = {
-			limit = {
-				scope:qpq_o_restraint ?= yes
-			}
-			scope:qpq_agent = {
-				add_to_variable_list = { name = qpq_protected_by_restraint target = scope:qpq_story }
-			}
-		}
-
-		# --- What was handed over or promised, for the Situations entry ---
-		if = {
-			limit = {
-				OR = {
-					scope:qpq_o_gold ?= yes
-					scope:qpq_o_gold_lavish ?= yes
-				}
-				NOT = { scope:qpq_o_on_delivery ?= yes }
-				NOT = { scope:qpq_o_stipend ?= yes }
+			if = {
+				limit = { scope:qpq_o_office ?= yes }
+				set_variable = qpq_offer_office
 			}
 			if = {
-				limit = { scope:qpq_o_split ?= yes }
-				set_variable = { name = qpq_paid_now value = { value = scope:qpq_gold_total divide = 2 round = yes } }
+				limit = { scope:qpq_o_contract ?= yes }
+				set_variable = qpq_offer_contract
 			}
-			else = {
-				set_variable = { name = qpq_paid_now value = scope:qpq_gold_total }
+			if = {
+				limit = { scope:qpq_o_succession ?= yes }
+				set_variable = qpq_offer_succession
 			}
-		}
-		if = {
-			limit = { scope:qpq_o_claim ?= yes }
-			set_variable = qpq_gave_claim
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			set_variable = qpq_gave_marriage
-		}
-		if = {
-			limit = { scope:qpq_o_release_hook ?= yes }
-			set_variable = qpq_gave_hook_release
-		}
-		if = {
-			limit = { scope:qpq_o_my_word ?= yes }
-			set_variable = qpq_gave_my_word
-		}
-		if = {
-			limit = { scope:qpq_o_secret ?= yes }
-			set_variable = qpq_gave_secret
-		}
-		if = {
-			limit = { scope:qpq_o_clemency ?= yes }
-			set_variable = qpq_gave_clemency
-		}
-		if = {
-			limit = { scope:qpq_o_arms ?= yes }
-			set_variable = qpq_gave_arms
-		}
-		if = {
-			limit = { scope:qpq_o_church ?= yes }
-			set_variable = qpq_gave_church
-		}
-		if = {
-			limit = { scope:qpq_o_hook ?= yes }
-			set_variable = qpq_used_hook
-		}
-		if = {
-			limit = { scope:qpq_o_restraint ?= yes }
-			set_variable = qpq_offer_restraint
+			if = {
+				limit = { scope:qpq_o_restraint ?= yes }
+				set_variable = qpq_offer_restraint
+				scope:qpq_agent = {
+					add_to_variable_list = { name = qpq_protected_by_restraint target = scope:qpq_story }
+				}
+			}
+			if = {
+				limit = { scope:qpq_o_claim ?= yes }
+				set_variable = qpq_gave_claim
+			}
+			if = {
+				limit = { scope:qpq_o_marriage ?= yes }
+				set_variable = qpq_gave_marriage
+			}
+			if = {
+				limit = { scope:qpq_o_release_hook ?= yes }
+				set_variable = qpq_gave_hook_release
+			}
+			if = {
+				limit = { scope:qpq_o_my_word ?= yes }
+				set_variable = qpq_gave_my_word
+			}
+			if = {
+				limit = { scope:qpq_o_secret ?= yes }
+				set_variable = qpq_gave_secret
+			}
+			if = {
+				limit = { scope:qpq_o_clemency ?= yes }
+				set_variable = qpq_gave_clemency
+			}
+			if = {
+				limit = { scope:qpq_o_arms ?= yes }
+				set_variable = qpq_gave_arms
+			}
+			if = {
+				limit = { scope:qpq_o_church ?= yes }
+				set_variable = qpq_gave_church
+			}
+			if = {
+				limit = { scope:qpq_o_hook ?= yes }
+				set_variable = qpq_used_hook
+			}
 		}
 	}
 }
@@ -942,7 +931,7 @@ qpq_pay_on_delivery_effect = {
 
 # Payer refused or could not pay on delivery: the agent is the wronged party
 qpq_payer_reneged_effect = {
-	qpq_mark_wronged_effect = { WRONGED = scope:qpq_agent BREACHER = scope:qpq_payer }
+	qpq_mark_wronged_effect = { WRONGED = scope:qpq_agent }
 	scope:qpq_agent = {
 		add_hook = { type = qpq_broken_pact_hook target = scope:qpq_payer }
 		add_opinion = { target = scope:qpq_payer modifier = qpq_broke_our_pact_opinion }
@@ -972,7 +961,7 @@ qpq_mark_wronged_effect = {
 
 qpq_breach_pact_effect = {
 	set_variable = { name = qpq_closed value = flag:breached }
-	qpq_mark_wronged_effect = { WRONGED = $WRONGED$ BREACHER = $BREACHER$ }
+	qpq_mark_wronged_effect = { WRONGED = $WRONGED$ }
 	$WRONGED$ = {
 		add_hook = { type = qpq_broken_pact_hook target = $BREACHER$ }
 		add_opinion = { target = $BREACHER$ modifier = qpq_broke_our_pact_opinion }
@@ -1262,7 +1251,7 @@ qpq_apply_pact_fallout_effect = {
 				add_prestige = minor_prestige_gain
 			}
 			else = {
-				qpq_apply_half_fallout_effect = { ROLE = payer }
+				qpq_apply_half_fallout_effect = yes
 			}
 		}
 	}
@@ -1288,7 +1277,7 @@ qpq_apply_pact_fallout_effect = {
 				add_prestige = medium_prestige_gain
 			}
 			else = {
-				qpq_apply_half_fallout_effect = { ROLE = agent }
+				qpq_apply_half_fallout_effect = yes
 			}
 		}
 	}
@@ -1345,7 +1334,12 @@ qpq_apply_pact_fallout_effect = {
 			exists = scope:qpq_f_simony
 			scope:qpq_f_tier >= 1
 		}
-		scope:qpq_agent.faith = { change_fervor = qpq_f_fervor_loss_value }
+		scope:qpq_agent.faith = {
+			change_fervor = {
+				value = qpq_f_fervor_loss_value
+				desc = qpq_fervor_pact_exposed
+			}
+		}
 	}
 
 	# Notifications

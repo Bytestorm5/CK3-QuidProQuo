@@ -437,6 +437,37 @@ def main():
                 if re.match(r"^qpq_[a-z_0-9]+_value$", tok) and tok not in my["values"]:
                     report("MISSING-VALUE %s:%d %s" % (rel, n.line, tok))
 
+    # scripted effect/trigger arguments must match the $PARAMS$ the definition uses
+    params = {}
+    for f, tree in trees.items():
+        rel = os.path.relpath(f, ROOT)
+        if rel.startswith(("common/scripted_effects", "common/scripted_triggers")):
+            txt = read(f)
+            for n in tree:
+                if n.key and isinstance(n.value, list):
+                    # re-read the raw text of this definition for $PARAM$ names
+                    m = re.search(r"^%s = \{(.*?)^\}" % re.escape(n.key), txt, re.S | re.M)
+                    params[n.key] = set(re.findall(r"\$([A-Z_0-9]+)\$", m.group(1))) if m else set()
+    for f, tree in trees.items():
+        rel = os.path.relpath(f, ROOT)
+        for n, parents in walk(tree):
+            if n.key in params and parents:
+                want = params[n.key]
+                if isinstance(n.value, list):
+                    got = {c.key for c in n.value if c.key}
+                    if got - want:
+                        report("BAD-ARGS %s:%d %s given %s" % (rel, n.line, n.key, sorted(got - want)))
+                    if want - got:
+                        report("MISSING-ARGS %s:%d %s lacks %s" % (rel, n.line, n.key, sorted(want - got)))
+                elif want:
+                    report("MISSING-ARGS %s:%d %s needs %s" % (rel, n.line, n.key, sorted(want)))
+            # durations take numbers or named values, not scope references
+            if n.key in ("days", "weeks", "months", "years") and isinstance(n.value, str) and n.value.startswith("scope:"):
+                report("DURATION-SCOPE %s:%d %s = %s" % (rel, n.line, n.key, n.value))
+            # effects that only take a block
+            if n.key in ("change_fervor",) and not isinstance(n.value, list):
+                report("NEEDS-BLOCK %s:%d %s" % (rel, n.line, n.key))
+
     # scopes used but never saved
     for s, where in sorted(used_scopes.items()):
         if s in BUILTIN_SCOPES or s in saved or s.startswith("$"):

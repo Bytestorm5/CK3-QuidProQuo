@@ -422,9 +422,9 @@ K(key="marcher_charge", cat="A", group="war", secret="conquest", icon="military_
 scope:qpq_agent = {
     every_held_title = {
         limit = { tier = tier_county }
-        scope:qpq_story = { add_to_variable_list = { name = qpq_charge_counties target = prev } }
+        scope:qpq_story ?= { add_to_variable_list = { name = qpq_charge_counties target = prev } }
     }
-    add_character_modifier = { modifier = qpq_marcher_charge_modifier months = scope:qpq_term_months }
+    add_character_modifier = { modifier = qpq_marcher_charge_modifier months = qpq_term_months_value }
 }
 """,
   breach="""
@@ -506,7 +506,7 @@ K(key="development_charter", cat="A", group="favours", secret="bribery", icon="c
   pick=dict(source="recipient", filter="domain_titles", can_pick="scope:target = { tier = tier_county }"),
   target_valid="scope:target = { tier = tier_county }",
   on_seal="""
-scope:qpq_story = {
+scope:qpq_story ?= {
     set_variable = {
         name = qpq_dev_goal
         value = { value = scope:qpq_target_title.development_level add = 5 }
@@ -1648,7 +1648,7 @@ scope:recipient = {
   on_seal="""
 scope:qpq_target.primary_title ?= {
     save_scope_as = qpq_coup_title
-    scope:qpq_story = { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+    scope:qpq_story ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
     scope:qpq_payer_secret ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
 }
 """,
@@ -1783,7 +1783,7 @@ scope:actor = {
 scope:qpq_target = {
     every_realm_county = {
         limit = { is_neighbor_to_realm = scope:qpq_payer }
-        scope:qpq_story = { add_to_variable_list = { name = qpq_payer_share target = prev } }
+        scope:qpq_story ?= { add_to_variable_list = { name = qpq_payer_share target = prev } }
     }
 }
 """,
@@ -1861,7 +1861,7 @@ scope:qpq_payer = {
     }
     add_truce_both_ways = {
         character = scope:qpq_agent
-        months = scope:qpq_term_months
+        months = qpq_term_months_value
     }
 }
 """,
@@ -2143,7 +2143,7 @@ scope:recipient = {
   demand=[("-15", "scope:recipient = { opinion = { target = scope:recipient.liege value >= 40 } }", "QPQ_REASON_LOVES_TARGET")],
   on_seal="""
 scope:qpq_target = {
-    add_character_modifier = { modifier = qpq_council_sabotage_modifier months = scope:qpq_term_months }
+    add_character_modifier = { modifier = qpq_council_sabotage_modifier months = qpq_term_months_value }
 }
 """,
   tick="""
@@ -2188,7 +2188,7 @@ K(key="stay_home", cat="C", group="abroad", secret="betrayal", icon="military_st
   rel=REL_FOREIGN_VASSAL,
   on_seal="""
 scope:qpq_agent = {
-    add_character_modifier = { modifier = qpq_withholding_levies_modifier months = scope:qpq_term_months }
+    add_character_modifier = { modifier = qpq_withholding_levies_modifier months = qpq_term_months_value }
 }
 """,
   deliver=PAYER_BEAT_TARGET,
@@ -2665,7 +2665,12 @@ if = {
         add_piety = major_piety_loss
         add_character_modifier = { modifier = qpq_bought_legitimacy_modifier years = 15 }
     }
-    scope:qpq_target.faith = { change_fervor = -10 }
+    scope:qpq_target.faith = {
+        change_fervor = {
+            value = -10
+            desc = qpq_fervor_pact_exposed
+        }
+    }
 }
 """)
 
@@ -2690,7 +2695,12 @@ scope:qpq_agent = {
 """,
   exposed="""
 scope:qpq_agent = { add_piety = medium_piety_loss }
-scope:qpq_agent.faith = { change_fervor = -5 }
+scope:qpq_agent.faith = {
+    change_fervor = {
+        value = -5
+        desc = qpq_fervor_pact_exposed
+    }
+}
 """)
 
 ###############################################################################

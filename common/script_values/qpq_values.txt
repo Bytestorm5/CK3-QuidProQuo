@@ -557,3 +557,8 @@ qpq_agent_share_value = {
 		}
 	}
 }
+
+# Length of the pact being sealed, in months (durations need a named value, not a scope reference)
+qpq_term_months_value = {
+	value = scope:qpq_term_months
+}

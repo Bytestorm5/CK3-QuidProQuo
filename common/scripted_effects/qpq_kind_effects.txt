@@ -231,9 +231,9 @@ qpq_k_marcher_charge_on_seal_effect = {
 	scope:qpq_agent = {
 		every_held_title = {
 			limit = { tier = tier_county }
-			scope:qpq_story = { add_to_variable_list = { name = qpq_charge_counties target = prev } }
+			scope:qpq_story ?= { add_to_variable_list = { name = qpq_charge_counties target = prev } }
 		}
-		add_character_modifier = { modifier = qpq_marcher_charge_modifier months = scope:qpq_term_months }
+		add_character_modifier = { modifier = qpq_marcher_charge_modifier months = qpq_term_months_value }
 	}
 }
 qpq_k_marcher_charge_on_deliver_effect = {
@@ -367,7 +367,7 @@ qpq_k_development_charter_seal_from_scopes_effect = {
 	}
 }
 qpq_k_development_charter_on_seal_effect = {
-	scope:qpq_story = {
+	scope:qpq_story ?= {
 		set_variable = {
 			name = qpq_dev_goal
 			value = { value = scope:qpq_target_title.development_level add = 5 }
@@ -2042,7 +2042,7 @@ qpq_k_coup_pact_seal_from_scopes_effect = {
 qpq_k_coup_pact_on_seal_effect = {
 	scope:qpq_target.primary_title ?= {
 		save_scope_as = qpq_coup_title
-		scope:qpq_story = { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+		scope:qpq_story ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
 		scope:qpq_payer_secret ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
 	}
 }
@@ -2231,7 +2231,7 @@ qpq_k_partition_pact_on_seal_effect = {
 	scope:qpq_target = {
 		every_realm_county = {
 			limit = { is_neighbor_to_realm = scope:qpq_payer }
-			scope:qpq_story = { add_to_variable_list = { name = qpq_payer_share target = prev } }
+			scope:qpq_story ?= { add_to_variable_list = { name = qpq_payer_share target = prev } }
 		}
 	}
 }
@@ -2368,7 +2368,7 @@ qpq_k_bought_truce_on_seal_effect = {
 		}
 		add_truce_both_ways = {
 			character = scope:qpq_agent
-			months = scope:qpq_term_months
+			months = qpq_term_months_value
 		}
 	}
 }
@@ -2801,7 +2801,7 @@ qpq_k_buy_a_councillor_seal_from_scopes_effect = {
 }
 qpq_k_buy_a_councillor_on_seal_effect = {
 	scope:qpq_target = {
-		add_character_modifier = { modifier = qpq_council_sabotage_modifier months = scope:qpq_term_months }
+		add_character_modifier = { modifier = qpq_council_sabotage_modifier months = qpq_term_months_value }
 	}
 }
 qpq_k_buy_a_councillor_on_deliver_effect = {
@@ -2872,7 +2872,7 @@ qpq_k_stay_home_seal_from_scopes_effect = {
 }
 qpq_k_stay_home_on_seal_effect = {
 	scope:qpq_agent = {
-		add_character_modifier = { modifier = qpq_withholding_levies_modifier months = scope:qpq_term_months }
+		add_character_modifier = { modifier = qpq_withholding_levies_modifier months = qpq_term_months_value }
 	}
 }
 qpq_k_stay_home_on_deliver_effect = {
@@ -3713,7 +3713,12 @@ qpq_k_conclave_votes_exposed_effect = {
 			add_piety = major_piety_loss
 			add_character_modifier = { modifier = qpq_bought_legitimacy_modifier years = 15 }
 		}
-		scope:qpq_target.faith = { change_fervor = -10 }
+		scope:qpq_target.faith = {
+			change_fervor = {
+				value = -10
+				desc = qpq_fervor_pact_exposed
+			}
+		}
 	}
 }
 
@@ -3762,7 +3767,12 @@ qpq_k_council_lobbying_ai_attempt_effect = {
 }
 qpq_k_council_lobbying_exposed_effect = {
 	scope:qpq_agent = { add_piety = medium_piety_loss }
-	scope:qpq_agent.faith = { change_fervor = -5 }
+	scope:qpq_agent.faith = {
+		change_fervor = {
+			value = -5
+			desc = qpq_fervor_pact_exposed
+		}
+	}
 }
 
 #### Caliphal Investiture
