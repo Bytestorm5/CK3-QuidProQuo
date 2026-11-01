@@ -449,6 +449,21 @@ def main():
             continue
         report("VAR-NEVER-SET %s (%s)" % (vname, where[0]))
 
+    # variables written but never read (1.20 logs these as errors)
+    read_in_loc = set()
+    for f in files_under(os.path.join(ROOT, "localization"), ".yml"):
+        read_in_loc |= set(re.findall(r"Var\('([A-Za-z_0-9]+)'\)", read(f)))
+    for f, tree in trees.items():
+        for n, _p in walk(tree):
+            if n.key == "variable_name" and isinstance(n.value, str):
+                read_in_loc.add(n.value.strip('"'))
+    for vname in sorted(set_vars):
+        if vname in used_vars or vname in read_in_loc or vname.startswith("$"):
+            continue
+        if vname in ("pam_forced_papal_vote_target",):
+            continue
+        report("VAR-NEVER-READ %s" % vname)
+
     # localization: interactions, decisions, modifiers, opinions, secrets, CBs, rules need keys
     def need(key, why):
         if key not in loc:
