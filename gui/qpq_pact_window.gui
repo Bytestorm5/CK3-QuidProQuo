@@ -1297,6 +1297,7 @@ window = {
 				spacing = 6
 
 				vbox = {
+					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, 'none' ) )]"
 					layoutpolicy_horizontal = expanding
 					margin = { 12 8 }
 					spacing = 4
