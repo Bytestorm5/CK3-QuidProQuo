@@ -10,9 +10,10 @@ Hand-written companions:
 """
 from qpq_kinds import KINDS, GROUPS
 
-# GuiScope with the player as root, actor = the player and recipient = the character the panel was opened on
+# GuiScope with the player as root, actor = the player and recipient = the character the panel was opened on.
+# AddScope needs a real object scope (X.MakeScope, as vanilla does); a raw .Var('x') is not one.
 GS = ("GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope )"
-      ".AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient') ).End")
+      ".AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End")
 GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 UI_OFFERS = ["gold", "land", "claim", "office", "marriage", "release_hook", "my_word", "secret", "contract",
              "succession", "clemency", "arms", "artifact", "church", "restraint", "hook", "charter"]
@@ -746,7 +747,7 @@ window = {
 									layoutpolicy_horizontal = expanding
 									size = { 0 34 }
 									text = "[Scope.Title.GetNameNoTooltip]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_title').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope ).End )]"
+									onclick = "[GetScriptedGui('qpq_ui_pick_title').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
 									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_target_title').Title, Scope.Title )]"
 								}
 							}
@@ -775,7 +776,7 @@ window = {
 									layoutpolicy_horizontal = expanding
 									size = { 0 34 }
 									text = "[Scope.Artifact.GetName]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope ).End )]"
+									onclick = "[GetScriptedGui('qpq_ui_pick_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
 									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_target_artifact').Artifact, Scope.Artifact )]"
 								}
 							}

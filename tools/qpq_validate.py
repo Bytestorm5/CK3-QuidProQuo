@@ -619,6 +619,10 @@ def check_gui(report, trees, my, loc, V, tiger):
         for name in re.findall(r"\.Custom\(\s*'([A-Za-z_0-9]+)'", expr):
             if name not in my["custom_loc"] and name not in van_cl:
                 report("GUI-CUSTOM %s unknown custom loc %s" % (where, name))
+        # AddScope takes an object's own scope (X.MakeScope), never a raw variable or list item
+        for name, arg in re.findall(r"AddScope\(\s*'([A-Za-z_0-9]+)'\s*,\s*([^()]*(?:\([^()]*\))*[^()]*?)\s*\)", expr):
+            if not arg.strip().endswith(".MakeScope"):
+                report("GUI-ADDSCOPE %s scope '%s' is given %s, not an object's MakeScope" % (where, name, arg.strip()))
         # scopes passed to a scripted GUI must cover its saved_scopes
         for name, gs in re.findall(r"GetScriptedGui\(\s*'([A-Za-z_0-9]+)'\s*\)\.\w+\(\s*(GuiScope.*?\.End)", expr):
             given = set(re.findall(r"AddScope\(\s*'([A-Za-z_0-9]+)'", gs))
