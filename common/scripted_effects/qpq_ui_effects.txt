@@ -1,0 +1,155 @@
+﻿# Quid Pro Quo - the Propose-a-Pact panel (gui/qpq_pact_window.gui)
+#
+# Root is always the player. The panel's state lives in variables on the player, so it is the same on
+# every machine in multiplayer:
+#   qpq_ui_open                     the window is shown
+#   qpq_ui_recipient                who the pact is proposed to
+#   qpq_ui_kind                     the chosen Ask (flag:none until one is picked)
+#   qpq_ui_pick_char / qpq_ui_target_title / qpq_ui_target_artifact   the picked target
+#   qpq_ui_o_<offer>, qpq_ui_timing, qpq_ui_qpq_x_<term>              the ticked boxes
+# Everything else (tiers, price, acceptance, candidate lists) is recomputed by qpq_ui_refresh_effect
+# from those, by the generated helpers in qpq_ui_kind_effects.txt.
+
+# Open the panel on RECIPIENT
+qpq_ui_open_effect = {
+	set_variable = { name = qpq_ui_recipient value = $RECIPIENT$ }
+	set_variable = { name = qpq_ui_kind value = flag:none }
+	qpq_ui_clear_choices_effect = yes
+	qpq_ui_refresh_effect = yes
+	set_variable = qpq_ui_open
+}
+
+qpq_ui_close_effect = {
+	if = {
+		limit = { has_variable = qpq_ui_open }
+		remove_variable = qpq_ui_open
+	}
+	qpq_ui_clear_choices_effect = yes
+	qpq_ui_clear_derived_effect = yes
+	set_variable = { name = qpq_ui_kind value = flag:none }
+}
+
+# The parties and the picked target, as the scopes the pact engine reads
+qpq_ui_load_parties_effect = {
+	save_scope_as = actor
+	if = {
+		limit = { exists = var:qpq_ui_recipient }
+		var:qpq_ui_recipient = { save_scope_as = recipient }
+	}
+}
+
+qpq_ui_load_pick_effect = {
+	if = {
+		limit = {
+			exists = var:qpq_ui_pick_char
+			qpq_ui_kind_needs_char_target_trigger = yes
+		}
+		var:qpq_ui_pick_char = { save_scope_as = secondary_recipient }
+	}
+	else_if = {
+		limit = {
+			exists = var:qpq_ui_target_title
+			qpq_ui_kind_needs_title_target_trigger = yes
+		}
+		var:qpq_ui_target_title = { save_scope_as = target }
+	}
+	else_if = {
+		limit = {
+			exists = var:qpq_ui_target_artifact
+			qpq_ui_kind_needs_artifact_target_trigger = yes
+		}
+		var:qpq_ui_target_artifact = { save_scope_as = target }
+	}
+}
+
+# Recompute everything the panel shows
+qpq_ui_refresh_effect = {
+	qpq_ui_clear_derived_effect = yes
+	qpq_ui_load_parties_effect = yes
+	if = {
+		limit = {
+			exists = scope:recipient
+			NOT = { var:qpq_ui_kind = flag:none }
+		}
+		qpq_ui_fill_candidates_effect = yes
+		# A pick that is no longer on offer (the world moved on) is dropped
+		if = {
+			limit = {
+				exists = var:qpq_ui_pick_char
+				OR = {
+					NOT = { has_variable_list = qpq_ui_candidates }
+					NOT = { is_target_in_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char } }
+				}
+			}
+			remove_variable = qpq_ui_pick_char
+		}
+		if = {
+			limit = {
+				exists = var:qpq_ui_target_title
+				OR = {
+					NOT = { has_variable_list = qpq_ui_title_candidates }
+					NOT = { is_target_in_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title } }
+				}
+			}
+			remove_variable = qpq_ui_target_title
+		}
+		if = {
+			limit = {
+				exists = var:qpq_ui_target_artifact
+				OR = {
+					NOT = { has_variable_list = qpq_ui_artifact_candidates }
+					NOT = { is_target_in_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact } }
+				}
+			}
+			remove_variable = qpq_ui_target_artifact
+		}
+		# Filling the pickers reuses the target scopes, so the real pick is loaded after it
+		clear_saved_scope = secondary_recipient
+		clear_saved_scope = target
+		qpq_ui_load_pick_effect = yes
+		qpq_ui_load_choices_effect = yes
+		qpq_ui_compute_effect = yes
+		set_variable = {
+			name = qpq_ui_acc_other
+			value = {
+				value = var:qpq_ui_acc_total
+				subtract = var:qpq_ui_acc_ask
+				subtract = var:qpq_ui_acc_offers
+			}
+		}
+	}
+}
+
+# Send the proposal. AI recipients answer at once; a human recipient gets the proposal event.
+qpq_ui_propose_effect = {
+	qpq_ui_refresh_effect = yes
+	qpq_ui_save_proposed_kind_effect = yes
+	if = {
+		limit = { scope:recipient = { is_ai = yes } }
+		if = {
+			limit = { var:qpq_ui_acc_total > 0 }
+			qpq_seal_proposed_kind_effect = yes
+		}
+		else = {
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = qpq_msg_proposal_declined_title
+				left_icon = scope:recipient
+				custom_tooltip = qpq_msg_proposal_declined_tt
+			}
+		}
+	}
+	else = {
+		scope:recipient = {
+			add_character_flag = { flag = qpq_considering_proposal days = 30 }
+			trigger_event = qpq_hub.50
+		}
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = qpq_msg_proposal_sent_title
+			left_icon = scope:recipient
+			custom_tooltip = qpq_msg_proposal_sent_tt
+		}
+	}
+	qpq_ui_close_effect = yes
+}

@@ -25,10 +25,21 @@ qpq_propose_pact_interaction = {
 	}
 
 	auto_accept = yes
+	# Clicking it opens the pact panel (or the classic event) straight away
+	needs_confirmation = { always = no }
 
 	on_accept = {
-		scope:recipient = { save_scope_as = qpq_hub_recipient }
-		scope:actor = { trigger_event = qpq_hub.1 }
+		custom_tooltip = qpq_propose_pact_opens_tt
+		hidden_effect = {
+			if = {
+				limit = { has_game_rule = qpq_proposal_window_classic }
+				scope:recipient = { save_scope_as = qpq_hub_recipient }
+				scope:actor = { trigger_event = qpq_hub.1 }
+			}
+			else = {
+				scope:actor = { qpq_ui_open_effect = { RECIPIENT = scope:recipient } }
+			}
+		}
 	}
 
 	ai_will_do = {

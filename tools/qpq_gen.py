@@ -10,6 +10,7 @@ import textwrap
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qpq_kinds import KINDS, GROUPS, SECRET_CATEGORIES, TIER_NAMES  # noqa: E402
+import qpq_ui_gen  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOM = "﻿"
@@ -121,21 +122,45 @@ def gen_values():
         # What the Ask costs the agent
         out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
                 "\tadd = %d\n}\n") % (key, key, -k["effort"])
-        # Whole-acceptance mirror used when an AI recipient answers an AI proposal
-        out += "qpq_%s_ai_acceptance_value = {\n" % key
+        # What the Ask is worth to the recipient before anything is offered
+        out += "qpq_%s_ask_value = {\n" % key
         if k["initiator"] == "payer":
             out += "\tvalue = qpq_%s_demand_value\n" % key
+        else:
+            out += "\tvalue = %d\n\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n" % (AGENT_INIT_BASE, key)
+        out += "}\n"
+        # What is offered (or, when the proposer does the deed, what is demanded), in acceptance points
+        out += "qpq_%s_offer_points_value = {\n\tvalue = 0\n" % key
+        if k["initiator"] == "payer":
             out += "\tif = {\n\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\tadd = qpq_%s_gold_points_value\n\t}\n" % key
-            out += "\tif = {\n\t\tlimit = { scope:qpq_o_on_delivery ?= yes }\n\t\tadd = -8\n\t}\n"
-            out += "\tadd = {\n\t\tvalue = \"scope:recipient.opinion(scope:actor)\"\n\t\tmultiply = 0.5\n\t}\n"
+            for o, pts in (("on_delivery", -8), ("split", -3), ("stipend", -5)):
+                out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, pts)
+            for o in k["offers"]:
+                if o in OFFER_POINTS:
+                    out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %s\n\t}\n" % (o, OFFER_POINTS[o])
+            if "hook" in k["offers"]:
+                out += "\tif = {\n\t\tlimit = { scope:qpq_o_hook ?= yes }\n\t\tadd = 40\n\t}\n"
+                out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_hook ?= yes\n"
+                        "\t\t\tscope:actor = { has_strong_hook = scope:recipient }\n\t\t}\n\t\tadd = 60\n\t}\n")
+        else:
+            for o in k["offers"]:
+                if o in DEMAND_COST:
+                    out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, DEMAND_COST[o])
+            out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_gold ?= yes\n\t\t\tscope:recipient = { has_trait = greedy }\n"
+                    "\t\t}\n\t\tadd = -10\n\t}\n")
+        out += "}\n"
+        # The whole acceptance, mirroring the interaction's ai_accept: used by the Propose-a-Pact panel
+        # and when an AI recipient answers an AI proposal
+        out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
+        out += "\tadd = {\n\t\tvalue = \"scope:recipient.opinion(scope:actor)\"\n\t\tmultiply = 0.5\n\t}\n"
+        if k["initiator"] == "payer":
             for trig, mult in TRAIT_MODS:
                 out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_trait = %s } }\n"
                         "\t\tadd = { value = qpq_%s_agent_tier_value multiply = %d }\n\t}\n") % (trig, key, mult)
-        else:
-            out += "\tvalue = %d\n" % AGENT_INIT_BASE
-            out += "\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n" % key
-            out += "\tif = {\n\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\tadd = -30\n\t}\n"
-            out += "\tadd = {\n\t\tvalue = \"scope:recipient.opinion(scope:actor)\"\n\t\tmultiply = 0.5\n\t}\n"
+        out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }\n"
+                "\t\tadd = intimidated_halved_reason_value\n\t}\n")
+        out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }\n"
+                "\t\tadd = cowed_halved_reason_value\n\t}\n")
         for add, trig, _desc in k.get("demand", []):
             out += "\tif = {\n\t\tlimit = {\n%s\t\t}\n\t\tadd = %s\n\t}\n" % (block(trig, 3), add)
         out += "}\n\n"
@@ -220,6 +245,17 @@ OFFER_POINTS = {
 DEMAND_COST = {"gold": -30, "on_delivery": 10, "split": 5, "stipend": 5, "land": -40, "office": -15,
                "contract": -30, "release_hook": -25, "my_word": -12, "clemency": -20, "artifact": -20,
                "church": -15}
+
+
+# Terms listed in the proposal event (qpq_hub.50), in this order
+HUB50_TERMS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "marriage", "release_hook",
+               "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
+               "restraint", "hook", "charter"]
+
+
+def fmt_shown(s, P, A):
+    """An offer condition with explicit payer/agent scopes (for the Propose-a-Pact panel)."""
+    return s.replace("{P}", P).replace("{A}", A)
 
 
 def fmt(s, k):
@@ -568,10 +604,9 @@ if = {
     out += "qpq_seal_proposed_kind_effect = {\n"
     first = True
     for k in KINDS:
-        if k.get("ai"):
-            out += "\t%s = {\n\t\tlimit = { scope:qpq_proposed_kind = flag:%s }\n\t\tqpq_k_%s_seal_from_scopes_effect = yes\n\t}\n" % (
-                "if" if first else "else_if", k["key"], k["key"])
-            first = False
+        out += "\t%s = {\n\t\tlimit = { scope:qpq_proposed_kind = flag:%s }\n\t\tqpq_k_%s_seal_from_scopes_effect = yes\n\t}\n" % (
+            "if" if first else "else_if", k["key"], k["key"])
+        first = False
     out += "}\n"
     write("common/scripted_effects/qpq_kind_effects.txt", out)
 
@@ -629,8 +664,7 @@ qpq_hub.1 = {
 		first_valid = {
 """
     for k in KINDS:
-        if k.get("ai"):
-            out += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_proposed_kind = flag:%s }\n\t\t\t\tdesc = qpq_%s_proposal_desc\n\t\t\t}\n" % (k["key"], k["key"])
+        out += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_proposed_kind = flag:%s }\n\t\t\t\tdesc = qpq_%s_proposal_desc\n\t\t\t}\n" % (k["key"], k["key"])
     out += """			desc = qpq_unknown_pact
 		}
 		first_valid = {
@@ -644,6 +678,24 @@ qpq_hub.1 = {
 			}
 			desc = qpq_hub.50.none
 		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { qpq_proposed_kind_is_agent_init_trigger = yes }
+				desc = qpq_hub.50.terms_demand
+			}
+			desc = qpq_hub.50.terms_offer
+		}
+""" + "".join("""		triggered_desc = {
+			trigger = { scope:qpq_o_%s ?= yes }
+			desc = qpq_hub.50.term_%s
+		}
+""" % (o, o) for o in HUB50_TERMS) + """		triggered_desc = {
+			trigger = {
+				NOR = {
+""" + "".join("\t\t\t\t\tscope:qpq_o_%s ?= yes\n" % o for o in HUB50_TERMS) + """				}
+			}
+			desc = qpq_hub.50.term_nothing
+		}
 		desc = qpq_hub.50.price
 	}
 	theme = intrigue
@@ -651,18 +703,22 @@ qpq_hub.1 = {
 	right_portrait = scope:actor
 	lower_right_portrait = scope:secondary_recipient
 
-	immediate = {
-		remove_character_flag = qpq_considering_proposal
-	}
-
 	option = {
 		name = qpq_hub.50.a
+		remove_character_flag = qpq_considering_proposal
 		qpq_seal_proposed_kind_effect = yes
 	}
 	option = {
 		name = qpq_hub.50.b
+		remove_character_flag = qpq_considering_proposal
 		scope:actor = {
 			add_opinion = { target = root modifier = qpq_declined_pact_opinion }
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = qpq_msg_proposal_declined_title
+				left_icon = root
+				custom_tooltip = qpq_msg_proposal_declined_tt
+			}
 		}
 	}
 }
@@ -760,6 +816,7 @@ def main():
     gen_hub_events()
     gen_proposal_desc()
     gen_loc()
+    qpq_ui_gen.gen_all(block, fmt_shown, OFFER_DEFS, write)
     print("generated %d pacts" % len(KINDS))
 
 

@@ -562,3 +562,19 @@ qpq_agent_share_value = {
 qpq_term_months_value = {
 	value = scope:qpq_term_months
 }
+
+# Propose-a-Pact panel: order of the capped target lists (most powerful first)
+qpq_ui_candidate_order_value = {
+	value = highest_held_title_tier
+	multiply = 100000
+	add = current_military_strength
+}
+
+qpq_ui_title_order_value = {
+	value = tier
+	multiply = 100
+	if = {
+		limit = { tier = tier_county }
+		add = development_level
+	}
+}

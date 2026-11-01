@@ -8,3 +8,11 @@ qpq_ai_pact_frequency = {
 	qpq_ai_pacts_normal = {}
 	qpq_ai_pacts_frequent = {}
 }
+
+qpq_proposal_window = {
+	categories = { tweaks }
+	default = qpq_proposal_window_panel
+
+	qpq_proposal_window_panel = {}
+	qpq_proposal_window_classic = {}
+}

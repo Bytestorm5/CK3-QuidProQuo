@@ -251,6 +251,7 @@ def main():
         "custom_loc": defs("common/customizable_localization"),
         "on_actions": defs("common/on_action"),
         "rules": defs("common/game_rules"),
+        "sguis": defs("common/scripted_guis"),
     }
     events = {}
     for f, tree in trees.items():
@@ -330,6 +331,10 @@ def main():
                         saved.add(c.value.replace("$ROLE$", "agent"))
             if k == "flag" and parents and parents[-1].key == "send_option":
                 saved.add(n.value)
+            if k == "saved_scopes" and isinstance(n.value, list):
+                for c in n.value:
+                    if c.key is None and isinstance(c.value, str):
+                        saved.add(c.value)
             if k == "save_scope_as" and isinstance(n.value, str) and False:
                 pass
             for tok in ([k] + ([n.value] if isinstance(n.value, str) else [])):
@@ -533,7 +538,7 @@ def main():
         for i, line in enumerate(read(f).split("\n"), 1):
             m = re.match(r'\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"\s*$', line)
             if not m:
-                if line.strip() and not line.startswith("l_english"):
+                if line.strip() and not line.startswith("l_english") and not line.lstrip().startswith("#"):
                     report("LOC-SYNTAX %s:%d" % (os.path.relpath(f, ROOT), i))
                 continue
             text = m.group(2)
@@ -545,10 +550,130 @@ def main():
             if re.search(r'(?<!\\)"', text):
                 report("LOC-QUOTE %s:%d unescaped quote" % (os.path.relpath(f, ROOT), i))
 
+    check_gui(report, trees, my, loc, V, args.tiger)
+
     for p in sorted(set(problems)):
         print(p)
     print("\n%d problem(s)" % len(set(problems)))
     return 1 if problems else 0
+
+
+# =============================================================== GUI files
+def gui_tables(V, tiger):
+    """Known widget types, templates, block names, properties and data functions."""
+    vg = files_under(os.path.join(V, "gui"), ".gui")
+    types, templates, blocks, keys = set(), set(), set(), set()
+    for f in vg:
+        t = read(f)
+        types |= set(re.findall(r"\btype\s+([A-Za-z_0-9]+)\s*=", t))
+        templates |= set(re.findall(r"\btemplate\s+([A-Za-z_0-9]+)", t))
+        blocks |= set(re.findall(r'\bblock\s+"([^"]+)"', t))
+        keys |= set(re.findall(r"^\s*([A-Za-z_][A-Za-z_0-9]*)\s*=", t, re.M))
+    b = read(os.path.join(tiger, "src/gui/builtins.rs"))
+    m = re.search(r"pub enum BuiltinWidget \{(.*?)\}", b, re.S)
+    builtins = set(re.findall(r"^\s*([a-z_0-9]+),", m.group(1), re.M)) if m else set()
+    props = set()
+    gp = os.path.join(tiger, "guiproperties.txt")
+    if os.path.exists(gp):
+        for line in read(gp).split("\n"):
+            if line.strip():
+                props.add(line.split()[0])
+    funcs = set()
+    inc = os.path.join(tiger, "tiger-tables/src/ck3/include")
+    for f in files_under(inc, ".rs"):
+        funcs |= set(re.findall(r'\("([A-Za-z_0-9]+)",', read(f)))
+    dts = set(re.findall(r"^\s*([A-Za-z_0-9]+),", read(os.path.join(inc, "datatypes.rs")), re.M))
+    gen = re.search(r"pub enum Datatype \{(.*?)\}", read(os.path.join(tiger, "tiger-tables/src/datatype.rs")), re.S)
+    if gen:
+        dts |= set(re.findall(r"^\s*([A-Za-z_0-9]+),", gen.group(1), re.M))
+    return dict(types=types, templates=templates, blocks=blocks, keys=keys | props | builtins, widgets=types | builtins,
+                funcs=funcs | dts)
+
+
+def check_gui(report, trees, my, loc, V, tiger):
+    T = gui_tables(V, tiger)
+    # saved scopes each scripted GUI expects
+    sgui_scopes = {}
+    for f, tree in trees.items():
+        if os.path.relpath(f, ROOT).startswith("common/scripted_guis"):
+            for n in tree:
+                if n.key and isinstance(n.value, list):
+                    sc = set()
+                    for c in n.value:
+                        if c.key == "saved_scopes" and isinstance(c.value, list):
+                            sc |= {x.value for x in c.value if x.key is None}
+                    sgui_scopes[n.key] = sc
+    van_sguis = top_keys(os.path.join(V, "common/scripted_guis"))
+    van_cl = top_keys(os.path.join(V, "common/customizable_localization"))
+    STRUCT = {"blockoverride", "block", "type", "types", "template", "using", "item", "state", "window", "name",
+              "datamodel", "datacontext"}
+
+    def check_expr(expr, where):
+        body = re.sub(r"'[^']*'", "''", expr.split("|")[0])
+        for ident in re.findall(r"[A-Za-z_][A-Za-z_0-9]*", body):
+            if ident[0].isupper() and ident not in T["funcs"]:
+                report("GUI-FUNC %s unknown data function %s" % (where, ident))
+        for name in re.findall(r"GetScriptedGui\(\s*'([A-Za-z_0-9]+)'", expr):
+            if name not in sgui_scopes and name not in van_sguis:
+                report("GUI-SGUI %s unknown scripted gui %s" % (where, name))
+        for name in re.findall(r"\.Custom\(\s*'([A-Za-z_0-9]+)'", expr):
+            if name not in my["custom_loc"] and name not in van_cl:
+                report("GUI-CUSTOM %s unknown custom loc %s" % (where, name))
+        # scopes passed to a scripted GUI must cover its saved_scopes
+        for name, gs in re.findall(r"GetScriptedGui\(\s*'([A-Za-z_0-9]+)'\s*\)\.\w+\(\s*(GuiScope.*?\.End)", expr):
+            given = set(re.findall(r"AddScope\(\s*'([A-Za-z_0-9]+)'", gs))
+            want = sgui_scopes.get(name, set())
+            if want - given:
+                report("GUI-SCOPES %s %s needs %s" % (where, name, sorted(want - given)))
+
+    for f in files_under(os.path.join(ROOT, "gui"), ".gui"):
+        rel = os.path.relpath(f, ROOT)
+        text = read(f)
+        try:
+            tree = parse(text, rel)
+        except ParseError as e:
+            report("GUI-SYNTAX %s" % e)
+            continue
+        for n, parents in walk(tree):
+            where = "%s:%d" % (rel, n.line)
+            if n.key and isinstance(n.value, list) and n.key not in T["keys"] and n.key not in STRUCT:
+                report("GUI-WIDGET %s unknown widget or property %s" % (where, n.key))
+            if n.key and isinstance(n.value, str):
+                v = n.value.strip('"')
+                if n.key not in T["keys"] and n.key not in STRUCT:
+                    report("GUI-PROPERTY %s unknown property %s" % (where, n.key))
+                if n.key == "using" and v not in T["templates"]:
+                    report("GUI-TEMPLATE %s unknown template %s" % (where, v))
+                if n.key in ("text", "tooltip", "raw_tooltip") and re.match(r"^[A-Za-z_][A-Za-z_0-9.]*$", v):
+                    if v not in loc:
+                        report("GUI-LOC %s missing loc %s" % (where, v))
+                for expr in re.findall(r"\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]", v):
+                    check_expr(expr, where)
+            # bare tokens: block names after blockoverride
+            if n.key is None and isinstance(n.value, str) and parents is not None:
+                pass
+        for name in re.findall(r'blockoverride\s+"([^"]+)"', text):
+            if name not in T["blocks"]:
+                report("GUI-BLOCK %s unknown block %s" % (rel, name))
+        for wname in re.findall(r"^\s*([a-z_][a-z_0-9]*)\s*=\s*\{", text, re.M):
+            pass
+    for f in files_under(os.path.join(ROOT, "gui/scripted_widgets"), ".txt"):
+        for line in read(f).split("\n"):
+            line = line.strip().lstrip("\ufeff")
+            if not line or line.startswith("#"):
+                continue
+            m = re.match(r"^(gui/[A-Za-z_0-9/.]+\.gui)\s*=\s*([A-Za-z_0-9]+)$", line)
+            if not m:
+                report("GUI-WIDGETS-SYNTAX %s" % line)
+                continue
+            gf = os.path.join(ROOT, m.group(1))
+            if not os.path.exists(gf) or not re.search(r'name\s*=\s*"%s"' % m.group(2), read(gf)):
+                report("GUI-WIDGETS-MISSING %s" % line)
+    # data functions used in our localization
+    for f in files_under(os.path.join(ROOT, "localization"), ".yml"):
+        for i, line in enumerate(read(f).split("\n"), 1):
+            for expr in re.findall(r"\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]", line):
+                check_expr(expr, "%s:%d" % (os.path.relpath(f, ROOT), i))
 
 
 if __name__ == "__main__":

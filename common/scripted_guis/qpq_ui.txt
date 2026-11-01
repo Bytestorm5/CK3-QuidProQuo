@@ -1,0 +1,143 @@
+﻿# Quid Pro Quo - Propose-a-Pact panel buttons (hand-written; per-Ask buttons are in qpq_ui_kinds.txt)
+# Root is always the player.
+
+qpq_ui_close = {
+	scope = character
+	effect = {
+		qpq_ui_close_effect = yes
+	}
+}
+
+# Pick a target from the panel's lists
+qpq_ui_pick_target = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		set_variable = { name = qpq_ui_pick_char value = scope:qpq_pick }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_pick_title = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		set_variable = { name = qpq_ui_target_title value = scope:qpq_pick }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_pick_artifact = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		set_variable = { name = qpq_ui_target_artifact value = scope:qpq_pick }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+# Send the proposal
+qpq_ui_propose = {
+	scope = character
+	saved_scopes = { actor recipient }
+
+	is_valid = {
+		custom_description = {
+			text = QPQ_UI_FAIL_NO_ASK
+			NOT = { var:qpq_ui_kind = flag:none }
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_NOT_POSSIBLE
+			qpq_ui_kind_still_possible_trigger = yes
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_NO_TARGET
+			has_variable = qpq_ui_target_ok
+		}
+		qpq_ui_ask_valid_trigger = yes
+		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
+		custom_description = {
+			text = QPQ_UI_FAIL_IMPRISONED
+			OR = {
+				var:qpq_ui_kind = flag:clemency_bargain
+				AND = {
+					is_imprisoned = no
+					scope:recipient = { is_imprisoned = no }
+				}
+			}
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_BUSY
+			scope:recipient = {
+				is_alive = yes
+				NOT = { has_character_flag = qpq_considering_proposal }
+			}
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_OFFERS
+			qpq_ui_offers_still_possible_trigger = yes
+		}
+		# Gold paid when the pact is sealed must be in hand
+		custom_description = {
+			text = QPQ_UI_FAIL_GOLD_YOU
+			trigger_if = {
+				limit = {
+					has_variable = qpq_ui_o_gold
+					NOT = { has_variable = qpq_ui_agent_init }
+					var:qpq_ui_timing = flag:up_front
+				}
+				gold >= var:qpq_ui_price
+			}
+			trigger_else_if = {
+				limit = {
+					has_variable = qpq_ui_o_gold
+					NOT = { has_variable = qpq_ui_agent_init }
+					var:qpq_ui_timing = flag:split
+				}
+				gold >= { value = var:qpq_ui_price divide = 2 }
+			}
+			trigger_else = {
+				always = yes
+			}
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_GOLD_THEM
+			trigger_if = {
+				limit = {
+					has_variable = qpq_ui_o_gold
+					has_variable = qpq_ui_agent_init
+					var:qpq_ui_timing = flag:up_front
+				}
+				scope:recipient = { gold >= scope:actor.var:qpq_ui_price }
+			}
+			trigger_else_if = {
+				limit = {
+					has_variable = qpq_ui_o_gold
+					has_variable = qpq_ui_agent_init
+					var:qpq_ui_timing = flag:split
+				}
+				scope:recipient = { gold >= { value = scope:actor.var:qpq_ui_price divide = 2 } }
+			}
+			trigger_else = {
+				always = yes
+			}
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_REFUSE
+			OR = {
+				scope:recipient = { is_ai = no }
+				AND = {
+					exists = var:qpq_ui_acc_total
+					var:qpq_ui_acc_total > 0
+				}
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = QPQ_UI_PROPOSE_TT
+		hidden_effect = {
+			qpq_ui_propose_effect = yes
+		}
+	}
+}

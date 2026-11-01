@@ -16,7 +16,7 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 | Where | What |
 | --- | --- |
-| Right-click a character, **Propose a Pact** | Pick a kind of deal, then the Ask. That opens the Ask's own window: choose the target and tick what you offer (gold and its timing, land, claims, office, marriage, hooks, secrets, contract terms, succession, clemency, arms, artifacts, church favour, restraint, a hook to call in, or publishing it as a Charter). The usual acceptance breakdown shows how they weigh value, opinion, traits and tier. |
+| Right-click a character, **Propose a Pact** | Opens the pact panel, built from the game's own window parts. **1. The Ask:** pick what you want done (only the Asks open between you two are listed) and its target. **2. The Terms:** tick what you offer (gold and when it is paid, land, claims, office, marriage, hooks, secrets, contract terms, succession, clemency, arms, artifacts, church favour, restraint, a hook to call in, or publishing it as a Charter); when you are the one doing the deed, these become what you demand. **3. Seal:** what each side gets and gives, and both Scandal tiers. The footer always shows whether they would accept, with the breakdown on hover, and Propose lists anything still missing. |
 | Situations window | Every active pact shows for both parties, with the target and the months left. |
 | **Honour the Pact** (on the payer) | For Asks done by a single act (take vows, marry, hand someone over, excommunicate, cede a county...). AI agents do this on their own. |
 | **Break the Pact** | Walk away openly. The other side becomes the wronged party. |
@@ -26,6 +26,7 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 | Decision: **Open the Pact Ledger** | Two tabs, *My pacts* (halves you hold, including old ones) and *Known pacts* (dirt you hold on others), five entries a page. |
 | Vanilla **Expose secret** | Exposing either half exposes both. |
 | Game rule **Quid Pro Quo: AI Pacts** | Rare / Normal / Frequent AI proposals. |
+| Game rule **Quid Pro Quo: Proposal Window** | *Pact panel* (default) or *Classic*: pick a kind of deal and Ask through events, then the game's own interaction window. |
 
 ## The rules as implemented
 
@@ -72,10 +73,11 @@ The design doc is a brainstorm; where it left a choice open, this is what the mo
 - **Mutual Defense League** is called when the liege revokes from the proposer; the partner then has six months to join a faction against the liege.
 - **Faith boundaries** follow vanilla's own doctrines rather than a hand-made list. Excommunication, absolution, church favour (indulgences), penance in gold and Purchase a Mitre need a sacramental faith with a spiritual head (`faith_has_sacraments_central_trigger`). Annulments also work where divorce needs the head of faith's approval. Bought Claim needs a spiritual head, Holy Warrant a temporal one, and Steer the Holy War a faith that wages great holy wars. Everywhere else a confession's gold goes to alms, and the Hajj counts as the pilgrimage.
 - **Inherited halves** are priced one tier lower by the mod, but keep their original secret type, so vanilla blackmail still treats a Tier IV-V stain as criminal.
+- **The pact panel** decides for AI recipients with the same numbers as the interaction's acceptance (they agree above 0). A human recipient gets the proposal as an event listing every term. The target lists are capped at the 40 strongest candidates (the 40 best titles), so a large realm does not build hundreds of rows.
 - **Hush Money** over vanilla secrets uses `disable_exposure_by`, so the holder truly can never expose them; over pact secrets, exposing it anyway breaches the hush money pact.
 
 ## Development
 
-- `python3 tools/qpq_gen.py` regenerates the per-pact files (interactions, secret types, kind triggers/effects/values, hub events, custom localization, pact localization) from `tools/qpq_kinds.py`. Generated files are committed.
-- `python3 tools/qpq_validate.py --vanilla <CK3>/game [--tiger <tiger checkout>]` parses every script file and checks keywords against the vanilla 1.20 files (and the tiger tables), references to modifiers, opinions, hooks, secrets, traits, schemes, factions, events and interactions, saved scopes and variables that are used but never set, and localization keys, BOMs and syntax. It reports 0 problems on this version.
+- `python3 tools/qpq_gen.py` regenerates the per-pact files (interactions, secret types, kind triggers/effects/values, hub events, custom localization, pact localization) from `tools/qpq_kinds.py`, and the pact panel (`gui/qpq_pact_window.gui`, its scripted GUIs, effects, triggers and text) through `tools/qpq_ui_gen.py`. Generated files are committed. The panel's hand-written parts are `common/scripted_effects/qpq_ui_effects.txt` and `common/scripted_guis/qpq_ui.txt`.
+- `python3 tools/qpq_validate.py --vanilla <CK3>/game [--tiger <tiger checkout>]` parses every script file and checks keywords against the vanilla 1.20 files (and the tiger tables), references to modifiers, opinions, hooks, secrets, traits, schemes, factions, events and interactions, saved scopes and variables that are used but never set, and localization keys, BOMs and syntax. For `gui/` it checks widget types, properties, templates, block overrides, data functions, scripted GUI names and the scopes each scripted GUI is given, and the localization keys used. It reports 0 problems on this version.
 - This was written and checked without running the game. Before relying on it, run [ck3-tiger](https://github.com/amtep/tiger) for scope-level validation and check `error.log` after a few in-game years.
