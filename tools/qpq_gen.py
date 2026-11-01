@@ -716,7 +716,12 @@ def gen_loc():
         add("qpq_%s_prompt" % key, "Pick the target")
         if k["target"] == "char":
             add("recipient_secondary_qpq_%s_interaction" % key, "Target")
-        ask = k["ask"]
+        ask = (k["ask"]
+               .replace("[qpq_target_title.", "[Story.MakeScope.Var('qpq_target_title').Title.")
+               .replace("[qpq_target_artifact.", "[Story.MakeScope.Var('qpq_target_artifact').Artifact.")
+               .replace("[qpq_target.", "[Story.MakeScope.Var('qpq_target').Char.")
+               .replace("[qpq_payer.", "[Story.MakeScope.Var('qpq_payer').Char.")
+               .replace("[qpq_agent.", "[Story.MakeScope.Var('qpq_agent').Char."))
         add("qpq_%s_ask_story" % key, ask)
         mode = {"condition": "Delivered when it happens.", "perform": "Delivered when they act on it (Honour the Pact).",
                 "restraint": "Delivered if the promise holds until the deadline."}[k["mode"]]

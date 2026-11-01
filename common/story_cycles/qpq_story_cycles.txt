@@ -13,15 +13,6 @@ qpq_pact_story = {
 		custom_string_key = "QPQ_STORY_PAYER_STRING"
 		character = { variable_name = "qpq_agent" label = "QPQ_STORY_AGENT_LABEL" }
 		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
-		basic_counter = {
-			variable_name = "qpq_months_left"
-			min = 0
-			max = 120
-			label = "QPQ_STORY_MONTHS_LEFT"
-			min_label = "QPQ_STORY_COUNTER_MIN"
-			max_label = "QPQ_STORY_COUNTER_MAX"
-			tooltip = "QPQ_STORY_MONTHS_LEFT_TT"
-		}
 	}
 
 	on_setup = {}
@@ -59,15 +50,6 @@ qpq_pact_mirror_story = {
 		custom_string_key = "QPQ_STORY_AGENT_STRING"
 		character = { variable_name = "qpq_payer" label = "QPQ_STORY_PAYER_LABEL" }
 		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
-		basic_counter = {
-			variable_name = "qpq_months_left"
-			min = 0
-			max = 120
-			label = "QPQ_STORY_MONTHS_LEFT"
-			min_label = "QPQ_STORY_COUNTER_MIN"
-			max_label = "QPQ_STORY_COUNTER_MAX"
-			tooltip = "QPQ_STORY_MONTHS_LEFT_TT"
-		}
 	}
 
 	on_setup = {}

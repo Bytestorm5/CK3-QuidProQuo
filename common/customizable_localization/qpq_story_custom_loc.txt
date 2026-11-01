@@ -1,0 +1,606 @@
+﻿# Quid Pro Quo - the Situations-window entry for a pact.
+# Root: the payer's story or the agent's mirror story (var:qpq_main exists on the mirror).
+
+QpqOwesGoldDue = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gold_due var:qpq_gold_due > 0
+		}
+		localization_key = qpq_sl_owed_gold_due
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gold_due var:qpq_gold_due > 0
+		}
+		localization_key = qpq_sl_owe_gold_due
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesStipend = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_stipend
+		}
+		localization_key = qpq_sl_owed_stipend
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_stipend
+		}
+		localization_key = qpq_sl_owe_stipend
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesLand = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_title
+		}
+		localization_key = qpq_sl_owed_land
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_title
+		}
+		localization_key = qpq_sl_owe_land
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesArtifact = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_artifact
+		}
+		localization_key = qpq_sl_owed_artifact
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_artifact
+		}
+		localization_key = qpq_sl_owe_artifact
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesContract = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_contract
+		}
+		localization_key = qpq_sl_owed_contract
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_contract
+		}
+		localization_key = qpq_sl_owe_contract
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesSuccession = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_succession
+		}
+		localization_key = qpq_sl_owed_succession
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_succession
+		}
+		localization_key = qpq_sl_owe_succession
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesOffice = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_office
+		}
+		localization_key = qpq_sl_owed_office
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_office
+		}
+		localization_key = qpq_sl_owe_office
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesRestraint = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_offer_restraint
+		}
+		localization_key = qpq_sl_owed_restraint
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_offer_restraint
+		}
+		localization_key = qpq_sl_owe_restraint
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveGold = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_paid_now
+		}
+		localization_key = qpq_sl_got_gold
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_paid_now
+		}
+		localization_key = qpq_sl_gave_gold
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveClaim = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_claim
+		}
+		localization_key = qpq_sl_got_claim
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_claim
+		}
+		localization_key = qpq_sl_gave_claim
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveMarriage = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_marriage
+		}
+		localization_key = qpq_sl_got_marriage
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_marriage
+		}
+		localization_key = qpq_sl_gave_marriage
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveHookRelease = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_hook_release
+		}
+		localization_key = qpq_sl_got_hook_release
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_hook_release
+		}
+		localization_key = qpq_sl_gave_hook_release
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveMyWord = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_my_word
+		}
+		localization_key = qpq_sl_got_my_word
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_my_word
+		}
+		localization_key = qpq_sl_gave_my_word
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveSecret = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_secret
+		}
+		localization_key = qpq_sl_got_secret
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_secret
+		}
+		localization_key = qpq_sl_gave_secret
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveClemency = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_clemency
+		}
+		localization_key = qpq_sl_got_clemency
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_clemency
+		}
+		localization_key = qpq_sl_gave_clemency
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveArms = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_arms
+		}
+		localization_key = qpq_sl_got_arms
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_arms
+		}
+		localization_key = qpq_sl_gave_arms
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveChurch = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_gave_church
+		}
+		localization_key = qpq_sl_got_church
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_gave_church
+		}
+		localization_key = qpq_sl_gave_church
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUsedHook = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_used_hook
+		}
+		localization_key = qpq_sl_hook_used_on_you
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			exists = var:qpq_used_hook
+		}
+		localization_key = qpq_sl_used_hook
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqOwesNothing = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
+		}
+		localization_key = qpq_sl_owed_nothing
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
+		}
+		localization_key = qpq_sl_owe_nothing
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqGaveNothing = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			NOR = { AND = { exists = var:qpq_paid_now } AND = { exists = var:qpq_gave_claim } AND = { exists = var:qpq_gave_marriage } AND = { exists = var:qpq_gave_hook_release } AND = { exists = var:qpq_gave_my_word } AND = { exists = var:qpq_gave_secret } AND = { exists = var:qpq_gave_clemency } AND = { exists = var:qpq_gave_arms } AND = { exists = var:qpq_gave_church } AND = { exists = var:qpq_used_hook } }
+		}
+		localization_key = qpq_sl_gave_nothing
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqAskStatus = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			qpq_kind_is_restraint_trigger = yes
+		}
+		localization_key = qpq_sl_status_restraint_agent
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			qpq_kind_is_restraint_trigger = yes
+		}
+		localization_key = qpq_sl_status_restraint_payer
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			qpq_kind_is_performable_trigger = yes
+		}
+		localization_key = qpq_sl_status_perform_agent
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			qpq_kind_is_performable_trigger = yes
+		}
+		localization_key = qpq_sl_status_perform_payer
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+		}
+		localization_key = qpq_sl_status_condition_agent
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_sl_status_condition_payer
+	}
+}
+
+QpqMyTier = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 0
+		}
+		localization_key = qpq_sl_tier_0
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 0
+		}
+		localization_key = qpq_sl_tier_0
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 1
+		}
+		localization_key = qpq_sl_tier_1
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 1
+		}
+		localization_key = qpq_sl_tier_1
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 2
+		}
+		localization_key = qpq_sl_tier_2
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 2
+		}
+		localization_key = qpq_sl_tier_2
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 3
+		}
+		localization_key = qpq_sl_tier_3
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 3
+		}
+		localization_key = qpq_sl_tier_3
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 4
+		}
+		localization_key = qpq_sl_tier_4
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 4
+		}
+		localization_key = qpq_sl_tier_4
+	}
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			var:qpq_agent_tier ?= 5
+		}
+		localization_key = qpq_sl_tier_5
+	}
+	text = {
+		trigger = {
+			NOT = { exists = var:qpq_main }
+			var:qpq_payer_tier ?= 5
+		}
+		localization_key = qpq_sl_tier_5
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqSecretLine = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_charter
+		}
+		localization_key = qpq_sl_secret_charter
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_sl_secret_private
+	}
+}
+

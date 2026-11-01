@@ -62,6 +62,8 @@ qpq_seal_pact_effect = {
 			set_variable = { name = qpq_target_artifact value = scope:qpq_target_artifact }
 		}
 		set_variable = { name = qpq_term value = $TERM$ }
+		set_variable = { name = qpq_payer_tier value = scope:qpq_payer_tier }
+		set_variable = { name = qpq_agent_tier value = scope:qpq_agent_tier }
 		set_variable = { name = qpq_months_left value = $TERM$ }
 		if = {
 			limit = { exists = scope:qpq_is_charter }
@@ -98,6 +100,7 @@ qpq_seal_pact_effect = {
 		}
 		set_variable = { name = qpq_months_left value = $TERM$ }
 	}
+	scope:qpq_story = { set_variable = { name = qpq_mirror value = scope:qpq_mirror } }
 
 	if = {
 		limit = { exists = scope:qpq_is_charter }
@@ -109,6 +112,7 @@ qpq_seal_pact_effect = {
 
 	qpq_store_and_pay_offers_effect = yes
 	qpq_k_$KIND$_on_seal_effect = yes
+	scope:qpq_story = { qpq_sync_mirror_effect = yes }
 
 	scope:qpq_payer = {
 		send_interface_message = {
@@ -498,6 +502,65 @@ qpq_store_and_pay_offers_effect = {
 				add_to_variable_list = { name = qpq_protected_by_restraint target = scope:qpq_story }
 			}
 		}
+
+		# --- What was handed over or promised, for the Situations entry ---
+		if = {
+			limit = {
+				OR = {
+					scope:qpq_o_gold ?= yes
+					scope:qpq_o_gold_lavish ?= yes
+				}
+				NOT = { scope:qpq_o_on_delivery ?= yes }
+				NOT = { scope:qpq_o_stipend ?= yes }
+			}
+			if = {
+				limit = { scope:qpq_o_split ?= yes }
+				set_variable = { name = qpq_paid_now value = { value = scope:qpq_gold_total divide = 2 round = yes } }
+			}
+			else = {
+				set_variable = { name = qpq_paid_now value = scope:qpq_gold_total }
+			}
+		}
+		if = {
+			limit = { scope:qpq_o_claim ?= yes }
+			set_variable = qpq_gave_claim
+		}
+		if = {
+			limit = { scope:qpq_o_marriage ?= yes }
+			set_variable = qpq_gave_marriage
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			set_variable = qpq_gave_hook_release
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			set_variable = qpq_gave_my_word
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			set_variable = qpq_gave_secret
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			set_variable = qpq_gave_clemency
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			set_variable = qpq_gave_arms
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			set_variable = qpq_gave_church
+		}
+		if = {
+			limit = { scope:qpq_o_hook ?= yes }
+			set_variable = qpq_used_hook
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			set_variable = qpq_offer_restraint
+		}
 	}
 }
 
@@ -688,6 +751,7 @@ qpq_story_tick_effect = {
 			if = {
 				limit = { qpq_story_is_active_trigger = yes }
 				change_variable = { name = qpq_months_left add = -1 }
+				qpq_sync_mirror_effect = yes
 				if = {
 					limit = { var:qpq_months_left <= 0 }
 					if = {
@@ -1712,5 +1776,50 @@ qpq_ai_secret_pulse_effect = {
 				}
 			}
 		}
+	}
+}
+
+# Root: a pact story. Copies what the agent's Situations entry shows onto their mirror story.
+qpq_sync_mirror_effect = {
+	if = {
+		limit = { exists = var:qpq_mirror }
+		var:qpq_mirror = {
+			set_variable = { name = qpq_months_left value = prev.var:qpq_months_left }
+			set_variable = { name = qpq_term value = prev.var:qpq_term }
+			set_variable = { name = qpq_payer_tier value = prev.var:qpq_payer_tier }
+			set_variable = { name = qpq_agent_tier value = prev.var:qpq_agent_tier }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gold_due }
+			qpq_mirror_copy_var_effect = { VAR = qpq_stipend }
+			qpq_mirror_copy_var_effect = { VAR = qpq_paid_now }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_title }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_artifact }
+			qpq_mirror_copy_var_effect = { VAR = qpq_target_artifact }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_contract }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_succession }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_office }
+			qpq_mirror_copy_var_effect = { VAR = qpq_offer_restraint }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_claim }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_marriage }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_hook_release }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_my_word }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_secret }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_clemency }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_arms }
+			qpq_mirror_copy_var_effect = { VAR = qpq_gave_church }
+			qpq_mirror_copy_var_effect = { VAR = qpq_used_hook }
+			qpq_mirror_copy_var_effect = { VAR = qpq_charter }
+		}
+	}
+}
+
+# Root: the mirror story; prev: the main story
+qpq_mirror_copy_var_effect = {
+	if = {
+		limit = { exists = prev.var:$VAR$ }
+		set_variable = { name = $VAR$ value = prev.var:$VAR$ }
+	}
+	else_if = {
+		limit = { exists = var:$VAR$ }
+		remove_variable = $VAR$
 	}
 }
