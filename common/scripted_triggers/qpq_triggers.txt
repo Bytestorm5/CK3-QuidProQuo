@@ -1,0 +1,268 @@
+﻿# Quid Pro Quo - shared scripted triggers
+# Everything in this mod is prefixed qpq_ and no vanilla object is overridden.
+
+############################################################
+# Context modifiers (Scandal tier table)
+# PARTY = the pact member whose half is being priced
+# TARGET = the character the Ask is aimed at
+############################################################
+
+# Target is a foreigner of a hostile faith (-1)
+qpq_ctx_hostile_foreigner_trigger = {
+	$TARGET$ = {
+		NOT = { top_liege = $PARTY$.top_liege }
+	}
+	$PARTY$.faith = {
+		faith_hostility_level = {
+			target = $TARGET$.faith
+			value >= faith_hostile_level
+		}
+	}
+}
+
+# Target is a co-religionist you have a truce or alliance with (+1)
+qpq_ctx_coreligionist_ally_trigger = {
+	$TARGET$.faith = $PARTY$.faith
+	$PARTY$ = {
+		OR = {
+			is_allied_to = $TARGET$
+			has_truce = $TARGET$
+		}
+	}
+}
+
+# Target is inside the same realm, a fellow (or own) vassal (+1)
+qpq_ctx_same_realm_trigger = {
+	$TARGET$ = {
+		is_landed = yes
+		top_liege = $PARTY$.top_liege
+		NOT = { this = $PARTY$.top_liege }
+		NOT = { this = $PARTY$ }
+	}
+}
+
+# Target is close family or the designated heir (+1, kinslaying applies)
+qpq_ctx_close_kin_trigger = {
+	$PARTY$ = {
+		OR = {
+			is_close_family_of = $TARGET$
+			is_spouse_of = $TARGET$
+			primary_heir ?= $TARGET$
+			designated_heir ?= $TARGET$
+		}
+	}
+}
+
+# Target is your own liege (+2, treason)
+qpq_ctx_own_liege_trigger = {
+	$PARTY$ = {
+		liege ?= $TARGET$
+		NOT = { this = $TARGET$ }
+	}
+}
+
+# Target is clergy or a Head of Faith (+1)
+qpq_ctx_clergy_trigger = {
+	$TARGET$ = {
+		OR = {
+			is_clergy = yes
+			is_head_of_faith = yes
+		}
+	}
+}
+
+# The exposer's culture or faith tolerates intrigue (-1 at exposure).
+# Reads the By God Alone rite parameters where available, plus a short list of
+# court-intrigue traditions.
+qpq_tolerates_intrigue_trigger = {
+	$CHAR$ = {
+		OR = {
+			culture = { has_cultural_tradition = tradition_court_eunuchs }
+			culture = { has_cultural_tradition = tradition_byzantine_succession }
+			rite ?= { rite_has_parameter = sanctioned_assassinations }
+		}
+	}
+}
+
+############################################################
+# Pact bookkeeping
+############################################################
+
+# Secret scope: is this a Quid Pro Quo pact secret?
+qpq_is_pact_secret_trigger = {
+	has_variable = qpq_kind
+}
+
+# Character can still take on another pact (2 + diplomacy / 5, Charters included)
+qpq_has_pact_capacity_trigger = {
+	$CHAR$ = {
+		OR = {
+			NOT = { has_variable_list = qpq_pacts }
+			variable_list_size = {
+				name = qpq_pacts
+				value < qpq_pact_cap_value
+			}
+		}
+	}
+}
+
+# Both sides have room for one more pact (shown as a failure reason in interactions)
+qpq_both_have_pact_capacity_trigger = {
+	custom_description = {
+		text = qpq_actor_pact_cap_reached
+		subject = $ACTOR$
+		qpq_has_pact_capacity_trigger = { CHAR = $ACTOR$ }
+	}
+	custom_description = {
+		text = qpq_recipient_pact_cap_reached
+		subject = $RECIPIENT$
+		qpq_has_pact_capacity_trigger = { CHAR = $RECIPIENT$ }
+	}
+}
+
+# A has an active pact (any role) with B
+qpq_has_active_pact_with_trigger = {
+	$A$ = {
+		has_variable_list = qpq_pacts
+		any_in_list = {
+			variable = qpq_pacts
+			OR = {
+				var:qpq_agent ?= $B$
+				var:qpq_payer ?= $B$
+			}
+		}
+	}
+}
+
+# Story scope: the pact is still running
+qpq_story_is_active_trigger = {
+	exists = var:qpq_kind
+	NOT = { exists = var:qpq_closed }
+}
+
+# Character is someone who should play the intrigue game at all
+qpq_valid_party_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+}
+
+# Character leans on Dread: being known as ruthless pays off instead of costing prestige
+qpq_leans_on_dread_trigger = {
+	is_ruler = yes
+	OR = {
+		dread >= 40
+		has_trait = sadistic
+		has_trait = callous
+	}
+}
+
+# A ruler with legitimacy (Roads to Power / 1.13+ legitimacy system)
+qpq_uses_legitimacy_trigger = {
+	is_ruler = yes
+	has_legitimacy = yes
+}
+
+# Administrative / influence-based government (Roads to Power)
+qpq_uses_influence_trigger = {
+	government_has_flag = government_has_influence
+}
+
+# Faith has a Head of Faith who can excommunicate
+qpq_faith_has_hof_trigger = {
+	exists = faith.religious_head
+	NOT = { faith.religious_head = this }
+}
+
+# Intrigue-heavy character (for AI-initiated pacts)
+qpq_intrigue_heavy_trigger = {
+	OR = {
+		intrigue >= 14
+		has_trait = schemer
+		has_trait = deceitful
+		has_lifestyle = intrigue_lifestyle
+	}
+}
+
+# Character is a valid recipient of an AI-initiated proposal
+qpq_ai_target_ok_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { has_character_flag = qpq_considering_proposal }
+}
+
+############################################################
+# Engine triggers
+############################################################
+
+# Payer-side breaches: dismissing an office early, breaking a restraint promise, missing a stipend
+qpq_payer_broke_terms_trigger = {
+	OR = {
+		has_variable = qpq_payer_violated
+		AND = {
+			has_variable = qpq_offer_office
+			has_variable = qpq_office_given
+			scope:qpq_agent = { NOT = { is_councillor_of = scope:qpq_payer } }
+		}
+	}
+}
+
+# A stipend falls due in months 1, 13, 25, ...
+qpq_stipend_due_trigger = {
+	OR = {
+		var:qpq_stipend_counter = 1
+		var:qpq_stipend_counter = 13
+		var:qpq_stipend_counter = 25
+		var:qpq_stipend_counter = 37
+		var:qpq_stipend_counter = 49
+		var:qpq_stipend_counter = 61
+		var:qpq_stipend_counter = 73
+		var:qpq_stipend_counter = 85
+		var:qpq_stipend_counter = 97
+		var:qpq_stipend_counter = 109
+	}
+}
+
+# The agent carries the full criminal weight of the deed (the hand that held the knife),
+# unless they were the wronged party and burned the pact themselves
+qpq_agent_is_criminal_trigger = {
+	qpq_effective_tier_value >= 4
+	NOT = {
+		AND = {
+			scope:qpq_exposer = var:qpq_owner
+			var:qpq_wronged ?= var:qpq_owner
+		}
+	}
+}
+
+qpq_payer_is_criminal_trigger = {
+	qpq_effective_tier_value >= 4
+	qpq_payer_share_value >= 45
+}
+
+# Price of Loyalty candidate: greedy or disgruntled AI vassal
+qpq_price_of_loyalty_candidate_trigger = {
+	is_landed = yes
+	highest_held_title_tier >= tier_county
+	qpq_has_pact_capacity_trigger = { CHAR = this }
+	OR = {
+		has_trait = greedy
+		has_trait = ambitious
+		opinion = { target = $LIEGE$ value <= 0 }
+	}
+	NOT = { has_character_flag = qpq_demanded_price }
+}
+
+# Story scope: LIST (a character variable list on the story) contains WHO or WHO's top liege
+qpq_beat_trigger = {
+	has_variable_list = $LIST$
+	OR = {
+		is_target_in_variable_list = { name = $LIST$ target = $WHO$ }
+		AND = {
+			exists = $WHO$.top_liege
+			is_target_in_variable_list = { name = $LIST$ target = $WHO$.top_liege }
+		}
+	}
+}

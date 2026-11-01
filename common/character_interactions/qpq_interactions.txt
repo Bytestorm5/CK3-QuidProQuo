@@ -1,0 +1,439 @@
+﻿# Quid Pro Quo - player-facing interactions.
+# The 61 pact interactions themselves are hidden (qpq_pact_interactions.txt) and opened from the hub,
+# so the right-click menu only gains these few entries.
+
+#################################################################
+# Propose a Pact: the hub. Pick a kind of deal in an event, then the Ask; that opens its window.
+#################################################################
+qpq_propose_pact_interaction = {
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	interface_priority = 60
+	icon = icon_personal
+	desc = qpq_propose_pact_interaction_desc
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		NOT = { scope:actor = scope:recipient }
+		scope:recipient = { is_alive = yes is_adult = yes }
+		qpq_any_pact_possible_trigger = yes
+	}
+
+	is_valid_showing_failures_only = {
+		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
+		scope:recipient = { is_imprisoned = no }
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:recipient = { save_scope_as = qpq_hub_recipient }
+		scope:actor = { trigger_event = qpq_hub.1 }
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+#################################################################
+# Honour the Pact: the agent performs an Ask that is done by a single act
+#################################################################
+qpq_honour_pact_interaction = {
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	interface_priority = 61
+	icon = icon_personal
+	desc = qpq_honour_pact_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			has_variable_list = qpq_pacts
+			any_in_list = {
+				variable = qpq_pacts
+				qpq_story_is_active_trigger = yes
+				qpq_kind_is_performable_trigger = yes
+				var:qpq_agent ?= scope:actor
+				var:qpq_payer ?= scope:recipient
+			}
+		}
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:actor = {
+			random_in_list = {
+				variable = qpq_pacts
+				limit = {
+					qpq_story_is_active_trigger = yes
+					qpq_kind_is_performable_trigger = yes
+					var:qpq_agent ?= scope:actor
+					var:qpq_payer ?= scope:recipient
+				}
+				save_scope_as = qpq_honour_story
+			}
+		}
+		scope:qpq_honour_story = {
+			qpq_load_story_scopes_effect = yes
+			if = {
+				limit = { qpq_kind_can_perform_trigger = yes }
+				qpq_kind_perform_effect = yes
+				qpq_deliver_pact_effect = yes
+			}
+			else = {
+				scope:qpq_agent = {
+					send_interface_toast = {
+						type = event_toast_effect_bad
+						title = qpq_msg_cannot_honour_title
+						custom_tooltip = qpq_msg_cannot_honour_tt
+					}
+				}
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+#################################################################
+# Break the Pact: an open breach. The other side becomes the wronged party.
+#################################################################
+qpq_break_pact_interaction = {
+	category = interaction_category_hostile
+	interface_priority = 30
+	icon = icon_personal
+	desc = qpq_break_pact_interaction_desc
+
+	is_shown = {
+		qpq_has_active_pact_with_trigger = { A = scope:actor B = scope:recipient }
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:actor = {
+			random_in_list = {
+				variable = qpq_pacts
+				limit = {
+					qpq_story_is_active_trigger = yes
+					OR = {
+						var:qpq_agent ?= scope:recipient
+						var:qpq_payer ?= scope:recipient
+					}
+				}
+				save_scope_as = qpq_broken_story
+			}
+		}
+		scope:qpq_broken_story = {
+			qpq_load_story_scopes_effect = yes
+			qpq_breach_pact_effect = { BREACHER = scope:actor WRONGED = scope:recipient }
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+#################################################################
+# Proclaim as a Charter: a private pact with floor 0 can go public, but only before war is declared
+#################################################################
+qpq_proclaim_charter_interaction = {
+	category = interaction_category_diplomacy
+	interface_priority = 40
+	icon = icon_personal
+	desc = qpq_proclaim_charter_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			has_variable_list = qpq_pacts
+			any_in_list = {
+				variable = qpq_pacts
+				qpq_story_is_active_trigger = yes
+				has_variable = qpq_floor0
+				NOT = { has_variable = qpq_charter }
+				var:qpq_payer ?= scope:actor
+				var:qpq_agent ?= scope:recipient
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		custom_description = {
+			text = qpq_proclaim_before_war
+			scope:actor = {
+				any_in_list = {
+					variable = qpq_pacts
+					qpq_story_is_active_trigger = yes
+					has_variable = qpq_floor0
+					NOT = { has_variable = qpq_charter }
+					var:qpq_agent ?= scope:recipient
+					OR = {
+						NOT = { exists = var:qpq_target }
+						NOT = { scope:recipient = { is_at_war_with = prev.var:qpq_target } }
+					}
+				}
+			}
+		}
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:actor = {
+			random_in_list = {
+				variable = qpq_pacts
+				limit = {
+					qpq_story_is_active_trigger = yes
+					has_variable = qpq_floor0
+					NOT = { has_variable = qpq_charter }
+					var:qpq_agent ?= scope:recipient
+				}
+				save_scope_as = qpq_proclaimed_story
+			}
+		}
+		scope:qpq_proclaimed_story = {
+			qpq_load_story_scopes_effect = yes
+			set_variable = qpq_charter
+			if = {
+				limit = { exists = scope:qpq_payer_secret }
+				scope:qpq_payer_secret = { remove_secret = yes }
+			}
+			if = {
+				limit = { exists = scope:qpq_agent_secret }
+				scope:qpq_agent_secret = { remove_secret = yes }
+			}
+			remove_variable = qpq_payer_secret
+			remove_variable = qpq_agent_secret
+			set_variable = { name = qpq_payer_tier value = 0 }
+			set_variable = { name = qpq_agent_tier value = 0 }
+			qpq_publish_charter_effect = yes
+			# A chartered conquest now carries the Crown Mandate
+			if = {
+				limit = {
+					var:qpq_kind = flag:chartered_conquest
+					exists = scope:qpq_target
+				}
+				scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_against target = scope:qpq_target } }
+				scope:qpq_target = {
+					every_realm_county = {
+						limit = {
+							any_this_title_or_de_jure_above = { holder ?= scope:qpq_payer }
+						}
+						scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_titles target = prev } }
+					}
+				}
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+#################################################################
+# Renegotiate: blackmail before exposure. Demand more, or else.
+#################################################################
+qpq_renegotiate_interaction = {
+	category = interaction_category_hostile
+	interface_priority = 45
+	icon = secret
+	desc = qpq_renegotiate_interaction_desc
+	popup_on_receive = yes
+	pause_on_receive = yes
+	ai_maybe = yes
+	ai_min_reply_days = 1
+	ai_max_reply_days = 4
+	cooldown_against_recipient = { years = 2 }
+	send_options_exclusive = yes
+
+	is_shown = {
+		NOT = { scope:actor = scope:recipient }
+		scope:recipient = {
+			any_secret = {
+				qpq_is_pact_secret_trigger = yes
+				is_known_by = scope:actor
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { NOT = { is_at_war_with = scope:recipient } }
+	}
+
+	send_option = {
+		flag = qpq_reneg_gold
+		localization = qpq_reneg_gold
+		current_description = qpq_reneg_gold_desc
+	}
+	send_option = {
+		flag = qpq_reneg_hook
+		localization = qpq_reneg_hook
+		current_description = qpq_reneg_hook_desc
+		is_valid = {
+			NOT = { scope:actor = { has_strong_hook = scope:recipient } }
+		}
+	}
+
+	ai_accept = {
+		base = -15
+		modifier = {
+			add = {
+				value = 0
+				every_secret = {
+					limit = {
+						qpq_is_pact_secret_trigger = yes
+						is_known_by = scope:actor
+					}
+					add = {
+						value = var:qpq_tier
+						multiply = 12
+					}
+				}
+				max = 70
+			}
+			desc = QPQ_REASON_WHAT_THEY_KNOW
+		}
+		modifier = {
+			add = -25
+			scope:recipient = {
+				any_secret = {
+					qpq_is_pact_secret_trigger = yes
+					is_known_by = scope:actor
+					OR = {
+						var:qpq_payer ?= scope:actor
+						var:qpq_agent ?= scope:actor
+					}
+					NOT = { var:qpq_wronged ?= scope:actor }
+				}
+			}
+			desc = QPQ_REASON_MUTUALLY_ASSURED
+		}
+		modifier = {
+			add = 10
+			scope:recipient = { has_trait = paranoid }
+			desc = QPQ_REASON_TRAIT_PARANOID
+		}
+		modifier = {
+			add = -10
+			scope:recipient = { has_trait = brave }
+			desc = QPQ_REASON_TRAIT_BRAVE
+		}
+		modifier = {
+			add = -10
+			scope:qpq_reneg_gold ?= yes
+			scope:recipient = { has_trait = greedy }
+			desc = QPQ_REASON_TRAIT_GREEDY
+		}
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.25
+			desc = AI_OPINION_REASON
+		}
+	}
+
+	on_accept = {
+		scope:recipient = {
+			ordered_secret = {
+				limit = {
+					qpq_is_pact_secret_trigger = yes
+					is_known_by = scope:actor
+				}
+				order_by = var:qpq_tier
+				save_scope_as = qpq_hush_secret
+			}
+		}
+		save_scope_value_as = { name = qpq_reneg_tier value = scope:qpq_hush_secret.var:qpq_tier }
+		if = {
+			limit = { scope:qpq_reneg_gold ?= yes }
+			scope:recipient = { save_scope_as = qpq_hush_payer }
+			scope:actor = { save_scope_as = qpq_hush_agent }
+			save_scope_value_as = { name = qpq_hush_price value = qpq_renegotiate_demand_value }
+			qpq_seal_hush_money_effect = yes
+		}
+		else = {
+			scope:actor = {
+				add_hook = { type = qpq_leverage_hook target = scope:recipient }
+			}
+		}
+	}
+
+	on_decline = {
+		scope:actor = { trigger_event = qpq_expose.21 }
+	}
+
+	auto_accept = no
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+#################################################################
+# Confess: burn your own pact, pay 75% of your share and a penance; the other side pays in full
+#################################################################
+qpq_confess_pact_interaction = {
+	category = interaction_category_religion
+	interface_priority = 20
+	icon = religious
+	desc = qpq_confess_pact_interaction_desc
+	send_options_exclusive = yes
+
+	is_shown = {
+		scope:actor = {
+			any_secret = {
+				qpq_is_pact_secret_trigger = yes
+				secret_target = scope:recipient
+			}
+		}
+	}
+
+	send_option = {
+		flag = qpq_penance_gold
+		localization = qpq_penance_gold
+		current_description = qpq_penance_gold_desc
+	}
+	send_option = {
+		flag = qpq_penance_piety
+		localization = qpq_penance_piety
+		current_description = qpq_penance_piety_desc
+	}
+	send_option = {
+		flag = qpq_penance_pilgrimage
+		localization = qpq_penance_pilgrimage
+		current_description = qpq_penance_pilgrimage_desc
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:actor = {
+			random_secret = {
+				limit = {
+					qpq_is_pact_secret_trigger = yes
+					secret_target = scope:recipient
+				}
+				save_scope_as = qpq_confess_half
+			}
+			save_scope_value_as = { name = qpq_penance value = flag:pilgrimage }
+			if = {
+				limit = { scope:qpq_penance_gold ?= yes }
+				save_scope_value_as = { name = qpq_penance value = flag:gold }
+			}
+			else_if = {
+				limit = { scope:qpq_penance_piety ?= yes }
+				save_scope_value_as = { name = qpq_penance value = flag:piety }
+			}
+			qpq_confess_pact_effect = yes
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

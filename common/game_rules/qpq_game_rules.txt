@@ -1,0 +1,10 @@
+﻿# Quid Pro Quo game rules
+
+qpq_ai_pact_frequency = {
+	categories = { ai }
+	default = qpq_ai_pacts_normal
+
+	qpq_ai_pacts_rare = {}
+	qpq_ai_pacts_normal = {}
+	qpq_ai_pacts_frequent = {}
+}

@@ -1,0 +1,132 @@
+﻿namespace = qpq_expose
+
+#################################################################
+# 1: A pact you were party to has been exposed (fallout already applied)
+#################################################################
+qpq_expose.1 = {
+	type = character_event
+	title = qpq_expose.1.t
+	desc = {
+		desc = qpq_expose.1.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:qpq_exposer = root }
+				desc = qpq_expose.1.you_exposed
+			}
+			triggered_desc = {
+				trigger = {
+					OR = {
+						scope:qpq_exposer = scope:qpq_payer
+						scope:qpq_exposer = scope:qpq_agent
+					}
+				}
+				desc = qpq_expose.1.partner_exposed
+			}
+			desc = qpq_expose.1.third_party
+		}
+	}
+	theme = secret
+	left_portrait = root
+	right_portrait = scope:qpq_exposer
+
+	immediate = {
+		play_music_cue = "mx_cue_secret"
+	}
+
+	option = {
+		name = qpq_expose.1.a
+	}
+}
+
+#################################################################
+# 2: You exposed someone else's pact
+#################################################################
+qpq_expose.2 = {
+	type = character_event
+	title = qpq_expose.2.t
+	desc = qpq_expose.2.desc
+	theme = secret
+	left_portrait = root
+	right_portrait = scope:qpq_payer
+	lower_right_portrait = scope:qpq_agent
+
+	option = {
+		name = qpq_expose.2.a
+		add_prestige = minor_prestige_gain
+	}
+}
+
+#################################################################
+# 3: You learn you were the target of a pact
+#################################################################
+qpq_expose.3 = {
+	type = character_event
+	title = qpq_expose.3.t
+	desc = qpq_expose.3.desc
+	theme = secret
+	left_portrait = root
+	right_portrait = scope:qpq_payer
+	lower_right_portrait = scope:qpq_agent
+
+	option = {
+		name = qpq_expose.3.a
+	}
+}
+
+#################################################################
+# 20: An AI holder demands more for their silence (blackmail before exposure)
+#################################################################
+qpq_expose.20 = {
+	type = character_event
+	title = qpq_expose.20.t
+	desc = qpq_expose.20.desc
+	theme = secret
+	left_portrait = root
+	right_portrait = scope:qpq_ai_blackmailer
+
+	immediate = {
+		scope:qpq_ai_secret = { save_scope_as = qpq_hush_secret }
+	}
+
+	option = {
+		name = qpq_expose.20.a
+		trigger = { gold >= scope:qpq_hush_price }
+		root = { save_scope_as = qpq_hush_payer }
+		scope:qpq_ai_blackmailer = { save_scope_as = qpq_hush_agent }
+		qpq_seal_hush_money_effect = yes
+	}
+	option = {
+		name = qpq_expose.20.b
+		custom_tooltip = qpq_expose.20.b.tt
+		scope:qpq_hush_secret = { expose_secret = scope:qpq_ai_blackmailer }
+	}
+}
+
+#################################################################
+# 21: They refused your renegotiation. Burn it, or back down?
+#################################################################
+qpq_expose.21 = {
+	type = character_event
+	title = qpq_expose.21.t
+	desc = qpq_expose.21.desc
+	theme = secret
+	left_portrait = root
+	right_portrait = scope:recipient
+
+	option = {
+		name = qpq_expose.21.a
+		scope:recipient = {
+			random_secret = {
+				limit = {
+					qpq_is_pact_secret_trigger = yes
+					is_known_by = root
+				}
+				expose_secret = root
+			}
+		}
+	}
+	option = {
+		name = qpq_expose.21.b
+		add_prestige = minor_prestige_loss
+	}
+}

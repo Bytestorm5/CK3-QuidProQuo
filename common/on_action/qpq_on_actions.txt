@@ -1,0 +1,167 @@
+﻿# Quid Pro Quo on_actions.
+# Vanilla on_actions are only extended through their on_actions = { } lists (which merge),
+# never redefined, so this file sits alongside other mods.
+
+yearly_playable_pulse = {
+	on_actions = { qpq_yearly_pulse }
+}
+
+on_death = {
+	on_actions = { qpq_on_death }
+}
+
+on_war_won_attacker = {
+	on_actions = { qpq_on_war_won_attacker }
+}
+
+on_war_won_defender = {
+	on_actions = { qpq_on_war_won_defender }
+}
+
+on_war_white_peace = {
+	on_actions = { qpq_on_war_white_peace }
+}
+
+on_war_started = {
+	on_actions = { qpq_on_war_started }
+}
+
+on_join_war_as_secondary = {
+	on_actions = { qpq_on_join_war_as_secondary }
+}
+
+on_title_lost = {
+	on_actions = { qpq_on_title_lost }
+}
+
+on_imprison = {
+	on_actions = { qpq_on_imprison }
+}
+
+#################################################################
+
+qpq_yearly_pulse = {
+	effect = {
+		# Keep the heir pointer on Tier IV-V halves current
+		qpq_yearly_secret_upkeep_effect = yes
+		# Pilgrimage penance
+		if = {
+			limit = {
+				has_variable = qpq_owes_pilgrimage
+				has_trait = pilgrim
+			}
+			remove_variable = qpq_owes_pilgrimage
+			remove_character_modifier = qpq_owes_pilgrimage_modifier
+		}
+		if = {
+			limit = { is_ai = yes }
+			# AI holders milk or burn pact secrets
+			random = {
+				chance = 15
+				qpq_ai_secret_pulse_effect = yes
+			}
+			# Deathbed and stress-break confessions
+			qpq_ai_consider_confession_effect = yes
+			# AI-initiated pacts
+			random = {
+				chance = qpq_ai_proposal_chance_value
+				qpq_ai_broker_pact_effect = yes
+			}
+		}
+	}
+}
+
+qpq_on_death = {
+	effect = {
+		# Tier IV-V halves pass to the heir: note who that is while we still can
+		every_secret = {
+			limit = { qpq_is_pact_secret_trigger = yes }
+			if = {
+				limit = { exists = prev.primary_heir }
+				set_variable = { name = qpq_heir value = prev.primary_heir }
+			}
+		}
+	}
+}
+
+qpq_on_war_won_attacker = {
+	effect = {
+		qpq_record_war_result_effect = { WINNER = scope:attacker LOSER = scope:defender }
+	}
+}
+
+qpq_on_war_won_defender = {
+	effect = {
+		qpq_record_war_result_effect = { WINNER = scope:defender LOSER = scope:attacker }
+	}
+}
+
+qpq_on_war_white_peace = {
+	effect = {
+		qpq_record_war_end_effect = { A = scope:attacker B = scope:defender }
+	}
+}
+
+qpq_on_war_started = {
+	effect = {
+		qpq_war_started_effect = yes
+	}
+}
+
+qpq_on_join_war_as_secondary = {
+	effect = {
+		qpq_joined_war_effect = yes
+	}
+}
+
+qpq_on_title_lost = {
+	effect = {
+		# Mutual Defense League: a revocation by the liege calls the league to arms (six months to answer)
+		if = {
+			limit = {
+				exists = scope:transfer_type
+				scope:transfer_type = flag:revoked
+				has_variable_list = qpq_league_stories
+			}
+			every_in_list = {
+				variable = qpq_league_stories
+				limit = {
+					qpq_story_is_active_trigger = yes
+					var:qpq_target ?= scope:new_holder
+				}
+				set_variable = qpq_league_called
+				set_variable = { name = qpq_league_grace value = yes months = 6 }
+			}
+		}
+		# Restraint: a payer who revokes from an agent they promised to protect breaks the pact
+		if = {
+			limit = {
+				exists = scope:transfer_type
+				scope:transfer_type = flag:revoked
+				has_variable_list = qpq_protected_by_restraint
+				exists = scope:new_holder
+			}
+			every_in_list = {
+				variable = qpq_protected_by_restraint
+				limit = { var:qpq_payer ?= scope:new_holder }
+				set_variable = qpq_payer_violated
+			}
+		}
+	}
+}
+
+qpq_on_imprison = {
+	effect = {
+		if = {
+			limit = {
+				has_variable_list = qpq_protected_by_restraint
+				exists = scope:imprisoner
+			}
+			every_in_list = {
+				variable = qpq_protected_by_restraint
+				limit = { var:qpq_payer ?= scope:imprisoner }
+				set_variable = qpq_payer_violated
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+﻿# Quid Pro Quo hooks
+
+# The wronged party's strong hook after a breach
+qpq_broken_pact_hook = {
+	strong = yes
+	expiration_days = 7300
+}
+
+# "My word as bond": a voluntary weak hook on yourself, an IOU
+qpq_my_word_hook = {
+	expiration_days = 3650
+}
+
+# The victim of an exposed Tier III+ pact holds this over whoever exposed less of their own guilt
+qpq_leverage_hook = {
+	strong = yes
+	expiration_days = 5475
+}
+
+# A patriarch who owes the throne a favour (Pliant Patriarch)
+qpq_pliant_cleric_hook = {
+	strong = yes
+	expiration_days = 7300
+}

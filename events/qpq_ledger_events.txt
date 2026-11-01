@@ -1,0 +1,119 @@
+﻿namespace = qpq_ledger
+
+# The Pact Ledger. Active pacts already appear in the Situations window (one entry per pact, for
+# both parties). The ledger adds what that window cannot show: every pact half you hold and every
+# pact secret you know about, on separate tabs, five entries a page.
+
+#################################################################
+# 1: Front page (tab picker)
+#################################################################
+qpq_ledger.1 = {
+	type = character_event
+	title = qpq_ledger.1.t
+	desc = qpq_ledger.1.desc
+	theme = intrigue
+	left_portrait = root
+
+	immediate = {
+		qpq_ledger_reset_effect = yes
+	}
+
+	option = {
+		name = qpq_ledger.1.mine
+		trigger = { any_secret = { qpq_is_pact_secret_trigger = yes } }
+		every_secret = {
+			limit = { qpq_is_pact_secret_trigger = yes }
+			root = { add_to_variable_list = { name = qpq_ledger_queue target = prev } }
+		}
+		set_variable = { name = qpq_ledger_tab value = flag:mine }
+		trigger_event = qpq_ledger.2
+	}
+	option = {
+		name = qpq_ledger.1.known
+		trigger = {
+			any_known_secret = {
+				qpq_is_pact_secret_trigger = yes
+				NOT = { secret_owner = root }
+			}
+		}
+		every_known_secret = {
+			limit = {
+				qpq_is_pact_secret_trigger = yes
+				NOT = { secret_owner = root }
+			}
+			root = { add_to_variable_list = { name = qpq_ledger_queue target = prev } }
+		}
+		set_variable = { name = qpq_ledger_tab value = flag:known }
+		trigger_event = qpq_ledger.2
+	}
+	option = {
+		name = qpq_ledger.close
+		qpq_ledger_reset_effect = yes
+	}
+}
+
+#################################################################
+# 2: One page of up to five entries
+#################################################################
+qpq_ledger.2 = {
+	type = character_event
+	title = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { var:qpq_ledger_tab ?= flag:mine }
+				desc = qpq_ledger.2.t.mine
+			}
+			desc = qpq_ledger.2.t.known
+		}
+	}
+	desc = {
+		desc = qpq_ledger.2.intro
+		triggered_desc = {
+			trigger = { exists = scope:qpq_l1 }
+			desc = qpq_ledger.2.slot1
+		}
+		triggered_desc = {
+			trigger = { exists = scope:qpq_l2 }
+			desc = qpq_ledger.2.slot2
+		}
+		triggered_desc = {
+			trigger = { exists = scope:qpq_l3 }
+			desc = qpq_ledger.2.slot3
+		}
+		triggered_desc = {
+			trigger = { exists = scope:qpq_l4 }
+			desc = qpq_ledger.2.slot4
+		}
+		triggered_desc = {
+			trigger = { exists = scope:qpq_l5 }
+			desc = qpq_ledger.2.slot5
+		}
+	}
+	theme = intrigue
+	left_portrait = root
+
+	immediate = {
+		qpq_ledger_take_effect = { SLOT = qpq_l1 }
+		qpq_ledger_take_effect = { SLOT = qpq_l2 }
+		qpq_ledger_take_effect = { SLOT = qpq_l3 }
+		qpq_ledger_take_effect = { SLOT = qpq_l4 }
+		qpq_ledger_take_effect = { SLOT = qpq_l5 }
+	}
+
+	option = {
+		name = qpq_ledger.2.next
+		trigger = {
+			has_variable_list = qpq_ledger_queue
+			variable_list_size = { name = qpq_ledger_queue value > 0 }
+		}
+		trigger_event = qpq_ledger.2
+	}
+	option = {
+		name = qpq_ledger.2.back
+		trigger_event = qpq_ledger.1
+	}
+	option = {
+		name = qpq_ledger.close
+		qpq_ledger_reset_effect = yes
+	}
+}

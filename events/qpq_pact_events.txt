@@ -1,0 +1,117 @@
+﻿namespace = qpq_pact
+
+#################################################################
+# 20: Payment falls due on delivery (player payers may renege)
+#################################################################
+qpq_pact.20 = {
+	type = character_event
+	title = qpq_pact.20.t
+	desc = qpq_pact.20.desc
+	theme = stewardship
+	left_portrait = root
+	right_portrait = scope:qpq_agent
+
+	option = {
+		name = qpq_pact.20.a
+		trigger = { gold >= scope:qpq_due }
+		pay_short_term_gold = {
+			target = scope:qpq_agent
+			gold = scope:qpq_due
+		}
+		scope:qpq_agent = {
+			add_opinion = { target = root modifier = qpq_kept_our_pact_opinion }
+		}
+	}
+	option = {
+		name = qpq_pact.20.b
+		custom_tooltip = qpq_pact.20.b.tt
+		qpq_payer_reneged_effect = yes
+	}
+}
+
+#################################################################
+# 70: Price of Loyalty - a vassal demands payment before answering the call
+#################################################################
+qpq_pact.70 = {
+	type = character_event
+	title = qpq_pact.70.t
+	desc = qpq_pact.70.desc
+	theme = war
+	left_portrait = root
+	right_portrait = scope:qpq_greedy_vassal
+
+	immediate = {
+		scope:qpq_greedy_vassal = {
+			add_character_flag = { flag = qpq_demanded_price years = 5 }
+			save_scope_as = actor
+		}
+		root = { save_scope_as = recipient }
+		save_scope_value_as = { name = qpq_price value = qpq_price_of_loyalty_price_value }
+		if = {
+			limit = { has_variable = qpq_precedent }
+			save_scope_value_as = {
+				name = qpq_price
+				value = { value = scope:qpq_price multiply = 1.5 round = yes }
+			}
+		}
+	}
+
+	option = {
+		name = qpq_pact.70.a
+		trigger = { gold >= scope:qpq_price }
+		save_scope_value_as = { name = qpq_o_gold value = yes }
+		qpq_k_price_of_loyalty_seal_from_scopes_effect = yes
+		scope:qpq_greedy_vassal = {
+			add_opinion = { target = root modifier = qpq_paid_my_price_opinion }
+		}
+	}
+	option = {
+		name = qpq_pact.70.b
+		scope:qpq_greedy_vassal = {
+			add_opinion = { target = root modifier = qpq_refused_my_price_opinion }
+			add_character_modifier = { modifier = qpq_withholding_levies_modifier years = 2 }
+		}
+		add_prestige = minor_prestige_loss
+	}
+}
+
+#################################################################
+# 80: A Charter has been published against you or your vassal
+#################################################################
+qpq_pact.80 = {
+	type = character_event
+	title = qpq_pact.80.t
+	desc = qpq_pact.80.desc
+	theme = diplomacy
+	left_portrait = root
+	right_portrait = scope:qpq_agent
+
+	option = {
+		name = qpq_pact.80.a
+		add_opinion = { target = scope:qpq_payer modifier = qpq_charter_threat_opinion }
+		add_opinion = { target = scope:qpq_agent modifier = qpq_charter_threat_opinion }
+	}
+}
+
+#################################################################
+# 90: A Secret Alliance is called
+#################################################################
+qpq_pact.90 = {
+	type = character_event
+	title = qpq_pact.90.t
+	desc = qpq_pact.90.desc
+	theme = war
+	left_portrait = root
+	right_portrait = scope:defender
+	lower_right_portrait = scope:attacker
+
+	option = {
+		name = qpq_pact.90.a
+		scope:war = { add_defender = root }
+	}
+	option = {
+		name = qpq_pact.90.b
+		custom_tooltip = qpq_pact.90.b.tt
+		scope:qpq_alliance_story = { set_variable = qpq_agent_refused_call }
+	}
+}

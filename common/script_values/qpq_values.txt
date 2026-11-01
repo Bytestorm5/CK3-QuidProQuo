@@ -1,0 +1,559 @@
+﻿# Quid Pro Quo - shared script values
+
+# Pact cap: 2 + diplomacy / 5 active pacts per character, Charters included
+qpq_pact_cap_value = {
+	value = diplomacy
+	divide = 5
+	floor = yes
+	add = 2
+}
+
+# How many pacts the character currently has running
+qpq_active_pacts_value = {
+	value = 0
+	if = {
+		limit = { has_variable_list = qpq_pacts }
+		every_in_list = {
+			variable = qpq_pacts
+			add = 1
+		}
+	}
+}
+
+############################################################
+# Generic context shifts (see qpq_triggers.txt)
+# Interaction scopes: scope:actor = payer, scope:recipient = agent,
+# scope:secondary_recipient = target character, scope:target = target title
+############################################################
+
+qpq_ctx_shift_payer_char_value = {
+	value = 0
+	if = {
+		limit = { exists = scope:secondary_recipient }
+		if = {
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
+			add = -1
+		}
+		if = {
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
+			add = 2
+		}
+		if = {
+			limit = { qpq_ctx_clergy_trigger = { TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+	}
+}
+
+qpq_ctx_shift_agent_char_value = {
+	value = 0
+	if = {
+		limit = { exists = scope:secondary_recipient }
+		if = {
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:recipient TARGET = scope:secondary_recipient } }
+			add = -1
+		}
+		if = {
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:recipient TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:recipient TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:recipient TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:recipient TARGET = scope:secondary_recipient } }
+			add = 2
+		}
+		if = {
+			limit = { qpq_ctx_clergy_trigger = { TARGET = scope:secondary_recipient } }
+			add = 1
+		}
+	}
+}
+
+qpq_ctx_shift_payer_title_value = {
+	value = 0
+	if = {
+		limit = { exists = scope:target.holder }
+		if = {
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			add = -1
+		}
+		if = {
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			add = 2
+		}
+	}
+}
+
+qpq_ctx_shift_agent_title_value = {
+	value = 0
+	if = {
+		limit = { exists = scope:target.holder }
+		if = {
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:recipient TARGET = scope:target.holder } }
+			add = -1
+		}
+		if = {
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:recipient TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:recipient TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:recipient TARGET = scope:target.holder } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:recipient TARGET = scope:target.holder } }
+			add = 2
+		}
+	}
+}
+
+############################################################
+# Offers (currencies). Points are acceptance points for the agent.
+############################################################
+
+# Months of the payer's income asked for a pact of a given agent tier (scope:qpq_price_tier)
+qpq_offer_land_points_value = {
+	value = 30
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = ambitious } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { is_landed = no } }
+		add = 15
+	}
+}
+
+qpq_offer_claim_points_value = {
+	value = 18
+	if = {
+		limit = { scope:recipient = { has_trait = ambitious } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = content } }
+		add = -10
+	}
+}
+
+qpq_offer_office_points_value = {
+	value = 22
+	if = {
+		limit = { scope:recipient = { has_trait = ambitious } }
+		add = 8
+	}
+	if = {
+		limit = { scope:recipient = { is_councillor_of = scope:actor } }
+		add = -22
+	}
+}
+
+qpq_offer_marriage_points_value = {
+	value = 20
+	if = {
+		limit = {
+			exists = scope:actor.dynasty
+			scope:actor.dynasty = { dynasty_prestige_level >= 4 }
+		}
+		add = 10
+	}
+}
+
+qpq_offer_release_hook_points_value = {
+	value = 30
+	if = {
+		limit = { scope:actor = { has_strong_hook = scope:recipient } }
+		add = 20
+	}
+}
+
+qpq_offer_my_word_points_value = {
+	value = 12
+	if = {
+		limit = { scope:actor = { highest_held_title_tier >= tier_kingdom } }
+		add = 8
+	}
+}
+
+qpq_offer_secret_points_value = {
+	value = 15
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = 10
+	}
+}
+
+qpq_offer_contract_points_value = {
+	value = 35
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		add = 5
+	}
+}
+
+qpq_offer_succession_points_value = {
+	value = 40
+}
+
+qpq_offer_clemency_points_value = {
+	value = 30
+}
+
+qpq_offer_arms_points_value = {
+	value = 12
+	if = {
+		limit = { scope:recipient = { is_at_war = yes } }
+		add = 15
+	}
+}
+
+qpq_offer_artifact_points_value = {
+	value = 18
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		add = 8
+	}
+}
+
+qpq_offer_church_points_value = {
+	value = 25
+	if = {
+		limit = { scope:recipient = { has_trait = zealous } }
+		add = 15
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = excommunicated } }
+		add = 25
+	}
+}
+
+qpq_offer_restraint_points_value = {
+	value = 15
+	if = {
+		limit = { scope:recipient = { liege ?= scope:actor } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = 10
+	}
+}
+
+############################################################
+# Exposure fallout scales. scope:qpq_f_tier = effective tier of the half,
+# scope:qpq_f_mult = 0-100 share of the baseline this party pays.
+############################################################
+
+qpq_f_scale_value = {
+	value = scope:qpq_f_mult
+	divide = 100
+}
+
+qpq_f_prestige_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 1 } add = 50 }
+	else_if = { limit = { scope:qpq_f_tier = 2 } add = 150 }
+	else_if = { limit = { scope:qpq_f_tier = 3 } add = 300 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 500 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 800 }
+	multiply = qpq_f_scale_value
+	multiply = -1
+	round = yes
+}
+
+qpq_f_dread_gain_value = {
+	value = qpq_f_prestige_loss_value
+	multiply = -0.04
+	round = yes
+}
+
+qpq_f_legitimacy_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 2 } add = 8 }
+	else_if = { limit = { scope:qpq_f_tier = 3 } add = 15 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 25 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 40 }
+	multiply = qpq_f_scale_value
+	multiply = -1
+	round = yes
+}
+
+qpq_f_influence_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 2 } add = 50 }
+	else_if = { limit = { scope:qpq_f_tier = 3 } add = 100 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 175 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 250 }
+	multiply = qpq_f_scale_value
+	multiply = -1
+	round = yes
+}
+
+qpq_f_betrayed_opinion_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 3 } add = 30 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 50 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 75 }
+	multiply = qpq_f_scale_value
+	multiply = -1
+	max = -5
+	round = yes
+}
+
+qpq_f_favourites_opinion_value = {
+	value = -5
+	multiply = qpq_f_scale_value
+	max = -1
+	round = yes
+}
+
+qpq_f_piety_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 4 } add = 150 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 300 }
+	if = {
+		limit = { is_clergy = yes }
+		multiply = 1.5
+	}
+	if = {
+		limit = { exists = scope:qpq_f_simony }
+		multiply = 1.5
+	}
+	multiply = qpq_f_scale_value
+	multiply = -1
+	round = yes
+}
+
+qpq_f_excommunication_chance_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 4 } add = 15 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 30 }
+	if = {
+		limit = { exists = scope:qpq_f_simony }
+		multiply = 2
+	}
+	multiply = qpq_f_scale_value
+	round = yes
+}
+
+qpq_f_renown_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier >= 5 } add = 500 }
+	multiply = qpq_f_scale_value
+	multiply = -1
+	round = yes
+}
+
+qpq_f_discontent_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 3 } add = 5 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 10 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 15 }
+	multiply = qpq_f_scale_value
+	round = yes
+}
+
+# Fervor lost by a faith whose head of faith was caught selling holiness (scope:qpq_f_tier)
+qpq_f_fervor_loss_value = {
+	value = 0
+	if = { limit = { scope:qpq_f_tier = 1 } add = 2 }
+	else_if = { limit = { scope:qpq_f_tier = 2 } add = 5 }
+	else_if = { limit = { scope:qpq_f_tier = 3 } add = 10 }
+	else_if = { limit = { scope:qpq_f_tier = 4 } add = 15 }
+	else_if = { limit = { scope:qpq_f_tier >= 5 } add = 25 }
+	multiply = -1
+}
+
+# Confession: the penance in gold (scaled to the confessor's income and tier)
+qpq_confession_penance_gold_value = {
+	value = monthly_character_income
+	multiply = {
+		value = scope:qpq_f_tier
+		multiply = 4
+		add = 2
+	}
+	min = 20
+	round = yes
+}
+
+qpq_confession_penance_piety_value = {
+	value = scope:qpq_f_tier
+	multiply = -100
+}
+
+# Renegotiation: what a holder can demand for continued silence
+qpq_renegotiate_demand_value = {
+	value = scope:recipient.monthly_character_income
+	multiply = {
+		value = scope:qpq_reneg_tier
+		multiply = 4
+		add = 4
+	}
+	min = 30
+	round = yes
+}
+
+# AI-initiated pacts: yearly chance (percent) for a character to propose one.
+# "Slightly rarer than uncommon", higher for intrigue-heavy characters.
+qpq_ai_proposal_chance_value = {
+	value = 3
+	if = {
+		limit = { has_game_rule = qpq_ai_pacts_frequent }
+		multiply = 2
+	}
+	else_if = {
+		limit = { has_game_rule = qpq_ai_pacts_rare }
+		multiply = 0.4
+	}
+	if = {
+		limit = { intrigue >= 14 }
+		multiply = 1.75
+	}
+	if = {
+		limit = { has_trait = schemer }
+		multiply = 1.5
+	}
+	if = {
+		limit = { has_trait = deceitful }
+		multiply = 1.3
+	}
+	if = {
+		limit = { has_lifestyle = intrigue_lifestyle }
+		multiply = 1.3
+	}
+	if = {
+		limit = {
+			OR = {
+				has_trait = honest
+				has_trait = just
+			}
+		}
+		multiply = 0.5
+	}
+}
+
+############################################################
+# Exposure pricing (root: a pact half)
+############################################################
+
+# Effective tier of a half at the moment of exposure (root: the half)
+qpq_effective_tier_value = {
+	value = var:qpq_tier
+	if = {
+		limit = { has_variable = qpq_cover_up }
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				NOT = { has_variable = qpq_fresh }
+				var:qpq_payer = { is_alive = no }
+				var:qpq_agent = { is_alive = no }
+			}
+		}
+		add = -1
+	}
+	if = {
+		limit = { has_variable = qpq_victor }
+		add = -1
+		if = {
+			limit = { var:qpq_owner = { is_independent_ruler = yes } }
+			add = -1
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:qpq_exposer
+			qpq_tolerates_intrigue_trigger = { CHAR = scope:qpq_exposer }
+		}
+		add = -1
+	}
+	min = 0
+	max = 5
+}
+
+# Share of the baseline cost this half's owner pays (0-100)
+qpq_payer_share_value = {
+	value = 100
+	if = {
+		limit = {
+			exists = var:qpq_confessed_by
+			var:qpq_confessed_by = var:qpq_owner
+		}
+		value = 45
+		if = {
+			limit = { has_variable = qpq_deathbed }
+			value = 15
+		}
+	}
+	else_if = {
+		limit = { scope:qpq_exposer = var:qpq_owner }
+		value = 60
+		if = {
+			limit = { var:qpq_wronged ?= var:qpq_owner }
+			multiply = 0.25
+		}
+	}
+}
+
+qpq_agent_share_value = {
+	value = 100
+	if = {
+		limit = {
+			exists = var:qpq_confessed_by
+			var:qpq_confessed_by = var:qpq_owner
+		}
+		value = 30
+		if = {
+			limit = { has_variable = qpq_deathbed }
+			value = 10
+		}
+	}
+	else_if = {
+		limit = { scope:qpq_exposer = var:qpq_owner }
+		value = 40
+		if = {
+			limit = { var:qpq_wronged ?= var:qpq_owner }
+			multiply = 0.25
+		}
+	}
+}

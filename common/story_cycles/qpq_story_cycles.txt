@@ -1,0 +1,104 @@
+﻿# Quid Pro Quo - one story cycle per pact holds the terms and checks them every month.
+# Owner: the payer. A display-only mirror story is owned by the agent, so both parties see
+# the pact in the vanilla Situations window ("My pacts" without a custom GUI).
+
+qpq_pact_story = {
+	visible = yes
+
+	icon = {
+		reference = "gfx/interface/icons/story_cycles/story_icon_palace_politics.dds"
+	}
+
+	visualization = {
+		custom_string_key = "QPQ_STORY_PAYER_STRING"
+		character = { variable_name = "qpq_agent" label = "QPQ_STORY_AGENT_LABEL" }
+		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
+		title = { variable_name = "qpq_target_title" label = "QPQ_STORY_TITLE_LABEL" }
+		basic_counter = {
+			variable_name = "qpq_months_left"
+			min = 0
+			max = 120
+			label = "QPQ_STORY_MONTHS_LEFT"
+			min_label = "QPQ_STORY_COUNTER_MIN"
+			max_label = "QPQ_STORY_COUNTER_MAX"
+			tooltip = "QPQ_STORY_MONTHS_LEFT_TT"
+		}
+	}
+
+	on_setup = {}
+
+	on_end = {
+		qpq_story_cleanup_effect = yes
+	}
+
+	on_owner_death = {
+		qpq_story_owner_died_effect = yes
+	}
+
+	effect_group = {
+		months = 1
+		trigger = {
+			qpq_story_is_active_trigger = yes
+		}
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				qpq_story_tick_effect = yes
+			}
+		}
+	}
+}
+
+qpq_pact_mirror_story = {
+	visible = yes
+
+	icon = {
+		reference = "gfx/interface/icons/story_cycles/story_icon_palace_politics.dds"
+	}
+
+	visualization = {
+		custom_string_key = "QPQ_STORY_AGENT_STRING"
+		character = { variable_name = "qpq_payer" label = "QPQ_STORY_PAYER_LABEL" }
+		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
+		title = { variable_name = "qpq_target_title" label = "QPQ_STORY_TITLE_LABEL" }
+		basic_counter = {
+			variable_name = "qpq_months_left"
+			min = 0
+			max = 120
+			label = "QPQ_STORY_MONTHS_LEFT"
+			min_label = "QPQ_STORY_COUNTER_MIN"
+			max_label = "QPQ_STORY_COUNTER_MAX"
+			tooltip = "QPQ_STORY_MONTHS_LEFT_TT"
+		}
+	}
+
+	on_setup = {}
+	on_end = {}
+	on_owner_death = {
+		end_story = yes
+	}
+
+	effect_group = {
+		months = 1
+		triggered_effect = {
+			trigger = {
+				OR = {
+					NOT = { exists = var:qpq_main }
+					var:qpq_main = { NOT = { qpq_story_is_active_trigger = yes } }
+				}
+			}
+			effect = {
+				end_story = yes
+			}
+		}
+		triggered_effect = {
+			trigger = {
+				exists = var:qpq_main
+				var:qpq_main = { qpq_story_is_active_trigger = yes }
+			}
+			effect = {
+				set_variable = { name = qpq_months_left value = var:qpq_main.var:qpq_months_left }
+			}
+		}
+	}
+}

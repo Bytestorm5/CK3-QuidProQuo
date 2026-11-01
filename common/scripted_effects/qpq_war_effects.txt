@@ -1,0 +1,560 @@
+﻿# Quid Pro Quo - war tracking, war licences and AI helpers.
+# "Outcomes CK3 can check": every war result is written onto the pacts of the people involved.
+
+# A war ended with a winner. Stories gain lists:
+#   qpq_agent_beat / qpq_payer_beat       characters the agent / payer defeated
+#   qpq_agent_lost_to / qpq_payer_lost_to characters who defeated them
+qpq_record_war_result_effect = {
+	$WINNER$ = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				if = {
+					limit = { var:qpq_agent ?= $WINNER$ }
+					add_to_variable_list = { name = qpq_agent_beat target = $LOSER$ }
+				}
+				if = {
+					limit = { var:qpq_payer ?= $WINNER$ }
+					add_to_variable_list = { name = qpq_payer_beat target = $LOSER$ }
+				}
+			}
+		}
+	}
+	$LOSER$ = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				if = {
+					limit = { var:qpq_agent ?= $LOSER$ }
+					add_to_variable_list = { name = qpq_agent_lost_to target = $WINNER$ }
+				}
+				if = {
+					limit = { var:qpq_payer ?= $LOSER$ }
+					add_to_variable_list = { name = qpq_payer_lost_to target = $WINNER$ }
+				}
+			}
+		}
+	}
+	qpq_record_war_end_effect = { A = $WINNER$ B = $LOSER$ }
+}
+
+# Any war end: records who actually fought whom (qpq_agent_fought / qpq_payer_fought)
+qpq_record_war_end_effect = {
+	$A$ = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				if = {
+					limit = { var:qpq_agent ?= $A$ }
+					add_to_variable_list = { name = qpq_agent_fought target = $B$ }
+				}
+				if = {
+					limit = { var:qpq_payer ?= $A$ }
+					add_to_variable_list = { name = qpq_payer_fought target = $B$ }
+				}
+			}
+		}
+	}
+	$B$ = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				if = {
+					limit = { var:qpq_agent ?= $B$ }
+					add_to_variable_list = { name = qpq_agent_fought target = $A$ }
+				}
+				if = {
+					limit = { var:qpq_payer ?= $B$ }
+					add_to_variable_list = { name = qpq_payer_fought target = $A$ }
+				}
+			}
+		}
+	}
+}
+
+# on_war_started: scope:attacker, scope:defender, scope:war
+qpq_war_started_effect = {
+	# Who attacked whom
+	scope:attacker = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				if = {
+					limit = { var:qpq_agent ?= scope:attacker }
+					add_to_variable_list = { name = qpq_agent_attacked target = scope:defender }
+				}
+				if = {
+					limit = { var:qpq_payer ?= scope:attacker }
+					add_to_variable_list = { name = qpq_payer_attacked target = scope:defender }
+				}
+			}
+		}
+	}
+	# Secret Alliance: the hidden partner is called in
+	scope:defender = {
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				limit = {
+					var:qpq_kind = flag:secret_alliance
+					qpq_story_is_active_trigger = yes
+				}
+				save_scope_as = qpq_alliance_story
+				if = {
+					limit = { var:qpq_payer = scope:defender }
+					var:qpq_agent = { save_scope_as = qpq_alliance_partner }
+				}
+				else = {
+					var:qpq_payer = { save_scope_as = qpq_alliance_partner }
+				}
+				if = {
+					limit = {
+						NOT = { scope:qpq_alliance_partner = scope:attacker }
+						scope:qpq_alliance_partner = { is_alive = yes }
+					}
+					if = {
+						limit = { scope:qpq_alliance_partner = { is_ai = no } }
+						scope:qpq_alliance_partner = { trigger_event = qpq_pact.90 }
+					}
+					else = {
+						random_list = {
+							75 = {
+								modifier = {
+									add = -40
+									scope:qpq_alliance_partner = { has_trait = craven }
+								}
+								scope:war = { add_defender = scope:qpq_alliance_partner }
+							}
+							25 = {
+								scope:qpq_alliance_story = { set_variable = qpq_agent_refused_call }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	# Price of Loyalty: a greedy vassal demands payment before answering the call
+	scope:attacker = {
+		if = {
+			limit = {
+				is_ai = no
+				any_vassal = {
+					is_ai = yes
+					qpq_price_of_loyalty_candidate_trigger = { LIEGE = scope:attacker }
+				}
+			}
+			random_vassal = {
+				limit = {
+					is_ai = yes
+					qpq_price_of_loyalty_candidate_trigger = { LIEGE = scope:attacker }
+				}
+				save_scope_as = qpq_greedy_vassal
+			}
+			random = {
+				chance = 35
+				modifier = {
+					add = 25
+					scope:attacker = { has_variable = qpq_precedent }
+				}
+				scope:attacker = { trigger_event = qpq_pact.70 }
+			}
+		}
+	}
+}
+
+# on_join_war_as_secondary: root = joiner, scope:war
+qpq_joined_war_effect = {
+	save_scope_as = qpq_joiner
+	if = {
+		limit = { has_variable_list = qpq_pacts }
+		every_in_list = {
+			variable = qpq_pacts
+			limit = {
+				var:qpq_agent ?= scope:qpq_joiner
+				qpq_story_is_active_trigger = yes
+				exists = var:qpq_payer
+			}
+			save_scope_as = qpq_join_story
+			var:qpq_payer = { save_scope_as = qpq_join_payer }
+			if = {
+				limit = {
+					scope:war = {
+						OR = {
+							AND = {
+								is_attacker = scope:qpq_joiner
+								is_defender = scope:qpq_join_payer
+							}
+							AND = {
+								is_defender = scope:qpq_joiner
+								is_attacker = scope:qpq_join_payer
+							}
+						}
+					}
+				}
+				scope:qpq_join_story = { set_variable = qpq_agent_fought_payer }
+			}
+		}
+	}
+}
+
+# Crown Mandate on_declaration: the target's liege and allies were alerted by the Charter.
+# How strongly they come is scaled by their opinion of the targeted vassal.
+qpq_charter_war_declared_effect = {
+	scope:defender = {
+		every_ally = {
+			limit = {
+				is_ai = yes
+				NOT = { this = scope:attacker }
+				NOT = { scope:war = { is_participant = prev } }
+			}
+			random = {
+				chance = 20
+				modifier = {
+					add = {
+						value = "opinion(scope:defender)"
+						multiply = 0.4
+						max = 40
+						min = -20
+					}
+				}
+				scope:war = { add_defender = prev }
+			}
+		}
+	}
+}
+
+# Grant the agent a licence to wage a pact war against a character (and their realm)
+qpq_grant_war_licence_effect = {
+	$AGENT$ = {
+		add_to_variable_list = { name = qpq_war_licence_against target = $TARGET$ }
+		if = {
+			limit = { exists = $TARGET$.top_liege }
+			add_to_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+		}
+	}
+}
+
+qpq_revoke_war_licence_effect = {
+	$AGENT$ = {
+		if = {
+			limit = { is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$ } }
+			remove_list_variable = { name = qpq_war_licence_against target = $TARGET$ }
+		}
+		if = {
+			limit = {
+				exists = $TARGET$.top_liege
+				is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+			}
+			remove_list_variable = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+		}
+	}
+}
+
+# AI agent opens the war they were paid for
+qpq_ai_declare_pact_war_effect = {
+	$DEFENDER$ = { save_scope_as = qpq_war_defender }
+	if = {
+		limit = { exists = scope:qpq_war_defender.top_liege }
+		scope:qpq_war_defender.top_liege = { save_scope_as = qpq_war_defender }
+	}
+	scope:qpq_war_defender = {
+		random_realm_county = {
+			limit = { is_neighbor_to_realm = $ATTACKER$ }
+			save_scope_as = qpq_war_target_county
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:qpq_war_target_county
+			$ATTACKER$ = {
+				is_at_war = no
+				is_target_in_variable_list = { name = qpq_war_licence_against target = scope:qpq_war_defender }
+			}
+		}
+		$ATTACKER$ = {
+			start_war = {
+				casus_belli = qpq_pact_war_cb
+				target = scope:qpq_war_defender
+				target_title = scope:qpq_war_target_county
+			}
+		}
+	}
+}
+
+# AI agent tries to have someone killed
+qpq_ai_start_murder_effect = {
+	if = {
+		limit = {
+			$AGENT$ = {
+				can_start_scheme = {
+					type = murder
+					target_character = $TARGET$
+				}
+			}
+		}
+		$AGENT$ = {
+			start_scheme = {
+				type = murder
+				target_character = $TARGET$
+			}
+		}
+	}
+}
+
+qpq_ai_start_abduction_effect = {
+	if = {
+		limit = {
+			$AGENT$ = {
+				can_start_scheme = {
+					type = abduct
+					target_character = $TARGET$
+				}
+			}
+		}
+		$AGENT$ = {
+			start_scheme = {
+				type = abduct
+				target_character = $TARGET$
+			}
+		}
+	}
+}
+
+# A paid assassin abroad: no scheme window, just a chance every month
+qpq_hired_blade_attempt_effect = {
+	random = {
+		chance = {
+			value = 2
+			add = {
+				value = $AGENT$.intrigue
+				divide = 5
+			}
+			max = 10
+		}
+		if = {
+			limit = { $TARGET$ = { is_alive = yes } }
+			$TARGET$ = {
+				death = {
+					death_reason = death_murder
+					killer = $AGENT$
+				}
+			}
+		}
+	}
+}
+
+#################################################################
+# AI confessions: mostly deathbed confessions, or Honest and Zealous characters near a stress break
+#################################################################
+qpq_ai_consider_confession_effect = {
+	if = {
+		limit = {
+			any_secret = { qpq_is_pact_secret_trigger = yes }
+			OR = {
+				health <= 1
+				AND = {
+					OR = {
+						has_trait = honest
+						has_trait = zealous
+					}
+					stress_level >= 2
+				}
+			}
+		}
+		random = {
+			chance = 15
+			modifier = {
+				add = 15
+				health <= 1
+			}
+			random_secret = {
+				limit = { qpq_is_pact_secret_trigger = yes }
+				save_scope_as = qpq_confess_half
+			}
+			save_scope_value_as = { name = qpq_penance value = flag:piety }
+			if = {
+				limit = { gold >= qpq_confession_penance_gold_value }
+				save_scope_value_as = { name = qpq_penance value = flag:gold }
+			}
+			qpq_confess_pact_effect = yes
+		}
+	}
+}
+
+#################################################################
+# Pact mechanics shared by several kinds
+#################################################################
+
+# Everyone a pact entrapped turns on the payer (Agent Provocateur)
+qpq_entrapped_turn_on_payer_effect = {
+	scope:qpq_payer_secret ?= {
+		if = {
+			limit = { has_variable_list = qpq_entrapped }
+			every_in_list = {
+				variable = qpq_entrapped
+				limit = { is_alive = yes }
+				add_opinion = { target = scope:qpq_payer modifier = qpq_entrapped_opinion }
+			}
+		}
+	}
+}
+
+# Remember everyone in the agent's faction against the payer (Agent Provocateur, Loyal Mole)
+qpq_record_faction_members_effect = {
+	if = {
+		limit = {
+			scope:qpq_agent = {
+				exists = joined_faction
+				joined_faction = { faction_target = scope:qpq_payer }
+			}
+		}
+		set_variable = qpq_agent_in_faction
+		scope:qpq_agent.joined_faction = {
+			every_faction_member = {
+				limit = { NOT = { this = scope:qpq_agent } }
+				save_temporary_scope_as = qpq_trapped_member
+				scope:qpq_story = {
+					add_to_variable_list = { name = qpq_entrapped target = scope:qpq_trapped_member }
+				}
+				scope:qpq_payer_secret ?= {
+					add_to_variable_list = { name = qpq_entrapped target = scope:qpq_trapped_member }
+				}
+			}
+		}
+	}
+}
+
+# Agent joins (or starts) a faction against the payer
+qpq_ai_join_faction_against_payer_effect = {
+	if = {
+		limit = {
+			scope:qpq_agent = { NOT = { exists = joined_faction } }
+			scope:qpq_payer = {
+				any_targeting_faction = {
+					NOT = { faction_is_type = peasant_faction }
+				}
+			}
+		}
+		scope:qpq_payer = {
+			random_targeting_faction = {
+				limit = { NOT = { faction_is_type = peasant_faction } }
+				save_scope_as = qpq_faction_to_join
+			}
+		}
+		scope:qpq_agent = {
+			join_faction_forced = {
+				faction = scope:qpq_faction_to_join
+				forced_by = scope:qpq_payer
+				years = 5
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			scope:qpq_agent = {
+				NOT = { exists = joined_faction }
+				can_create_faction = {
+					type = liberty_faction
+					target = scope:qpq_payer
+				}
+			}
+		}
+		scope:qpq_agent = {
+			create_faction = {
+				type = liberty_faction
+				target = scope:qpq_payer
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			scope:qpq_agent = {
+				NOT = { exists = joined_faction }
+				can_create_faction = {
+					type = claimant_faction
+					target = scope:qpq_payer
+				}
+			}
+		}
+		scope:qpq_agent = {
+			create_faction = {
+				type = claimant_faction
+				target = scope:qpq_payer
+			}
+		}
+	}
+}
+
+# Agent transfers a county to the payer (Title Swap, Secret Clause)
+qpq_agent_cedes_title_effect = {
+	if = {
+		limit = {
+			exists = scope:qpq_target_title
+			scope:qpq_target_title.holder ?= scope:qpq_agent
+		}
+		create_title_and_vassal_change = {
+			type = granted
+			save_scope_as = qpq_cede_change
+			add_claim_on_loss = no
+		}
+		scope:qpq_target_title = {
+			change_title_holder = {
+				holder = scope:qpq_payer
+				change = scope:qpq_cede_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:qpq_cede_change
+	}
+}
+
+# A character is handed over into the payer's dungeon (Hand-Over, Extradition, Snatch)
+qpq_hand_prisoner_to_payer_effect = {
+	if = {
+		limit = { scope:qpq_target = { is_imprisoned = yes } }
+		scope:qpq_target = { release_from_prison = yes }
+	}
+	scope:qpq_payer = {
+		imprison = {
+			target = scope:qpq_target
+			type = house_arrest
+		}
+	}
+}
+
+
+#################################################################
+# Pact Ledger paging
+#################################################################
+qpq_ledger_reset_effect = {
+	if = {
+		limit = { has_variable_list = qpq_ledger_queue }
+		clear_variable_list = qpq_ledger_queue
+	}
+	if = {
+		limit = { has_variable = qpq_ledger_tab }
+		remove_variable = qpq_ledger_tab
+	}
+}
+
+# Moves the next secret of the queue into saved scope SLOT
+qpq_ledger_take_effect = {
+	if = {
+		limit = {
+			has_variable_list = qpq_ledger_queue
+			variable_list_size = { name = qpq_ledger_queue value > 0 }
+		}
+		ordered_in_list = {
+			variable = qpq_ledger_queue
+			order_by = var:qpq_tier
+			save_scope_as = $SLOT$
+		}
+		remove_list_variable = { name = qpq_ledger_queue target = scope:$SLOT$ }
+	}
+}

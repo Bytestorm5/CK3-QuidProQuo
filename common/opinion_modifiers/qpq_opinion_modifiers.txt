@@ -1,0 +1,219 @@
+﻿# Quid Pro Quo opinion modifiers
+
+qpq_broke_our_pact_opinion = {
+	opinion = -30
+	years = 10
+	decaying = yes
+}
+
+qpq_kept_our_pact_opinion = {
+	opinion = 15
+	years = 5
+	decaying = yes
+}
+
+qpq_declined_pact_opinion = {
+	opinion = -5
+	years = 1
+	decaying = yes
+}
+
+qpq_played_favourites_opinion = {
+	opinion = -5
+	years = 5
+	decaying = yes
+}
+
+# Scaled per exposure: always added with an explicit opinion value
+qpq_betrayed_me_opinion = {
+	opinion = -30
+	years = 15
+	decaying = yes
+	stacking = yes
+}
+
+qpq_betrayed_my_ally_opinion = {
+	opinion = -15
+	years = 8
+	decaying = yes
+}
+
+qpq_betrayed_my_house_opinion = {
+	opinion = -20
+	years = 10
+	decaying = yes
+}
+
+# Criminal halves: grounds to imprison or revoke
+qpq_criminal_pact_opinion = {
+	opinion = -25
+	years = 20
+	decaying = yes
+	imprisonment_reason = yes
+	revoke_title_reason = yes
+}
+
+# Damnable halves: also grounds to execute without tyranny
+qpq_damnable_pact_opinion = {
+	opinion = -40
+	years = 25
+	decaying = yes
+	imprisonment_reason = yes
+	revoke_title_reason = yes
+	execute_reason = yes
+}
+
+# Held by the victim of an exposed Tier IV+ pact: enables the Avenge Perfidy casus belli
+qpq_avenge_perfidy_opinion = {
+	opinion = -20
+	years = 10
+}
+
+qpq_pardoned_opinion = {
+	opinion = 10
+	years = 5
+	decaying = yes
+}
+
+qpq_bought_vote_opinion = {
+	opinion = 60
+	years = 10
+}
+
+qpq_bought_support_opinion = {
+	opinion = 40
+	years = 5
+}
+
+qpq_bought_election_opinion = {
+	opinion = -20
+	years = 10
+	decaying = yes
+}
+
+qpq_betrayer_opinion = {
+	opinion = -50
+	years = 15
+	decaying = yes
+	imprisonment_reason = yes
+}
+
+qpq_entrapped_opinion = {
+	opinion = -60
+	years = 20
+	decaying = yes
+}
+
+qpq_faction_mistrust_opinion = {
+	opinion = -20
+	years = 5
+	decaying = yes
+}
+
+qpq_plays_favourites_opinion = {
+	opinion = -15
+	years = 8
+	decaying = yes
+}
+
+qpq_informer_opinion = {
+	opinion = -40
+	years = 10
+	decaying = yes
+}
+
+qpq_precedent_opinion = {
+	opinion = -10
+	years = 5
+	decaying = yes
+}
+
+qpq_refused_my_price_opinion = {
+	opinion = -20
+	years = 5
+	decaying = yes
+}
+
+qpq_paid_my_price_opinion = {
+	opinion = 15
+	years = 5
+	decaying = yes
+}
+
+qpq_conspirator_opinion = {
+	opinion = -40
+	years = 15
+	decaying = yes
+	imprisonment_reason = yes
+	revoke_title_reason = yes
+}
+
+qpq_traitor_opinion = {
+	opinion = -60
+	years = 25
+	decaying = yes
+	imprisonment_reason = yes
+	revoke_title_reason = yes
+	execute_reason = yes
+}
+
+qpq_faithless_opinion = {
+	opinion = -40
+	years = 10
+	decaying = yes
+}
+
+qpq_cheated_by_marriage_opinion = {
+	opinion = -30
+	years = 10
+	decaying = yes
+}
+
+qpq_betrayed_a_guest_opinion = {
+	opinion = -25
+	years = 10
+	decaying = yes
+}
+
+qpq_easy_mark_opinion = {
+	opinion = 15
+	years = 10
+	decaying = yes
+}
+
+qpq_clergy_scandal_opinion = {
+	opinion = -25
+	years = 10
+	decaying = yes
+}
+
+qpq_bought_legitimacy_opinion = {
+	opinion = -15
+	years = 10
+	decaying = yes
+}
+
+qpq_feared_partition_opinion = {
+	opinion = 20
+	years = 10
+}
+
+qpq_spied_for_a_foreigner_opinion = {
+	opinion = -50
+	years = 15
+	decaying = yes
+	imprisonment_reason = yes
+	revoke_title_reason = yes
+}
+
+qpq_charter_threat_opinion = {
+	opinion = -15
+	years = 5
+	decaying = yes
+}
+
+qpq_grateful_patron_opinion = {
+	opinion = 20
+	years = 10
+	decaying = yes
+}

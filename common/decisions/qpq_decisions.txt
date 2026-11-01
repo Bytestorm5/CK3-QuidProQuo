@@ -1,0 +1,28 @@
+﻿# Quid Pro Quo decisions
+
+qpq_pact_ledger_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = realm
+	ai_check_interval = 0
+
+	desc = qpq_pact_ledger_decision_desc
+	selection_tooltip = qpq_pact_ledger_decision_tooltip
+
+	is_shown = {
+		is_ai = no
+		OR = {
+			any_secret = { qpq_is_pact_secret_trigger = yes }
+			any_known_secret = { qpq_is_pact_secret_trigger = yes }
+		}
+	}
+
+	effect = {
+		trigger_event = qpq_ledger.1
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
