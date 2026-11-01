@@ -1,5 +1,6 @@
 ﻿l_english:
  qpq_send_pact:0 "Propose the Pact"
+ qpq_truce_name:0 "A truce bought in a backroom deal"
  qpq_propose_pact_interaction:0 "Propose a Pact"
  qpq_propose_pact_interaction_desc:0 "Offer [recipient.GetShortUIName] a deal: an Ask they carry out, and what you give in return. From Tier I up, sealing it creates a secret you both hold, and that shared secret is what keeps both of you honest."
  qpq_honour_pact_interaction:0 "Honour the Pact"

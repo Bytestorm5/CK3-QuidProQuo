@@ -1,1 +1,1 @@
-gui/qpq_pact_window.gui = qpq_pact_window
+﻿gui/qpq_pact_window.gui = qpq_pact_window

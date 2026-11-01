@@ -79,7 +79,7 @@ qpq_ui_refresh_effect = {
 			if = {
 				limit = {
 					qpq_ui_kind_needs_char_target_trigger = yes
-					var:qpq_ui_pick_char = { is_in_list = qpq_ui_pool }
+					var:qpq_ui_pick_char = { is_in_list = qpq_ui_pool_char }
 				}
 				if = {
 					limit = {
@@ -97,7 +97,7 @@ qpq_ui_refresh_effect = {
 			if = {
 				limit = {
 					qpq_ui_kind_needs_title_target_trigger = yes
-					var:qpq_ui_target_title = { is_in_list = qpq_ui_pool }
+					var:qpq_ui_target_title = { is_in_list = qpq_ui_pool_title }
 				}
 				if = {
 					limit = {
@@ -115,7 +115,7 @@ qpq_ui_refresh_effect = {
 			if = {
 				limit = {
 					qpq_ui_kind_needs_artifact_target_trigger = yes
-					var:qpq_ui_target_artifact = { is_in_list = qpq_ui_pool }
+					var:qpq_ui_target_artifact = { is_in_list = qpq_ui_pool_artifact }
 				}
 				if = {
 					limit = {

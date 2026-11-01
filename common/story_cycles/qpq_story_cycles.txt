@@ -74,7 +74,10 @@ qpq_pact_mirror_story = {
 		triggered_effect = {
 			trigger = {
 				exists = var:qpq_main
-				var:qpq_main = { qpq_story_is_active_trigger = yes }
+				var:qpq_main = {
+					qpq_story_is_active_trigger = yes
+					exists = var:qpq_months_left
+				}
 			}
 			effect = {
 				set_variable = { name = qpq_months_left value = var:qpq_main.var:qpq_months_left }

@@ -230,33 +230,37 @@ qpq_grant_war_licence_effect = {
 
 qpq_revoke_war_licence_effect = {
 	$TARGET$ = { save_scope_as = qpq_licence_target }
-	$AGENT$ = {
-		if = {
-			limit = { is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$ } }
-			remove_list_variable = { name = qpq_war_licence_against target = $TARGET$ }
-		}
-		if = {
-			limit = {
-				exists = $TARGET$.top_liege
-				is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+	# A dead or forgotten agent (the game stops tracking such characters) holds no licence to revoke
+	if = {
+		limit = { $AGENT$ = { is_alive = yes } }
+		$AGENT$ = {
+			if = {
+				limit = { is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$ } }
+				remove_list_variable = { name = qpq_war_licence_against target = $TARGET$ }
 			}
-			remove_list_variable = { name = qpq_war_licence_against target = $TARGET$.top_liege }
-		}
-	}
-	# Another active pact may still license the same war
-	$AGENT$ = {
-		save_scope_as = qpq_licence_holder
-		if = {
-			limit = { has_variable_list = qpq_pacts }
-			every_in_list = {
-				variable = qpq_pacts
+			if = {
 				limit = {
-					qpq_story_is_active_trigger = yes
-					NOT = { this = scope:qpq_story }
-					var:qpq_target ?= scope:qpq_licence_target
-					qpq_kind_grants_war_licence_trigger = yes
+					exists = $TARGET$.top_liege
+					is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
 				}
-				qpq_grant_war_licence_effect = { AGENT = scope:qpq_licence_holder TARGET = scope:qpq_licence_target }
+				remove_list_variable = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+			}
+		}
+		# Another active pact may still license the same war
+		$AGENT$ = {
+			save_scope_as = qpq_licence_holder
+			if = {
+				limit = { has_variable_list = qpq_pacts }
+				every_in_list = {
+					variable = qpq_pacts
+					limit = {
+						qpq_story_is_active_trigger = yes
+						NOT = { this = scope:qpq_story }
+						var:qpq_target ?= scope:qpq_licence_target
+						qpq_kind_grants_war_licence_trigger = yes
+					}
+					qpq_grant_war_licence_effect = { AGENT = scope:qpq_licence_holder TARGET = scope:qpq_licence_target }
+				}
 			}
 		}
 	}

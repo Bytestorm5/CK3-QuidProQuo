@@ -410,7 +410,7 @@ random_vassal = {
 }
 """))
 
-K(key="marcher_charge", cat="A", group="war", secret="conquest", icon="military_strength",
+K(key="marcher_charge", cat="A", group="war", secret="conquest", icon="icon_combat",
   name="Marcher Charge",
   ask="hold the border against [qpq_target.GetTitledFirstName]",
   desc="Hold a named border: keep levies raised and defend against a named enemy for the whole term. Failure is a breach, not a scandal.",
@@ -497,7 +497,7 @@ random = {
 """,
   exposed="scope:qpq_agent = { add_piety = minor_piety_loss }")
 
-K(key="development_charter", cat="A", group="favours", secret="bribery", icon="county_modifier_development_positive",
+K(key="development_charter", cat="A", group="favours", secret="bribery", icon="icon_transfer_county",
   name="Development Charter",
   ask="raise the development of [qpq_target_title.GetName]",
   desc="Pay a vassal to build up one of their counties, five levels of development within the term.",
@@ -953,7 +953,7 @@ if = {
 }
 """)
 
-K(key="dispossession", cat="A", group="shadows", secret="dynastic", icon="revoke_title_interaction",
+K(key="dispossession", cat="A", group="shadows", secret="dynastic", icon="revoke_title",
   icategory="interaction_category_vassal",
   name="Dispossession",
   ask="imprison or strip [qpq_target.GetTitledFirstName], their own vassal, and absorb the tyranny",
@@ -1052,7 +1052,7 @@ if = {
 }
 """)
 
-K(key="marriage_by_command", cat="A", group="family", secret="dynastic", icon="marriage",
+K(key="marriage_by_command", cat="A", group="family", secret="dynastic", icon="icon_marriage",
   name="Marriage by Command",
   ask="set aside their spouse and marry [qpq_target.GetTitledFirstName]",
   desc="A vassal sets aside a spouse and marries the person you choose.",
@@ -1195,7 +1195,7 @@ scope:qpq_target_artifact = {
 """,
   exposed="scope:qpq_agent = { add_prestige = minor_prestige_loss }")
 
-K(key="renunciation", cat="A", group="favours", secret="dynastic", icon="claim",
+K(key="renunciation", cat="A", group="favours", secret="dynastic", icon="icon_claim_pressed",
   name="Renunciation",
   ask="renounce their claim on [qpq_target_title.GetName]",
   desc="Renounce a claim on a title you hold or want.",
@@ -1251,7 +1251,7 @@ scope:qpq_payer = {
 # CATALOGUE B: vassal-initiated and vassal-to-vassal
 ###############################################################################
 
-K(key="price_of_loyalty", cat="B", group="favours", secret="bribery", icon="gold",
+K(key="price_of_loyalty", cat="B", group="favours", secret="bribery", icon="icon_gold",
   icategory="interaction_category_vassal", initiator="agent", offers=AGENT_DEMANDS,
   name="Price of Loyalty",
   ask="answer [qpq_payer.GetShortUINamePossessive] call to arms and stay loyal through the war",
@@ -1838,7 +1838,7 @@ random_neighboring_and_across_water_top_liege_realm_owner = {
 }
 """))
 
-K(key="bought_truce", cat="C", group="war", secret="bribery", icon="peace",
+K(key="bought_truce", cat="C", group="war", secret="bribery", icon="negotiate_settlement_interaction",
   name="Bought Truce",
   ask="make peace with [qpq_payer.GetShortUIName] and keep it",
   desc="Pay to end or avoid a war. If it comes out, raiders mark the payer as an easy mark.",
@@ -2051,7 +2051,7 @@ if = {
 }
 """))
 
-K(key="shelter_the_pretender", cat="C", group="abroad", secret="betrayal", icon="claim",
+K(key="shelter_the_pretender", cat="C", group="abroad", secret="betrayal", icon="icon_claim_pressed",
   name="Shelter the Pretender",
   ask="take [qpq_target_title.GetName] with [qpq_payer.GetShortUINamePossessive] backing, and remember who made them",
   desc="Host a claimant to a rival throne and back their claim. Mostly public already; the secret clause, armies quietly promised, is what hurts.",
@@ -2180,7 +2180,7 @@ if = {
 }
 """)
 
-K(key="stay_home", cat="C", group="abroad", secret="betrayal", icon="military_strength",
+K(key="stay_home", cat="C", group="abroad", secret="betrayal", icon="icon_combat",
   name="Stay Home",
   ask="ignore [qpq_target.GetShortUINamePossessive] call to arms when [qpq_payer.GetShortUIName] attacks",
   desc="A foreign vassal ignores their liege's call to arms when you attack: their levies stay home for the whole term.",
@@ -2248,7 +2248,7 @@ if = {
 """,
   exposed="")
 
-K(key="secret_clause", cat="C", group="family", secret="dynastic", icon="marriage",
+K(key="secret_clause", cat="C", group="family", secret="dynastic", icon="icon_marriage",
   name="Secret Clause",
   ask="hand over [qpq_target_title.GetName] as a hidden dowry",
   desc="A marriage between your houses with a hidden term: a dowry county handed over later. If it comes out, the other house feels cheated.",
@@ -2510,7 +2510,7 @@ if = {
 }
 """)
 
-K(key="bought_claim", cat="D1", group="church_favours", secret="simony", icon="claim",
+K(key="bought_claim", cat="D1", group="church_favours", secret="simony", icon="icon_claim_pressed",
   icategory="interaction_category_religion",
   name="Bought Claim",
   ask="grant [qpq_payer.GetShortUIName] a claim on [qpq_target.GetShortUINamePossessive] title",

@@ -158,24 +158,24 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         if k["target"] == "char":
             eff += block(k["pick"], 2)
             eff += ("\t\tevery_in_list = {\n\t\t\tlist = characters\n\t\t\tsave_temporary_scope_as = secondary_recipient\n"
-                    "\t\t\tif = {\n\t\t\t\tlimit = {\n%s\t\t\t\t}\n\t\t\t\tadd_to_list = qpq_ui_pool\n\t\t\t}\n\t\t}\n") % block(
+                    "\t\t\tif = {\n\t\t\t\tlimit = {\n%s\t\t\t\t}\n\t\t\t\tadd_to_list = qpq_ui_pool_char\n\t\t\t}\n\t\t}\n") % block(
                 k.get("target_valid") or "always = yes", 5)
-            eff += ("\t\tordered_in_list = {\n\t\t\tlist = qpq_ui_pool\n\t\t\torder_by = qpq_ui_candidate_order_value\n"
+            eff += ("\t\tordered_in_list = {\n\t\t\tlist = qpq_ui_pool_char\n\t\t\torder_by = qpq_ui_candidate_order_value\n"
                     "\t\t\tmax = %d\n\t\t\tcheck_range_bounds = no\n"
                     "\t\t\tscope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }\n\t\t}\n") % CANDIDATE_CAP
         else:
             pk = k["pick"]
             src = {"actor": "scope:actor", "recipient": "scope:recipient"}[pk["source"]]
             if k["target"] == "artifact":
-                it, lst, order = "every_character_artifact", "qpq_ui_artifact_candidates", "artifact_rarity"
+                it, lst, order, pool = "every_character_artifact", "qpq_ui_artifact_candidates", "artifact_rarity", "qpq_ui_pool_artifact"
             else:
-                it, lst, order = TITLE_SOURCES[pk["filter"]], "qpq_ui_title_candidates", "qpq_ui_title_order_value"
+                it, lst, order, pool = TITLE_SOURCES[pk["filter"]], "qpq_ui_title_candidates", "qpq_ui_title_order_value", "qpq_ui_pool_title"
             eff += "\t\t%s = {\n\t\t\t%s = {\n\t\t\t\tsave_temporary_scope_as = target\n" % (src, it)
-            eff += "\t\t\t\tif = {\n\t\t\t\t\tlimit = {\n%s%s\t\t\t\t\t}\n\t\t\t\t\tadd_to_list = qpq_ui_pool\n\t\t\t\t}\n\t\t\t}\n\t\t}\n" % (
-                block(pk["can_pick"], 6), block(k.get("target_valid") or "always = yes", 6))
-            eff += ("\t\tordered_in_list = {\n\t\t\tlist = qpq_ui_pool\n\t\t\torder_by = %s\n\t\t\tmax = %d\n"
+            eff += "\t\t\t\tif = {\n\t\t\t\t\tlimit = {\n%s%s\t\t\t\t\t}\n\t\t\t\t\tadd_to_list = %s\n\t\t\t\t}\n\t\t\t}\n\t\t}\n" % (
+                block(pk["can_pick"], 6), block(k.get("target_valid") or "always = yes", 6), pool)
+            eff += ("\t\tordered_in_list = {\n\t\t\tlist = %s\n\t\t\torder_by = %s\n\t\t\tmax = %d\n"
                     "\t\t\tcheck_range_bounds = no\n"
-                    "\t\t\tscope:actor = { add_to_variable_list = { name = %s target = prev } }\n\t\t}\n") % (order, CANDIDATE_CAP, lst)
+                    "\t\t\tscope:actor = { add_to_variable_list = { name = %s target = prev } }\n\t\t}\n") % (pool, order, CANDIDATE_CAP, lst)
         eff += "\t}\n"
     eff += "}\n\n"
 
@@ -517,7 +517,7 @@ def gen_gui(write):
     assert "@@" not in gui
     write("gui/qpq_pact_window.gui", gui)
     # No byte-order mark here: the line is read as a file path
-    write("gui/scripted_widgets/qpq_scripted_widgets.txt", "gui/qpq_pact_window.gui = qpq_pact_window\n", bom=False)
+    write("gui/scripted_widgets/qpq_scripted_widgets.txt", "gui/qpq_pact_window.gui = qpq_pact_window\n")  # the game wants utf8-bom here too
 
 
 def gen_all(block, fmt_shown, OFFER_DEFS, write):

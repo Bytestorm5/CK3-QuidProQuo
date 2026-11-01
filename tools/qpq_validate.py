@@ -95,6 +95,11 @@ def parse(text, fname):
     return parse_block(0)
 
 
+def relp(path, start):
+    """Relative path with forward slashes, whatever the platform."""
+    return os.path.relpath(path, start).replace(os.sep, "/")
+
+
 def walk(nodes, parents=()):
     for n in nodes:
         yield n, parents
@@ -214,20 +219,20 @@ def main():
     for f in mod_files:
         txt = read(f)
         try:
-            trees[f] = parse(txt, os.path.relpath(f, ROOT))
+            trees[f] = parse(txt, relp(f, ROOT))
         except ParseError as e:
             report("SYNTAX " + str(e))
     for f in files_under(os.path.join(ROOT, "localization"), ".yml"):
         raw = open(f, "rb").read()
         if not raw.startswith(b"\xef\xbb\xbf"):
-            report("LOC %s: missing UTF-8 BOM" % os.path.relpath(f, ROOT))
+            report("LOC %s: missing UTF-8 BOM" % relp(f, ROOT))
         if not os.path.basename(f).endswith("_l_english.yml"):
             report("LOC %s: file name must end in _l_english.yml" % f)
 
     def defs(sub):
         out = {}
         for f, tree in trees.items():
-            rel = os.path.relpath(f, ROOT)
+            rel = relp(f, ROOT)
             if rel.startswith(sub):
                 for n in tree:
                     if n.key and (isinstance(n.value, list) or sub.startswith("common/script_values")):
@@ -255,7 +260,7 @@ def main():
     }
     events = {}
     for f, tree in trees.items():
-        if os.path.relpath(f, ROOT).startswith("events"):
+        if relp(f, ROOT).startswith("events"):
             for n in tree:
                 if n.key and re.match(r"^qpq_[a-z]+\.\d+$", n.key):
                     events[n.key] = f
@@ -309,8 +314,8 @@ def main():
                   "selection_tooltip", "label", "min_label", "max_label", "tooltip", "custom_string_key",
                   "localization_key", "options_heading", "notification_text"}
     for f, tree in trees.items():
-        rel = os.path.relpath(f, ROOT)
-        top_dir = rel.split(os.sep)[1] if rel.startswith("common") else "events"
+        rel = relp(f, ROOT)
+        top_dir = rel.split("/")[1] if rel.startswith("common") else "events"
         for n, parents in walk(tree):
             k = n.key
             if k is None:
@@ -445,7 +450,7 @@ def main():
     # scripted effect/trigger arguments must match the $PARAMS$ the definition uses
     params = {}
     for f, tree in trees.items():
-        rel = os.path.relpath(f, ROOT)
+        rel = relp(f, ROOT)
         if rel.startswith(("common/scripted_effects", "common/scripted_triggers")):
             txt = read(f)
             for n in tree:
@@ -454,7 +459,7 @@ def main():
                     m = re.search(r"^%s = \{(.*?)^\}" % re.escape(n.key), txt, re.S | re.M)
                     params[n.key] = set(re.findall(r"\$([A-Z_0-9]+)\$", m.group(1))) if m else set()
     for f, tree in trees.items():
-        rel = os.path.relpath(f, ROOT)
+        rel = relp(f, ROOT)
         for n, parents in walk(tree):
             if n.key in params and parents:
                 want = params[n.key]
@@ -539,18 +544,21 @@ def main():
             m = re.match(r'\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"\s*$', line)
             if not m:
                 if line.strip() and not line.startswith("l_english") and not line.lstrip().startswith("#"):
-                    report("LOC-SYNTAX %s:%d" % (os.path.relpath(f, ROOT), i))
+                    report("LOC-SYNTAX %s:%d" % (relp(f, ROOT), i))
                 continue
             text = m.group(2)
             if text.count("[") != text.count("]"):
-                report("LOC-BRACKETS %s:%d %s" % (os.path.relpath(f, ROOT), i, m.group(1)))
+                report("LOC-BRACKETS %s:%d %s" % (relp(f, ROOT), i, m.group(1)))
             for ref in re.findall(r"\$([A-Za-z0-9_]+)(?:\|[^$]*)?\$", text):
                 if ref not in loc and ref.upper() != ref:
-                    report("LOC-REF %s:%d $%s$" % (os.path.relpath(f, ROOT), i, ref))
+                    report("LOC-REF %s:%d $%s$" % (relp(f, ROOT), i, ref))
             if re.search(r'(?<!\\)"', text):
-                report("LOC-QUOTE %s:%d unescaped quote" % (os.path.relpath(f, ROOT), i))
+                report("LOC-QUOTE %s:%d unescaped quote" % (relp(f, ROOT), i))
 
-    check_gui(report, trees, my, loc, V, args.tiger)
+    if args.tiger:
+        check_gui(report, trees, my, loc, V, args.tiger)
+    else:
+        print("(no --tiger checkout: gui/ checks skipped)")
 
     for p in sorted(set(problems)):
         print(p)
@@ -595,7 +603,7 @@ def check_gui(report, trees, my, loc, V, tiger):
     # saved scopes each scripted GUI expects
     sgui_scopes = {}
     for f, tree in trees.items():
-        if os.path.relpath(f, ROOT).startswith("common/scripted_guis"):
+        if relp(f, ROOT).startswith("common/scripted_guis"):
             for n in tree:
                 if n.key and isinstance(n.value, list):
                     sc = set()
@@ -631,7 +639,7 @@ def check_gui(report, trees, my, loc, V, tiger):
                 report("GUI-SCOPES %s %s needs %s" % (where, name, sorted(want - given)))
 
     for f in files_under(os.path.join(ROOT, "gui"), ".gui"):
-        rel = os.path.relpath(f, ROOT)
+        rel = relp(f, ROOT)
         text = read(f)
         try:
             tree = parse(text, rel)
@@ -677,7 +685,7 @@ def check_gui(report, trees, my, loc, V, tiger):
     for f in files_under(os.path.join(ROOT, "localization"), ".yml"):
         for i, line in enumerate(read(f).split("\n"), 1):
             for expr in re.findall(r"\[([^\[\]]*(?:\[[^\[\]]*\][^\[\]]*)*)\]", line):
-                check_expr(expr, "%s:%d" % (os.path.relpath(f, ROOT), i))
+                check_expr(expr, "%s:%d" % (relp(f, ROOT), i))
 
 
 if __name__ == "__main__":
