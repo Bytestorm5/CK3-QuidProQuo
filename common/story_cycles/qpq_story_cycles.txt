@@ -13,7 +13,6 @@ qpq_pact_story = {
 		custom_string_key = "QPQ_STORY_PAYER_STRING"
 		character = { variable_name = "qpq_agent" label = "QPQ_STORY_AGENT_LABEL" }
 		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
-		title = { variable_name = "qpq_target_title" label = "QPQ_STORY_TITLE_LABEL" }
 		basic_counter = {
 			variable_name = "qpq_months_left"
 			min = 0
@@ -60,7 +59,6 @@ qpq_pact_mirror_story = {
 		custom_string_key = "QPQ_STORY_AGENT_STRING"
 		character = { variable_name = "qpq_payer" label = "QPQ_STORY_PAYER_LABEL" }
 		character = { variable_name = "qpq_target" label = "QPQ_STORY_TARGET_LABEL" }
-		title = { variable_name = "qpq_target_title" label = "QPQ_STORY_TITLE_LABEL" }
 		basic_counter = {
 			variable_name = "qpq_months_left"
 			min = 0

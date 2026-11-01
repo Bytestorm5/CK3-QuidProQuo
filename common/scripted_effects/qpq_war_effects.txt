@@ -235,7 +235,10 @@ qpq_grant_war_licence_effect = {
 	$AGENT$ = {
 		add_to_variable_list = { name = qpq_war_licence_against target = $TARGET$ }
 		if = {
-			limit = { exists = $TARGET$.top_liege }
+			limit = {
+				exists = $TARGET$.top_liege
+				NOT = { $TARGET$.top_liege = top_liege }
+			}
 			add_to_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
 		}
 	}
@@ -260,8 +263,12 @@ qpq_revoke_war_licence_effect = {
 # AI agent opens the war they were paid for
 qpq_ai_declare_pact_war_effect = {
 	$DEFENDER$ = { save_scope_as = qpq_war_defender }
+	# Outside your realm you can only attack the top liege; inside it (a Licensed Feud) the vassal itself
 	if = {
-		limit = { exists = scope:qpq_war_defender.top_liege }
+		limit = {
+			exists = scope:qpq_war_defender.top_liege
+			NOT = { scope:qpq_war_defender.top_liege = $ATTACKER$.top_liege }
+		}
 		scope:qpq_war_defender.top_liege = { save_scope_as = qpq_war_defender }
 	}
 	scope:qpq_war_defender = {

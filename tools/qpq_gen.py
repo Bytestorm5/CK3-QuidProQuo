@@ -527,10 +527,8 @@ if = {
 		save_scope_value_as = { name = qpq_proposed_kind value = flag:$KIND$ }
 		save_scope_value_as = { name = qpq_o_gold value = yes }
 		save_scope_value_as = { name = qpq_price value = qpq_$KIND$_price_value }
-		if = {
-			limit = { scope:actor = { gold < scope:qpq_price } }
-			save_scope_value_as = { name = qpq_o_on_delivery value = yes }
-		}
+		# AI proposers pay on delivery: if they cannot pay then, the deal sours into a breach
+		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
 		if = {
 			limit = { scope:recipient = { is_ai = yes } }
 			if = {

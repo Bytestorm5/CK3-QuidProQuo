@@ -26,7 +26,7 @@ qpq_propose_pact_interaction = {
 
 	auto_accept = yes
 
-	on_auto_accept = {
+	on_accept = {
 		scope:recipient = { save_scope_as = qpq_hub_recipient }
 		scope:actor = { trigger_event = qpq_hub.1 }
 	}
@@ -61,7 +61,7 @@ qpq_honour_pact_interaction = {
 
 	auto_accept = yes
 
-	on_auto_accept = {
+	on_accept = {
 		scope:actor = {
 			random_in_list = {
 				variable = qpq_pacts
@@ -113,7 +113,7 @@ qpq_break_pact_interaction = {
 
 	auto_accept = yes
 
-	on_auto_accept = {
+	on_accept = {
 		scope:actor = {
 			random_in_list = {
 				variable = qpq_pacts
@@ -182,7 +182,7 @@ qpq_proclaim_charter_interaction = {
 
 	auto_accept = yes
 
-	on_auto_accept = {
+	on_accept = {
 		scope:actor = {
 			random_in_list = {
 				variable = qpq_pacts
@@ -411,7 +411,7 @@ qpq_confess_pact_interaction = {
 
 	auto_accept = yes
 
-	on_auto_accept = {
+	on_accept = {
 		scope:actor = {
 			random_secret = {
 				limit = {
