@@ -10,6 +10,13 @@ Hand-written companions:
 """
 from qpq_kinds import KINDS, GROUPS
 
+
+def deal_words(t):
+    import re
+    for a, b in (("Pacts", "Deals"), ("pacts", "deals"), ("Pact", "Deal"), ("pact", "deal")):
+        t = re.sub(r"(?<![\w])%s(?![\w])" % a, b, t)
+    return t
+
 # GuiScope with the player as root, actor = the player and recipient = the character the panel was opened on.
 # AddScope needs a real object scope (X.MakeScope, as vanilla does); a raw .Var('x') is not one.
 GS = ("GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope )"
@@ -74,21 +81,15 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
     # One button per Ask
     for k in KINDS:
         out += "qpq_ui_kind_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n" % k["key"]
-        out += "\tis_shown = {\n%s" % block(k["rel"], 2)
-        if k.get("dlc"):
-            out += block(k["dlc"], 2)
-        out += "\t}\n\teffect = {\n\t\tset_variable = { name = qpq_ui_kind value = flag:%s }\n" % k["key"]
+        # Every Ask is listed; one that is not open between these two is greyed out and its tooltip says why
+        out += "\tis_shown = {\n%s\t}\n" % (block(k["dlc"], 2) if k.get("dlc") else "\t\talways = yes\n")
+        out += "\tis_valid = {\n%s\t}\n" % block(k["rel"], 2)
+        out += "\teffect = {\n\t\tset_variable = { name = qpq_ui_kind value = flag:%s }\n" % k["key"]
         out += "\t\tqpq_ui_clear_choices_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
     # Group headings
     for g, _name in GROUPS:
         kinds = [k for k in KINDS if k["group"] == g]
-        out += "qpq_ui_group_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n\t\tOR = {\n" % g
-        for k in kinds:
-            out += "\t\t\tAND = {\n%s" % block(k["rel"], 4)
-            if k.get("dlc"):
-                out += block(k["dlc"], 4)
-            out += "\t\t\t}\n"
-        out += "\t\t}\n\t}\n}\n\n"
+        out += "qpq_ui_group_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n\t\talways = yes\n\t}\n}\n\n" % g
     # Offers (or demands, when the player is the one doing the deed). A ticked box always stays visible
     # so it can be unticked.
     for o in UI_OFFERS:
@@ -399,7 +400,7 @@ def gen_ui_loc(write):
     """Generated loc: the panel's version of each Ask's text."""
     L = ["l_english:"]
     for k in KINDS:
-        L.append(' qpq_%s_ask_ui:0 "%s"' % (k["key"], ask_ui(k).replace('"', '\\"')))
+        L.append(' qpq_%s_ask_ui:0 "%s"' % (k["key"], deal_words(ask_ui(k)).replace('"', '\\"')))
     for o in UI_OFFERS[1:]:
         L.append(' QPQ_UI_BULLET_OFFER_%s:0 "#P •#! $qpq_offer_%s$"' % (o, o))
     write("localization/english/qpq_ui_kinds_l_english.yml", "\n".join(L) + "\n")
@@ -429,12 +430,15 @@ def gen_gui(write):
 							layoutpolicy_horizontal = expanding
 							size = { 0 32 }
 							text = "qpq_%s_name"
-							tooltip = "qpq_%s_hub_tt"
+							enabled = "%s"
+							tooltip = "[Select_CString( %s, Localize( 'qpq_%s_hub_tt' ), %s )]"
 							using = tooltip_ne
 							onclick = "%s"
 							down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, '%s' )]"
 						}
-""" % (sg("qpq_ui_kind_%s" % k["key"], "IsShown"), k["key"], k["key"], sg("qpq_ui_kind_%s" % k["key"], "Execute"), k["key"])
+""" % (sg("qpq_ui_kind_%s" % k["key"], "IsShown"), k["key"], sg("qpq_ui_kind_%s" % k["key"], "IsValid"),
+               sg("qpq_ui_kind_%s" % k["key"], "IsValid")[1:-1], k["key"], sg("qpq_ui_kind_%s" % k["key"], "BuildTooltip")[1:-1],
+               sg("qpq_ui_kind_%s" % k["key"], "Execute"), k["key"])
 
     offer_items = ""
     for o in UI_OFFERS:

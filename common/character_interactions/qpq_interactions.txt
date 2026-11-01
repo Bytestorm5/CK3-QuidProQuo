@@ -12,16 +12,16 @@ qpq_propose_pact_interaction = {
 	icon = icon_personal
 	desc = qpq_propose_pact_interaction_desc
 
+	# Anyone can be offered a deal. Which Asks are open with them (and, for each one that is not,
+	# why) is shown in the panel itself, so nothing is hidden here.
 	is_shown = {
 		scope:actor = { is_ai = no }
 		NOT = { scope:actor = scope:recipient }
-		scope:recipient = { is_alive = yes is_adult = yes }
-		qpq_any_pact_possible_trigger = yes
+		scope:recipient = { is_alive = yes }
 	}
 
 	is_valid_showing_failures_only = {
 		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
-		scope:recipient = { is_imprisoned = no }
 	}
 
 	auto_accept = yes

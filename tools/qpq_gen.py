@@ -784,6 +784,14 @@ def esc(s):
     return s.replace('"', '\\"')
 
 
+def deal_words(t):
+    """The player-facing word is "deal", not "pact" (keys, variables and scope names keep qpq_pact)."""
+    import re
+    for a, b in (("Pacts", "Deals"), ("pacts", "deals"), ("Pact", "Deal"), ("pact", "deal")):
+        t = re.sub(r"(?<![\w])%s(?![\w])" % a, b, t)
+    return t
+
+
 def story_ask(ask):
     # The ask text in story/secret context uses the saved scopes; in the interaction window it uses others.
     return ask
@@ -793,7 +801,7 @@ def gen_loc():
     L = ["l_english:"]
 
     def add(key, text):
-        L.append(' %s:0 "%s"' % (key, esc(text)))
+        L.append(' %s:0 "%s"' % (key, esc(deal_words(text))))
 
     for g, gname in GROUPS:
         add("qpq_hub.group.%s" % g, gname)
