@@ -208,8 +208,6 @@ qpq_proclaim_charter_interaction = {
 			}
 			remove_variable = qpq_payer_secret
 			remove_variable = qpq_agent_secret
-			set_variable = { name = qpq_payer_tier value = 0 }
-			set_variable = { name = qpq_agent_tier value = 0 }
 			qpq_publish_charter_effect = yes
 			# A chartered conquest now carries the Crown Mandate
 			if = {

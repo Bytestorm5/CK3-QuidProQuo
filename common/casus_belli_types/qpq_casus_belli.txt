@@ -228,8 +228,10 @@ qpq_avenge_perfidy_cb = {
 	on_victory = {
 		scope:attacker = { show_pow_release_message_effect = yes }
 		scope:defender = {
-			pay_short_term_gold_reparations_effect = {
-				GOLD_VALUE = 4
+			pay_short_term_gold = {
+				target = scope:attacker
+				gold = 4
+				yearly_income = yes
 			}
 			add_prestige = major_prestige_loss
 		}

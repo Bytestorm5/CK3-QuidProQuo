@@ -59,8 +59,6 @@ qpq_seal_pact_effect = {
 			limit = { exists = scope:qpq_target_artifact }
 			set_variable = { name = qpq_target_artifact value = scope:qpq_target_artifact }
 		}
-		set_variable = { name = qpq_payer_tier value = scope:qpq_payer_tier }
-		set_variable = { name = qpq_agent_tier value = scope:qpq_agent_tier }
 		set_variable = { name = qpq_term value = $TERM$ }
 		set_variable = { name = qpq_months_left value = $TERM$ }
 		if = {
@@ -98,7 +96,6 @@ qpq_seal_pact_effect = {
 		}
 		set_variable = { name = qpq_months_left value = $TERM$ }
 	}
-	scope:qpq_story = { set_variable = { name = qpq_mirror value = scope:qpq_mirror } }
 
 	if = {
 		limit = { exists = scope:qpq_is_charter }
@@ -113,7 +110,7 @@ qpq_seal_pact_effect = {
 
 	scope:qpq_payer = {
 		send_interface_message = {
-			type = event_generic_good
+			type = event_generic_good_text
 			title = qpq_msg_pact_sealed_title
 			desc = qpq_msg_pact_sealed_payer_desc
 			left_icon = scope:qpq_agent
@@ -121,7 +118,7 @@ qpq_seal_pact_effect = {
 	}
 	scope:qpq_agent = {
 		send_interface_message = {
-			type = event_generic_good
+			type = event_generic_good_text
 			title = qpq_msg_pact_sealed_title
 			desc = qpq_msg_pact_sealed_agent_desc
 			left_icon = scope:qpq_payer
@@ -232,11 +229,6 @@ qpq_publish_charter_effect = {
 	if = {
 		limit = { exists = scope:qpq_charter_victim }
 		scope:qpq_charter_victim = {
-			set_variable = {
-				name = qpq_chartered_against_by
-				value = scope:qpq_agent
-				years = 10
-			}
 			if = {
 				limit = { exists = liege }
 				liege = { save_scope_as = qpq_charter_victim_liege }
@@ -248,11 +240,6 @@ qpq_publish_charter_effect = {
 		if = {
 			limit = { exists = scope:qpq_charter_victim_liege }
 			scope:qpq_charter_victim_liege = {
-				set_variable = {
-					name = qpq_defend_vassal
-					value = scope:qpq_charter_victim
-					years = 10
-				}
 				trigger_event = qpq_pact.80
 			}
 		}
@@ -283,7 +270,6 @@ qpq_store_and_pay_offers_effect = {
 			}
 			if = {
 				limit = { scope:qpq_o_stipend ?= yes }
-				set_variable = { name = qpq_timing value = flag:stipend }
 				set_variable = {
 					name = qpq_stipend
 					value = {
@@ -295,12 +281,10 @@ qpq_store_and_pay_offers_effect = {
 			}
 			else_if = {
 				limit = { scope:qpq_o_on_delivery ?= yes }
-				set_variable = { name = qpq_timing value = flag:on_delivery }
 				set_variable = { name = qpq_gold_due value = var:qpq_gold_total }
 			}
 			else_if = {
 				limit = { scope:qpq_o_split ?= yes }
-				set_variable = { name = qpq_timing value = flag:split }
 				set_variable = {
 					name = qpq_gold_due
 					value = { value = var:qpq_gold_total divide = 2 round = yes }
@@ -313,7 +297,6 @@ qpq_store_and_pay_offers_effect = {
 				}
 			}
 			else = {
-				set_variable = { name = qpq_timing value = flag:up_front }
 				scope:qpq_payer = {
 					pay_short_term_gold = {
 						target = scope:qpq_agent
@@ -506,7 +489,6 @@ qpq_store_and_pay_offers_effect = {
 			limit = {
 				scope:qpq_o_restraint ?= yes
 			}
-			set_variable = qpq_offer_restraint
 			scope:qpq_agent = {
 				add_to_variable_list = { name = qpq_protected_by_restraint target = scope:qpq_story }
 			}
@@ -765,6 +747,7 @@ qpq_story_stipend_effect = {
 qpq_ai_consider_breach_effect = {
 	if = {
 		limit = {
+			qpq_story_is_active_trigger = yes
 			scope:qpq_agent = {
 				OR = {
 					has_trait = deceitful
@@ -790,19 +773,11 @@ qpq_ai_consider_breach_effect = {
 qpq_deliver_pact_effect = {
 	set_variable = { name = qpq_closed value = flag:delivered }
 	qpq_kind_on_deliver_effect = yes
-	if = {
-		limit = { exists = scope:qpq_payer_secret }
-		scope:qpq_payer_secret = { set_variable = qpq_succeeded }
-	}
-	if = {
-		limit = { exists = scope:qpq_agent_secret }
-		scope:qpq_agent_secret = { set_variable = qpq_succeeded }
-	}
 	# Releasing payment
 	qpq_pay_on_delivery_effect = yes
 	scope:qpq_payer = {
 		send_interface_message = {
-			type = event_generic_good
+			type = event_generic_good_text
 			title = qpq_msg_pact_delivered_title
 			desc = qpq_msg_pact_delivered_payer_desc
 			left_icon = scope:qpq_agent
@@ -810,7 +785,7 @@ qpq_deliver_pact_effect = {
 	}
 	scope:qpq_agent = {
 		send_interface_message = {
-			type = event_generic_good
+			type = event_generic_good_text
 			title = qpq_msg_pact_delivered_title
 			desc = qpq_msg_pact_delivered_agent_desc
 			left_icon = scope:qpq_payer
@@ -903,7 +878,7 @@ qpq_payer_reneged_effect = {
 		add_hook = { type = qpq_broken_pact_hook target = scope:qpq_payer }
 		add_opinion = { target = scope:qpq_payer modifier = qpq_broke_our_pact_opinion }
 		send_interface_message = {
-			type = event_generic_bad
+			type = event_generic_bad_text
 			title = qpq_msg_pact_reneged_title
 			desc = qpq_msg_pact_reneged_desc
 			left_icon = scope:qpq_payer
@@ -916,14 +891,12 @@ qpq_mark_wronged_effect = {
 		limit = { exists = scope:qpq_payer_secret }
 		scope:qpq_payer_secret = {
 			set_variable = { name = qpq_wronged value = $WRONGED$ }
-			set_variable = { name = qpq_breacher value = $BREACHER$ }
 		}
 	}
 	if = {
 		limit = { exists = scope:qpq_agent_secret }
 		scope:qpq_agent_secret = {
 			set_variable = { name = qpq_wronged value = $WRONGED$ }
-			set_variable = { name = qpq_breacher value = $BREACHER$ }
 		}
 	}
 }
@@ -941,7 +914,7 @@ qpq_breach_pact_effect = {
 	}
 	$BREACHER$ = {
 		send_interface_message = {
-			type = event_generic_bad
+			type = event_generic_bad_text
 			title = qpq_msg_pact_breached_title
 			desc = qpq_msg_pact_breached_breacher_desc
 			left_icon = $WRONGED$
@@ -949,7 +922,7 @@ qpq_breach_pact_effect = {
 	}
 	$WRONGED$ = {
 		send_interface_message = {
-			type = event_generic_bad
+			type = event_generic_bad_text
 			title = qpq_msg_pact_breached_title
 			desc = qpq_msg_pact_breached_wronged_desc
 			left_icon = $BREACHER$
@@ -964,7 +937,7 @@ qpq_void_pact_effect = {
 		limit = { scope:qpq_payer = { is_alive = yes } }
 		scope:qpq_payer = {
 			send_interface_message = {
-				type = event_generic_neutral
+				type = event_generic_neutral_text
 				title = qpq_msg_pact_void_title
 				desc = qpq_msg_pact_void_desc
 				left_icon = scope:qpq_agent
@@ -975,7 +948,7 @@ qpq_void_pact_effect = {
 		limit = { scope:qpq_agent = { is_alive = yes } }
 		scope:qpq_agent = {
 			send_interface_message = {
-				type = event_generic_neutral
+				type = event_generic_neutral_text
 				title = qpq_msg_pact_void_title
 				desc = qpq_msg_pact_void_desc
 				left_icon = scope:qpq_payer
@@ -1546,14 +1519,13 @@ qpq_pact_secret_owner_death_effect = {
 		set_secret_owner = scope:qpq_new_owner
 		set_variable = { name = qpq_owner value = scope:qpq_new_owner }
 		change_variable = { name = qpq_tier add = -1 }
-		set_variable = qpq_inherited
 		if = {
 			limit = { exists = scope:qpq_new_owner.primary_heir }
 			set_variable = { name = qpq_heir value = scope:qpq_new_owner.primary_heir }
 		}
 		scope:qpq_new_owner = {
 			send_interface_message = {
-				type = event_generic_bad
+				type = event_generic_bad_text
 				title = qpq_msg_inherited_stain_title
 				desc = qpq_msg_inherited_stain_desc
 			}
@@ -1578,11 +1550,12 @@ qpq_yearly_secret_upkeep_effect = {
 
 # Root: the confessor. scope:qpq_confess_half = their own half. PENANCE = gold/piety/pilgrimage
 qpq_confess_pact_effect = {
+	save_scope_as = qpq_confessor
 	scope:qpq_confess_half = {
-		set_variable = { name = qpq_confessed_by value = root }
+		set_variable = { name = qpq_confessed_by value = scope:qpq_confessor }
 		if = {
 			limit = {
-				root = {
+				scope:qpq_confessor = {
 					OR = {
 						health <= 1
 						has_trait = incapable
@@ -1594,9 +1567,9 @@ qpq_confess_pact_effect = {
 			if = {
 				limit = {
 					var:qpq_tier >= 4
-					exists = root.primary_heir
+					exists = scope:qpq_confessor.primary_heir
 				}
-				root.primary_heir = {
+				scope:qpq_confessor.primary_heir = {
 					add_character_modifier = { modifier = qpq_heir_of_a_confession_modifier years = 10 }
 					add_prestige = medium_prestige_loss
 				}
@@ -1610,12 +1583,12 @@ qpq_confess_pact_effect = {
 				exists = var:qpq_story
 				exists = var:qpq_story.var:qpq_gold_total
 			}
-			root = {
+			scope:qpq_confessor = {
 				pay_short_term_gold = {
 					target = scope:qpq_confess_half.var:qpq_payer
 					gold = {
 						value = scope:qpq_confess_half.var:qpq_story.var:qpq_gold_total
-						max = root.gold
+						max = scope:qpq_confessor.gold
 						min = 0
 					}
 				}
@@ -1646,7 +1619,7 @@ qpq_confess_pact_effect = {
 		zealous = medium_stress_impact_loss
 		base = minor_stress_impact_loss
 	}
-	scope:qpq_confess_half = { expose_secret = root }
+	scope:qpq_confess_half = { expose_secret = scope:qpq_confessor }
 }
 
 ############################################################
@@ -1678,9 +1651,6 @@ qpq_seal_hush_money_effect = {
 		}
 	}
 	qpq_seal_pact_effect = { KIND = hush_money SECRET = bribery TERM = 120 }
-	scope:qpq_story = {
-		set_variable = { name = qpq_hushed_secret value = scope:qpq_hush_secret }
-	}
 }
 
 ############################################################
@@ -1721,6 +1691,7 @@ qpq_ai_secret_pulse_effect = {
 						save_scope_value_as = { name = qpq_reneg_tier value = scope:qpq_ai_secret.var:qpq_tier }
 						scope:qpq_ai_secret_owner = { save_scope_as = recipient }
 						save_scope_value_as = { name = qpq_hush_price value = qpq_renegotiate_demand_value }
+						clear_saved_scope = recipient
 						scope:qpq_ai_secret_owner = { trigger_event = qpq_expose.20 }
 					}
 				}

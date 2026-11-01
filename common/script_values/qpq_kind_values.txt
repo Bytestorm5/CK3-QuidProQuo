@@ -5869,29 +5869,29 @@ qpq_purchase_a_mitre_ai_acceptance_value = {
 qpq_bought_claim_payer_tier_value = {
 	value = 3
 	if = {
-		limit = { exists = scope:target.holder }
+		limit = { exists = scope:secondary_recipient }
 		if = {
-			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
 			add = -1
 		}
 		if = {
-			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
 			add = 1
 		}
 		if = {
-			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
 			add = 1
 		}
 		if = {
-			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
 			add = 1
 		}
 		if = {
-			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:actor TARGET = scope:target.holder } }
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:actor TARGET = scope:secondary_recipient } }
 			add = 2
 		}
 		if = {
-			limit = { qpq_ctx_clergy_trigger = { TARGET = scope:target.holder } }
+			limit = { qpq_ctx_clergy_trigger = { TARGET = scope:secondary_recipient } }
 			add = 1
 		}
 	}

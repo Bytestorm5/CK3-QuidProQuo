@@ -190,7 +190,7 @@ OR = {
 """),
     "arms": dict(shown="{P} = { is_landed = yes }"),
     "artifact": dict(shown="{P} = { any_character_artifact = { always = yes } }"),
-    "church": dict(shown="{P} = { is_head_of_faith = yes }"),
+    "church": dict(shown="{P} = { qpq_is_head_of_faith_trigger = yes }"),
     "restraint": dict(shown="{A} = { liege ?= {P} }"),
     "hook": dict(shown="{P} = { has_usable_hook = {A} }"),
     "charter": dict(shown="""
@@ -408,6 +408,20 @@ def gen_triggers():
         if performable(k):
             out += "\t\t%s\n" % kind_check(k)
     out += "\t}\n}\n\n"
+    out += "qpq_kind_grants_war_licence_trigger = {\n\tOR = {\n"
+    for k in KINDS:
+        if k.get("licence"):
+            out += "\t\t%s\n" % kind_check(k)
+    out += "\t}\n}\n\n"
+    # AI proposals: the finder must have found the target the Ask needs
+    for k in KINDS:
+        if k.get("ai"):
+            t = k["target"]
+            need = {"char": "exists = scope:secondary_recipient", "title": "exists = scope:target",
+                    "artifact": "exists = scope:target", "derived": "exists = %s" % k.get("derive", ""),
+                    "none": "always = yes"}[t]
+            out += "qpq_k_%s_ai_target_ok_trigger = {\n\t%s\n}\n" % (k["key"], need)
+    out += "\n"
     out += "qpq_kind_is_church_trigger = {\n\tOR = {\n"
     for k in KINDS:
         if k["secret"] in ("simony", "rites"):
@@ -514,11 +528,15 @@ if = {
             out += "\t\t\tqpq_ai_propose_kind_effect = { KIND = %s }\n\t\t}\n" % k["key"]
     out += "\t\t20 = {\n\t\t\t# think better of it\n\t\t}\n\t}\n}\n\n"
     out += """qpq_ai_propose_kind_effect = {
+	clear_saved_scope = recipient
+	clear_saved_scope = secondary_recipient
+	clear_saved_scope = target
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
 		limit = {
 			exists = scope:recipient
+			qpq_k_$KIND$_ai_target_ok_trigger = yes
 			NOT = { scope:recipient = scope:actor }
 			scope:recipient = { qpq_ai_target_ok_trigger = yes }
 			qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
@@ -696,6 +714,8 @@ def gen_loc():
         add("qpq_%s_interaction" % key, "Propose: %s" % k["name"])
         add("qpq_%s_interaction_desc" % key, k["desc"] + (" #italic %s#!" % k["echo"] if k.get("echo") else ""))
         add("qpq_%s_prompt" % key, "Pick the target")
+        if k["target"] == "char":
+            add("recipient_secondary_qpq_%s_interaction" % key, "Target")
         ask = k["ask"]
         add("qpq_%s_ask_story" % key, ask)
         mode = {"condition": "Delivered when it happens.", "perform": "Delivered when they act on it (Honour the Pact).",

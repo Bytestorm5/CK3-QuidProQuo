@@ -560,6 +560,7 @@ qpq_k_shelter_the_pretender_breached_trigger = {
 }
 qpq_k_shelter_the_pretender_invalid_trigger = {
 	NOT = { scope:qpq_agent = { has_claim_on = scope:qpq_target_title } }
+	NOT = { scope:qpq_target_title.holder ?= scope:qpq_agent }
 }
 qpq_k_shelter_the_pretender_can_perform_trigger = {
 	always = no
@@ -713,10 +714,11 @@ qpq_k_bought_claim_breached_trigger = {
 	always = no
 }
 qpq_k_bought_claim_invalid_trigger = {
-	always = no
+	scope:qpq_target = { is_landed = no }
 }
 qpq_k_bought_claim_can_perform_trigger = {
-	NOT = { scope:qpq_payer = { has_claim_on = scope:qpq_target_title } }
+	exists = scope:qpq_target.primary_title
+	NOT = { scope:qpq_payer = { has_claim_on = scope:qpq_target.primary_title } }
 }
 
 #### Absolution by Concession
@@ -763,7 +765,7 @@ qpq_k_buy_a_bull_can_perform_trigger = {
 
 #### Conclave Votes
 qpq_k_conclave_votes_delivered_trigger = {
-	scope:qpq_target = { is_head_of_faith = yes }
+	scope:qpq_target = { qpq_is_head_of_faith_trigger = yes }
 }
 qpq_k_conclave_votes_breached_trigger = {
 	always = no
@@ -1197,6 +1199,10 @@ qpq_kind_invalid_trigger = {
 			qpq_k_purchase_a_mitre_invalid_trigger = yes
 		}
 		AND = {
+			var:qpq_kind = flag:bought_claim
+			qpq_k_bought_claim_invalid_trigger = yes
+		}
+		AND = {
 			var:qpq_kind = flag:absolution_by_concession
 			qpq_k_absolution_by_concession_invalid_trigger = yes
 		}
@@ -1366,6 +1372,78 @@ qpq_kind_is_performable_trigger = {
 		var:qpq_kind = flag:consecration_rites
 		var:qpq_kind = flag:temple_patronage
 	}
+}
+
+qpq_kind_grants_war_licence_trigger = {
+	OR = {
+		var:qpq_kind = flag:chartered_conquest
+		var:qpq_kind = flag:sanctioned_conquest
+		var:qpq_kind = flag:licensed_feud
+		var:qpq_kind = flag:proxy_war
+		var:qpq_kind = flag:partition_pact
+		var:qpq_kind = flag:holy_warrant
+	}
+}
+
+qpq_k_chartered_conquest_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_sanctioned_conquest_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_marcher_charge_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_licensed_feud_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_dossier_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_quiet_removal_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_blessing_for_a_feud_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_clemency_bargain_ai_target_ok_trigger = {
+	always = yes
+}
+qpq_k_electoral_capitulation_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_mutual_defense_league_ai_target_ok_trigger = {
+	exists = scope:actor.liege
+}
+qpq_k_title_swap_ai_target_ok_trigger = {
+	exists = scope:target
+}
+qpq_k_coup_pact_ai_target_ok_trigger = {
+	exists = scope:actor.liege
+}
+qpq_k_proxy_war_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_secret_alliance_ai_target_ok_trigger = {
+	always = yes
+}
+qpq_k_bought_truce_ai_target_ok_trigger = {
+	always = yes
+}
+qpq_k_faithless_ally_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_turncoat_ai_target_ok_trigger = {
+	exists = scope:recipient.liege
+}
+qpq_k_seed_the_separatists_ai_target_ok_trigger = {
+	exists = scope:recipient.liege
+}
+qpq_k_bought_claim_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+}
+qpq_k_absolution_by_concession_ai_target_ok_trigger = {
+	always = yes
 }
 
 qpq_kind_is_church_trigger = {
@@ -1740,42 +1818,42 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1783,7 +1861,7 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1791,7 +1869,7 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1818,7 +1896,7 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1842,7 +1920,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 				religion = religion:islam_religion
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					AND = {
 						is_clergy = yes
 						learning >= 15
@@ -1856,7 +1934,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					AND = { is_clergy = yes learning >= 12 }
 				}
 			}
@@ -1864,7 +1942,7 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1877,7 +1955,7 @@ qpq_any_pact_possible_trigger = {
 		}
 		AND = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1890,7 +1968,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					this = scope:actor.realm_priest
 				}
 			}
@@ -1901,7 +1979,7 @@ qpq_any_pact_possible_trigger = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					this = scope:actor.realm_priest
 				}
 			}

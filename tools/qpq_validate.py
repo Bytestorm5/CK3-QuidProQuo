@@ -353,6 +353,8 @@ def main():
                 for c in n.value:
                     if c.key == "name" and not c.value.startswith("$") and c.value != "pam_forced_papal_vote_target":
                         used_vars[c.value].append("%s:%d" % (rel, n.line))
+            if k == "LIST" and isinstance(n.value, str):
+                used_vars[n.value].append("%s:%d" % (rel, n.line))
             if k == "variable" and isinstance(n.value, str) and pkeys and re.match(r"^(any|every|random|ordered)_in_list$", pkeys[-1] or ""):
                 used_vars[n.value].append("%s:%d" % (rel, n.line))
             # keyword check in effect/trigger-like files

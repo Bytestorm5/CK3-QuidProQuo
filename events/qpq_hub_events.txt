@@ -406,28 +406,28 @@ qpq_hub.1 = {
 			OR = {
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -435,7 +435,7 @@ qpq_hub.1 = {
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -445,7 +445,7 @@ qpq_hub.1 = {
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -453,7 +453,7 @@ qpq_hub.1 = {
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -466,7 +466,7 @@ qpq_hub.1 = {
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -479,7 +479,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 						faith = scope:actor.faith
 						OR = {
-							is_head_of_faith = yes
+							qpq_is_head_of_faith_trigger = yes
 							this = scope:actor.realm_priest
 						}
 					}
@@ -490,7 +490,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 						faith = scope:actor.faith
 						OR = {
-							is_head_of_faith = yes
+							qpq_is_head_of_faith_trigger = yes
 							this = scope:actor.realm_priest
 						}
 					}
@@ -517,21 +517,21 @@ qpq_hub.1 = {
 			OR = {
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
 				}
 				AND = {
 					scope:recipient = {
-						is_head_of_faith = yes
+						qpq_is_head_of_faith_trigger = yes
 						NOT = { this = scope:actor }
 					}
 					scope:actor.faith = scope:recipient.faith
@@ -572,7 +572,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 						religion = religion:islam_religion
 						OR = {
-							is_head_of_faith = yes
+							qpq_is_head_of_faith_trigger = yes
 							AND = {
 								is_clergy = yes
 								learning >= 15
@@ -586,7 +586,7 @@ qpq_hub.1 = {
 						NOT = { this = scope:actor }
 						faith = scope:actor.faith
 						OR = {
-							is_head_of_faith = yes
+							qpq_is_head_of_faith_trigger = yes
 							AND = { is_clergy = yes learning >= 12 }
 						}
 					}
@@ -1429,7 +1429,7 @@ qpq_hub.16 = {
 		name = qpq_dispensation_for_gold_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1445,7 +1445,7 @@ qpq_hub.16 = {
 		name = qpq_purchase_a_mitre_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1461,7 +1461,7 @@ qpq_hub.16 = {
 		name = qpq_bought_claim_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1477,7 +1477,7 @@ qpq_hub.16 = {
 		name = qpq_absolution_by_concession_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1494,7 +1494,7 @@ qpq_hub.16 = {
 		name = qpq_buy_a_bull_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1513,7 +1513,7 @@ qpq_hub.16 = {
 		name = qpq_caliphal_investiture_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1530,7 +1530,7 @@ qpq_hub.16 = {
 		name = qpq_crowning_the_usurper_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1552,7 +1552,7 @@ qpq_hub.16 = {
 		name = qpq_pliant_patriarch_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1574,7 +1574,7 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					this = scope:actor.realm_priest
 				}
 			}
@@ -1594,7 +1594,7 @@ qpq_hub.16 = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					this = scope:actor.realm_priest
 				}
 			}
@@ -1648,7 +1648,7 @@ qpq_hub.17 = {
 		name = qpq_excommunication_for_hire_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1664,7 +1664,7 @@ qpq_hub.17 = {
 		name = qpq_steer_the_holy_war_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1680,7 +1680,7 @@ qpq_hub.17 = {
 		name = qpq_holy_warrant_name
 		trigger = {
 			scope:recipient = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				NOT = { this = scope:actor }
 			}
 			scope:actor.faith = scope:recipient.faith
@@ -1757,7 +1757,7 @@ qpq_hub.17 = {
 				NOT = { this = scope:actor }
 				religion = religion:islam_religion
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					AND = {
 						is_clergy = yes
 						learning >= 15
@@ -1780,7 +1780,7 @@ qpq_hub.17 = {
 				NOT = { this = scope:actor }
 				faith = scope:actor.faith
 				OR = {
-					is_head_of_faith = yes
+					qpq_is_head_of_faith_trigger = yes
 					AND = { is_clergy = yes learning >= 12 }
 				}
 			}

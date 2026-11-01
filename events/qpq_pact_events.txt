@@ -107,6 +107,7 @@ qpq_pact.90 = {
 
 	option = {
 		name = qpq_pact.90.a
+		trigger = { exists = scope:war }
 		scope:war = { add_defender = root }
 	}
 	option = {

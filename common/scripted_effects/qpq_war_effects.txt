@@ -27,10 +27,6 @@ qpq_record_war_result_effect = {
 			every_in_list = {
 				variable = qpq_pacts
 				if = {
-					limit = { var:qpq_agent ?= $LOSER$ }
-					add_to_variable_list = { name = qpq_agent_lost_to target = $WINNER$ }
-				}
-				if = {
 					limit = { var:qpq_payer ?= $LOSER$ }
 					add_to_variable_list = { name = qpq_payer_lost_to target = $WINNER$ }
 				}
@@ -51,10 +47,6 @@ qpq_record_war_end_effect = {
 					limit = { var:qpq_agent ?= $A$ }
 					add_to_variable_list = { name = qpq_agent_fought target = $B$ }
 				}
-				if = {
-					limit = { var:qpq_payer ?= $A$ }
-					add_to_variable_list = { name = qpq_payer_fought target = $B$ }
-				}
 			}
 		}
 	}
@@ -66,10 +58,6 @@ qpq_record_war_end_effect = {
 				if = {
 					limit = { var:qpq_agent ?= $B$ }
 					add_to_variable_list = { name = qpq_agent_fought target = $A$ }
-				}
-				if = {
-					limit = { var:qpq_payer ?= $B$ }
-					add_to_variable_list = { name = qpq_payer_fought target = $A$ }
 				}
 			}
 		}
@@ -87,10 +75,6 @@ qpq_war_started_effect = {
 				if = {
 					limit = { var:qpq_agent ?= scope:attacker }
 					add_to_variable_list = { name = qpq_agent_attacked target = scope:defender }
-				}
-				if = {
-					limit = { var:qpq_payer ?= scope:attacker }
-					add_to_variable_list = { name = qpq_payer_attacked target = scope:defender }
 				}
 			}
 		}
@@ -245,6 +229,7 @@ qpq_grant_war_licence_effect = {
 }
 
 qpq_revoke_war_licence_effect = {
+	$TARGET$ = { save_scope_as = qpq_licence_target }
 	$AGENT$ = {
 		if = {
 			limit = { is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$ } }
@@ -256,6 +241,23 @@ qpq_revoke_war_licence_effect = {
 				is_target_in_variable_list = { name = qpq_war_licence_against target = $TARGET$.top_liege }
 			}
 			remove_list_variable = { name = qpq_war_licence_against target = $TARGET$.top_liege }
+		}
+	}
+	# Another active pact may still license the same war
+	$AGENT$ = {
+		save_scope_as = qpq_licence_holder
+		if = {
+			limit = { has_variable_list = qpq_pacts }
+			every_in_list = {
+				variable = qpq_pacts
+				limit = {
+					qpq_story_is_active_trigger = yes
+					NOT = { this = scope:qpq_story }
+					var:qpq_target ?= scope:qpq_licence_target
+					qpq_kind_grants_war_licence_trigger = yes
+				}
+				qpq_grant_war_licence_effect = { AGENT = scope:qpq_licence_holder TARGET = scope:qpq_licence_target }
+			}
 		}
 	}
 }
@@ -385,6 +387,7 @@ qpq_ai_consider_confession_effect = {
 				limit = { qpq_is_pact_secret_trigger = yes }
 				save_scope_as = qpq_confess_half
 			}
+			save_scope_value_as = { name = qpq_f_tier value = scope:qpq_confess_half.var:qpq_tier }
 			save_scope_value_as = { name = qpq_penance value = flag:piety }
 			if = {
 				limit = { gold >= qpq_confession_penance_gold_value }

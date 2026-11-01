@@ -57,6 +57,28 @@ qpq_k_chartered_conquest_on_end_effect = {
 			limit = { has_variable_list = qpq_mandate_against }
 			clear_variable_list = qpq_mandate_against
 		}
+		# Other Charters of the same vassal keep their Crown Mandate
+		every_in_list = {
+			variable = qpq_pacts
+			limit = {
+				qpq_story_is_active_trigger = yes
+				NOT = { this = scope:qpq_story }
+				var:qpq_kind = flag:chartered_conquest
+				has_variable = qpq_charter
+				exists = var:qpq_target
+			}
+			var:qpq_target = { save_scope_as = qpq_other_mandate_target }
+			scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_against target = scope:qpq_other_mandate_target } }
+			var:qpq_payer = { save_scope_as = qpq_other_mandate_payer }
+			scope:qpq_other_mandate_target = {
+				every_realm_county = {
+					limit = {
+						any_this_title_or_de_jure_above = { holder ?= scope:qpq_other_mandate_payer }
+					}
+					scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_titles target = prev } }
+				}
+			}
+		}
 	}
 }
 qpq_k_chartered_conquest_tick_effect = {
@@ -1116,6 +1138,10 @@ qpq_k_the_cloister_tick_effect = {
 qpq_k_the_cloister_perform_effect = {
 	if = {
 		limit = { scope:qpq_target = scope:qpq_agent }
+		if = {
+			limit = { exists = scope:qpq_agent.primary_heir }
+			scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
+		}
 		scope:qpq_agent = { depose = yes }
 	}
 	scope:qpq_target = {
@@ -1138,8 +1164,8 @@ qpq_k_the_cloister_ai_attempt_effect = {
 }
 qpq_k_the_cloister_exposed_effect = {
 	if = {
-		limit = { exists = scope:qpq_agent.primary_title.holder }
-		scope:qpq_agent.primary_title.holder = {
+		limit = { exists = scope:qpq_payer_secret.var:qpq_successor }
+		scope:qpq_payer_secret.var:qpq_successor = {
 			if = {
 				limit = { qpq_uses_legitimacy_trigger = yes }
 				add_legitimacy = -20
@@ -1193,7 +1219,8 @@ qpq_k_marriage_by_command_tick_effect = {
 qpq_k_marriage_by_command_perform_effect = {
 	scope:qpq_agent = {
 		every_spouse = {
-			scope:qpq_story = { add_to_variable_list = { name = qpq_discarded target = prev } }
+			save_temporary_scope_as = qpq_discarded_spouse
+			scope:qpq_payer_secret ?= { add_to_variable_list = { name = qpq_discarded target = scope:qpq_discarded_spouse } }
 			divorce = scope:qpq_agent
 		}
 		marry = scope:qpq_target
@@ -1212,6 +1239,18 @@ qpq_k_marriage_by_command_ai_attempt_effect = {
 qpq_k_marriage_by_command_exposed_effect = {
 	scope:qpq_payer = { add_piety = medium_piety_loss }
 	scope:qpq_agent = { add_piety = medium_piety_loss }
+	scope:qpq_payer_secret ?= {
+		if = {
+			limit = { has_variable_list = qpq_discarded }
+			every_in_list = {
+				variable = qpq_discarded
+				house.house_head ?= {
+					add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_my_house_opinion }
+					add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_house_opinion }
+				}
+			}
+		}
+	}
 }
 
 #### Hand-Over
@@ -1422,7 +1461,17 @@ qpq_k_hush_money_seal_from_scopes_effect = {
 qpq_k_hush_money_on_seal_effect = {
 	scope:qpq_payer = {
 		every_secret = {
-			limit = { is_known_by = scope:qpq_agent }
+			limit = {
+				is_known_by = scope:qpq_agent
+				NOT = { var:qpq_story ?= scope:qpq_story }
+				trigger_if = {
+					limit = { exists = scope:qpq_hush_secret }
+					OR = {
+						this = scope:qpq_hush_secret
+						scope:qpq_hush_secret.var:qpq_twin ?= this
+					}
+				}
+			}
 			if = {
 				limit = { qpq_is_pact_secret_trigger = yes }
 				set_variable = qpq_cover_up
@@ -1905,7 +1954,7 @@ qpq_k_title_swap_on_seal_effect = {
 		limit = { scope:qpq_x_consent ?= yes }
 		scope:qpq_payer.liege = {
 			send_interface_message = {
-				type = event_generic_neutral
+				type = event_generic_neutral_text
 				title = qpq_msg_title_swap_consent_title
 				desc = qpq_msg_title_swap_consent_desc
 				left_icon = scope:qpq_payer
@@ -1991,13 +2040,17 @@ qpq_k_coup_pact_seal_from_scopes_effect = {
 	}
 }
 qpq_k_coup_pact_on_seal_effect = {
-	# nothing
+	scope:qpq_target.primary_title ?= {
+		save_scope_as = qpq_coup_title
+		scope:qpq_story = { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+		scope:qpq_payer_secret ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+	}
 }
 qpq_k_coup_pact_on_deliver_effect = {
 	# Seize the regency: the new ruler owes the plotter
 	if = {
-		limit = { exists = scope:qpq_target.primary_title.holder }
-		scope:qpq_target.primary_title.holder = { save_scope_as = qpq_new_ruler }
+		limit = { exists = var:qpq_coup_title.holder }
+		var:qpq_coup_title.holder = { save_scope_as = qpq_new_ruler }
 		if = {
 			limit = {
 				scope:qpq_new_ruler = { is_adult = no }
@@ -2039,8 +2092,8 @@ qpq_k_coup_pact_exposed_effect = {
 	}
 
 	if = {
-		limit = { exists = scope:qpq_target.primary_title.holder }
-		scope:qpq_target.primary_title.holder = {
+		limit = { exists = scope:qpq_payer_secret.var:qpq_coup_title.holder }
+		scope:qpq_payer_secret.var:qpq_coup_title.holder = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_traitor_opinion }
 			add_opinion = { target = scope:qpq_agent modifier = qpq_traitor_opinion }
 		}
@@ -2379,6 +2432,10 @@ qpq_k_faithless_ally_on_seal_effect = {
 					AND = { is_attacker = scope:qpq_agent is_defender = scope:qpq_payer }
 					AND = { is_defender = scope:qpq_agent is_attacker = scope:qpq_payer }
 				}
+				NOR = {
+					primary_attacker = scope:qpq_agent
+					primary_defender = scope:qpq_agent
+				}
 			}
 			remove_participant = scope:qpq_agent
 		}
@@ -2642,8 +2699,8 @@ qpq_k_shelter_the_pretender_on_deliver_effect = {
 	qpq_victors_justice_effect = yes
 	scope:qpq_agent = {
 		add_opinion = { target = scope:qpq_payer modifier = qpq_grateful_patron_opinion }
-		add_hook = { type = strong_favor_hook target = scope:qpq_agent }
 	}
+	scope:qpq_payer = { add_hook = { type = strong_favor_hook target = scope:qpq_agent } }
 }
 qpq_k_shelter_the_pretender_on_end_effect = {
 	# nothing
@@ -3140,7 +3197,6 @@ qpq_k_dispensation_for_gold_perform_effect = {
 	if = {
 		limit = { scope:qpq_target = { is_spouse_of = scope:qpq_payer } }
 		scope:qpq_payer = { divorce = scope:qpq_target }
-		scope:qpq_story = { set_variable = qpq_was_annulment }
 	}
 	else = {
 		scope:qpq_target = {
@@ -3297,7 +3353,7 @@ qpq_k_purchase_a_mitre_perform_effect = {
 			}
 		}
 		resolve_title_and_vassal_change = scope:qpq_mitre_change
-		scope:qpq_story = { set_variable = { name = qpq_mitre_title value = scope:qpq_mitre } }
+		scope:qpq_payer_secret ?= { set_variable = { name = qpq_mitre_title value = scope:qpq_mitre } }
 	}
 	scope:qpq_target = {
 		add_piety = medium_piety_gain
@@ -3320,17 +3376,34 @@ qpq_k_purchase_a_mitre_exposed_effect = {
 		scope:qpq_target = { remove_character_modifier = qpq_bought_mitre_modifier }
 	}
 	scope:qpq_payer = { add_character_modifier = { modifier = qpq_clerical_denunciation_modifier years = 10 } }
+	# The holder may be deposed: the bought see returns to the head of faith
+	if = {
+		limit = {
+			exists = scope:qpq_payer_secret.var:qpq_mitre_title
+			scope:qpq_payer_secret.var:qpq_mitre_title.holder ?= scope:qpq_target
+			scope:qpq_agent = { is_alive = yes is_landed = yes }
+		}
+		scope:qpq_payer_secret.var:qpq_mitre_title = { save_scope_as = qpq_lost_mitre }
+		create_title_and_vassal_change = {
+			type = revoked
+			save_scope_as = qpq_mitre_revoke
+			add_claim_on_loss = no
+		}
+		scope:qpq_lost_mitre = {
+			change_title_holder = {
+				holder = scope:qpq_agent
+				change = scope:qpq_mitre_revoke
+			}
+		}
+		resolve_title_and_vassal_change = scope:qpq_mitre_revoke
+	}
 }
 
 #### Bought Claim
 qpq_k_bought_claim_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
-	scope:target = { save_scope_as = qpq_target_title }
-	if = {
-		limit = { exists = scope:target.holder }
-		scope:target.holder = { save_scope_as = qpq_target }
-	}
+	scope:secondary_recipient = { save_scope_as = qpq_target }
 	save_scope_value_as = { name = qpq_payer_tier value = qpq_bought_claim_payer_tier_value }
 	save_scope_value_as = { name = qpq_agent_tier value = qpq_bought_claim_agent_tier_value }
 	if = {
@@ -3363,7 +3436,8 @@ qpq_k_bought_claim_tick_effect = {
 	# nothing
 }
 qpq_k_bought_claim_perform_effect = {
-	scope:qpq_payer = { add_unpressed_claim = scope:qpq_target_title }
+	scope:qpq_payer = { add_unpressed_claim = scope:qpq_target.primary_title }
+	scope:qpq_payer_secret ?= { set_variable = { name = qpq_bought_claim_title value = scope:qpq_target.primary_title } }
 }
 qpq_k_bought_claim_ai_attempt_effect = {
 	if = {
@@ -3377,8 +3451,11 @@ qpq_k_bought_claim_ai_attempt_effect = {
 }
 qpq_k_bought_claim_exposed_effect = {
 	if = {
-		limit = { scope:qpq_payer = { has_claim_on = scope:qpq_target_title } }
-		scope:qpq_payer = { remove_claim = scope:qpq_target_title }
+		limit = {
+			exists = scope:qpq_payer_secret.var:qpq_bought_claim_title
+			scope:qpq_payer = { has_claim_on = scope:qpq_payer_secret.var:qpq_bought_claim_title }
+		}
+		scope:qpq_payer = { remove_claim = scope:qpq_payer_secret.var:qpq_bought_claim_title }
 	}
 }
 qpq_k_bought_claim_ai_find_effect = {
@@ -3386,7 +3463,7 @@ qpq_k_bought_claim_ai_find_effect = {
 	random_relation = {
 		type = rival
 		limit = { is_landed = yes }
-		primary_title = { save_scope_as = target }
+		save_scope_as = secondary_recipient
 	}
 }
 
@@ -3631,7 +3708,7 @@ qpq_k_conclave_votes_ai_attempt_effect = {
 }
 qpq_k_conclave_votes_exposed_effect = {
 	if = {
-		limit = { scope:qpq_target = { is_head_of_faith = yes } }
+		limit = { scope:qpq_target = { qpq_is_head_of_faith_trigger = yes } }
 		scope:qpq_target = {
 			add_piety = major_piety_loss
 			add_character_modifier = { modifier = qpq_bought_legitimacy_modifier years = 15 }
@@ -5389,11 +5466,15 @@ qpq_ai_broker_pact_effect = {
 }
 
 qpq_ai_propose_kind_effect = {
+	clear_saved_scope = recipient
+	clear_saved_scope = secondary_recipient
+	clear_saved_scope = target
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
 		limit = {
 			exists = scope:recipient
+			qpq_k_$KIND$_ai_target_ok_trigger = yes
 			NOT = { scope:recipient = scope:actor }
 			scope:recipient = { qpq_ai_target_ok_trigger = yes }
 			qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }

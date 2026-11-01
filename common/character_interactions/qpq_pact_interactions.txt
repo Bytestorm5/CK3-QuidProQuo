@@ -205,7 +205,7 @@ qpq_chartered_conquest_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -644,7 +644,7 @@ qpq_sanctioned_conquest_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -1067,7 +1067,7 @@ qpq_marcher_charge_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -1476,7 +1476,7 @@ qpq_holy_sponsorship_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -1878,7 +1878,7 @@ qpq_development_charter_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -2289,7 +2289,7 @@ qpq_electoral_purchase_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -2678,7 +2678,7 @@ qpq_loyal_mole_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -3067,7 +3067,7 @@ qpq_agent_provocateur_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -3474,7 +3474,7 @@ qpq_licensed_feud_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -3890,7 +3890,7 @@ qpq_dossier_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -4323,7 +4323,7 @@ qpq_quiet_removal_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -4750,7 +4750,7 @@ qpq_heir_question_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -5179,7 +5179,7 @@ qpq_snatch_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -5584,7 +5584,7 @@ qpq_dispossession_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -5992,7 +5992,7 @@ qpq_the_cloister_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -6414,7 +6414,7 @@ qpq_marriage_by_command_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -6825,7 +6825,7 @@ qpq_hand_over_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -7228,7 +7228,7 @@ qpq_hand_over_artifact_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -7631,7 +7631,7 @@ qpq_renunciation_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -8020,7 +8020,7 @@ qpq_hush_money_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -8367,7 +8367,7 @@ qpq_price_of_loyalty_interaction = {
 		localization = qpq_demand_church
 		current_description = qpq_demand_church_desc
 		is_shown = {
-			scope:recipient = { is_head_of_faith = yes }
+			scope:recipient = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 
@@ -8694,7 +8694,7 @@ qpq_blessing_for_a_feud_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -9088,7 +9088,7 @@ qpq_clemency_bargain_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -9454,7 +9454,7 @@ qpq_electoral_capitulation_interaction = {
 		localization = qpq_demand_church
 		current_description = qpq_demand_church_desc
 		is_shown = {
-			scope:recipient = { is_head_of_faith = yes }
+			scope:recipient = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 
@@ -9765,7 +9765,7 @@ qpq_mutual_defense_league_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -10171,7 +10171,7 @@ qpq_faction_pledge_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -10579,7 +10579,7 @@ qpq_title_swap_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -10982,7 +10982,7 @@ qpq_coup_pact_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -11406,7 +11406,7 @@ qpq_proxy_war_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -11839,7 +11839,7 @@ qpq_partition_pact_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -12231,7 +12231,7 @@ qpq_secret_alliance_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -12618,7 +12618,7 @@ qpq_bought_truce_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -13030,7 +13030,7 @@ qpq_faithless_ally_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -13432,7 +13432,7 @@ qpq_turncoat_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -13825,7 +13825,7 @@ qpq_seed_the_separatists_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -14239,7 +14239,7 @@ qpq_shelter_the_pretender_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -14666,7 +14666,7 @@ qpq_extradition_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -15058,7 +15058,7 @@ qpq_buy_a_councillor_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -15456,7 +15456,7 @@ qpq_stay_home_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -15849,7 +15849,7 @@ qpq_defection_pact_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -16262,7 +16262,7 @@ qpq_secret_clause_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -16682,7 +16682,7 @@ qpq_hire_the_hashashin_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -16914,7 +16914,7 @@ qpq_excommunication_for_hire_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -17105,7 +17105,7 @@ qpq_excommunication_for_hire_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -17337,7 +17337,7 @@ qpq_dispensation_for_gold_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -17511,7 +17511,7 @@ qpq_dispensation_for_gold_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -17743,7 +17743,7 @@ qpq_steer_the_holy_war_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -17928,7 +17928,7 @@ qpq_steer_the_holy_war_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -18160,7 +18160,7 @@ qpq_purchase_a_mitre_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -18337,7 +18337,7 @@ qpq_purchase_a_mitre_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -18565,10 +18565,11 @@ qpq_bought_claim_interaction = {
 	ai_max_reply_days = 3
 	send_options_exclusive = no
 	cooldown_against_recipient = { months = 6 }
+	prompt = qpq_bought_claim_prompt
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -18580,21 +18581,30 @@ qpq_bought_claim_interaction = {
 		scope:actor = { is_imprisoned = no }
 	}
 
-	target_type = title
-	target_source = actor
-	target_filter = top_liege_de_jure_titles
-
-	can_be_picked_title = {
-		scope:target = {
-			tier >= tier_county
-			exists = holder
-			NOT = { holder = scope:actor }
+	populate_recipient_list = {
+		scope:actor = {
+			every_relation = {
+				type = rival
+				limit = { NOT = { this = scope:recipient } }
+				add_to_list = characters
+			}
+			every_neighboring_and_across_water_top_liege_realm_owner = {
+				limit = { NOT = { this = scope:recipient } }
+				add_to_list = characters
+			}
+			every_vassal = {
+				limit = {
+					is_landed = yes
+					NOT = { this = scope:recipient }
+				}
+				add_to_list = characters
+			}
 		}
 	}
 
 	has_valid_target_showing_failures_only = {
-		exists = scope:target
-		scope:target = { exists = holder NOT = { holder = scope:actor } }
+		exists = scope:secondary_recipient
+		scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }
 	}
 
 	send_option = {
@@ -18744,7 +18754,7 @@ qpq_bought_claim_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -18975,7 +18985,7 @@ qpq_absolution_by_concession_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -19135,7 +19145,7 @@ qpq_absolution_by_concession_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -19367,7 +19377,7 @@ qpq_holy_warrant_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -19556,7 +19566,7 @@ qpq_holy_warrant_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -19788,7 +19798,7 @@ qpq_buy_a_bull_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -19978,7 +19988,7 @@ qpq_buy_a_bull_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -20392,7 +20402,7 @@ qpq_conclave_votes_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -20784,7 +20794,7 @@ qpq_council_lobbying_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -21015,7 +21025,7 @@ qpq_caliphal_investiture_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -21175,7 +21185,7 @@ qpq_caliphal_investiture_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -21571,7 +21581,7 @@ qpq_name_in_the_khutba_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -21806,7 +21816,7 @@ qpq_fatwa_for_hire_interaction = {
 			NOT = { this = scope:actor }
 			religion = religion:islam_religion
 			OR = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				AND = {
 					is_clergy = yes
 					learning >= 15
@@ -21995,7 +22005,7 @@ qpq_fatwa_for_hire_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -22230,7 +22240,7 @@ qpq_fund_the_dawa_interaction = {
 			NOT = { this = scope:actor }
 			faith = scope:actor.faith
 			OR = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				AND = { is_clergy = yes learning >= 12 }
 			}
 		}
@@ -22416,7 +22426,7 @@ qpq_fund_the_dawa_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -22647,7 +22657,7 @@ qpq_crowning_the_usurper_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -22812,7 +22822,7 @@ qpq_crowning_the_usurper_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -23043,7 +23053,7 @@ qpq_pliant_patriarch_interaction = {
 
 	is_shown = {
 		scope:recipient = {
-			is_head_of_faith = yes
+			qpq_is_head_of_faith_trigger = yes
 			NOT = { this = scope:actor }
 		}
 		scope:actor.faith = scope:recipient.faith
@@ -23205,7 +23215,7 @@ qpq_pliant_patriarch_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -23440,7 +23450,7 @@ qpq_favourable_omens_interaction = {
 			NOT = { this = scope:actor }
 			faith = scope:actor.faith
 			OR = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				this = scope:actor.realm_priest
 			}
 		}
@@ -23628,7 +23638,7 @@ qpq_favourable_omens_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -23862,7 +23872,7 @@ qpq_consecration_rites_interaction = {
 			NOT = { this = scope:actor }
 			faith = scope:actor.faith
 			OR = {
-				is_head_of_faith = yes
+				qpq_is_head_of_faith_trigger = yes
 				this = scope:actor.realm_priest
 			}
 		}
@@ -24022,7 +24032,7 @@ qpq_consecration_rites_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {
@@ -24443,7 +24453,7 @@ qpq_temple_patronage_interaction = {
 		localization = qpq_offer_church
 		current_description = qpq_offer_church_desc
 		is_shown = {
-			scope:actor = { is_head_of_faith = yes }
+			scope:actor = { qpq_is_head_of_faith_trigger = yes }
 		}
 	}
 	send_option = {

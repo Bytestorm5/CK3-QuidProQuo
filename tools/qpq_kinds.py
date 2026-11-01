@@ -76,7 +76,7 @@ scope:recipient = {
 """
 REL_HOF = """
 scope:recipient = {
-    is_head_of_faith = yes
+    qpq_is_head_of_faith_trigger = yes
     NOT = { this = scope:actor }
 }
 scope:actor.faith = scope:recipient.faith
@@ -273,7 +273,7 @@ def K(**kw):
 # CATALOGUE A: liege to vassal
 ###############################################################################
 
-K(key="chartered_conquest", cat="A", group="war", secret="conquest", icon="declare_war_interaction",
+K(key="chartered_conquest", licence=True, cat="A", group="war", secret="conquest", icon="declare_war_interaction",
   name="Chartered Conquest",
   ask="conquer land held by [qpq_target.GetTitledFirstName] under a published charter",
   desc="Publicly charter a vassal to take land from a named neighbour. They may use the Crown Mandate casus belli, borrowing your de jure right where they have no claim of their own.",
@@ -316,6 +316,28 @@ scope:qpq_agent = {
         limit = { has_variable_list = qpq_mandate_against }
         clear_variable_list = qpq_mandate_against
     }
+    # Other Charters of the same vassal keep their Crown Mandate
+    every_in_list = {
+        variable = qpq_pacts
+        limit = {
+            qpq_story_is_active_trigger = yes
+            NOT = { this = scope:qpq_story }
+            var:qpq_kind = flag:chartered_conquest
+            has_variable = qpq_charter
+            exists = var:qpq_target
+        }
+        var:qpq_target = { save_scope_as = qpq_other_mandate_target }
+        scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_against target = scope:qpq_other_mandate_target } }
+        var:qpq_payer = { save_scope_as = qpq_other_mandate_payer }
+        scope:qpq_other_mandate_target = {
+            every_realm_county = {
+                limit = {
+                    any_this_title_or_de_jure_above = { holder ?= scope:qpq_other_mandate_payer }
+                }
+                scope:qpq_agent = { add_to_variable_list = { name = qpq_mandate_titles target = prev } }
+            }
+        }
+    }
 }
 """,
   exposed="",
@@ -339,7 +361,7 @@ random_vassal = {
 }
 """))
 
-K(key="sanctioned_conquest", cat="A", group="war", secret="conquest", icon="declare_war_interaction",
+K(key="sanctioned_conquest", licence=True, cat="A", group="war", secret="conquest", icon="declare_war_interaction",
   name="Sanctioned Conquest",
   ask="privately take land from [qpq_target.GetTitledFirstName]",
   desc="Privately back a vassal's conquest of a named target. They use their own casus belli, a claim you fabricate as part of the payment, or the Pact War you license.",
@@ -681,7 +703,7 @@ scope:qpq_payer = {
 }
 """)
 
-K(key="licensed_feud", cat="A", group="war", secret="conquest", icon="declare_war_interaction",
+K(key="licensed_feud", licence=True, cat="A", group="war", secret="conquest", icon="declare_war_interaction",
   name="Licensed Feud",
   ask="wage war on fellow vassal [qpq_target.GetTitledFirstName], with your quiet blessing",
   desc="You quietly sanction their war on a fellow vassal despite crown authority. They get a Pact War against the target and a favour on you to get it past the law.",
@@ -998,6 +1020,10 @@ scope:recipient = {
   perform="""
 if = {
     limit = { scope:qpq_target = scope:qpq_agent }
+    if = {
+        limit = { exists = scope:qpq_agent.primary_heir }
+        scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
+    }
     scope:qpq_agent = { depose = yes }
 }
 scope:qpq_target = {
@@ -1010,8 +1036,8 @@ scope:qpq_target = {
 """,
   exposed="""
 if = {
-    limit = { exists = scope:qpq_agent.primary_title.holder }
-    scope:qpq_agent.primary_title.holder = {
+    limit = { exists = scope:qpq_payer_secret.var:qpq_successor }
+    scope:qpq_payer_secret.var:qpq_successor = {
         if = {
             limit = { qpq_uses_legitimacy_trigger = yes }
             add_legitimacy = -20
@@ -1051,7 +1077,8 @@ scope:actor = {
   perform="""
 scope:qpq_agent = {
     every_spouse = {
-        scope:qpq_story = { add_to_variable_list = { name = qpq_discarded target = prev } }
+        save_temporary_scope_as = qpq_discarded_spouse
+        scope:qpq_payer_secret ?= { add_to_variable_list = { name = qpq_discarded target = scope:qpq_discarded_spouse } }
         divorce = scope:qpq_agent
     }
     marry = scope:qpq_target
@@ -1060,6 +1087,18 @@ scope:qpq_agent = {
   exposed="""
 scope:qpq_payer = { add_piety = medium_piety_loss }
 scope:qpq_agent = { add_piety = medium_piety_loss }
+scope:qpq_payer_secret ?= {
+    if = {
+        limit = { has_variable_list = qpq_discarded }
+        every_in_list = {
+            variable = qpq_discarded
+            house.house_head ?= {
+                add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_my_house_opinion }
+                add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_house_opinion }
+            }
+        }
+    }
+}
 """)
 
 K(key="hand_over", cat="A", group="favours", secret="abduction", icon="prison",
@@ -1183,7 +1222,17 @@ scope:actor = {
   on_seal="""
 scope:qpq_payer = {
     every_secret = {
-        limit = { is_known_by = scope:qpq_agent }
+        limit = {
+            is_known_by = scope:qpq_agent
+            NOT = { var:qpq_story ?= scope:qpq_story }
+            trigger_if = {
+                limit = { exists = scope:qpq_hush_secret }
+                OR = {
+                    this = scope:qpq_hush_secret
+                    scope:qpq_hush_secret.var:qpq_twin ?= this
+                }
+            }
+        }
         if = {
             limit = { qpq_is_pact_secret_trigger = yes }
             set_variable = qpq_cover_up
@@ -1534,7 +1583,7 @@ if = {
     limit = { scope:qpq_x_consent ?= yes }
     scope:qpq_payer.liege = {
         send_interface_message = {
-            type = event_generic_neutral
+            type = event_generic_neutral_text
             title = qpq_msg_title_swap_consent_title
             desc = qpq_msg_title_swap_consent_desc
             left_icon = scope:qpq_payer
@@ -1596,6 +1645,13 @@ scope:recipient = {
 """,
   demand=[("20", "scope:recipient = { opinion = { target = scope:actor.liege value <= -30 } }", "QPQ_REASON_RESENTS_LIEGE")],
   deliver=TARGET_DEAD,
+  on_seal="""
+scope:qpq_target.primary_title ?= {
+    save_scope_as = qpq_coup_title
+    scope:qpq_story = { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+    scope:qpq_payer_secret ?= { set_variable = { name = qpq_coup_title value = scope:qpq_coup_title } }
+}
+""",
   attempt="""
 random = {
     chance = 20
@@ -1605,8 +1661,8 @@ random = {
   on_deliver="""
 # Seize the regency: the new ruler owes the plotter
 if = {
-    limit = { exists = scope:qpq_target.primary_title.holder }
-    scope:qpq_target.primary_title.holder = { save_scope_as = qpq_new_ruler }
+    limit = { exists = var:qpq_coup_title.holder }
+    var:qpq_coup_title.holder = { save_scope_as = qpq_new_ruler }
     if = {
         limit = {
             scope:qpq_new_ruler = { is_adult = no }
@@ -1620,8 +1676,8 @@ if = {
 """,
   exposed=VICTIM_HOUSE_HOSTILE + """
 if = {
-    limit = { exists = scope:qpq_target.primary_title.holder }
-    scope:qpq_target.primary_title.holder = {
+    limit = { exists = scope:qpq_payer_secret.var:qpq_coup_title.holder }
+    scope:qpq_payer_secret.var:qpq_coup_title.holder = {
         add_opinion = { target = scope:qpq_payer modifier = qpq_traitor_opinion }
         add_opinion = { target = scope:qpq_agent modifier = qpq_traitor_opinion }
     }
@@ -1663,7 +1719,7 @@ scope:qpq_payer = {
 }
 """
 
-K(key="proxy_war", cat="C", group="war", secret="conquest", icon="declare_war_interaction",
+K(key="proxy_war", licence=True, cat="C", group="war", secret="conquest", icon="declare_war_interaction",
   name="Proxy War",
   ask="attack [qpq_target.GetTitledFirstName]",
   desc="Pay a foreign ruler to attack your rival. If it comes out, the victim gains Avenge Perfidy against you and your allies cool.",
@@ -1704,7 +1760,7 @@ if = {
 }
 """))
 
-K(key="partition_pact", cat="C", group="war", secret="conquest", icon="declare_war_interaction",
+K(key="partition_pact", licence=True, cat="C", group="war", secret="conquest", icon="declare_war_interaction",
   name="Partition Pact",
   ask="join the conquest of [qpq_target.GetTitledFirstName] and keep off the counties bordering [qpq_payer.GetShortUIName]",
   desc="Jointly conquer a third realm and split it on a pre-agreed line: every county bordering your realm is yours.",
@@ -1845,6 +1901,10 @@ scope:qpq_agent = {
             OR = {
                 AND = { is_attacker = scope:qpq_agent is_defender = scope:qpq_payer }
                 AND = { is_defender = scope:qpq_agent is_attacker = scope:qpq_payer }
+            }
+            NOR = {
+                primary_attacker = scope:qpq_agent
+                primary_defender = scope:qpq_agent
             }
         }
         remove_participant = scope:qpq_agent
@@ -2017,13 +2077,16 @@ if = {
 }
 """,
   deliver="scope:qpq_target_title.holder ?= scope:qpq_agent",
-  invalid="NOT = { scope:qpq_agent = { has_claim_on = scope:qpq_target_title } }",
+  invalid="""
+NOT = { scope:qpq_agent = { has_claim_on = scope:qpq_target_title } }
+NOT = { scope:qpq_target_title.holder ?= scope:qpq_agent }
+""",
   on_deliver="""
 qpq_victors_justice_effect = yes
 scope:qpq_agent = {
     add_opinion = { target = scope:qpq_payer modifier = qpq_grateful_patron_opinion }
-    add_hook = { type = strong_favor_hook target = scope:qpq_agent }
 }
+scope:qpq_payer = { add_hook = { type = strong_favor_hook target = scope:qpq_agent } }
 """,
   exposed="")
 
@@ -2298,7 +2361,6 @@ scope:actor = {
 if = {
     limit = { scope:qpq_target = { is_spouse_of = scope:qpq_payer } }
     scope:qpq_payer = { divorce = scope:qpq_target }
-    scope:qpq_story = { set_variable = qpq_was_annulment }
 }
 else = {
     scope:qpq_target = {
@@ -2405,7 +2467,7 @@ if = {
         }
     }
     resolve_title_and_vassal_change = scope:qpq_mitre_change
-    scope:qpq_story = { set_variable = { name = qpq_mitre_title value = scope:qpq_mitre } }
+    scope:qpq_payer_secret ?= { set_variable = { name = qpq_mitre_title value = scope:qpq_mitre } }
 }
 scope:qpq_target = {
     add_piety = medium_piety_gain
@@ -2418,29 +2480,53 @@ if = {
     scope:qpq_target = { remove_character_modifier = qpq_bought_mitre_modifier }
 }
 scope:qpq_payer = { add_character_modifier = { modifier = qpq_clerical_denunciation_modifier years = 10 } }
+# The holder may be deposed: the bought see returns to the head of faith
+if = {
+    limit = {
+        exists = scope:qpq_payer_secret.var:qpq_mitre_title
+        scope:qpq_payer_secret.var:qpq_mitre_title.holder ?= scope:qpq_target
+        scope:qpq_agent = { is_alive = yes is_landed = yes }
+    }
+    scope:qpq_payer_secret.var:qpq_mitre_title = { save_scope_as = qpq_lost_mitre }
+    create_title_and_vassal_change = {
+        type = revoked
+        save_scope_as = qpq_mitre_revoke
+        add_claim_on_loss = no
+    }
+    scope:qpq_lost_mitre = {
+        change_title_holder = {
+            holder = scope:qpq_agent
+            change = scope:qpq_mitre_revoke
+        }
+    }
+    resolve_title_and_vassal_change = scope:qpq_mitre_revoke
+}
 """)
 
 K(key="bought_claim", cat="D1", group="church_favours", secret="simony", icon="claim",
   icategory="interaction_category_religion",
   name="Bought Claim",
-  ask="grant [qpq_payer.GetShortUIName] a claim on [qpq_target_title.GetName]",
-  desc="The head of faith grants a claim on a rival's title, where the faith allows it. If it comes out, the claim loses its sanctity.",
-  payer_base=3, agent_base=3, mode="perform", target="title", term=24, effort=10,
-  rel=REL_HOF,
-  pick=dict(source="actor", filter="top_liege_de_jure_titles", can_pick="""
-scope:target = {
-    tier >= tier_county
-    exists = holder
-    NOT = { holder = scope:actor }
-}
-"""),
-  target_valid="scope:target = { exists = holder NOT = { holder = scope:actor } }",
-  can_perform="NOT = { scope:qpq_payer = { has_claim_on = scope:qpq_target_title } }",
-  perform="scope:qpq_payer = { add_unpressed_claim = scope:qpq_target_title }",
+  ask="grant [qpq_payer.GetShortUIName] a claim on [qpq_target.GetShortUINamePossessive] title",
+  desc="The head of faith grants you a claim on a rival's primary title, where the faith allows it. If it comes out, the claim loses its sanctity.",
+  payer_base=3, agent_base=3, mode="perform", term=24, effort=10,
+  rel=REL_HOF, pick=PICK_RIVALS,
+  target_valid="scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }",
+  can_perform="""
+exists = scope:qpq_target.primary_title
+NOT = { scope:qpq_payer = { has_claim_on = scope:qpq_target.primary_title } }
+""",
+  invalid="scope:qpq_target = { is_landed = no }",
+  perform="""
+scope:qpq_payer = { add_unpressed_claim = scope:qpq_target.primary_title }
+scope:qpq_payer_secret ?= { set_variable = { name = qpq_bought_claim_title value = scope:qpq_target.primary_title } }
+""",
   exposed="""
 if = {
-    limit = { scope:qpq_payer = { has_claim_on = scope:qpq_target_title } }
-    scope:qpq_payer = { remove_claim = scope:qpq_target_title }
+    limit = {
+        exists = scope:qpq_payer_secret.var:qpq_bought_claim_title
+        scope:qpq_payer = { has_claim_on = scope:qpq_payer_secret.var:qpq_bought_claim_title }
+    }
+    scope:qpq_payer = { remove_claim = scope:qpq_payer_secret.var:qpq_bought_claim_title }
 }
 """,
   ai=dict(weight=3, valid="""
@@ -2453,7 +2539,7 @@ faith.religious_head = { save_scope_as = recipient }
 random_relation = {
     type = rival
     limit = { is_landed = yes }
-    primary_title = { save_scope_as = target }
+    save_scope_as = secondary_recipient
 }
 """))
 
@@ -2472,7 +2558,7 @@ K(key="absolution_by_concession", cat="D1", group="church_favours", secret="simo
   ai=dict(weight=8, valid="has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes }",
           find="faith.religious_head = { save_scope_as = recipient }"))
 
-K(key="holy_warrant", cat="D1", group="church_weapons", secret="simony", icon="religious",
+K(key="holy_warrant", licence=True, cat="D1", group="church_weapons", secret="simony", icon="religious",
   icategory="interaction_category_religion",
   name="Holy Warrant",
   ask="declare a holy war on [qpq_target.GetTitledFirstName] on [qpq_payer.GetShortUINamePossessive] behalf",
@@ -2570,11 +2656,11 @@ scope:qpq_agent = {
     recalculate_succession_election_vote = yes
 }
 """,
-  deliver="scope:qpq_target = { is_head_of_faith = yes }",
+  deliver="scope:qpq_target = { qpq_is_head_of_faith_trigger = yes }",
   invalid="scope:qpq_target = { is_alive = no }",
   exposed="""
 if = {
-    limit = { scope:qpq_target = { is_head_of_faith = yes } }
+    limit = { scope:qpq_target = { qpq_is_head_of_faith_trigger = yes } }
     scope:qpq_target = {
         add_piety = major_piety_loss
         add_character_modifier = { modifier = qpq_bought_legitimacy_modifier years = 15 }
@@ -2683,7 +2769,7 @@ scope:recipient = {
     NOT = { this = scope:actor }
     religion = religion:islam_religion
     OR = {
-        is_head_of_faith = yes
+        qpq_is_head_of_faith_trigger = yes
         AND = {
             is_clergy = yes
             learning >= 15
@@ -2718,7 +2804,7 @@ scope:recipient = {
     NOT = { this = scope:actor }
     faith = scope:actor.faith
     OR = {
-        is_head_of_faith = yes
+        qpq_is_head_of_faith_trigger = yes
         AND = { is_clergy = yes learning >= 12 }
     }
 }
@@ -2802,7 +2888,7 @@ scope:recipient = {
     NOT = { this = scope:actor }
     faith = scope:actor.faith
     OR = {
-        is_head_of_faith = yes
+        qpq_is_head_of_faith_trigger = yes
         this = scope:actor.realm_priest
     }
 }

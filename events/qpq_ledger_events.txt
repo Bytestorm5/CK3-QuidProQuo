@@ -93,6 +93,11 @@ qpq_ledger.2 = {
 	left_portrait = root
 
 	immediate = {
+		clear_saved_scope = qpq_l1
+		clear_saved_scope = qpq_l2
+		clear_saved_scope = qpq_l3
+		clear_saved_scope = qpq_l4
+		clear_saved_scope = qpq_l5
 		qpq_ledger_take_effect = { SLOT = qpq_l1 }
 		qpq_ledger_take_effect = { SLOT = qpq_l2 }
 		qpq_ledger_take_effect = { SLOT = qpq_l3 }

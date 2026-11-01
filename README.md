@@ -70,6 +70,7 @@ The design doc is a brainstorm; where it left a choice open, this is what the mo
 - **Electoral Purchase / Electoral Capitulation** buy the vote through a strong opinion of the candidate, which the vanilla elective scripts weigh; the pact is a promise kept until the deadline.
 - **The Cloister** abdicates the vassal to their own heir (choosing the heir is not scriptable reliably); a relative simply takes vows. **Dispensation for Gold** covers annulment and legitimisation, not consanguinity waivers. **Fund the Da'wa** is open to Shia faiths (Ismaili is not a separate faith key in 1.20).
 - **Mutual Defense League** is called when the liege revokes from the proposer; the partner then has six months to join a faction against the liege.
+- **Inherited halves** are priced one tier lower by the mod, but keep their original secret type, so vanilla blackmail still treats a Tier IV-V stain as criminal.
 - **Hush Money** over vanilla secrets uses `disable_exposure_by`, so the holder truly can never expose them; over pact secrets, exposing it anyway breaches the hush money pact.
 
 ## Development
