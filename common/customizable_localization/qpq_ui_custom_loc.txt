@@ -2140,6 +2140,93 @@ QpqUiTheirTier = {
 	}
 }
 
+QpqUiConseqMy = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_charter var:qpq_ui_my_tier > 0 }
+		localization_key = QPQ_UI_CONSEQ_PUBLIC_MY
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 0 }
+		localization_key = QPQ_UI_CONSEQ_0
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 1 }
+		localization_key = QPQ_UI_CONSEQ_1
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 2 }
+		localization_key = QPQ_UI_CONSEQ_2
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 3 }
+		localization_key = QPQ_UI_CONSEQ_3
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 4 }
+		localization_key = QPQ_UI_CONSEQ_4
+	}
+	text = {
+		trigger = { var:qpq_ui_my_tier ?= 5 }
+		localization_key = QPQ_UI_CONSEQ_5
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiConseqTheir = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_charter var:qpq_ui_their_tier > 0 }
+		localization_key = QPQ_UI_CONSEQ_PUBLIC_THEIR
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 0 }
+		localization_key = QPQ_UI_CONSEQ_0
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 1 }
+		localization_key = QPQ_UI_CONSEQ_1
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 2 }
+		localization_key = QPQ_UI_CONSEQ_2
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 3 }
+		localization_key = QPQ_UI_CONSEQ_3
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 4 }
+		localization_key = QPQ_UI_CONSEQ_4
+	}
+	text = {
+		trigger = { var:qpq_ui_their_tier ?= 5 }
+		localization_key = QPQ_UI_CONSEQ_5
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiSecrecyNote = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_charter }
+		localization_key = QPQ_UI_SECRECY_PUBLIC
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_SECRECY_SECRET
+	}
+}
+
 QpqUiAcceptance = {
 	type = character
 	log_loc_errors = no

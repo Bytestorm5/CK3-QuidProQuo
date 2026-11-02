@@ -14,13 +14,10 @@ qpq_ui_kind_t_chartered_conquest = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:chartered_conquest }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:chartered_conquest } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:chartered_conquest }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:chartered_conquest }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -39,13 +36,10 @@ qpq_ui_kind_t_sanctioned_conquest = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:sanctioned_conquest }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:sanctioned_conquest } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:sanctioned_conquest }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:sanctioned_conquest }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -64,13 +58,10 @@ qpq_ui_kind_t_marcher_charge = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:marcher_charge }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:marcher_charge } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:marcher_charge }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:marcher_charge }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -89,13 +80,10 @@ qpq_ui_kind_t_holy_sponsorship = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:holy_sponsorship }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:holy_sponsorship } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:holy_sponsorship }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:holy_sponsorship }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -114,13 +102,10 @@ qpq_ui_kind_t_development_charter = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:development_charter }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:development_charter } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:development_charter }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:development_charter }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -142,13 +127,10 @@ qpq_ui_kind_t_electoral_purchase = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:electoral_purchase }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:electoral_purchase } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:electoral_purchase }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:electoral_purchase }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -167,13 +149,10 @@ qpq_ui_kind_t_loyal_mole = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:loyal_mole }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:loyal_mole } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:loyal_mole }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:loyal_mole }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -192,13 +171,10 @@ qpq_ui_kind_t_agent_provocateur = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:agent_provocateur }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:agent_provocateur } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:agent_provocateur }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:agent_provocateur }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -217,13 +193,10 @@ qpq_ui_kind_t_licensed_feud = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:licensed_feud }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:licensed_feud } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:licensed_feud }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:licensed_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -246,13 +219,10 @@ qpq_ui_kind_t_dossier = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:dossier }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:dossier } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:dossier }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:dossier }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -275,13 +245,10 @@ qpq_ui_kind_t_quiet_removal = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:quiet_removal }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:quiet_removal } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:quiet_removal }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:quiet_removal }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -304,13 +271,10 @@ qpq_ui_kind_t_heir_question = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:heir_question }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:heir_question } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:heir_question }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:heir_question }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -333,13 +297,10 @@ qpq_ui_kind_t_snatch = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:snatch }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:snatch } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:snatch }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:snatch }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -359,13 +320,10 @@ qpq_ui_kind_t_dispossession = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:dispossession }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:dispossession } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:dispossession }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:dispossession }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -384,13 +342,10 @@ qpq_ui_kind_t_the_cloister = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:the_cloister }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:the_cloister } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:the_cloister }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:the_cloister }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -409,13 +364,10 @@ qpq_ui_kind_t_marriage_by_command = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:marriage_by_command }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:marriage_by_command } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:marriage_by_command }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:marriage_by_command }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -434,13 +386,10 @@ qpq_ui_kind_t_hand_over = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:hand_over }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:hand_over } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:hand_over }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:hand_over }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -460,13 +409,10 @@ qpq_ui_kind_t_hand_over_artifact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:hand_over_artifact }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:hand_over_artifact } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:hand_over_artifact }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:hand_over_artifact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -486,13 +432,10 @@ qpq_ui_kind_t_renunciation = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:renunciation }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:renunciation } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:renunciation }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:renunciation }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -511,13 +454,10 @@ qpq_ui_kind_t_hush_money = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:hush_money }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:hush_money } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:hush_money }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:hush_money }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -537,13 +477,10 @@ qpq_ui_kind_t_price_of_loyalty = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:price_of_loyalty }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:price_of_loyalty } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:price_of_loyalty }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:price_of_loyalty }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -562,13 +499,10 @@ qpq_ui_kind_t_blessing_for_a_feud = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:blessing_for_a_feud }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:blessing_for_a_feud } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:blessing_for_a_feud }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:blessing_for_a_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -594,13 +528,10 @@ qpq_ui_kind_t_clemency_bargain = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:clemency_bargain }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:clemency_bargain } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:clemency_bargain }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:clemency_bargain }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -618,13 +549,10 @@ qpq_ui_kind_t_electoral_capitulation = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:electoral_capitulation }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:electoral_capitulation } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:electoral_capitulation }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:electoral_capitulation }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -646,13 +574,10 @@ qpq_ui_kind_t_mutual_defense_league = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:mutual_defense_league }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:mutual_defense_league } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:mutual_defense_league }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:mutual_defense_league }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -675,13 +600,10 @@ qpq_ui_kind_t_faction_pledge = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:faction_pledge }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:faction_pledge } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:faction_pledge }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:faction_pledge }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -703,13 +625,10 @@ qpq_ui_kind_t_title_swap = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:title_swap }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:title_swap } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:title_swap }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:title_swap }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -734,13 +653,10 @@ qpq_ui_kind_t_coup_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:coup_pact }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:coup_pact } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:coup_pact }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:coup_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -762,13 +678,10 @@ qpq_ui_kind_t_proxy_war = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:proxy_war }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:proxy_war } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:proxy_war }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:proxy_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -790,13 +703,10 @@ qpq_ui_kind_t_partition_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:partition_pact }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:partition_pact } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:partition_pact }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:partition_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -813,13 +723,10 @@ qpq_ui_kind_t_secret_alliance = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:secret_alliance }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:secret_alliance } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:secret_alliance }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:secret_alliance }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -836,13 +743,10 @@ qpq_ui_kind_t_bought_truce = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:bought_truce }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:bought_truce } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:bought_truce }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:bought_truce }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -864,13 +768,10 @@ qpq_ui_kind_t_faithless_ally = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:faithless_ally }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:faithless_ally } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:faithless_ally }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:faithless_ally }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -892,13 +793,10 @@ qpq_ui_kind_t_turncoat = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:turncoat }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:turncoat } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:turncoat }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:turncoat }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -921,13 +819,10 @@ qpq_ui_kind_t_seed_the_separatists = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:seed_the_separatists }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:seed_the_separatists } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:seed_the_separatists }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:seed_the_separatists }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -948,13 +843,10 @@ qpq_ui_kind_t_shelter_the_pretender = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:shelter_the_pretender }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:shelter_the_pretender } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:shelter_the_pretender }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:shelter_the_pretender }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -976,13 +868,10 @@ qpq_ui_kind_t_extradition = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:extradition }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:extradition } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:extradition }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:extradition }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1004,13 +893,10 @@ qpq_ui_kind_t_buy_a_councillor = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:buy_a_councillor }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:buy_a_councillor } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:buy_a_councillor }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:buy_a_councillor }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1033,13 +919,10 @@ qpq_ui_kind_t_stay_home = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:stay_home }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:stay_home } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:stay_home }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:stay_home }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1062,13 +945,10 @@ qpq_ui_kind_t_defection_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:defection_pact }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:defection_pact } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:defection_pact }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:defection_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1098,13 +978,10 @@ qpq_ui_kind_t_secret_clause = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:secret_clause }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:secret_clause } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:secret_clause }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:secret_clause }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1123,13 +1000,10 @@ qpq_ui_kind_t_hire_the_hashashin = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:hire_the_hashashin }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:hire_the_hashashin } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:hire_the_hashashin }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:hire_the_hashashin }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1155,13 +1029,10 @@ qpq_ui_kind_t_excommunication_for_hire = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:excommunication_for_hire }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:excommunication_for_hire } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:excommunication_for_hire }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:excommunication_for_hire }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1199,13 +1070,10 @@ qpq_ui_kind_t_dispensation_for_gold = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:dispensation_for_gold }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:dispensation_for_gold } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:dispensation_for_gold }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:dispensation_for_gold }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1231,13 +1099,10 @@ qpq_ui_kind_t_steer_the_holy_war = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:steer_the_holy_war }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:steer_the_holy_war } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:steer_the_holy_war }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:steer_the_holy_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1263,13 +1128,10 @@ qpq_ui_kind_t_purchase_a_mitre = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:purchase_a_mitre }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:purchase_a_mitre } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:purchase_a_mitre }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:purchase_a_mitre }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1295,13 +1157,10 @@ qpq_ui_kind_t_bought_claim = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:bought_claim }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:bought_claim } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:bought_claim }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:bought_claim }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1327,13 +1186,10 @@ qpq_ui_kind_t_absolution_by_concession = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:absolution_by_concession }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:absolution_by_concession } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:absolution_by_concession }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:absolution_by_concession }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1359,13 +1215,10 @@ qpq_ui_kind_t_holy_warrant = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:holy_warrant }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:holy_warrant } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:holy_warrant }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:holy_warrant }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1394,13 +1247,10 @@ qpq_ui_kind_t_buy_a_bull = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:buy_a_bull }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:buy_a_bull } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:buy_a_bull }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:buy_a_bull }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1425,13 +1275,10 @@ qpq_ui_kind_t_conclave_votes = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:conclave_votes }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:conclave_votes } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:conclave_votes }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:conclave_votes }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1458,13 +1305,10 @@ qpq_ui_kind_t_council_lobbying = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:council_lobbying }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:council_lobbying } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:council_lobbying }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:council_lobbying }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1490,13 +1334,10 @@ qpq_ui_kind_t_caliphal_investiture = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:caliphal_investiture }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:caliphal_investiture } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:caliphal_investiture }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:caliphal_investiture }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1532,13 +1373,10 @@ qpq_ui_kind_t_name_in_the_khutba = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:name_in_the_khutba }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:name_in_the_khutba } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:name_in_the_khutba }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:name_in_the_khutba }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1576,13 +1414,10 @@ qpq_ui_kind_t_fatwa_for_hire = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:fatwa_for_hire }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:fatwa_for_hire } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:fatwa_for_hire }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:fatwa_for_hire }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1614,13 +1449,10 @@ qpq_ui_kind_t_fund_the_dawa = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:fund_the_dawa }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:fund_the_dawa } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:fund_the_dawa }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:fund_the_dawa }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1656,13 +1488,10 @@ qpq_ui_kind_t_crowning_the_usurper = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:crowning_the_usurper }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:crowning_the_usurper } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:crowning_the_usurper }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:crowning_the_usurper }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1692,13 +1521,10 @@ qpq_ui_kind_t_pliant_patriarch = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:pliant_patriarch }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:pliant_patriarch } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:pliant_patriarch }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:pliant_patriarch }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1730,13 +1556,10 @@ qpq_ui_kind_t_favourable_omens = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:favourable_omens }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:favourable_omens } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:favourable_omens }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:favourable_omens }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1768,13 +1591,10 @@ qpq_ui_kind_t_consecration_rites = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:consecration_rites }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:consecration_rites } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:consecration_rites }
-		}
-		qpq_ui_clear_leg_t_effect = yes
+		set_variable = { name = qpq_ui_t_kind value = flag:consecration_rites }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -1806,14 +1626,57 @@ qpq_ui_kind_t_temple_patronage = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_t_kind = flag:temple_patronage }
-			set_variable = { name = qpq_ui_t_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_t_kind = flag:temple_patronage } }
+			qpq_ui_clear_leg_t_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_t_kind value = flag:temple_patronage }
-		}
+		set_variable = { name = qpq_ui_t_kind value = flag:temple_patronage }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_nodeed_t = {
+	scope = character
+	effect = {
+		set_variable = { name = qpq_ui_t_kind value = flag:none }
 		qpq_ui_clear_leg_t_effect = yes
 		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_add_t = {
+	scope = character
+	effect = {
+		set_variable = qpq_ui_t_o_gold
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_land_clear_t = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_land }
+			clear_variable_list = qpq_ui_t_land
+		}
+		if = {
+			limit = { has_variable = qpq_ui_t_o_land }
+			remove_variable = qpq_ui_t_o_land
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_config_t = {
+	scope = character
+	is_shown = {
+		OR = {
+			qpq_ui_leg_t_needs_char_trigger = yes
+			qpq_ui_leg_t_needs_title_trigger = yes
+			qpq_ui_leg_t_needs_artifact_trigger = yes
+			qpq_ui_leg_t_has_extra_qpq_x_armed_trigger = yes
+			qpq_ui_leg_t_has_extra_qpq_x_consent_trigger = yes
+			qpq_ui_leg_t_has_extra_qpq_x_armies_trigger = yes
+		}
 	}
 }
 
@@ -2687,13 +2550,10 @@ qpq_ui_kind_i_chartered_conquest = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:chartered_conquest }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:chartered_conquest } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:chartered_conquest }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:chartered_conquest }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2712,13 +2572,10 @@ qpq_ui_kind_i_sanctioned_conquest = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:sanctioned_conquest }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:sanctioned_conquest } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:sanctioned_conquest }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:sanctioned_conquest }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2737,13 +2594,10 @@ qpq_ui_kind_i_marcher_charge = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:marcher_charge }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:marcher_charge } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:marcher_charge }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:marcher_charge }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2762,13 +2616,10 @@ qpq_ui_kind_i_holy_sponsorship = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:holy_sponsorship }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:holy_sponsorship } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:holy_sponsorship }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:holy_sponsorship }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2787,13 +2638,10 @@ qpq_ui_kind_i_development_charter = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:development_charter }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:development_charter } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:development_charter }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:development_charter }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2815,13 +2663,10 @@ qpq_ui_kind_i_electoral_purchase = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:electoral_purchase }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:electoral_purchase } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:electoral_purchase }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:electoral_purchase }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2840,13 +2685,10 @@ qpq_ui_kind_i_loyal_mole = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:loyal_mole }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:loyal_mole } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:loyal_mole }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:loyal_mole }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2865,13 +2707,10 @@ qpq_ui_kind_i_agent_provocateur = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:agent_provocateur }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:agent_provocateur } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:agent_provocateur }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:agent_provocateur }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2890,13 +2729,10 @@ qpq_ui_kind_i_licensed_feud = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:licensed_feud }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:licensed_feud } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:licensed_feud }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:licensed_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2919,13 +2755,10 @@ qpq_ui_kind_i_dossier = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:dossier }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:dossier } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:dossier }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:dossier }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2948,13 +2781,10 @@ qpq_ui_kind_i_quiet_removal = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:quiet_removal }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:quiet_removal } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:quiet_removal }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:quiet_removal }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2977,13 +2807,10 @@ qpq_ui_kind_i_heir_question = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:heir_question }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:heir_question } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:heir_question }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:heir_question }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3006,13 +2833,10 @@ qpq_ui_kind_i_snatch = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:snatch }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:snatch } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:snatch }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:snatch }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3032,13 +2856,10 @@ qpq_ui_kind_i_dispossession = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:dispossession }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:dispossession } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:dispossession }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:dispossession }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3057,13 +2878,10 @@ qpq_ui_kind_i_the_cloister = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:the_cloister }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:the_cloister } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:the_cloister }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:the_cloister }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3082,13 +2900,10 @@ qpq_ui_kind_i_marriage_by_command = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:marriage_by_command }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:marriage_by_command } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:marriage_by_command }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:marriage_by_command }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3107,13 +2922,10 @@ qpq_ui_kind_i_hand_over = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:hand_over }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:hand_over } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:hand_over }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:hand_over }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3133,13 +2945,10 @@ qpq_ui_kind_i_hand_over_artifact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:hand_over_artifact }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:hand_over_artifact } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:hand_over_artifact }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:hand_over_artifact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3159,13 +2968,10 @@ qpq_ui_kind_i_renunciation = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:renunciation }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:renunciation } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:renunciation }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:renunciation }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3184,13 +2990,10 @@ qpq_ui_kind_i_hush_money = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:hush_money }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:hush_money } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:hush_money }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:hush_money }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3210,13 +3013,10 @@ qpq_ui_kind_i_price_of_loyalty = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:price_of_loyalty }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:price_of_loyalty } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:price_of_loyalty }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:price_of_loyalty }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3235,13 +3035,10 @@ qpq_ui_kind_i_blessing_for_a_feud = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:blessing_for_a_feud }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:blessing_for_a_feud } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:blessing_for_a_feud }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:blessing_for_a_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3267,13 +3064,10 @@ qpq_ui_kind_i_clemency_bargain = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:clemency_bargain }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:clemency_bargain } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:clemency_bargain }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:clemency_bargain }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3291,13 +3085,10 @@ qpq_ui_kind_i_electoral_capitulation = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:electoral_capitulation }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:electoral_capitulation } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:electoral_capitulation }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:electoral_capitulation }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3319,13 +3110,10 @@ qpq_ui_kind_i_mutual_defense_league = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:mutual_defense_league }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:mutual_defense_league } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:mutual_defense_league }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:mutual_defense_league }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3348,13 +3136,10 @@ qpq_ui_kind_i_faction_pledge = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:faction_pledge }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:faction_pledge } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:faction_pledge }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:faction_pledge }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3376,13 +3161,10 @@ qpq_ui_kind_i_title_swap = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:title_swap }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:title_swap } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:title_swap }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:title_swap }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3407,13 +3189,10 @@ qpq_ui_kind_i_coup_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:coup_pact }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:coup_pact } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:coup_pact }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:coup_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3435,13 +3214,10 @@ qpq_ui_kind_i_proxy_war = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:proxy_war }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:proxy_war } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:proxy_war }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:proxy_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3463,13 +3239,10 @@ qpq_ui_kind_i_partition_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:partition_pact }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:partition_pact } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:partition_pact }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:partition_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3486,13 +3259,10 @@ qpq_ui_kind_i_secret_alliance = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:secret_alliance }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:secret_alliance } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:secret_alliance }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:secret_alliance }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3509,13 +3279,10 @@ qpq_ui_kind_i_bought_truce = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:bought_truce }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:bought_truce } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:bought_truce }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:bought_truce }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3537,13 +3304,10 @@ qpq_ui_kind_i_faithless_ally = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:faithless_ally }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:faithless_ally } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:faithless_ally }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:faithless_ally }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3565,13 +3329,10 @@ qpq_ui_kind_i_turncoat = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:turncoat }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:turncoat } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:turncoat }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:turncoat }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3594,13 +3355,10 @@ qpq_ui_kind_i_seed_the_separatists = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:seed_the_separatists }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:seed_the_separatists } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:seed_the_separatists }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:seed_the_separatists }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3621,13 +3379,10 @@ qpq_ui_kind_i_shelter_the_pretender = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:shelter_the_pretender }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:shelter_the_pretender } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:shelter_the_pretender }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:shelter_the_pretender }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3649,13 +3404,10 @@ qpq_ui_kind_i_extradition = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:extradition }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:extradition } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:extradition }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:extradition }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3677,13 +3429,10 @@ qpq_ui_kind_i_buy_a_councillor = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:buy_a_councillor }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:buy_a_councillor } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:buy_a_councillor }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:buy_a_councillor }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3706,13 +3455,10 @@ qpq_ui_kind_i_stay_home = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:stay_home }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:stay_home } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:stay_home }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:stay_home }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3735,13 +3481,10 @@ qpq_ui_kind_i_defection_pact = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:defection_pact }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:defection_pact } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:defection_pact }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:defection_pact }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3771,13 +3514,10 @@ qpq_ui_kind_i_secret_clause = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:secret_clause }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:secret_clause } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:secret_clause }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:secret_clause }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3796,13 +3536,10 @@ qpq_ui_kind_i_hire_the_hashashin = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:hire_the_hashashin }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:hire_the_hashashin } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:hire_the_hashashin }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:hire_the_hashashin }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3828,13 +3565,10 @@ qpq_ui_kind_i_excommunication_for_hire = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:excommunication_for_hire }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:excommunication_for_hire } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:excommunication_for_hire }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:excommunication_for_hire }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3872,13 +3606,10 @@ qpq_ui_kind_i_dispensation_for_gold = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:dispensation_for_gold }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:dispensation_for_gold } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:dispensation_for_gold }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:dispensation_for_gold }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3904,13 +3635,10 @@ qpq_ui_kind_i_steer_the_holy_war = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:steer_the_holy_war }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:steer_the_holy_war } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:steer_the_holy_war }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:steer_the_holy_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3936,13 +3664,10 @@ qpq_ui_kind_i_purchase_a_mitre = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:purchase_a_mitre }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:purchase_a_mitre } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:purchase_a_mitre }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:purchase_a_mitre }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3968,13 +3693,10 @@ qpq_ui_kind_i_bought_claim = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:bought_claim }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:bought_claim } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:bought_claim }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:bought_claim }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4000,13 +3722,10 @@ qpq_ui_kind_i_absolution_by_concession = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:absolution_by_concession }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:absolution_by_concession } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:absolution_by_concession }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:absolution_by_concession }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4032,13 +3751,10 @@ qpq_ui_kind_i_holy_warrant = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:holy_warrant }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:holy_warrant } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:holy_warrant }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:holy_warrant }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4067,13 +3783,10 @@ qpq_ui_kind_i_buy_a_bull = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:buy_a_bull }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:buy_a_bull } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:buy_a_bull }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:buy_a_bull }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4098,13 +3811,10 @@ qpq_ui_kind_i_conclave_votes = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:conclave_votes }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:conclave_votes } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:conclave_votes }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:conclave_votes }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4131,13 +3841,10 @@ qpq_ui_kind_i_council_lobbying = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:council_lobbying }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:council_lobbying } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:council_lobbying }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:council_lobbying }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4163,13 +3870,10 @@ qpq_ui_kind_i_caliphal_investiture = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:caliphal_investiture }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:caliphal_investiture } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:caliphal_investiture }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:caliphal_investiture }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4205,13 +3909,10 @@ qpq_ui_kind_i_name_in_the_khutba = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:name_in_the_khutba }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:name_in_the_khutba } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:name_in_the_khutba }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:name_in_the_khutba }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4249,13 +3950,10 @@ qpq_ui_kind_i_fatwa_for_hire = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:fatwa_for_hire }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:fatwa_for_hire } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:fatwa_for_hire }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:fatwa_for_hire }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4287,13 +3985,10 @@ qpq_ui_kind_i_fund_the_dawa = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:fund_the_dawa }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:fund_the_dawa } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:fund_the_dawa }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:fund_the_dawa }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4329,13 +4024,10 @@ qpq_ui_kind_i_crowning_the_usurper = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:crowning_the_usurper }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:crowning_the_usurper } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:crowning_the_usurper }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:crowning_the_usurper }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4365,13 +4057,10 @@ qpq_ui_kind_i_pliant_patriarch = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:pliant_patriarch }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:pliant_patriarch } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:pliant_patriarch }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:pliant_patriarch }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4403,13 +4092,10 @@ qpq_ui_kind_i_favourable_omens = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:favourable_omens }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:favourable_omens } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:favourable_omens }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:favourable_omens }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4441,13 +4127,10 @@ qpq_ui_kind_i_consecration_rites = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:consecration_rites }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:consecration_rites } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:consecration_rites }
-		}
-		qpq_ui_clear_leg_i_effect = yes
+		set_variable = { name = qpq_ui_i_kind value = flag:consecration_rites }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4479,14 +4162,57 @@ qpq_ui_kind_i_temple_patronage = {
 	}
 	effect = {
 		if = {
-			limit = { var:qpq_ui_i_kind = flag:temple_patronage }
-			set_variable = { name = qpq_ui_i_kind value = flag:none }
+			limit = { NOT = { var:qpq_ui_i_kind = flag:temple_patronage } }
+			qpq_ui_clear_leg_i_effect = yes
 		}
-		else = {
-			set_variable = { name = qpq_ui_i_kind value = flag:temple_patronage }
-		}
+		set_variable = { name = qpq_ui_i_kind value = flag:temple_patronage }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_nodeed_i = {
+	scope = character
+	effect = {
+		set_variable = { name = qpq_ui_i_kind value = flag:none }
 		qpq_ui_clear_leg_i_effect = yes
 		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_add_i = {
+	scope = character
+	effect = {
+		set_variable = qpq_ui_i_o_gold
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_land_clear_i = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_land }
+			clear_variable_list = qpq_ui_i_land
+		}
+		if = {
+			limit = { has_variable = qpq_ui_i_o_land }
+			remove_variable = qpq_ui_i_o_land
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_config_i = {
+	scope = character
+	is_shown = {
+		OR = {
+			qpq_ui_leg_i_needs_char_trigger = yes
+			qpq_ui_leg_i_needs_title_trigger = yes
+			qpq_ui_leg_i_needs_artifact_trigger = yes
+			qpq_ui_leg_i_has_extra_qpq_x_armed_trigger = yes
+			qpq_ui_leg_i_has_extra_qpq_x_consent_trigger = yes
+			qpq_ui_leg_i_has_extra_qpq_x_armies_trigger = yes
+		}
 	}
 }
 
@@ -5362,21 +5088,20 @@ qpq_ui_them_empty = {
 	}
 }
 
-qpq_ui_charter = {
+qpq_ui_secrecy_public = {
 	scope = character
-	is_shown = {
-		OR = {
-			has_variable = qpq_ui_charter_ok
-			has_variable = qpq_ui_charter
-		}
+	effect = {
+		set_variable = qpq_ui_charter
+		qpq_ui_refresh_effect = yes
 	}
+}
+
+qpq_ui_secrecy_secret = {
+	scope = character
 	effect = {
 		if = {
 			limit = { has_variable = qpq_ui_charter }
 			remove_variable = qpq_ui_charter
-		}
-		else = {
-			set_variable = qpq_ui_charter
 		}
 		qpq_ui_refresh_effect = yes
 	}

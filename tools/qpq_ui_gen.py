@@ -185,9 +185,25 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             out += "\tis_shown = {\n%s\t}\n" % shown
             out += "\tis_valid = {\n%s\t}\n" % rel
             out += "\teffect = {\n"
-            out += "\t\tif = {\n\t\t\tlimit = { %s }\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n\t\t}\n" % (vkind(L, k), L)
-            out += "\t\telse = {\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:%s }\n\t\t}\n" % (L, k["key"])
-            out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
+            # Picking a deed selects it; it is taken out again from the side's summary
+            out += "\t\tif = {\n\t\t\tlimit = { NOT = { %s } }\n\t\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\t}\n" % (vkind(L, k), L)
+            out += "\t\tset_variable = { name = qpq_ui_%s_kind value = flag:%s }\n" % (L, k["key"])
+            out += "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
+        out += "qpq_ui_nodeed_%s = {\n\tscope = character\n\teffect = {\n\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % (L, L)
+        out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
+        # Gold: picking it adds it (its amount and timing are set in its window); it is removed from the summary
+        out += ("qpq_ui_gold_add_%s = {\n\tscope = character\n\teffect = {\n\t\tset_variable = qpq_ui_%s_o_gold\n"
+                "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (L, L)
+        out += ("qpq_ui_land_clear_%s = {\n\tscope = character\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n"
+                "\t\t\tclear_variable_list = qpq_ui_%s_land\n\t\t}\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n"
+                "\t\t\tremove_variable = qpq_ui_%s_o_land\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % ((L,) * 5)
+        # Does the chosen deed have anything to configure (a target or terms)?
+        out += ("qpq_ui_config_%s = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n\t\t\tqpq_ui_leg_%s_needs_char_trigger = yes\n"
+                "\t\t\tqpq_ui_leg_%s_needs_title_trigger = yes\n\t\t\tqpq_ui_leg_%s_needs_artifact_trigger = yes\n") % (L, L, L, L)
+        for flag in extras():
+            out += "\t\t\tqpq_ui_leg_%s_has_extra_%s_trigger = yes\n" % (L, flag)
+        out += "\t\t}\n\t}\n}\n\n"
+        # Group headings (deed list)
         # Land is given as chosen titles: picking one adds it to (or takes it off) the list, and the box is
         # ticked while the list is not empty
         out += ("qpq_ui_land_toggle_%s = {\n\tscope = character\n\tsaved_scopes = { qpq_pick }\n\teffect = {\n"
@@ -254,10 +270,11 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             "\t\tNOT = { qpq_ui_leg_t_has_goods_trigger = yes }\n\t}\n}\n\n")
     out += ("qpq_ui_them_empty = {\n\tscope = character\n\tis_shown = {\n\t\tvar:qpq_ui_t_kind = flag:none\n"
             "\t\tNOT = { qpq_ui_leg_i_has_goods_trigger = yes }\n\t}\n}\n\n")
-    out += ("qpq_ui_charter = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n\t\t\thas_variable = qpq_ui_charter_ok\n"
-            "\t\t\thas_variable = qpq_ui_charter\n\t\t}\n\t}\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_charter }\n"
-            "\t\t\tremove_variable = qpq_ui_charter\n\t\t}\n\t\telse = {\n\t\t\tset_variable = qpq_ui_charter\n\t\t}\n"
+    # Secrecy: public (a Charter, no secret, the fallout lands now) or secret (exposure risk, full fallout)
+    out += ("qpq_ui_secrecy_public = {\n\tscope = character\n\teffect = {\n\t\tset_variable = qpq_ui_charter\n"
             "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n")
+    out += ("qpq_ui_secrecy_secret = {\n\tscope = character\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_charter }\n"
+            "\t\t\tremove_variable = qpq_ui_charter\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n")
     write("common/scripted_guis/qpq_ui_kinds.txt", out)
 
 
@@ -479,8 +496,6 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         eff += "\t\tchange_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_%s_a_offers }\n" % L
         eff += "\t\tchange_variable = { name = qpq_ui_acc_other add = var:qpq_ui_%s_a_other }\n\t}\n" % L
     eff += "\tchange_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }\n"
-    eff += ("\tset_variable = {\n\t\tname = qpq_ui_acc_total\n\t\tvalue = {\n\t\t\tvalue = var:qpq_ui_acc_ask\n"
-            "\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\tadd = var:qpq_ui_acc_other\n\t\t}\n\t}\n")
     # Each side's scandal: the worse of its two halves
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
     eff += "\t\tset_variable = { name = qpq_ui_my_tier value = 0 }\n\t\tset_variable = { name = qpq_ui_their_tier value = 0 }\n"
@@ -490,18 +505,21 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
                 "\t\t\t\tset_variable = { name = qpq_ui_my_tier value = var:qpq_ui_%s_%s_tier }\n\t\t\t}\n") % (L, mine, L, mine)
         eff += ("\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_%s_%s_tier > var:qpq_ui_their_tier }\n"
                 "\t\t\t\tset_variable = { name = qpq_ui_their_tier value = var:qpq_ui_%s_%s_tier }\n\t\t\t}\n\t\t}\n") % (L, theirs, L, theirs)
-    # Only a deal whose halves would all be Tier 0 may be published as a Charter; anything private is Tier I
-    eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\tvar:qpq_ui_my_tier <= 0\n\t\t\t\tvar:qpq_ui_their_tier <= 0\n\t\t\t}\n"
-            "\t\t\tset_variable = qpq_ui_charter_ok\n\t\t}\n")
-    eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\tOR = {\n\t\t\t\t\tNOT = { has_variable = qpq_ui_charter_ok }\n"
-            "\t\t\t\t\tNOT = { has_variable = qpq_ui_charter }\n\t\t\t\t}\n\t\t\t}\n")
-    eff += ("\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_my_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_my_tier value = 1 }\n\t\t\t}\n"
+    # Published openly (a Charter), a deal may carry any tier: its fallout lands at once. A secret deal is at
+    # least Tier I. Nobody likes to be seen doing what is scandalous: the other side asks more for it.
+    eff += ("\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_charter }\n"
+            "\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_their_tier > 0 }\n"
+            "\t\t\t\tchange_variable = { name = qpq_ui_acc_other add = { value = var:qpq_ui_their_tier multiply = -8 } }\n\t\t\t}\n\t\t}\n")
+    eff += ("\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_my_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_my_tier value = 1 }\n\t\t\t}\n"
             "\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_their_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_their_tier value = 1 }\n\t\t\t}\n\t\t}\n")
-    eff += "\t}\n}\n\n"
+    eff += "\t}\n"
+    eff += ("\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
+            "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_total\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_ask\n"
+            "\t\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\t\tadd = var:qpq_ui_acc_other\n\t\t\t}\n\t\t}\n\t}\n}\n\n")
 
     # Clear everything the compute steps derive
     eff += "qpq_ui_clear_derived_effect = {\n"
-    gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_charter_ok", "qpq_ui_acc_ask",
+    gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_acc_ask",
           "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total"]
     for L in LEGS:
         gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
@@ -528,7 +546,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
     # Save the deal as scope values and scopes: for the proposal event and for sealing
     eff += "qpq_ui_save_deal_effect = {\n"
-    eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_charter has_variable = qpq_ui_charter_ok }\n\t\tsave_scope_value_as = { name = qpq_deal_charter value = yes }\n\t}\n"
+    eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_charter }\n\t\tsave_scope_value_as = { name = qpq_deal_charter value = yes }\n\t}\n"
     for L in LEGS:
         eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
         first = True
@@ -783,6 +801,11 @@ def gen_ui_custom_loc(write):
         ], "QPQ_UI_GOLD_UP_FRONT_%s" % L.upper())
     for who in ("my", "their"):
         out += cl("QpqUi%sTier" % who.capitalize(), [("var:qpq_ui_%s_tier ?= %d" % (who, t), "qpq_tier_%d" % t) for t in range(6)], "qpq_empty")
+    for who in ("my", "their"):
+        out += cl("QpqUiConseq%s" % who.capitalize(),
+                  [("has_variable = qpq_ui_charter var:qpq_ui_%s_tier > 0" % who, "QPQ_UI_CONSEQ_PUBLIC_%s" % who.upper())] +
+                  [("var:qpq_ui_%s_tier ?= %d" % (who, t), "QPQ_UI_CONSEQ_%d" % t) for t in range(6)], "qpq_empty")
+    out += cl("QpqUiSecrecyNote", [("has_variable = qpq_ui_charter", "QPQ_UI_SECRECY_PUBLIC")], "QPQ_UI_SECRECY_SECRET")
     out += cl("QpqUiAcceptance", [
         ("NOT = { exists = var:qpq_ui_acc_total }", "QPQ_UI_ACC_NONE"),
         ("var:qpq_ui_recipient = { is_ai = no }", "QPQ_UI_ACC_PLAYER"),

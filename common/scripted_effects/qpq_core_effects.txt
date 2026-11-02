@@ -21,11 +21,7 @@ qpq_seal_pact_effect = {
 	save_scope_value_as = { name = qpq_term_months value = $TERM$ }
 	# Discretion: a pact with floor 0 may be published as a Charter; anything private is at least Tier I
 	if = {
-		limit = {
-			scope:qpq_o_charter ?= yes
-			scope:qpq_payer_tier <= 0
-			scope:qpq_agent_tier <= 0
-		}
+		limit = { scope:qpq_o_charter ?= yes }
 		save_scope_value_as = { name = qpq_is_charter value = yes }
 	}
 	else = {
@@ -247,8 +243,15 @@ qpq_create_pact_secrets_effect = {
 
 # Tier 0: the pact is published as a Charter instead of a secret
 qpq_publish_charter_effect = {
-	scope:qpq_payer = { add_prestige = minor_prestige_gain }
-	scope:qpq_agent = { add_prestige = minor_prestige_gain }
+	# Honourable deals made in the open earn prestige; a scandalous one only pays for it
+	if = {
+		limit = {
+			scope:qpq_payer_tier <= 0
+			scope:qpq_agent_tier <= 0
+		}
+		scope:qpq_payer = { add_prestige = minor_prestige_gain }
+		scope:qpq_agent = { add_prestige = minor_prestige_gain }
+	}
 	# Charter alerts: the target's liege and allies hear of it
 	if = {
 		limit = { exists = scope:qpq_target_title.holder }
@@ -275,6 +278,38 @@ qpq_publish_charter_effect = {
 				trigger_event = qpq_pact.80
 			}
 		}
+	}
+	# Made public at a price: the fallout of a scandalous deal lands now, at half weight, instead of waiting
+	# to be exposed. Nothing is left to expose, blackmail or inherit.
+	if = {
+		limit = { exists = scope:qpq_charter_victim }
+		scope:qpq_charter_victim = { save_scope_as = qpq_victim }
+	}
+	if = {
+		limit = { scope:qpq_payer_tier >= 1 }
+		save_scope_value_as = { name = qpq_f_tier value = scope:qpq_payer_tier }
+		save_scope_value_as = { name = qpq_f_mult value = 50 }
+		if = {
+			limit = { scope:qpq_payer_tier >= 4 }
+			save_scope_value_as = { name = qpq_f_criminal value = yes }
+		}
+		else = {
+			save_scope_value_as = { name = qpq_f_criminal value = no }
+		}
+		scope:qpq_payer = { qpq_apply_half_fallout_effect = yes }
+	}
+	if = {
+		limit = { scope:qpq_agent_tier >= 1 }
+		save_scope_value_as = { name = qpq_f_tier value = scope:qpq_agent_tier }
+		save_scope_value_as = { name = qpq_f_mult value = 50 }
+		if = {
+			limit = { scope:qpq_agent_tier >= 4 }
+			save_scope_value_as = { name = qpq_f_criminal value = yes }
+		}
+		else = {
+			save_scope_value_as = { name = qpq_f_criminal value = no }
+		}
+		scope:qpq_agent = { qpq_apply_half_fallout_effect = yes }
 	}
 }
 
