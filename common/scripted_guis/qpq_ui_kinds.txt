@@ -4,7 +4,10 @@ qpq_ui_kind_t_chartered_conquest = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -26,7 +29,10 @@ qpq_ui_kind_t_sanctioned_conquest = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -48,7 +54,10 @@ qpq_ui_kind_t_marcher_charge = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -70,7 +79,10 @@ qpq_ui_kind_t_holy_sponsorship = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -92,7 +104,10 @@ qpq_ui_kind_t_development_charter = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -114,7 +129,13 @@ qpq_ui_kind_t_electoral_purchase = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+		exists = scope:actor.primary_title
+		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -139,7 +160,10 @@ qpq_ui_kind_t_loyal_mole = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -161,7 +185,10 @@ qpq_ui_kind_t_agent_provocateur = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -183,7 +210,10 @@ qpq_ui_kind_t_licensed_feud = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -205,7 +235,14 @@ qpq_ui_kind_t_dossier = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -231,7 +268,14 @@ qpq_ui_kind_t_quiet_removal = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -257,7 +301,14 @@ qpq_ui_kind_t_heir_question = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -283,7 +334,14 @@ qpq_ui_kind_t_snatch = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_courtier_of = scope:actor
+			}
+			is_adult = yes
+			NOT = { this = scope:actor }
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -309,7 +367,11 @@ qpq_ui_kind_t_dispossession = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_vassal = { is_landed = yes } }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -332,7 +394,10 @@ qpq_ui_kind_t_the_cloister = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -354,7 +419,10 @@ qpq_ui_kind_t_marriage_by_command = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -376,7 +444,10 @@ qpq_ui_kind_t_hand_over = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -398,7 +469,11 @@ qpq_ui_kind_t_hand_over_artifact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_character_artifact = { always = yes } }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -421,7 +496,11 @@ qpq_ui_kind_t_renunciation = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:recipient = { any_claim = { always = yes } }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -444,7 +523,10 @@ qpq_ui_kind_t_hush_money = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = { NOT = { this = scope:actor } }
+		scope:actor = {
+			any_secret = { is_known_by = scope:recipient }
+		}
 	}
 	is_valid = {
 		scope:recipient = { NOT = { this = scope:actor } }
@@ -466,7 +548,11 @@ qpq_ui_kind_t_price_of_loyalty = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+		scope:actor = { is_at_war = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -489,7 +575,10 @@ qpq_ui_kind_t_blessing_for_a_feud = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -511,7 +600,17 @@ qpq_ui_kind_t_clemency_bargain = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_imprisoned_by = scope:recipient
+			}
+			any_known_secret = {
+				NOT = { secret_owner = scope:actor }
+				NOT = { secret_owner = scope:recipient }
+				NOT = { is_known_by = scope:recipient }
+			}
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -540,7 +639,9 @@ qpq_ui_kind_t_electoral_capitulation = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		exists = scope:actor.primary_title
+		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+		NOT = { scope:recipient = scope:actor }
 	}
 	is_valid = {
 		exists = scope:actor.primary_title
@@ -561,7 +662,13 @@ qpq_ui_kind_t_mutual_defense_league = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
 	}
 	is_valid = {
 		scope:actor = { is_landed = yes }
@@ -586,7 +693,14 @@ qpq_ui_kind_t_faction_pledge = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
+		scope:actor = { exists = joined_faction joined_faction = { faction_target = scope:actor.liege } }
 	}
 	is_valid = {
 		scope:actor = { is_landed = yes }
@@ -612,7 +726,13 @@ qpq_ui_kind_t_title_swap = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			NOT = { this = scope:actor }
+		}
+		exists = scope:actor.liege
+		scope:actor.liege = scope:recipient.liege
 	}
 	is_valid = {
 		scope:actor = { is_landed = yes }
@@ -637,7 +757,16 @@ qpq_ui_kind_t_coup_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		exists = scope:actor.liege
+		scope:recipient = {
+			is_adult = yes
+			NOT = { this = scope:actor }
+			NOT = { this = scope:actor.liege }
+			OR = {
+				is_courtier_of = scope:actor.liege
+				is_courtier_of = scope:actor
+			}
+		}
 	}
 	is_valid = {
 		exists = scope:actor.liege
@@ -665,7 +794,13 @@ qpq_ui_kind_t_proxy_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -690,7 +825,13 @@ qpq_ui_kind_t_partition_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -715,7 +856,8 @@ qpq_ui_kind_t_secret_alliance = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -735,7 +877,8 @@ qpq_ui_kind_t_bought_truce = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -755,7 +898,13 @@ qpq_ui_kind_t_faithless_ally = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -780,7 +929,13 @@ qpq_ui_kind_t_turncoat = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:recipient = {
+			exists = liege
+			is_independent_ruler = no
+		}
+		scope:actor = { is_at_war_with = scope:recipient.liege }
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -805,7 +960,14 @@ qpq_ui_kind_t_seed_the_separatists = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -831,7 +993,12 @@ qpq_ui_kind_t_shelter_the_pretender = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			is_adult = yes
+			NOT = { this = scope:actor }
+			any_claim = { tier >= tier_duchy NOT = { holder ?= scope:actor } }
+		}
+		scope:actor = { is_landed = yes }
 	}
 	is_valid = {
 		scope:recipient = {
@@ -855,7 +1022,13 @@ qpq_ui_kind_t_extradition = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -880,7 +1053,13 @@ qpq_ui_kind_t_buy_a_councillor = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:recipient = {
+			is_councillor = yes
+			exists = liege
+			is_councillor_of = scope:recipient.liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -905,7 +1084,14 @@ qpq_ui_kind_t_stay_home = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -931,7 +1117,14 @@ qpq_ui_kind_t_defection_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -957,7 +1150,21 @@ qpq_ui_kind_t_secret_clause = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+		exists = scope:actor.house
+		scope:recipient = {
+			is_landed = yes
+			OR = {
+				any_spouse = { house ?= scope:actor.house }
+				any_close_family_member = {
+					OR = {
+						any_spouse = { house ?= scope:actor.house }
+						betrothed.house ?= scope:actor.house
+					}
+				}
+			}
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -990,7 +1197,10 @@ qpq_ui_kind_t_hire_the_hashashin = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+		scope:recipient = {
+			any_held_title = { is_holy_order = yes }
+		}
 	}
 	is_valid = {
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
@@ -1651,6 +1861,111 @@ qpq_ui_gold_add_t = {
 	}
 }
 
+qpq_ui_gold_up_t_10 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = 10 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_up_t_100 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = 100 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_up_t_1000 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = 1000 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_t_10 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = -10 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_t_100 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = -100 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_t_1000 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_amount } }
+			set_variable = { name = qpq_ui_t_amount value = var:qpq_ui_t_fair }
+		}
+		change_variable = { name = qpq_ui_t_amount add = -1000 }
+		if = {
+			limit = { var:qpq_ui_t_amount < 1 }
+			set_variable = { name = qpq_ui_t_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_fair_t = {
+	scope = character
+	is_shown = { has_variable = qpq_ui_t_amount }
+	effect = {
+		remove_variable = qpq_ui_t_amount
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_land_clear_t = {
 	scope = character
 	effect = {
@@ -1715,7 +2030,60 @@ qpq_ui_group_t_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+				scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
+			}
+		}
 	}
 }
 
@@ -1723,7 +2091,53 @@ qpq_ui_group_t_favours = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+				scope:recipient = { any_character_artifact = { always = yes } }
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+				scope:recipient = { any_claim = { always = yes } }
+			}
+			AND = {
+				scope:recipient = { NOT = { this = scope:actor } }
+				scope:actor = {
+					any_secret = { is_known_by = scope:recipient }
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+				scope:actor = { is_at_war = yes }
+			}
+		}
 	}
 }
 
@@ -1731,7 +2145,60 @@ qpq_ui_group_t_family = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+
+				exists = scope:actor.primary_title
+				scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				exists = scope:actor.primary_title
+				scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+				NOT = { scope:recipient = scope:actor }
+			}
+			AND = {
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					NOT = { this = scope:actor }
+				}
+				exists = scope:actor.liege
+				scope:actor.liege = scope:recipient.liege
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				exists = scope:actor.house
+				scope:recipient = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:actor.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:actor.house }
+								betrothed.house ?= scope:actor.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1739,7 +2206,65 @@ qpq_ui_group_t_blood = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					OR = {
+						liege ?= scope:actor
+						is_courtier_of = scope:actor
+					}
+					is_adult = yes
+					NOT = { this = scope:actor }
+				}
+			}
+			AND = {
+				scope:recipient = {
+					OR = {
+						liege ?= scope:actor
+						is_courtier_of = scope:actor
+					}
+					is_adult = yes
+					NOT = { this = scope:actor }
+				}
+			}
+			AND = {
+				scope:recipient = {
+					OR = {
+						liege ?= scope:actor
+						is_courtier_of = scope:actor
+					}
+					is_adult = yes
+					NOT = { this = scope:actor }
+				}
+			}
+			AND = {
+				exists = scope:actor.liege
+				scope:recipient = {
+					is_adult = yes
+					NOT = { this = scope:actor }
+					NOT = { this = scope:actor.liege }
+					OR = {
+						is_courtier_of = scope:actor.liege
+						is_courtier_of = scope:actor
+					}
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+				scope:recipient = {
+					any_held_title = { is_holy_order = yes }
+				}
+			}
+		}
 	}
 }
 
@@ -1747,7 +2272,78 @@ qpq_ui_group_t_shadows = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					OR = {
+						liege ?= scope:actor
+						is_courtier_of = scope:actor
+					}
+					is_adult = yes
+					NOT = { this = scope:actor }
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+				scope:recipient = { any_vassal = { is_landed = yes } }
+			}
+			AND = {
+				scope:actor = {
+					OR = {
+						liege ?= scope:recipient
+						is_imprisoned_by = scope:recipient
+					}
+					any_known_secret = {
+						NOT = { secret_owner = scope:actor }
+						NOT = { secret_owner = scope:recipient }
+						NOT = { is_known_by = scope:recipient }
+					}
+				}
+			}
+			AND = {
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					NOT = { this = scope:actor }
+				}
+				exists = scope:actor.liege
+				scope:actor.liege = scope:recipient.liege
+			}
+			AND = {
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					NOT = { this = scope:actor }
+				}
+				exists = scope:actor.liege
+				scope:actor.liege = scope:recipient.liege
+				scope:actor = { exists = joined_faction joined_faction = { faction_target = scope:actor.liege } }
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:recipient = {
+					is_councillor = yes
+					exists = liege
+					is_councillor_of = scope:recipient.liege
+				}
+			}
+		}
 	}
 }
 
@@ -1755,7 +2351,68 @@ qpq_ui_group_t_abroad = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+				scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:recipient = {
+					exists = liege
+					is_independent_ruler = no
+				}
+				scope:actor = { is_at_war_with = scope:recipient.liege }
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+			AND = {
+				scope:recipient = {
+					is_adult = yes
+					NOT = { this = scope:actor }
+					any_claim = { tier >= tier_duchy NOT = { holder ?= scope:actor } }
+				}
+				scope:actor = { is_landed = yes }
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+			AND = {
+				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+		}
 	}
 }
 
@@ -2391,30 +3048,6 @@ qpq_ui_timing_t_on_delivery = {
 	}
 }
 
-qpq_ui_timing_t_split = {
-	scope = character
-	is_shown = {
-		has_variable = qpq_ui_t_o_gold
-		qpq_ui_leg_t_allows_split_trigger = yes
-	}
-	effect = {
-		set_variable = { name = qpq_ui_t_timing value = flag:split }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_timing_t_stipend = {
-	scope = character
-	is_shown = {
-		has_variable = qpq_ui_t_o_gold
-		qpq_ui_leg_t_allows_stipend_trigger = yes
-	}
-	effect = {
-		set_variable = { name = qpq_ui_t_timing value = flag:stipend }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_extra_t_qpq_x_armed = {
 	scope = character
 	is_shown = {
@@ -2540,7 +3173,10 @@ qpq_ui_kind_i_chartered_conquest = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2562,7 +3198,10 @@ qpq_ui_kind_i_sanctioned_conquest = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2584,7 +3223,10 @@ qpq_ui_kind_i_marcher_charge = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2606,7 +3248,10 @@ qpq_ui_kind_i_holy_sponsorship = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2628,7 +3273,10 @@ qpq_ui_kind_i_development_charter = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2650,7 +3298,13 @@ qpq_ui_kind_i_electoral_purchase = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+
+		exists = scope:recipient.primary_title
+		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
 	}
 	is_valid = {
 		scope:actor = {
@@ -2675,7 +3329,10 @@ qpq_ui_kind_i_loyal_mole = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2697,7 +3354,10 @@ qpq_ui_kind_i_agent_provocateur = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2719,7 +3379,10 @@ qpq_ui_kind_i_licensed_feud = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2741,7 +3404,14 @@ qpq_ui_kind_i_dossier = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_courtier_of = scope:recipient
+			}
+			is_adult = yes
+			NOT = { this = scope:recipient }
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2767,7 +3437,14 @@ qpq_ui_kind_i_quiet_removal = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_courtier_of = scope:recipient
+			}
+			is_adult = yes
+			NOT = { this = scope:recipient }
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2793,7 +3470,14 @@ qpq_ui_kind_i_heir_question = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_courtier_of = scope:recipient
+			}
+			is_adult = yes
+			NOT = { this = scope:recipient }
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2819,7 +3503,14 @@ qpq_ui_kind_i_snatch = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			OR = {
+				liege ?= scope:recipient
+				is_courtier_of = scope:recipient
+			}
+			is_adult = yes
+			NOT = { this = scope:recipient }
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2845,7 +3536,11 @@ qpq_ui_kind_i_dispossession = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		scope:actor = { any_vassal = { is_landed = yes } }
 	}
 	is_valid = {
 		scope:actor = {
@@ -2868,7 +3563,10 @@ qpq_ui_kind_i_the_cloister = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2890,7 +3588,10 @@ qpq_ui_kind_i_marriage_by_command = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2912,7 +3613,10 @@ qpq_ui_kind_i_hand_over = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:actor = {
@@ -2934,7 +3638,11 @@ qpq_ui_kind_i_hand_over_artifact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		scope:actor = { any_character_artifact = { always = yes } }
 	}
 	is_valid = {
 		scope:actor = {
@@ -2957,7 +3665,11 @@ qpq_ui_kind_i_renunciation = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		scope:actor = { any_claim = { always = yes } }
 	}
 	is_valid = {
 		scope:actor = {
@@ -2980,7 +3692,10 @@ qpq_ui_kind_i_hush_money = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = { NOT = { this = scope:recipient } }
+		scope:recipient = {
+			any_secret = { is_known_by = scope:actor }
+		}
 	}
 	is_valid = {
 		scope:actor = { NOT = { this = scope:recipient } }
@@ -3002,7 +3717,11 @@ qpq_ui_kind_i_price_of_loyalty = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+		scope:recipient = { is_at_war = yes }
 	}
 	is_valid = {
 		scope:actor = {
@@ -3025,7 +3744,10 @@ qpq_ui_kind_i_blessing_for_a_feud = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -3047,7 +3769,17 @@ qpq_ui_kind_i_clemency_bargain = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = {
+			OR = {
+				liege ?= scope:actor
+				is_imprisoned_by = scope:actor
+			}
+			any_known_secret = {
+				NOT = { secret_owner = scope:recipient }
+				NOT = { secret_owner = scope:actor }
+				NOT = { is_known_by = scope:actor }
+			}
+		}
 	}
 	is_valid = {
 		scope:recipient = {
@@ -3076,7 +3808,9 @@ qpq_ui_kind_i_electoral_capitulation = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		exists = scope:recipient.primary_title
+		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+		NOT = { scope:actor = scope:recipient }
 	}
 	is_valid = {
 		exists = scope:recipient.primary_title
@@ -3097,7 +3831,13 @@ qpq_ui_kind_i_mutual_defense_league = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			NOT = { this = scope:recipient }
+		}
+		exists = scope:recipient.liege
+		scope:recipient.liege = scope:actor.liege
 	}
 	is_valid = {
 		scope:recipient = { is_landed = yes }
@@ -3122,7 +3862,14 @@ qpq_ui_kind_i_faction_pledge = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			NOT = { this = scope:recipient }
+		}
+		exists = scope:recipient.liege
+		scope:recipient.liege = scope:actor.liege
+		scope:recipient = { exists = joined_faction joined_faction = { faction_target = scope:recipient.liege } }
 	}
 	is_valid = {
 		scope:recipient = { is_landed = yes }
@@ -3148,7 +3895,13 @@ qpq_ui_kind_i_title_swap = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			NOT = { this = scope:recipient }
+		}
+		exists = scope:recipient.liege
+		scope:recipient.liege = scope:actor.liege
 	}
 	is_valid = {
 		scope:recipient = { is_landed = yes }
@@ -3173,7 +3926,16 @@ qpq_ui_kind_i_coup_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		exists = scope:recipient.liege
+		scope:actor = {
+			is_adult = yes
+			NOT = { this = scope:recipient }
+			NOT = { this = scope:recipient.liege }
+			OR = {
+				is_courtier_of = scope:recipient.liege
+				is_courtier_of = scope:recipient
+			}
+		}
 	}
 	is_valid = {
 		exists = scope:recipient.liege
@@ -3201,7 +3963,13 @@ qpq_ui_kind_i_proxy_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3226,7 +3994,13 @@ qpq_ui_kind_i_partition_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3251,7 +4025,8 @@ qpq_ui_kind_i_secret_alliance = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+		scope:recipient = { is_landed = yes } scope:actor = { is_landed = yes }
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3271,7 +4046,8 @@ qpq_ui_kind_i_bought_truce = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+		scope:recipient = { is_landed = yes } scope:actor = { is_landed = yes }
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3291,7 +4067,13 @@ qpq_ui_kind_i_faithless_ally = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3316,7 +4098,13 @@ qpq_ui_kind_i_turncoat = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:actor = {
+			exists = liege
+			is_independent_ruler = no
+		}
+		scope:recipient = { is_at_war_with = scope:actor.liege }
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3341,7 +4129,14 @@ qpq_ui_kind_i_seed_the_separatists = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3367,7 +4162,12 @@ qpq_ui_kind_i_shelter_the_pretender = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		scope:actor = {
+			is_adult = yes
+			NOT = { this = scope:recipient }
+			any_claim = { tier >= tier_duchy NOT = { holder ?= scope:recipient } }
+		}
+		scope:recipient = { is_landed = yes }
 	}
 	is_valid = {
 		scope:actor = {
@@ -3391,7 +4191,13 @@ qpq_ui_kind_i_extradition = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_independent_ruler = yes
+			is_landed = yes
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3416,7 +4222,13 @@ qpq_ui_kind_i_buy_a_councillor = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:actor = {
+			is_councillor = yes
+			exists = liege
+			is_councillor_of = scope:actor.liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3441,7 +4253,14 @@ qpq_ui_kind_i_stay_home = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3467,7 +4286,14 @@ qpq_ui_kind_i_defection_pact = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = no
+			exists = liege
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3493,7 +4319,21 @@ qpq_ui_kind_i_secret_clause = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+		exists = scope:recipient.house
+		scope:actor = {
+			is_landed = yes
+			OR = {
+				any_spouse = { house ?= scope:recipient.house }
+				any_close_family_member = {
+					OR = {
+						any_spouse = { house ?= scope:recipient.house }
+						betrothed.house ?= scope:recipient.house
+					}
+				}
+			}
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -3526,7 +4366,10 @@ qpq_ui_kind_i_hire_the_hashashin = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+		scope:actor = {
+			any_held_title = { is_holy_order = yes }
+		}
 	}
 	is_valid = {
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
@@ -4187,6 +5030,111 @@ qpq_ui_gold_add_i = {
 	}
 }
 
+qpq_ui_gold_up_i_10 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = 10 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_up_i_100 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = 100 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_up_i_1000 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = 1000 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_i_10 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = -10 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_i_100 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = -100 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_down_i_1000 = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_amount } }
+			set_variable = { name = qpq_ui_i_amount value = var:qpq_ui_i_fair }
+		}
+		change_variable = { name = qpq_ui_i_amount add = -1000 }
+		if = {
+			limit = { var:qpq_ui_i_amount < 1 }
+			set_variable = { name = qpq_ui_i_amount value = 1 }
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_gold_fair_i = {
+	scope = character
+	is_shown = { has_variable = qpq_ui_i_amount }
+	effect = {
+		remove_variable = qpq_ui_i_amount
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_land_clear_i = {
 	scope = character
 	effect = {
@@ -4251,7 +5199,60 @@ qpq_ui_group_i_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+				scope:recipient = { is_landed = yes } scope:actor = { is_landed = yes }
+			}
+		}
 	}
 }
 
@@ -4259,7 +5260,53 @@ qpq_ui_group_i_favours = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+				scope:actor = { any_character_artifact = { always = yes } }
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+				scope:actor = { any_claim = { always = yes } }
+			}
+			AND = {
+				scope:actor = { NOT = { this = scope:recipient } }
+				scope:recipient = {
+					any_secret = { is_known_by = scope:actor }
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+				scope:recipient = { is_at_war = yes }
+			}
+		}
 	}
 }
 
@@ -4267,7 +5314,60 @@ qpq_ui_group_i_family = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+
+				exists = scope:recipient.primary_title
+				scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				exists = scope:recipient.primary_title
+				scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+				NOT = { scope:actor = scope:recipient }
+			}
+			AND = {
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					NOT = { this = scope:recipient }
+				}
+				exists = scope:recipient.liege
+				scope:recipient.liege = scope:actor.liege
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				exists = scope:recipient.house
+				scope:actor = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:recipient.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:recipient.house }
+								betrothed.house ?= scope:recipient.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -4275,7 +5375,65 @@ qpq_ui_group_i_blood = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:actor = {
+					OR = {
+						liege ?= scope:recipient
+						is_courtier_of = scope:recipient
+					}
+					is_adult = yes
+					NOT = { this = scope:recipient }
+				}
+			}
+			AND = {
+				scope:actor = {
+					OR = {
+						liege ?= scope:recipient
+						is_courtier_of = scope:recipient
+					}
+					is_adult = yes
+					NOT = { this = scope:recipient }
+				}
+			}
+			AND = {
+				scope:actor = {
+					OR = {
+						liege ?= scope:recipient
+						is_courtier_of = scope:recipient
+					}
+					is_adult = yes
+					NOT = { this = scope:recipient }
+				}
+			}
+			AND = {
+				exists = scope:recipient.liege
+				scope:actor = {
+					is_adult = yes
+					NOT = { this = scope:recipient }
+					NOT = { this = scope:recipient.liege }
+					OR = {
+						is_courtier_of = scope:recipient.liege
+						is_courtier_of = scope:recipient
+					}
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+				scope:actor = {
+					any_held_title = { is_holy_order = yes }
+				}
+			}
+		}
 	}
 }
 
@@ -4283,7 +5441,78 @@ qpq_ui_group_i_shadows = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				scope:actor = {
+					OR = {
+						liege ?= scope:recipient
+						is_courtier_of = scope:recipient
+					}
+					is_adult = yes
+					NOT = { this = scope:recipient }
+				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+				scope:actor = { any_vassal = { is_landed = yes } }
+			}
+			AND = {
+				scope:recipient = {
+					OR = {
+						liege ?= scope:actor
+						is_imprisoned_by = scope:actor
+					}
+					any_known_secret = {
+						NOT = { secret_owner = scope:recipient }
+						NOT = { secret_owner = scope:actor }
+						NOT = { is_known_by = scope:actor }
+					}
+				}
+			}
+			AND = {
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					NOT = { this = scope:recipient }
+				}
+				exists = scope:recipient.liege
+				scope:recipient.liege = scope:actor.liege
+			}
+			AND = {
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					NOT = { this = scope:recipient }
+				}
+				exists = scope:recipient.liege
+				scope:recipient.liege = scope:actor.liege
+				scope:recipient = { exists = joined_faction joined_faction = { faction_target = scope:recipient.liege } }
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:actor = {
+					is_councillor = yes
+					exists = liege
+					is_councillor_of = scope:actor.liege
+				}
+			}
+		}
 	}
 }
 
@@ -4291,7 +5520,68 @@ qpq_ui_group_i_abroad = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		always = yes
+		OR = {
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+				scope:recipient = { is_landed = yes } scope:actor = { is_landed = yes }
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_independent_ruler = yes
+					is_landed = yes
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:actor = {
+					exists = liege
+					is_independent_ruler = no
+				}
+				scope:recipient = { is_at_war_with = scope:actor.liege }
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+			AND = {
+				scope:actor = {
+					is_adult = yes
+					NOT = { this = scope:recipient }
+					any_claim = { tier >= tier_duchy NOT = { holder ?= scope:recipient } }
+				}
+				scope:recipient = { is_landed = yes }
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+			AND = {
+				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_landed = yes
+					is_independent_ruler = no
+					exists = liege
+				}
+			}
+		}
 	}
 }
 
@@ -4923,30 +6213,6 @@ qpq_ui_timing_i_on_delivery = {
 	}
 	effect = {
 		set_variable = { name = qpq_ui_i_timing value = flag:on_delivery }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_timing_i_split = {
-	scope = character
-	is_shown = {
-		has_variable = qpq_ui_i_o_gold
-		qpq_ui_leg_i_allows_split_trigger = yes
-	}
-	effect = {
-		set_variable = { name = qpq_ui_i_timing value = flag:split }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_timing_i_stipend = {
-	scope = character
-	is_shown = {
-		has_variable = qpq_ui_i_o_gold
-		qpq_ui_leg_i_allows_stipend_trigger = yes
-	}
-	effect = {
-		set_variable = { name = qpq_ui_i_timing value = flag:stipend }
 		qpq_ui_refresh_effect = yes
 	}
 }

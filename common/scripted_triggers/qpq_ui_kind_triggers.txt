@@ -1069,140 +1069,6 @@ qpq_ui_leg_t_allows_on_delivery_trigger = {
 	}
 }
 
-qpq_ui_leg_t_allows_split_trigger = {
-	OR = {
-		var:qpq_ui_t_kind = flag:chartered_conquest
-		var:qpq_ui_t_kind = flag:sanctioned_conquest
-		var:qpq_ui_t_kind = flag:marcher_charge
-		var:qpq_ui_t_kind = flag:holy_sponsorship
-		var:qpq_ui_t_kind = flag:development_charter
-		var:qpq_ui_t_kind = flag:electoral_purchase
-		var:qpq_ui_t_kind = flag:loyal_mole
-		var:qpq_ui_t_kind = flag:agent_provocateur
-		var:qpq_ui_t_kind = flag:licensed_feud
-		var:qpq_ui_t_kind = flag:dossier
-		var:qpq_ui_t_kind = flag:quiet_removal
-		var:qpq_ui_t_kind = flag:heir_question
-		var:qpq_ui_t_kind = flag:snatch
-		var:qpq_ui_t_kind = flag:dispossession
-		var:qpq_ui_t_kind = flag:the_cloister
-		var:qpq_ui_t_kind = flag:marriage_by_command
-		var:qpq_ui_t_kind = flag:hand_over
-		var:qpq_ui_t_kind = flag:hand_over_artifact
-		var:qpq_ui_t_kind = flag:renunciation
-		var:qpq_ui_t_kind = flag:hush_money
-		var:qpq_ui_t_kind = flag:price_of_loyalty
-		var:qpq_ui_t_kind = flag:blessing_for_a_feud
-		var:qpq_ui_t_kind = flag:clemency_bargain
-		var:qpq_ui_t_kind = flag:electoral_capitulation
-		var:qpq_ui_t_kind = flag:mutual_defense_league
-		var:qpq_ui_t_kind = flag:faction_pledge
-		var:qpq_ui_t_kind = flag:title_swap
-		var:qpq_ui_t_kind = flag:coup_pact
-		var:qpq_ui_t_kind = flag:proxy_war
-		var:qpq_ui_t_kind = flag:partition_pact
-		var:qpq_ui_t_kind = flag:secret_alliance
-		var:qpq_ui_t_kind = flag:bought_truce
-		var:qpq_ui_t_kind = flag:faithless_ally
-		var:qpq_ui_t_kind = flag:turncoat
-		var:qpq_ui_t_kind = flag:seed_the_separatists
-		var:qpq_ui_t_kind = flag:shelter_the_pretender
-		var:qpq_ui_t_kind = flag:extradition
-		var:qpq_ui_t_kind = flag:buy_a_councillor
-		var:qpq_ui_t_kind = flag:stay_home
-		var:qpq_ui_t_kind = flag:defection_pact
-		var:qpq_ui_t_kind = flag:secret_clause
-		var:qpq_ui_t_kind = flag:hire_the_hashashin
-		var:qpq_ui_t_kind = flag:excommunication_for_hire
-		var:qpq_ui_t_kind = flag:dispensation_for_gold
-		var:qpq_ui_t_kind = flag:steer_the_holy_war
-		var:qpq_ui_t_kind = flag:purchase_a_mitre
-		var:qpq_ui_t_kind = flag:bought_claim
-		var:qpq_ui_t_kind = flag:absolution_by_concession
-		var:qpq_ui_t_kind = flag:holy_warrant
-		var:qpq_ui_t_kind = flag:buy_a_bull
-		var:qpq_ui_t_kind = flag:conclave_votes
-		var:qpq_ui_t_kind = flag:council_lobbying
-		var:qpq_ui_t_kind = flag:caliphal_investiture
-		var:qpq_ui_t_kind = flag:name_in_the_khutba
-		var:qpq_ui_t_kind = flag:fatwa_for_hire
-		var:qpq_ui_t_kind = flag:fund_the_dawa
-		var:qpq_ui_t_kind = flag:crowning_the_usurper
-		var:qpq_ui_t_kind = flag:pliant_patriarch
-		var:qpq_ui_t_kind = flag:favourable_omens
-		var:qpq_ui_t_kind = flag:consecration_rites
-		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:none
-	}
-}
-
-qpq_ui_leg_t_allows_stipend_trigger = {
-	OR = {
-		var:qpq_ui_t_kind = flag:chartered_conquest
-		var:qpq_ui_t_kind = flag:sanctioned_conquest
-		var:qpq_ui_t_kind = flag:marcher_charge
-		var:qpq_ui_t_kind = flag:holy_sponsorship
-		var:qpq_ui_t_kind = flag:development_charter
-		var:qpq_ui_t_kind = flag:electoral_purchase
-		var:qpq_ui_t_kind = flag:loyal_mole
-		var:qpq_ui_t_kind = flag:agent_provocateur
-		var:qpq_ui_t_kind = flag:licensed_feud
-		var:qpq_ui_t_kind = flag:dossier
-		var:qpq_ui_t_kind = flag:quiet_removal
-		var:qpq_ui_t_kind = flag:heir_question
-		var:qpq_ui_t_kind = flag:snatch
-		var:qpq_ui_t_kind = flag:dispossession
-		var:qpq_ui_t_kind = flag:the_cloister
-		var:qpq_ui_t_kind = flag:marriage_by_command
-		var:qpq_ui_t_kind = flag:hand_over
-		var:qpq_ui_t_kind = flag:hand_over_artifact
-		var:qpq_ui_t_kind = flag:renunciation
-		var:qpq_ui_t_kind = flag:hush_money
-		var:qpq_ui_t_kind = flag:price_of_loyalty
-		var:qpq_ui_t_kind = flag:blessing_for_a_feud
-		var:qpq_ui_t_kind = flag:clemency_bargain
-		var:qpq_ui_t_kind = flag:electoral_capitulation
-		var:qpq_ui_t_kind = flag:mutual_defense_league
-		var:qpq_ui_t_kind = flag:faction_pledge
-		var:qpq_ui_t_kind = flag:title_swap
-		var:qpq_ui_t_kind = flag:coup_pact
-		var:qpq_ui_t_kind = flag:proxy_war
-		var:qpq_ui_t_kind = flag:partition_pact
-		var:qpq_ui_t_kind = flag:secret_alliance
-		var:qpq_ui_t_kind = flag:bought_truce
-		var:qpq_ui_t_kind = flag:faithless_ally
-		var:qpq_ui_t_kind = flag:turncoat
-		var:qpq_ui_t_kind = flag:seed_the_separatists
-		var:qpq_ui_t_kind = flag:shelter_the_pretender
-		var:qpq_ui_t_kind = flag:extradition
-		var:qpq_ui_t_kind = flag:buy_a_councillor
-		var:qpq_ui_t_kind = flag:stay_home
-		var:qpq_ui_t_kind = flag:defection_pact
-		var:qpq_ui_t_kind = flag:secret_clause
-		var:qpq_ui_t_kind = flag:hire_the_hashashin
-		var:qpq_ui_t_kind = flag:excommunication_for_hire
-		var:qpq_ui_t_kind = flag:dispensation_for_gold
-		var:qpq_ui_t_kind = flag:steer_the_holy_war
-		var:qpq_ui_t_kind = flag:purchase_a_mitre
-		var:qpq_ui_t_kind = flag:bought_claim
-		var:qpq_ui_t_kind = flag:absolution_by_concession
-		var:qpq_ui_t_kind = flag:holy_warrant
-		var:qpq_ui_t_kind = flag:buy_a_bull
-		var:qpq_ui_t_kind = flag:conclave_votes
-		var:qpq_ui_t_kind = flag:council_lobbying
-		var:qpq_ui_t_kind = flag:caliphal_investiture
-		var:qpq_ui_t_kind = flag:name_in_the_khutba
-		var:qpq_ui_t_kind = flag:fatwa_for_hire
-		var:qpq_ui_t_kind = flag:fund_the_dawa
-		var:qpq_ui_t_kind = flag:crowning_the_usurper
-		var:qpq_ui_t_kind = flag:pliant_patriarch
-		var:qpq_ui_t_kind = flag:favourable_omens
-		var:qpq_ui_t_kind = flag:consecration_rites
-		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:none
-	}
-}
-
 qpq_ui_leg_t_has_goods_trigger = {
 	OR = {
 		has_variable = qpq_ui_t_o_gold
@@ -2330,13 +2196,6 @@ qpq_ui_leg_t_ready_trigger = {
 				}
 				gold >= var:qpq_ui_t_price
 			}
-			trigger_else_if = {
-				limit = {
-					has_variable = qpq_ui_t_o_gold
-					var:qpq_ui_t_timing = flag:split
-				}
-				gold >= { value = var:qpq_ui_t_price divide = 2 }
-			}
 			trigger_else = {
 				always = yes
 			}
@@ -3350,140 +3209,6 @@ qpq_ui_leg_i_allows_hook_trigger = {
 }
 
 qpq_ui_leg_i_allows_on_delivery_trigger = {
-	OR = {
-		var:qpq_ui_i_kind = flag:chartered_conquest
-		var:qpq_ui_i_kind = flag:sanctioned_conquest
-		var:qpq_ui_i_kind = flag:marcher_charge
-		var:qpq_ui_i_kind = flag:holy_sponsorship
-		var:qpq_ui_i_kind = flag:development_charter
-		var:qpq_ui_i_kind = flag:electoral_purchase
-		var:qpq_ui_i_kind = flag:loyal_mole
-		var:qpq_ui_i_kind = flag:agent_provocateur
-		var:qpq_ui_i_kind = flag:licensed_feud
-		var:qpq_ui_i_kind = flag:dossier
-		var:qpq_ui_i_kind = flag:quiet_removal
-		var:qpq_ui_i_kind = flag:heir_question
-		var:qpq_ui_i_kind = flag:snatch
-		var:qpq_ui_i_kind = flag:dispossession
-		var:qpq_ui_i_kind = flag:the_cloister
-		var:qpq_ui_i_kind = flag:marriage_by_command
-		var:qpq_ui_i_kind = flag:hand_over
-		var:qpq_ui_i_kind = flag:hand_over_artifact
-		var:qpq_ui_i_kind = flag:renunciation
-		var:qpq_ui_i_kind = flag:hush_money
-		var:qpq_ui_i_kind = flag:price_of_loyalty
-		var:qpq_ui_i_kind = flag:blessing_for_a_feud
-		var:qpq_ui_i_kind = flag:clemency_bargain
-		var:qpq_ui_i_kind = flag:electoral_capitulation
-		var:qpq_ui_i_kind = flag:mutual_defense_league
-		var:qpq_ui_i_kind = flag:faction_pledge
-		var:qpq_ui_i_kind = flag:title_swap
-		var:qpq_ui_i_kind = flag:coup_pact
-		var:qpq_ui_i_kind = flag:proxy_war
-		var:qpq_ui_i_kind = flag:partition_pact
-		var:qpq_ui_i_kind = flag:secret_alliance
-		var:qpq_ui_i_kind = flag:bought_truce
-		var:qpq_ui_i_kind = flag:faithless_ally
-		var:qpq_ui_i_kind = flag:turncoat
-		var:qpq_ui_i_kind = flag:seed_the_separatists
-		var:qpq_ui_i_kind = flag:shelter_the_pretender
-		var:qpq_ui_i_kind = flag:extradition
-		var:qpq_ui_i_kind = flag:buy_a_councillor
-		var:qpq_ui_i_kind = flag:stay_home
-		var:qpq_ui_i_kind = flag:defection_pact
-		var:qpq_ui_i_kind = flag:secret_clause
-		var:qpq_ui_i_kind = flag:hire_the_hashashin
-		var:qpq_ui_i_kind = flag:excommunication_for_hire
-		var:qpq_ui_i_kind = flag:dispensation_for_gold
-		var:qpq_ui_i_kind = flag:steer_the_holy_war
-		var:qpq_ui_i_kind = flag:purchase_a_mitre
-		var:qpq_ui_i_kind = flag:bought_claim
-		var:qpq_ui_i_kind = flag:absolution_by_concession
-		var:qpq_ui_i_kind = flag:holy_warrant
-		var:qpq_ui_i_kind = flag:buy_a_bull
-		var:qpq_ui_i_kind = flag:conclave_votes
-		var:qpq_ui_i_kind = flag:council_lobbying
-		var:qpq_ui_i_kind = flag:caliphal_investiture
-		var:qpq_ui_i_kind = flag:name_in_the_khutba
-		var:qpq_ui_i_kind = flag:fatwa_for_hire
-		var:qpq_ui_i_kind = flag:fund_the_dawa
-		var:qpq_ui_i_kind = flag:crowning_the_usurper
-		var:qpq_ui_i_kind = flag:pliant_patriarch
-		var:qpq_ui_i_kind = flag:favourable_omens
-		var:qpq_ui_i_kind = flag:consecration_rites
-		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:none
-	}
-}
-
-qpq_ui_leg_i_allows_split_trigger = {
-	OR = {
-		var:qpq_ui_i_kind = flag:chartered_conquest
-		var:qpq_ui_i_kind = flag:sanctioned_conquest
-		var:qpq_ui_i_kind = flag:marcher_charge
-		var:qpq_ui_i_kind = flag:holy_sponsorship
-		var:qpq_ui_i_kind = flag:development_charter
-		var:qpq_ui_i_kind = flag:electoral_purchase
-		var:qpq_ui_i_kind = flag:loyal_mole
-		var:qpq_ui_i_kind = flag:agent_provocateur
-		var:qpq_ui_i_kind = flag:licensed_feud
-		var:qpq_ui_i_kind = flag:dossier
-		var:qpq_ui_i_kind = flag:quiet_removal
-		var:qpq_ui_i_kind = flag:heir_question
-		var:qpq_ui_i_kind = flag:snatch
-		var:qpq_ui_i_kind = flag:dispossession
-		var:qpq_ui_i_kind = flag:the_cloister
-		var:qpq_ui_i_kind = flag:marriage_by_command
-		var:qpq_ui_i_kind = flag:hand_over
-		var:qpq_ui_i_kind = flag:hand_over_artifact
-		var:qpq_ui_i_kind = flag:renunciation
-		var:qpq_ui_i_kind = flag:hush_money
-		var:qpq_ui_i_kind = flag:price_of_loyalty
-		var:qpq_ui_i_kind = flag:blessing_for_a_feud
-		var:qpq_ui_i_kind = flag:clemency_bargain
-		var:qpq_ui_i_kind = flag:electoral_capitulation
-		var:qpq_ui_i_kind = flag:mutual_defense_league
-		var:qpq_ui_i_kind = flag:faction_pledge
-		var:qpq_ui_i_kind = flag:title_swap
-		var:qpq_ui_i_kind = flag:coup_pact
-		var:qpq_ui_i_kind = flag:proxy_war
-		var:qpq_ui_i_kind = flag:partition_pact
-		var:qpq_ui_i_kind = flag:secret_alliance
-		var:qpq_ui_i_kind = flag:bought_truce
-		var:qpq_ui_i_kind = flag:faithless_ally
-		var:qpq_ui_i_kind = flag:turncoat
-		var:qpq_ui_i_kind = flag:seed_the_separatists
-		var:qpq_ui_i_kind = flag:shelter_the_pretender
-		var:qpq_ui_i_kind = flag:extradition
-		var:qpq_ui_i_kind = flag:buy_a_councillor
-		var:qpq_ui_i_kind = flag:stay_home
-		var:qpq_ui_i_kind = flag:defection_pact
-		var:qpq_ui_i_kind = flag:secret_clause
-		var:qpq_ui_i_kind = flag:hire_the_hashashin
-		var:qpq_ui_i_kind = flag:excommunication_for_hire
-		var:qpq_ui_i_kind = flag:dispensation_for_gold
-		var:qpq_ui_i_kind = flag:steer_the_holy_war
-		var:qpq_ui_i_kind = flag:purchase_a_mitre
-		var:qpq_ui_i_kind = flag:bought_claim
-		var:qpq_ui_i_kind = flag:absolution_by_concession
-		var:qpq_ui_i_kind = flag:holy_warrant
-		var:qpq_ui_i_kind = flag:buy_a_bull
-		var:qpq_ui_i_kind = flag:conclave_votes
-		var:qpq_ui_i_kind = flag:council_lobbying
-		var:qpq_ui_i_kind = flag:caliphal_investiture
-		var:qpq_ui_i_kind = flag:name_in_the_khutba
-		var:qpq_ui_i_kind = flag:fatwa_for_hire
-		var:qpq_ui_i_kind = flag:fund_the_dawa
-		var:qpq_ui_i_kind = flag:crowning_the_usurper
-		var:qpq_ui_i_kind = flag:pliant_patriarch
-		var:qpq_ui_i_kind = flag:favourable_omens
-		var:qpq_ui_i_kind = flag:consecration_rites
-		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:none
-	}
-}
-
-qpq_ui_leg_i_allows_stipend_trigger = {
 	OR = {
 		var:qpq_ui_i_kind = flag:chartered_conquest
 		var:qpq_ui_i_kind = flag:sanctioned_conquest
@@ -4676,13 +4401,6 @@ qpq_ui_leg_i_ready_trigger = {
 					var:qpq_ui_i_timing = flag:up_front
 				}
 				scope:recipient = { gold >= scope:actor.var:qpq_ui_i_price }
-			}
-			trigger_else_if = {
-				limit = {
-					has_variable = qpq_ui_i_o_gold
-					var:qpq_ui_i_timing = flag:split
-				}
-				scope:recipient = { gold >= { value = scope:actor.var:qpq_ui_i_price divide = 2 } }
 			}
 			trigger_else = {
 				always = yes
@@ -6559,29 +6277,15 @@ qpq_deal_gold_ok_trigger = {
 		limit = {
 			scope:qpq_deal_t_o_gold ?= yes
 			NOT = { scope:qpq_deal_t_o_on_delivery ?= yes }
-			NOT = { scope:qpq_deal_t_o_stipend ?= yes }
 		}
-		trigger_if = {
-			limit = { scope:qpq_deal_t_o_split ?= yes }
-			scope:actor = { gold >= { value = scope:qpq_deal_t_price divide = 2 } }
-		}
-		trigger_else = {
-			scope:actor = { gold >= scope:qpq_deal_t_price }
-		}
+		scope:actor = { gold >= scope:qpq_deal_t_price }
 	}
 	trigger_if = {
 		limit = {
 			scope:qpq_deal_i_o_gold ?= yes
 			NOT = { scope:qpq_deal_i_o_on_delivery ?= yes }
-			NOT = { scope:qpq_deal_i_o_stipend ?= yes }
 		}
-		trigger_if = {
-			limit = { scope:qpq_deal_i_o_split ?= yes }
-			scope:recipient = { gold >= { value = scope:qpq_deal_i_price divide = 2 } }
-		}
-		trigger_else = {
-			scope:recipient = { gold >= scope:qpq_deal_i_price }
-		}
+		scope:recipient = { gold >= scope:qpq_deal_i_price }
 	}
 	always = yes
 }

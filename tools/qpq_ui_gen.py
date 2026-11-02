@@ -39,7 +39,8 @@ GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 # Charter is a property of the whole deal, not of one leg's goods
 UI_OFFERS = ["gold", "land", "claim", "office", "marriage", "release_hook", "my_word", "secret", "contract",
              "succession", "clemency", "arms", "artifact", "church", "restraint", "hook"]
-TIMINGS = ["up_front", "on_delivery", "split", "stipend"]
+TIMINGS = ["up_front", "on_delivery"]
+GOLD_STEPS = [10, 100, 1000]
 CANDIDATE_CAP = 120
 
 TITLE_SOURCES = {
@@ -178,10 +179,7 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             dlc = block(oriented(k, L, k.get("dlc") or ""), 2)
             # Church deeds that cannot apply between these two (no church, wrong faith, not a head of faith)
             # are not listed at all; every other deed is listed and greyed out with its reasons.
-            if k["group"].startswith("church_"):
-                shown = dlc + rel
-            else:
-                shown = dlc if k.get("dlc") else "\t\talways = yes\n"
+            shown = dlc + rel + block(oriented(k, L, k.get("avail") or ""), 2)
             out += "\tis_shown = {\n%s\t}\n" % shown
             out += "\tis_valid = {\n%s\t}\n" % rel
             out += "\teffect = {\n"
@@ -194,6 +192,17 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
         # Gold: picking it adds it (its amount and timing are set in its window); it is removed from the summary
         out += ("qpq_ui_gold_add_%s = {\n\tscope = character\n\teffect = {\n\t\tset_variable = qpq_ui_%s_o_gold\n"
                 "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (L, L)
+        # Gold: the amount is the player's to set (the fair price is only where it starts)
+        for sign, name in ((1, "up"), (-1, "down")):
+            for n in GOLD_STEPS:
+                out += ("qpq_ui_gold_%s_%s_%d = {\n\tscope = character\n\teffect = {\n"
+                        "\t\tif = {\n\t\t\tlimit = { NOT = { has_variable = qpq_ui_%s_amount } }\n"
+                        "\t\t\tset_variable = { name = qpq_ui_%s_amount value = var:qpq_ui_%s_fair }\n\t\t}\n"
+                        "\t\tchange_variable = { name = qpq_ui_%s_amount add = %d }\n"
+                        "\t\tif = {\n\t\t\tlimit = { var:qpq_ui_%s_amount < 1 }\n\t\t\tset_variable = { name = qpq_ui_%s_amount value = 1 }\n\t\t}\n"
+                        "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (name, L, n, L, L, L, L, sign * n, L, L)
+        out += ("qpq_ui_gold_fair_%s = {\n\tscope = character\n\tis_shown = { has_variable = qpq_ui_%s_amount }\n"
+                "\teffect = {\n\t\tremove_variable = qpq_ui_%s_amount\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (L, L, L)
         out += ("qpq_ui_land_clear_%s = {\n\tscope = character\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n"
                 "\t\t\tclear_variable_list = qpq_ui_%s_land\n\t\t}\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n"
                 "\t\t\tremove_variable = qpq_ui_%s_o_land\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % ((L,) * 5)
@@ -220,14 +229,12 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             kinds = [k for k in DEEDS if k["group"] == g]
             if not kinds:
                 continue
-            if g.startswith("church_"):
-                gs = "\t\tOR = {\n"
-                for k in kinds:
-                    gs += "\t\t\tAND = {\n%s%s\t\t\t}\n" % (block(oriented(k, L, k.get("dlc") or ""), 4),
-                                                          block(oriented(k, L, k["rel"]), 4))
-                gs += "\t\t}\n"
-            else:
-                gs = "\t\talways = yes\n"
+            gs = "\t\tOR = {\n"
+            for k in kinds:
+                gs += "\t\t\tAND = {\n%s%s%s\t\t\t}\n" % (block(oriented(k, L, k.get("dlc") or ""), 4),
+                                                         block(oriented(k, L, k["rel"]), 4),
+                                                         block(oriented(k, L, k.get("avail") or ""), 4))
+            gs += "\t\t}\n"
             out += "qpq_ui_group_%s_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n%s\t}\n}\n\n" % (L, g, gs)
         # Goods. A ticked box always stays visible so it can be unticked.
         for o in UI_OFFERS:
@@ -350,6 +357,9 @@ def compute_kind(k, L, block):
     s += "\t\t\tset_variable = { name = qpq_ui_%s_payer_tier value = qpq_%s_payer_tier_value }\n" % (L, key)
     s += "\t\t\tset_variable = { name = qpq_ui_%s_agent_tier value = qpq_%s_agent_tier_value }\n" % (L, key)
     s += "\t\t\tsave_scope_value_as = { name = qpq_price value = qpq_%s_price_value }\n" % key
+    s += "\t\t\tset_variable = { name = qpq_ui_%s_fair value = scope:qpq_price }\n" % L
+    s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_amount }\n\t\t\t\tclear_saved_scope = qpq_price\n"
+          "\t\t\t\tsave_scope_value_as = { name = qpq_price value = var:qpq_ui_%s_amount }\n\t\t\t}\n") % (L, L)
     s += "\t\t\tset_variable = { name = qpq_ui_%s_price value = scope:qpq_price }\n" % L
     # How the recipient of the deal (the other character) sees this leg
     if proposer_me(k, L):
@@ -370,6 +380,9 @@ def compute_kind(k, L, block):
         s += "\t\t\tset_variable = { name = qpq_ui_%s_a_ask value = qpq_%s_demand_value }\n" % (L, key)
         s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -1\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
         s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+        # They do the deed: some deeds they will not do at any price
+        s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value } }\n"
+              "\t\t\t\tset_variable = { name = qpq_ui_%s_a_other value = -1000 }\n\t\t\t}\n") % (key, L)
     # Every title beyond the first counts again (land is chosen title by title)
     sign = "1" if proposer_me(k, L) else ("-0.8" if k["initiator"] == "payer" else "-1")
     s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n\t\t\t\tchange_variable = {\n\t\t\t\t\tname = qpq_ui_%s_a_offers\n"
@@ -400,7 +413,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "# Root: the player. scope:qpq_deal_me / qpq_deal_them are the two characters; actor / recipient are set by\n"
     eff += "# qpq_deal_orient_*_effect to whichever of them is the proposer of the Ask being worked on.\n\n"
 
-    leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "term", "a_ask", "a_offers",
+    leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "fair", "term", "a_ask", "a_offers",
                 "a_other"] + ["fail_%d" % i for i in range(max_valid())]
     lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates"]
 
@@ -434,7 +447,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         eff += ("\tif = {\n\t\tlimit = {\n\t\t\tNOT = { has_variable = qpq_ui_%s_o_land }\n\t\t\thas_variable_list = qpq_ui_%s_land\n\t\t}\n"
                 "\t\tclear_variable_list = qpq_ui_%s_land\n\t}\n") % (L, L, L)
         eff += ("\tif = {\n\t\tlimit = { NOT = { has_variable = qpq_ui_%s_o_gold } }\n"
-                "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n\t}\n") % (L, L)
+                "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n"
+                "\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_amount }\n\t\t\tremove_variable = qpq_ui_%s_amount\n\t\t}\n\t}\n") % (L, L, L, L)
         for t in TIMINGS[1:]:
             eff += ("\tif = {\n\t\tlimit = {\n\t\t\tvar:qpq_ui_%s_timing = flag:%s\n"
                     "\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
@@ -456,8 +470,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
         # A different deed was picked: the old target and its terms go
         eff += "qpq_ui_clear_leg_%s_effect = {\n" % L
-        for v in ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
-                 ["qpq_ui_%s_%s" % (L, f) for f in extras()]:
+        for v in ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L,
+                  "qpq_ui_%s_amount" % L] + ["qpq_ui_%s_%s" % (L, f) for f in extras()]:
             eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
         eff += "}\n\n"
 
@@ -496,6 +510,9 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         eff += "\t\tchange_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_%s_a_offers }\n" % L
         eff += "\t\tchange_variable = { name = qpq_ui_acc_other add = var:qpq_ui_%s_a_other }\n\t}\n" % L
     eff += "\tchange_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }\n"
+    eff += ("\tif = {\n\t\tlimit = {\n\t\t\tvar:qpq_ui_recipient = { is_ai = yes }\n"
+            "\t\t\tvar:qpq_ui_recipient = { opinion = { target = root value <= -60 } }\n\t\t}\n"
+            "\t\tchange_variable = { name = qpq_ui_acc_other add = -1000 }\n\t}\n")
     # Each side's scandal: the worse of its two halves
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
     eff += "\t\tset_variable = { name = qpq_ui_my_tier value = 0 }\n\t\tset_variable = { name = qpq_ui_their_tier value = 0 }\n"
@@ -534,7 +551,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "qpq_ui_clear_choices_effect = {\n"
     vs = ["qpq_ui_charter"]
     for L in LEGS:
-        vs += ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
+        vs += ["qpq_ui_%s_amount" % L, "qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
               ["qpq_ui_%s_o_%s" % (L, o) for o in UI_OFFERS] + ["qpq_ui_%s_%s" % (L, f) for f in extras()]
     for v in vs:
         eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
@@ -694,15 +711,11 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         if L == "t":
             trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_GOLD_YOU\n\t\t\ttrigger_if = {\n\t\t\t\tlimit = {\n"
                     "\t\t\t\t\thas_variable = qpq_ui_t_o_gold\n\t\t\t\t\tvar:qpq_ui_t_timing = flag:up_front\n\t\t\t\t}\n"
-                    "\t\t\t\tgold >= var:qpq_ui_t_price\n\t\t\t}\n\t\t\ttrigger_else_if = {\n\t\t\t\tlimit = {\n"
-                    "\t\t\t\t\thas_variable = qpq_ui_t_o_gold\n\t\t\t\t\tvar:qpq_ui_t_timing = flag:split\n\t\t\t\t}\n"
-                    "\t\t\t\tgold >= { value = var:qpq_ui_t_price divide = 2 }\n\t\t\t}\n\t\t\ttrigger_else = {\n\t\t\t\talways = yes\n\t\t\t}\n\t\t}\n")
+                    "\t\t\t\tgold >= var:qpq_ui_t_price\n\t\t\t}\n\t\t\ttrigger_else = {\n\t\t\t\talways = yes\n\t\t\t}\n\t\t}\n")
         else:
             trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_GOLD_THEM\n\t\t\ttrigger_if = {\n\t\t\t\tlimit = {\n"
                     "\t\t\t\t\thas_variable = qpq_ui_i_o_gold\n\t\t\t\t\tvar:qpq_ui_i_timing = flag:up_front\n\t\t\t\t}\n"
-                    "\t\t\t\tscope:recipient = { gold >= scope:actor.var:qpq_ui_i_price }\n\t\t\t}\n\t\t\ttrigger_else_if = {\n\t\t\t\tlimit = {\n"
-                    "\t\t\t\t\thas_variable = qpq_ui_i_o_gold\n\t\t\t\t\tvar:qpq_ui_i_timing = flag:split\n\t\t\t\t}\n"
-                    "\t\t\t\tscope:recipient = { gold >= { value = scope:actor.var:qpq_ui_i_price divide = 2 } }\n"
+                    "\t\t\t\tscope:recipient = { gold >= scope:actor.var:qpq_ui_i_price }\n"
                     "\t\t\t}\n\t\t\ttrigger_else = {\n\t\t\t\talways = yes\n\t\t\t}\n\t\t}\n")
         trg += "\t}\n\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
 
@@ -735,9 +748,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     trg += "qpq_deal_gold_ok_trigger = {\n"
     for L, payer in (("t", "scope:actor"), ("i", "scope:recipient")):
         trg += ("\ttrigger_if = {\n\t\tlimit = {\n\t\t\tscope:qpq_deal_%s_o_gold ?= yes\n\t\t\tNOT = { scope:qpq_deal_%s_o_on_delivery ?= yes }\n"
-                "\t\t\tNOT = { scope:qpq_deal_%s_o_stipend ?= yes }\n\t\t}\n\t\ttrigger_if = {\n\t\t\tlimit = { scope:qpq_deal_%s_o_split ?= yes }\n"
-                "\t\t\t%s = { gold >= { value = scope:qpq_deal_%s_price divide = 2 } }\n\t\t}\n\t\ttrigger_else = {\n"
-                "\t\t\t%s = { gold >= scope:qpq_deal_%s_price }\n\t\t}\n\t}\n") % (L, L, L, L, payer, L, payer, L)
+                "\t\t}\n\t\t%s = { gold >= scope:qpq_deal_%s_price }\n\t}\n") % (L, L, payer, L)
     trg += "\talways = yes\n}\n\n"
     # Room for the deal's pacts on both sides
     trg += ("qpq_deal_room_trigger = {\n\ttrigger_if = {\n\t\tlimit = {\n\t\t\texists = scope:qpq_deal_t_kind\n\t\t\texists = scope:qpq_deal_i_kind\n\t\t}\n"
@@ -796,8 +807,6 @@ def gen_ui_custom_loc(write):
         out += cl("QpqUiGoldLine_%s" % L, [
             ("NOT = { has_variable = qpq_ui_%s_o_gold }" % L, "qpq_empty"),
             ("var:qpq_ui_%s_timing ?= flag:on_delivery" % L, "QPQ_UI_GOLD_ON_DELIVERY_%s" % L.upper()),
-            ("var:qpq_ui_%s_timing ?= flag:split" % L, "QPQ_UI_GOLD_SPLIT_%s" % L.upper()),
-            ("var:qpq_ui_%s_timing ?= flag:stipend" % L, "QPQ_UI_GOLD_STIPEND_%s" % L.upper()),
         ], "QPQ_UI_GOLD_UP_FRONT_%s" % L.upper())
     for who in ("my", "their"):
         out += cl("QpqUi%sTier" % who.capitalize(), [("var:qpq_ui_%s_tier ?= %d" % (who, t), "qpq_tier_%d" % t) for t in range(6)], "qpq_empty")
@@ -809,6 +818,7 @@ def gen_ui_custom_loc(write):
     out += cl("QpqUiAcceptance", [
         ("NOT = { exists = var:qpq_ui_acc_total }", "QPQ_UI_ACC_NONE"),
         ("var:qpq_ui_recipient = { is_ai = no }", "QPQ_UI_ACC_PLAYER"),
+        ("var:qpq_ui_acc_other <= -500", "QPQ_UI_ACC_REFUSE"),
         ("var:qpq_ui_acc_total > 0", "QPQ_UI_ACC_YES"),
     ], "QPQ_UI_ACC_NO")
     write("common/customizable_localization/qpq_ui_custom_loc.txt", out)
@@ -824,15 +834,14 @@ def gen_ui_loc(write):
     for o in UI_OFFERS[1:]:
         L_.append(' QPQ_UI_BULLET_OFFER_%s:0 "#P •#! $qpq_offer_%s$"' % (o, o))
     for L in LEGS:
-        for t, txt in (("UP_FRONT", "paid when sealed"), ("ON_DELIVERY", "paid on delivery"),
-                       ("SPLIT", "half now and half on delivery"), ("STIPEND", "in yearly installments")):
+        for t, txt in (("UP_FRONT", "paid at once"), ("ON_DELIVERY", "paid when the deed is done")):
             L_.append(' QPQ_UI_GOLD_%s_%s:0 "#P •#! [GetPlayer.MakeScope.Var(\'qpq_ui_%s_price\').GetValue|0] gold, %s"' % (t, L.upper(), L, txt))
         L_.append(' qpq_deal.1.gold_%s:0 "\\n #P •#! [qpq_deal_%s_price|0] gold"' % (L, L))
     write("localization/english/qpq_ui_kinds_l_english.yml", "\n".join(L_) + "\n")
 
 
 # ------------------------------------------------------------------ the deal event (a human recipient)
-HUB50_TERMS = ["on_delivery", "split", "stipend", "land", "claim", "office", "marriage", "release_hook",
+HUB50_TERMS = ["on_delivery", "land", "claim", "office", "marriage", "release_hook",
                "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
                "restraint", "hook"]
 HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]

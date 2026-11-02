@@ -343,3 +343,57 @@ qpq_proposal_gold_ok_trigger = {
 		}
 	}
 }
+
+# What an AI will not do at any price. AGENT does the deed for PAYER and TIER is how risky the deed is for AGENT.
+# Used by the acceptance values, the interaction acceptance and the Backroom Deal panel.
+qpq_ai_refuses_trigger = {
+	OR = {
+		# They hate the one asking
+		$AGENT$ = {
+			is_ai = yes
+			opinion = { target = $PAYER$ value <= -60 }
+		}
+		# A rival or nemesis gets nothing that risks anything
+		AND = {
+			$TIER$ >= 2
+			$AGENT$ = {
+				is_ai = yes
+				OR = {
+					has_relation_rival = $PAYER$
+					has_relation_nemesis = $PAYER$
+				}
+			}
+		}
+		# The honest, the just and the pious will not commit a crime for gold
+		AND = {
+			$TIER$ >= 4
+			$AGENT$ = {
+				is_ai = yes
+				OR = {
+					has_trait = honest
+					has_trait = just
+					has_trait = zealous
+					has_trait = compassionate
+				}
+			}
+		}
+		# Anyone not cowed refuses what would brand them a kinslayer or an outcast
+		AND = {
+			$TIER$ >= 5
+			$AGENT$ = {
+				is_ai = yes
+				NOT = { has_dread_level_towards = { target = $PAYER$ level = 2 } }
+			}
+		}
+		# A ruler who has been asked for more than they are worth to anyone, within a short while
+		AND = {
+			$TIER$ >= 3
+			$AGENT$ = {
+				is_ai = yes
+				opinion = { target = $PAYER$ value < 0 }
+				NOT = { has_strong_hook = $PAYER$ }
+				NOT = { has_dread_level_towards = { target = $PAYER$ level = 1 } }
+			}
+		}
+	}
+}

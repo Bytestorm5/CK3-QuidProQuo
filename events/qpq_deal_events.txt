@@ -267,14 +267,6 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_on_delivery
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_split ?= yes }
-			desc = qpq_hub.50.term_split
-		}
-		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_stipend ?= yes }
-			desc = qpq_hub.50.term_stipend
-		}
-		triggered_desc = {
 			trigger = { scope:qpq_deal_t_o_land ?= yes }
 			desc = qpq_hub.50.term_land
 		}
@@ -351,8 +343,6 @@ qpq_deal.1 = {
 				NOT = { exists = scope:qpq_deal_i_kind }
 				NOT = { scope:qpq_deal_t_o_gold ?= yes }
 				NOT = { scope:qpq_deal_t_o_on_delivery ?= yes }
-				NOT = { scope:qpq_deal_t_o_split ?= yes }
-				NOT = { scope:qpq_deal_t_o_stipend ?= yes }
 				NOT = { scope:qpq_deal_t_o_land ?= yes }
 				NOT = { scope:qpq_deal_t_o_claim ?= yes }
 				NOT = { scope:qpq_deal_t_o_office ?= yes }
@@ -631,14 +621,6 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_on_delivery
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_split ?= yes }
-			desc = qpq_hub.50.term_split
-		}
-		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_stipend ?= yes }
-			desc = qpq_hub.50.term_stipend
-		}
-		triggered_desc = {
 			trigger = { scope:qpq_deal_i_o_land ?= yes }
 			desc = qpq_hub.50.term_land
 		}
@@ -715,8 +697,6 @@ qpq_deal.1 = {
 				NOT = { exists = scope:qpq_deal_t_kind }
 				NOT = { scope:qpq_deal_i_o_gold ?= yes }
 				NOT = { scope:qpq_deal_i_o_on_delivery ?= yes }
-				NOT = { scope:qpq_deal_i_o_split ?= yes }
-				NOT = { scope:qpq_deal_i_o_stipend ?= yes }
 				NOT = { scope:qpq_deal_i_o_land ?= yes }
 				NOT = { scope:qpq_deal_i_o_claim ?= yes }
 				NOT = { scope:qpq_deal_i_o_office ?= yes }

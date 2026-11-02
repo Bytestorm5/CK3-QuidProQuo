@@ -1024,14 +1024,6 @@ QpqUiGoldLine_t = {
 		localization_key = QPQ_UI_GOLD_ON_DELIVERY_T
 	}
 	text = {
-		trigger = { var:qpq_ui_t_timing ?= flag:split }
-		localization_key = QPQ_UI_GOLD_SPLIT_T
-	}
-	text = {
-		trigger = { var:qpq_ui_t_timing ?= flag:stipend }
-		localization_key = QPQ_UI_GOLD_STIPEND_T
-	}
-	text = {
 		fallback = yes
 		localization_key = QPQ_UI_GOLD_UP_FRONT_T
 	}
@@ -2061,14 +2053,6 @@ QpqUiGoldLine_i = {
 		localization_key = QPQ_UI_GOLD_ON_DELIVERY_I
 	}
 	text = {
-		trigger = { var:qpq_ui_i_timing ?= flag:split }
-		localization_key = QPQ_UI_GOLD_SPLIT_I
-	}
-	text = {
-		trigger = { var:qpq_ui_i_timing ?= flag:stipend }
-		localization_key = QPQ_UI_GOLD_STIPEND_I
-	}
-	text = {
 		fallback = yes
 		localization_key = QPQ_UI_GOLD_UP_FRONT_I
 	}
@@ -2237,6 +2221,10 @@ QpqUiAcceptance = {
 	text = {
 		trigger = { var:qpq_ui_recipient = { is_ai = no } }
 		localization_key = QPQ_UI_ACC_PLAYER
+	}
+	text = {
+		trigger = { var:qpq_ui_acc_other <= -500 }
+		localization_key = QPQ_UI_ACC_REFUSE
 	}
 	text = {
 		trigger = { var:qpq_ui_acc_total > 0 }

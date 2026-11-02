@@ -114,12 +114,16 @@ def gen_values():
                 "\tmultiply = {\n\t\tvalue = qpq_%s_agent_tier_value\n\t\tmultiply = 4\n\t\tadd = 3\n\t}\n"
                 "\tmin = 25\n\tround = yes\n}\n") % (key, key)
         # Acceptance points of that gold to the agent
-        out += ("qpq_%s_gold_points_value = {\n\tvalue = 15\n\tadd = {\n\t\tvalue = qpq_%s_price_value\n"
+        # The amount is whatever was agreed (scope:qpq_price in the panel), otherwise the fair price. No sum buys more
+        # than 50 points (60 with the base), and the dirtier the deed the less any sum buys.
+        out += ("qpq_%s_gold_points_value = {\n\tvalue = {\n\t\tvalue = 0\n\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_price }\n"
+                "\t\t\tadd = scope:qpq_price\n\t\t}\n\t\telse = {\n\t\t\tadd = qpq_%s_price_value\n\t\t}\n"
                 "\t\tdivide = {\n\t\t\tvalue = scope:recipient.qpq_stake_value\n\t\t\tmultiply = 6\n\t\t\tmin = 5\n\t\t}\n"
-                "\t\tmultiply = 20\n\t\tmax = 45\n\t}\n"
+                "\t\tmultiply = 30\n\t\tmax = 50\n\t}\n\tadd = 10\n"
+                "\tmultiply = {\n\t\tvalue = 1\n\t\tsubtract = { value = qpq_%s_agent_tier_value multiply = 0.1 }\n\t\tmin = 0.5\n\t}\n"
                 "\tif = {\n\t\tlimit = { %s = { has_trait = greedy } }\n\t\tmultiply = 1.3\n\t}\n"
                 "\tif = {\n\t\tlimit = { %s = { has_trait = generous } }\n\t\tmultiply = 0.8\n\t}\n"
-                "\tround = yes\n}\n") % (key, key, a, a)
+                "\tround = yes\n}\n") % (key, key, key, a, a)
         # What the Ask costs the agent
         out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
                 "\tadd = %d\n}\n") % (key, key, -k["effort"])
@@ -131,19 +135,22 @@ def gen_values():
             out += "\tvalue = %d\n\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n" % (AGENT_INIT_BASE, key)
         out += "}\n"
         # What is offered (or, when the proposer does the deed, what is demanded), in acceptance points
-        out += "qpq_%s_offer_points_value = {\n\tvalue = 0\n" % key
+        out += "qpq_%s_offer_points_value = {\n" % key
         if k["initiator"] == "payer":
-            out += "\tif = {\n\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\tadd = qpq_%s_gold_points_value\n\t}\n" % key
+            out += "\tvalue = {\n\t\tvalue = 0\n"
+            out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\t\tadd = qpq_%s_gold_points_value\n\t\t}\n" % key
             for o, pts in (("on_delivery", -8), ("split", -3), ("stipend", -5)):
-                out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, pts)
+                out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\t\tadd = %d\n\t\t}\n" % (o, pts)
             for o in k["offers"]:
                 if o in OFFER_POINTS:
-                    out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %s\n\t}\n" % (o, OFFER_POINTS[o])
+                    out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\t\tadd = %s\n\t\t}\n" % (o, OFFER_POINTS[o])
+            out += "\t\tmax = 70\n\t}\n"
             if "hook" in k["offers"]:
                 out += "\tif = {\n\t\tlimit = { scope:qpq_o_hook ?= yes }\n\t\tadd = 40\n\t}\n"
                 out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_hook ?= yes\n"
                         "\t\t\tscope:actor = { has_strong_hook = scope:recipient }\n\t\t}\n\t\tadd = 60\n\t}\n")
         else:
+            out += "\tvalue = 0\n"
             for o in k["offers"]:
                 if o in DEMAND_COST:
                     out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, DEMAND_COST[o])
@@ -153,8 +160,10 @@ def gen_values():
         # The whole acceptance, mirroring the interaction's ai_accept: used by the Propose-a-Pact panel
         # and when an AI recipient answers an AI proposal
         out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
-        out += "\tadd = {\n\t\tvalue = \"scope:recipient.opinion(scope:actor)\"\n\t\tmultiply = 0.5\n\t}\n"
+        out += "\tadd = qpq_opinion_points_value\n"
         if k["initiator"] == "payer":
+            out += ("\tif = {\n\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_%s_agent_tier_value } }\n"
+                    "\t\tadd = -1000\n\t}\n") % key
             for trig, mult in TRAIT_MODS:
                 out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_trait = %s } }\n"
                         "\t\tadd = { value = qpq_%s_agent_tier_value multiply = %d }\n\t}\n") % (trig, key, mult)
@@ -360,6 +369,9 @@ def interaction(k):
             s += "\t\tmodifier = {\n\t\t\tadd = 40\n\t\t\tscope:qpq_o_hook ?= yes\n\t\t\tdesc = QPQ_REASON_HOOK\n\t\t}\n"
             s += ("\t\tmodifier = {\n\t\t\tadd = 60\n\t\t\tscope:qpq_o_hook ?= yes\n"
                   "\t\t\tscope:actor = { has_strong_hook = scope:recipient }\n\t\t\tdesc = QPQ_REASON_STRONG_HOOK\n\t\t}\n")
+        s += ("\t\tmodifier = {\n\t\t\tadd = -1000\n"
+              "\t\t\tqpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_%s_agent_tier_value }\n"
+              "\t\t\tdesc = QPQ_REASON_REFUSES\n\t\t}\n") % key
         for trig, mult in TRAIT_MODS:
             s += ("\t\tmodifier = {\n\t\t\tadd = { value = qpq_%s_agent_tier_value multiply = %d }\n"
                   "\t\t\tscope:recipient = { has_trait = %s }\n\t\t\tdesc = QPQ_REASON_TRAIT_%s\n\t\t}\n") % (

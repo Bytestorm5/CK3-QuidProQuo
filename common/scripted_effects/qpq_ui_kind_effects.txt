@@ -84,14 +84,6 @@ qpq_ui_clear_scopes_effect = {
 		clear_saved_scope = qpq_o_on_delivery
 	}
 	if = {
-		limit = { exists = scope:qpq_o_split }
-		clear_saved_scope = qpq_o_split
-	}
-	if = {
-		limit = { exists = scope:qpq_o_stipend }
-		clear_saved_scope = qpq_o_stipend
-	}
-	if = {
 		limit = { exists = scope:qpq_o_charter }
 		clear_saved_scope = qpq_o_charter
 	}
@@ -229,22 +221,6 @@ qpq_ui_load_goods_t_effect = {
 			qpq_ui_leg_t_allows_on_delivery_trigger = yes
 		}
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_t_o_gold
-			var:qpq_ui_t_timing ?= flag:split
-			qpq_ui_leg_t_allows_split_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_split value = yes }
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_t_o_gold
-			var:qpq_ui_t_timing ?= flag:stipend
-			qpq_ui_leg_t_allows_stipend_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_stipend value = yes }
 	}
 	if = {
 		limit = {
@@ -396,25 +372,15 @@ qpq_ui_prune_goods_t_effect = {
 	if = {
 		limit = { NOT = { has_variable = qpq_ui_t_o_gold } }
 		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
+		if = {
+			limit = { has_variable = qpq_ui_t_amount }
+			remove_variable = qpq_ui_t_amount
+		}
 	}
 	if = {
 		limit = {
 			var:qpq_ui_t_timing = flag:on_delivery
 			NOT = { qpq_ui_leg_t_allows_on_delivery_trigger = yes }
-		}
-		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
-	}
-	if = {
-		limit = {
-			var:qpq_ui_t_timing = flag:split
-			NOT = { qpq_ui_leg_t_allows_split_trigger = yes }
-		}
-		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
-	}
-	if = {
-		limit = {
-			var:qpq_ui_t_timing = flag:stipend
-			NOT = { qpq_ui_leg_t_allows_stipend_trigger = yes }
 		}
 		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
 	}
@@ -457,6 +423,10 @@ qpq_ui_clear_leg_t_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_target_artifact }
 		remove_variable = qpq_ui_t_target_artifact
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_amount }
+		remove_variable = qpq_ui_t_amount
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_qpq_x_armed }
@@ -558,6 +528,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_chartered_conquest_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_chartered_conquest_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_chartered_conquest_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_chartered_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_chartered_conquest_offer_points_value }
@@ -665,6 +641,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_sanctioned_conquest_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_sanctioned_conquest_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_sanctioned_conquest_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_sanctioned_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_sanctioned_conquest_offer_points_value }
@@ -769,6 +751,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_marcher_charge_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_marcher_charge_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_marcher_charge_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marcher_charge_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marcher_charge_offer_points_value }
@@ -867,6 +855,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_holy_sponsorship_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_holy_sponsorship_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_holy_sponsorship_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_sponsorship_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_sponsorship_offer_points_value }
@@ -973,6 +967,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_development_charter_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_development_charter_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_development_charter_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_development_charter_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_development_charter_offer_points_value }
@@ -1073,6 +1073,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_electoral_purchase_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_electoral_purchase_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_electoral_purchase_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_electoral_purchase_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_electoral_purchase_offer_points_value }
@@ -1115,6 +1121,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_loyal_mole_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_loyal_mole_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_loyal_mole_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_loyal_mole_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_loyal_mole_offer_points_value }
@@ -1156,6 +1168,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_agent_provocateur_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_agent_provocateur_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_agent_provocateur_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_agent_provocateur_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_agent_provocateur_offer_points_value }
@@ -1254,6 +1272,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_licensed_feud_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_licensed_feud_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_licensed_feud_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_licensed_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_licensed_feud_offer_points_value }
@@ -1353,6 +1377,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_dossier_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_dossier_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dossier_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dossier_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dossier_offer_points_value }
@@ -1469,6 +1499,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_quiet_removal_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_quiet_removal_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_quiet_removal_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_quiet_removal_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_quiet_removal_offer_points_value }
@@ -1574,6 +1610,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_heir_question_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_heir_question_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_heir_question_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_heir_question_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_heir_question_offer_points_value }
@@ -1686,6 +1728,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_snatch_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_snatch_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_snatch_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_snatch_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_snatch_offer_points_value }
@@ -1782,6 +1830,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_dispossession_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_dispossession_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dispossession_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispossession_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispossession_offer_points_value }
@@ -1882,6 +1936,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_the_cloister_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_the_cloister_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_the_cloister_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_the_cloister_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_the_cloister_offer_points_value }
@@ -1982,6 +2042,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_marriage_by_command_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_marriage_by_command_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_marriage_by_command_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marriage_by_command_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marriage_by_command_offer_points_value }
@@ -2097,6 +2163,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_hand_over_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_hand_over_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hand_over_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_offer_points_value }
@@ -2184,6 +2256,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_hand_over_artifact_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_hand_over_artifact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hand_over_artifact_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_artifact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_artifact_offer_points_value }
@@ -2279,6 +2357,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_renunciation_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_renunciation_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_renunciation_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_renunciation_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_renunciation_offer_points_value }
@@ -2321,6 +2405,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_hush_money_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_hush_money_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hush_money_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hush_money_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hush_money_offer_points_value }
@@ -2362,6 +2452,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_price_of_loyalty_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_price_of_loyalty_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_price_of_loyalty_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_price_of_loyalty_demand_value }
 			set_variable = {
@@ -2372,6 +2468,10 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_t_a_other value = 0 }
+			if = {
+				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value } }
+				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_t_o_land }
 				change_variable = {
@@ -2456,6 +2556,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_blessing_for_a_feud_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_blessing_for_a_feud_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_blessing_for_a_feud_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_blessing_for_a_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_blessing_for_a_feud_offer_points_value }
@@ -2498,6 +2604,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_clemency_bargain_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_clemency_bargain_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_clemency_bargain_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_clemency_bargain_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_clemency_bargain_offer_points_value }
@@ -2594,6 +2706,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_electoral_capitulation_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_electoral_capitulation_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_electoral_capitulation_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_electoral_capitulation_demand_value }
 			set_variable = {
@@ -2604,6 +2722,10 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_t_a_other value = 0 }
+			if = {
+				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value } }
+				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_t_o_land }
 				change_variable = {
@@ -2636,6 +2758,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_mutual_defense_league_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_mutual_defense_league_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_mutual_defense_league_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_mutual_defense_league_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_mutual_defense_league_offer_points_value }
@@ -2682,6 +2810,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_faction_pledge_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_faction_pledge_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_faction_pledge_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faction_pledge_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faction_pledge_offer_points_value }
@@ -2779,6 +2913,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_title_swap_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_title_swap_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_title_swap_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_title_swap_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_title_swap_offer_points_value }
@@ -2826,6 +2966,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_coup_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_coup_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_coup_pact_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_coup_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_coup_pact_offer_points_value }
@@ -2925,6 +3071,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_proxy_war_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_proxy_war_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_proxy_war_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_proxy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_proxy_war_offer_points_value }
@@ -3024,6 +3176,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_partition_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_partition_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_partition_pact_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_partition_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_partition_pact_offer_points_value }
@@ -3066,6 +3224,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_secret_alliance_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_secret_alliance_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_secret_alliance_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_alliance_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_secret_alliance_offer_points_value }
@@ -3107,6 +3271,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_bought_truce_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_bought_truce_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_bought_truce_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_truce_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_truce_offer_points_value }
@@ -3213,6 +3383,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_faithless_ally_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_faithless_ally_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_faithless_ally_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faithless_ally_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faithless_ally_offer_points_value }
@@ -3260,6 +3436,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_turncoat_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_turncoat_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_turncoat_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_turncoat_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_turncoat_offer_points_value }
@@ -3306,6 +3488,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_seed_the_separatists_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_seed_the_separatists_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_seed_the_separatists_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_seed_the_separatists_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_seed_the_separatists_offer_points_value }
@@ -3400,6 +3588,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_shelter_the_pretender_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_shelter_the_pretender_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_shelter_the_pretender_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_shelter_the_pretender_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_shelter_the_pretender_offer_points_value }
@@ -3499,6 +3693,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_extradition_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_extradition_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_extradition_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_extradition_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_extradition_offer_points_value }
@@ -3545,6 +3745,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_buy_a_councillor_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_buy_a_councillor_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_buy_a_councillor_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_councillor_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_councillor_offer_points_value }
@@ -3591,6 +3797,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_stay_home_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_stay_home_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_stay_home_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_home_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_home_offer_points_value }
@@ -3637,6 +3849,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_defection_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_defection_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_defection_pact_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_defection_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_defection_pact_offer_points_value }
@@ -3731,6 +3949,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_secret_clause_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_secret_clause_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_secret_clause_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_clause_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_secret_clause_offer_points_value }
@@ -3843,6 +4067,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_hire_the_hashashin_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_hire_the_hashashin_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hire_the_hashashin_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hire_the_hashashin_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hire_the_hashashin_offer_points_value }
@@ -3957,6 +4187,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_excommunication_for_hire_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_excommunication_for_hire_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_excommunication_for_hire_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_excommunication_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_excommunication_for_hire_offer_points_value }
@@ -4054,6 +4290,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_dispensation_for_gold_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_dispensation_for_gold_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dispensation_for_gold_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispensation_for_gold_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispensation_for_gold_offer_points_value }
@@ -4162,6 +4404,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_steer_the_holy_war_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_steer_the_holy_war_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_steer_the_holy_war_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_steer_the_holy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_steer_the_holy_war_offer_points_value }
@@ -4262,6 +4510,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_purchase_a_mitre_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_purchase_a_mitre_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_purchase_a_mitre_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_purchase_a_mitre_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_purchase_a_mitre_offer_points_value }
@@ -4370,6 +4624,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_bought_claim_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_bought_claim_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_bought_claim_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_claim_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_claim_offer_points_value }
@@ -4412,6 +4672,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_absolution_by_concession_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_absolution_by_concession_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_absolution_by_concession_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_absolution_by_concession_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_absolution_by_concession_offer_points_value }
@@ -4522,6 +4788,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_holy_warrant_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_holy_warrant_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_holy_warrant_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_warrant_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_warrant_offer_points_value }
@@ -4636,6 +4908,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_buy_a_bull_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_buy_a_bull_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_buy_a_bull_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_bull_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_bull_offer_points_value }
@@ -4740,6 +5018,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_conclave_votes_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_conclave_votes_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_conclave_votes_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_conclave_votes_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_conclave_votes_offer_points_value }
@@ -4782,6 +5066,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_council_lobbying_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_council_lobbying_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_council_lobbying_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_council_lobbying_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_council_lobbying_offer_points_value }
@@ -4823,6 +5113,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_caliphal_investiture_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_caliphal_investiture_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_caliphal_investiture_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_caliphal_investiture_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_caliphal_investiture_offer_points_value }
@@ -4869,6 +5165,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_name_in_the_khutba_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_name_in_the_khutba_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_name_in_the_khutba_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_name_in_the_khutba_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_name_in_the_khutba_offer_points_value }
@@ -4976,6 +5278,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_fatwa_for_hire_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_fatwa_for_hire_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_fatwa_for_hire_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fatwa_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fatwa_for_hire_offer_points_value }
@@ -5084,6 +5392,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_fund_the_dawa_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_fund_the_dawa_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_fund_the_dawa_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fund_the_dawa_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fund_the_dawa_offer_points_value }
@@ -5131,6 +5445,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_crowning_the_usurper_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_crowning_the_usurper_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_crowning_the_usurper_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_crowning_the_usurper_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_crowning_the_usurper_offer_points_value }
@@ -5172,6 +5492,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_pliant_patriarch_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_pliant_patriarch_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_pliant_patriarch_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_pliant_patriarch_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_pliant_patriarch_offer_points_value }
@@ -5281,6 +5607,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_favourable_omens_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_favourable_omens_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_favourable_omens_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_favourable_omens_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_favourable_omens_offer_points_value }
@@ -5323,6 +5655,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_consecration_rites_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_consecration_rites_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_consecration_rites_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_consecration_rites_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_consecration_rites_offer_points_value }
@@ -5430,6 +5768,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_temple_patronage_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_temple_patronage_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_temple_patronage_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_temple_patronage_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_temple_patronage_offer_points_value }
@@ -5472,6 +5816,12 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_payer_tier value = qpq_barter_payer_tier_value }
 			set_variable = { name = qpq_ui_t_agent_tier value = qpq_barter_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_barter_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_barter_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_barter_offer_points_value }
@@ -5631,22 +5981,6 @@ qpq_ui_load_goods_i_effect = {
 	}
 	if = {
 		limit = {
-			has_variable = qpq_ui_i_o_gold
-			var:qpq_ui_i_timing ?= flag:split
-			qpq_ui_leg_i_allows_split_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_split value = yes }
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_i_o_gold
-			var:qpq_ui_i_timing ?= flag:stipend
-			qpq_ui_leg_i_allows_stipend_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_stipend value = yes }
-	}
-	if = {
-		limit = {
 			has_variable = qpq_ui_i_qpq_x_armed
 			qpq_ui_leg_i_has_extra_qpq_x_armed_trigger = yes
 		}
@@ -5795,25 +6129,15 @@ qpq_ui_prune_goods_i_effect = {
 	if = {
 		limit = { NOT = { has_variable = qpq_ui_i_o_gold } }
 		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
+		if = {
+			limit = { has_variable = qpq_ui_i_amount }
+			remove_variable = qpq_ui_i_amount
+		}
 	}
 	if = {
 		limit = {
 			var:qpq_ui_i_timing = flag:on_delivery
 			NOT = { qpq_ui_leg_i_allows_on_delivery_trigger = yes }
-		}
-		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
-	}
-	if = {
-		limit = {
-			var:qpq_ui_i_timing = flag:split
-			NOT = { qpq_ui_leg_i_allows_split_trigger = yes }
-		}
-		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
-	}
-	if = {
-		limit = {
-			var:qpq_ui_i_timing = flag:stipend
-			NOT = { qpq_ui_leg_i_allows_stipend_trigger = yes }
 		}
 		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
 	}
@@ -5856,6 +6180,10 @@ qpq_ui_clear_leg_i_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_target_artifact }
 		remove_variable = qpq_ui_i_target_artifact
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_amount }
+		remove_variable = qpq_ui_i_amount
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_qpq_x_armed }
@@ -5957,6 +6285,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_chartered_conquest_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_chartered_conquest_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_chartered_conquest_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6065,6 +6399,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_sanctioned_conquest_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_sanctioned_conquest_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_sanctioned_conquest_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6170,6 +6510,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_marcher_charge_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_marcher_charge_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_marcher_charge_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6269,6 +6615,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_holy_sponsorship_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_holy_sponsorship_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_holy_sponsorship_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6376,6 +6728,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_development_charter_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_development_charter_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_development_charter_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6477,6 +6835,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_electoral_purchase_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_electoral_purchase_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_electoral_purchase_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6520,6 +6884,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_loyal_mole_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_loyal_mole_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_loyal_mole_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6562,6 +6932,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_agent_provocateur_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_agent_provocateur_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_agent_provocateur_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6661,6 +7037,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_licensed_feud_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_licensed_feud_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_licensed_feud_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6761,6 +7143,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_dossier_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_dossier_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dossier_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6878,6 +7266,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_quiet_removal_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_quiet_removal_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_quiet_removal_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -6984,6 +7378,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_heir_question_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_heir_question_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_heir_question_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7097,6 +7497,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_snatch_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_snatch_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_snatch_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7194,6 +7600,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_dispossession_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_dispossession_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dispossession_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7295,6 +7707,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_the_cloister_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_the_cloister_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_the_cloister_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7396,6 +7814,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_marriage_by_command_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_marriage_by_command_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_marriage_by_command_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7512,6 +7936,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_hand_over_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_hand_over_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hand_over_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7600,6 +8030,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_hand_over_artifact_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_hand_over_artifact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hand_over_artifact_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7696,6 +8132,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_renunciation_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_renunciation_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_renunciation_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7739,6 +8181,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_hush_money_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_hush_money_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hush_money_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7781,6 +8229,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_price_of_loyalty_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_price_of_loyalty_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_price_of_loyalty_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_price_of_loyalty_ask_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_price_of_loyalty_offer_points_value }
@@ -7880,6 +8334,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_blessing_for_a_feud_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_blessing_for_a_feud_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_blessing_for_a_feud_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -7923,6 +8383,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_clemency_bargain_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_clemency_bargain_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_clemency_bargain_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8020,6 +8486,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_electoral_capitulation_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_electoral_capitulation_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_electoral_capitulation_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_electoral_capitulation_ask_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_electoral_capitulation_offer_points_value }
@@ -8067,6 +8539,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_mutual_defense_league_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_mutual_defense_league_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_mutual_defense_league_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8114,6 +8592,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_faction_pledge_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_faction_pledge_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_faction_pledge_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8212,6 +8696,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_title_swap_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_title_swap_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_title_swap_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8260,6 +8750,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_coup_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_coup_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_coup_pact_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8360,6 +8856,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_proxy_war_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_proxy_war_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_proxy_war_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8460,6 +8962,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_partition_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_partition_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_partition_pact_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8503,6 +9011,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_secret_alliance_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_secret_alliance_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_secret_alliance_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8545,6 +9059,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_bought_truce_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_bought_truce_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_bought_truce_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8652,6 +9172,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_faithless_ally_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_faithless_ally_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_faithless_ally_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8700,6 +9226,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_turncoat_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_turncoat_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_turncoat_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8747,6 +9279,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_seed_the_separatists_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_seed_the_separatists_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_seed_the_separatists_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8842,6 +9380,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_shelter_the_pretender_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_shelter_the_pretender_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_shelter_the_pretender_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8942,6 +9486,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_extradition_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_extradition_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_extradition_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -8989,6 +9539,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_buy_a_councillor_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_buy_a_councillor_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_buy_a_councillor_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9036,6 +9592,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_stay_home_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_stay_home_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_stay_home_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9083,6 +9645,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_defection_pact_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_defection_pact_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_defection_pact_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9178,6 +9746,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_secret_clause_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_secret_clause_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_secret_clause_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9291,6 +9865,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_hire_the_hashashin_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_hire_the_hashashin_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_hire_the_hashashin_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9406,6 +9986,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_excommunication_for_hire_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_excommunication_for_hire_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_excommunication_for_hire_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9504,6 +10090,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_dispensation_for_gold_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_dispensation_for_gold_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_dispensation_for_gold_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9613,6 +10205,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_steer_the_holy_war_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_steer_the_holy_war_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_steer_the_holy_war_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9714,6 +10312,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_purchase_a_mitre_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_purchase_a_mitre_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_purchase_a_mitre_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9823,6 +10427,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_bought_claim_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_bought_claim_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_bought_claim_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9866,6 +10476,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_absolution_by_concession_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_absolution_by_concession_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_absolution_by_concession_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -9977,6 +10593,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_holy_warrant_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_holy_warrant_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_holy_warrant_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10092,6 +10714,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_buy_a_bull_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_buy_a_bull_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_buy_a_bull_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10197,6 +10825,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_conclave_votes_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_conclave_votes_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_conclave_votes_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10240,6 +10874,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_council_lobbying_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_council_lobbying_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_council_lobbying_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10282,6 +10922,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_caliphal_investiture_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_caliphal_investiture_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_caliphal_investiture_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10329,6 +10975,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_name_in_the_khutba_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_name_in_the_khutba_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_name_in_the_khutba_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10437,6 +11089,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_fatwa_for_hire_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_fatwa_for_hire_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_fatwa_for_hire_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10546,6 +11204,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_fund_the_dawa_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_fund_the_dawa_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_fund_the_dawa_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10594,6 +11258,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_crowning_the_usurper_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_crowning_the_usurper_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_crowning_the_usurper_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10636,6 +11306,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_pliant_patriarch_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_pliant_patriarch_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_pliant_patriarch_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10746,6 +11422,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_favourable_omens_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_favourable_omens_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_favourable_omens_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10789,6 +11471,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_consecration_rites_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_consecration_rites_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_consecration_rites_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10897,6 +11585,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_temple_patronage_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_temple_patronage_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_temple_patronage_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10940,6 +11634,12 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_payer_tier value = qpq_barter_payer_tier_value }
 			set_variable = { name = qpq_ui_i_agent_tier value = qpq_barter_agent_tier_value }
 			save_scope_value_as = { name = qpq_price value = qpq_barter_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = {
 				name = qpq_ui_i_a_ask
@@ -10997,6 +11697,13 @@ qpq_ui_deal_finish_effect = {
 		change_variable = { name = qpq_ui_acc_other add = var:qpq_ui_i_a_other }
 	}
 	change_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }
+	if = {
+		limit = {
+			var:qpq_ui_recipient = { is_ai = yes }
+			var:qpq_ui_recipient = { opinion = { target = root value <= -60 } }
+		}
+		change_variable = { name = qpq_ui_acc_other add = -1000 }
+	}
 	if = {
 		limit = { has_variable = qpq_ui_deal_active }
 		set_variable = { name = qpq_ui_my_tier value = 0 }
@@ -11108,6 +11815,10 @@ qpq_ui_clear_derived_effect = {
 		remove_variable = qpq_ui_t_price
 	}
 	if = {
+		limit = { has_variable = qpq_ui_t_fair }
+		remove_variable = qpq_ui_t_fair
+	}
+	if = {
 		limit = { has_variable = qpq_ui_t_term }
 		remove_variable = qpq_ui_t_term
 	}
@@ -11150,6 +11861,10 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_price }
 		remove_variable = qpq_ui_i_price
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_fair }
+		remove_variable = qpq_ui_i_fair
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_term }
@@ -11209,6 +11924,10 @@ qpq_ui_clear_choices_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_charter }
 		remove_variable = qpq_ui_charter
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_amount }
+		remove_variable = qpq_ui_t_amount
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_pick_char }
@@ -11297,6 +12016,10 @@ qpq_ui_clear_choices_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_qpq_x_armies }
 		remove_variable = qpq_ui_t_qpq_x_armies
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_amount }
+		remove_variable = qpq_ui_i_amount
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_pick_char }
@@ -11778,22 +12501,6 @@ qpq_ui_save_deal_effect = {
 		}
 		if = {
 			limit = {
-				has_variable = qpq_ui_t_o_gold
-				var:qpq_ui_t_timing ?= flag:split
-				qpq_ui_leg_t_allows_split_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_t_o_split value = yes }
-		}
-		if = {
-			limit = {
-				has_variable = qpq_ui_t_o_gold
-				var:qpq_ui_t_timing ?= flag:stipend
-				qpq_ui_leg_t_allows_stipend_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_t_o_stipend value = yes }
-		}
-		if = {
-			limit = {
 				has_variable = qpq_ui_t_qpq_x_armed
 				qpq_ui_leg_t_has_extra_qpq_x_armed_trigger = yes
 			}
@@ -12214,22 +12921,6 @@ qpq_ui_save_deal_effect = {
 		}
 		if = {
 			limit = {
-				has_variable = qpq_ui_i_o_gold
-				var:qpq_ui_i_timing ?= flag:split
-				qpq_ui_leg_i_allows_split_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_i_o_split value = yes }
-		}
-		if = {
-			limit = {
-				has_variable = qpq_ui_i_o_gold
-				var:qpq_ui_i_timing ?= flag:stipend
-				qpq_ui_leg_i_allows_stipend_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_i_o_stipend value = yes }
-		}
-		if = {
-			limit = {
 				has_variable = qpq_ui_i_qpq_x_armed
 				qpq_ui_leg_i_has_extra_qpq_x_armed_trigger = yes
 			}
@@ -12561,14 +13252,6 @@ qpq_deal_clear_seal_scopes_effect = {
 		clear_saved_scope = qpq_o_on_delivery
 	}
 	if = {
-		limit = { exists = scope:qpq_o_split }
-		clear_saved_scope = qpq_o_split
-	}
-	if = {
-		limit = { exists = scope:qpq_o_stipend }
-		clear_saved_scope = qpq_o_stipend
-	}
-	if = {
 		limit = { exists = scope:qpq_o_charter }
 		clear_saved_scope = qpq_o_charter
 	}
@@ -12654,14 +13337,6 @@ qpq_deal_load_goods_t_effect = {
 	if = {
 		limit = { scope:qpq_deal_t_o_on_delivery ?= yes }
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_t_o_split ?= yes }
-		save_scope_value_as = { name = qpq_o_split value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_t_o_stipend ?= yes }
-		save_scope_value_as = { name = qpq_o_stipend value = yes }
 	}
 	if = {
 		limit = { scope:qpq_deal_t_qpq_x_armed ?= yes }
@@ -13354,14 +14029,6 @@ qpq_deal_load_goods_i_effect = {
 	if = {
 		limit = { scope:qpq_deal_i_o_on_delivery ?= yes }
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_i_o_split ?= yes }
-		save_scope_value_as = { name = qpq_o_split value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_i_o_stipend ?= yes }
-		save_scope_value_as = { name = qpq_o_stipend value = yes }
 	}
 	if = {
 		limit = { scope:qpq_deal_i_qpq_x_armed ?= yes }

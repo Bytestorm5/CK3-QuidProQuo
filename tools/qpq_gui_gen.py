@@ -389,6 +389,20 @@ def gen_gui(write):
            needs_artifact=sg("qpq_ui_needs_artifact_target_%s" % D, "IsShown", GS_ROOT),
            has_extras=sg("qpq_ui_has_extras_%s" % D, "IsShown", GS_ROOT), extra_items=extra_items(D))
 
+    def gold_steps(G, sign):
+        s = ""
+        order = list(reversed(U.GOLD_STEPS)) if sign < 0 else list(U.GOLD_STEPS)
+        for n in order:
+            name = "qpq_ui_gold_%s_%s_%d" % ("up" if sign > 0 else "down", G, n)
+            s += """
+							button_standard_list = {
+								size = { 64 30 }
+								text = "%s%d"
+								onclick = "%s"
+							}
+""" % ("+" if sign > 0 else "-", n, sg(name, "Execute", GS_ROOT))
+        return s
+
     def gold_popup(side):
         G = SIDES[side]["G"]
         return """
@@ -414,9 +428,37 @@ def gen_gui(write):
 						autoresize = yes
 						text = "QPQ_UI_GOLD_INFO_%(GU)s"
 					}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+%(steps_down)s
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = center|nobaseline
+								text = "QPQ_UI_GOLD_AMOUNT_%(GU)s"
+								using = Font_Size_Medium
+							}
+%(steps_up)s
+						}
+						button_standard_list = {
+							layoutpolicy_horizontal = expanding
+							size = { 0 30 }
+							text = "QPQ_UI_GOLD_FAIR"
+							visible = "%(fair_shown)s"
+							onclick = "%(fair_exec)s"
+							tooltip = "QPQ_UI_GOLD_FAIR_TT"
+						}
+						text_multi = {
+							layoutpolicy_horizontal = expanding
+							max_width = 480
+							autoresize = yes
+							align = center|nobaseline
+							text = "[GetPlayer.Custom('QpqUiAcceptance')]"
+						}
 %(timing_items)s
 				}
-""" % dict(side=side, GU=G.upper(), timing_items=timing_items(G))
+""" % dict(side=side, GU=G.upper(), timing_items=timing_items(G), steps_down=gold_steps(G, -1), steps_up=gold_steps(G, 1),
+           fair_shown=sg("qpq_ui_gold_fair_%s" % G, "IsShown", GS_ROOT), fair_exec=sg("qpq_ui_gold_fair_%s" % G, "Execute", GS_ROOT))
 
     def land_popup(side):
         G = SIDES[side]["G"]
@@ -677,6 +719,7 @@ window = {
 					text_single = {
 						layoutpolicy_horizontal = expanding
 						text = "QPQ_UI_SCANDAL_HEADER"
+						tooltip = "QPQ_UI_SCANDAL_TEXT"
 						default_format = "#T"
 						using = Font_Size_Medium
 					}
@@ -685,13 +728,6 @@ window = {
 						spacing = 10
 @@CONSEQ_ME@@
 @@CONSEQ_THEM@@
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 420
-						autoresize = yes
-						default_format = "#weak"
-						text = "QPQ_UI_SCANDAL_TEXT"
 					}
 
 					# How secret the deal is

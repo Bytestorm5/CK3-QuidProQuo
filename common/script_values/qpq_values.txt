@@ -15,9 +15,17 @@ qpq_pact_cap_minus_one_value = {
 }
 
 # How the other character (scope:recipient) feels about the one proposing (scope:actor), in acceptance points
-qpq_ui_deal_opinion_value = {
+# Goodwill is worth only so much: past a point, being liked buys nothing more, and being hated costs only so much
+# (hatred itself is a flat refusal, see qpq_ai_refuses_trigger)
+qpq_opinion_points_value = {
 	value = "scope:recipient.opinion(scope:actor)"
 	multiply = 0.5
+	min = -30
+	max = 20
+}
+
+qpq_ui_deal_opinion_value = {
+	value = qpq_opinion_points_value
 }
 
 # Titles chosen to be handed over beyond the first, in the panel (leg t: yours, leg i: theirs)
@@ -34,6 +42,7 @@ qpq_ui_land_extra_t_value = {
 	}
 	subtract = 1
 	min = 0
+	max = 2
 }
 
 qpq_ui_land_extra_i_value = {
@@ -49,6 +58,7 @@ qpq_ui_land_extra_i_value = {
 	}
 	subtract = 1
 	min = 0
+	max = 2
 }
 
 # How many pacts the character currently has running
