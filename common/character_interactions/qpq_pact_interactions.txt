@@ -120,14 +120,6 @@ qpq_chartered_conquest_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -287,11 +279,6 @@ qpq_chartered_conquest_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -564,14 +551,6 @@ qpq_sanctioned_conquest_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -731,11 +710,6 @@ qpq_sanctioned_conquest_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -992,14 +966,6 @@ qpq_marcher_charge_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -1154,11 +1120,6 @@ qpq_marcher_charge_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -1406,14 +1367,6 @@ qpq_holy_sponsorship_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -1568,11 +1521,6 @@ qpq_holy_sponsorship_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -1813,14 +1761,6 @@ qpq_development_charter_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -1975,11 +1915,6 @@ qpq_development_charter_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -2229,14 +2164,6 @@ qpq_electoral_purchase_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -2391,11 +2318,6 @@ qpq_electoral_purchase_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -2623,14 +2545,6 @@ qpq_loyal_mole_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -2785,11 +2699,6 @@ qpq_loyal_mole_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -3017,14 +2926,6 @@ qpq_agent_provocateur_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -3179,11 +3080,6 @@ qpq_agent_provocateur_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -3429,14 +3325,6 @@ qpq_licensed_feud_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -3591,11 +3479,6 @@ qpq_licensed_feud_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -3850,14 +3733,6 @@ qpq_dossier_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -4012,11 +3887,6 @@ qpq_dossier_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -4288,14 +4158,6 @@ qpq_quiet_removal_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -4450,11 +4312,6 @@ qpq_quiet_removal_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -4720,14 +4577,6 @@ qpq_heir_question_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -4882,11 +4731,6 @@ qpq_heir_question_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -5154,14 +4998,6 @@ qpq_snatch_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -5316,11 +5152,6 @@ qpq_snatch_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -5564,14 +5395,6 @@ qpq_dispossession_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -5726,11 +5549,6 @@ qpq_dispossession_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -5977,14 +5795,6 @@ qpq_the_cloister_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -6139,11 +5949,6 @@ qpq_the_cloister_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -6404,14 +6209,6 @@ qpq_marriage_by_command_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -6566,11 +6363,6 @@ qpq_marriage_by_command_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -6820,14 +6612,6 @@ qpq_hand_over_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -6982,11 +6766,6 @@ qpq_hand_over_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -7228,14 +7007,6 @@ qpq_hand_over_artifact_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -7390,11 +7161,6 @@ qpq_hand_over_artifact_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -7636,14 +7402,6 @@ qpq_renunciation_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -7798,11 +7556,6 @@ qpq_renunciation_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -8030,14 +7783,6 @@ qpq_hush_money_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -8192,11 +7937,6 @@ qpq_hush_money_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -8709,14 +8449,6 @@ qpq_blessing_for_a_feud_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -8871,11 +8603,6 @@ qpq_blessing_for_a_feud_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -9108,14 +8835,6 @@ qpq_clemency_bargain_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -9270,11 +8989,6 @@ qpq_clemency_bargain_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -9790,14 +9504,6 @@ qpq_mutual_defense_league_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -9960,11 +9666,6 @@ qpq_mutual_defense_league_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -10201,14 +9902,6 @@ qpq_faction_pledge_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -10363,11 +10056,6 @@ qpq_faction_pledge_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -10614,14 +10302,6 @@ qpq_title_swap_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -10784,11 +10464,6 @@ qpq_title_swap_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -11022,14 +10697,6 @@ qpq_coup_pact_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -11184,11 +10851,6 @@ qpq_coup_pact_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -11451,14 +11113,6 @@ qpq_proxy_war_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -11618,11 +11272,6 @@ qpq_proxy_war_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -11889,14 +11538,6 @@ qpq_partition_pact_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -12056,11 +11697,6 @@ qpq_partition_pact_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -12286,14 +11922,6 @@ qpq_secret_alliance_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -12448,11 +12076,6 @@ qpq_secret_alliance_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -12682,14 +12305,6 @@ qpq_bought_truce_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -12844,11 +12459,6 @@ qpq_bought_truce_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -13104,14 +12714,6 @@ qpq_faithless_ally_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -13266,11 +12868,6 @@ qpq_faithless_ally_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -13511,14 +13108,6 @@ qpq_turncoat_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -13673,11 +13262,6 @@ qpq_turncoat_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -13909,14 +13493,6 @@ qpq_seed_the_separatists_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -14071,11 +13647,6 @@ qpq_seed_the_separatists_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -14328,14 +13899,6 @@ qpq_shelter_the_pretender_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -14498,11 +14061,6 @@ qpq_shelter_the_pretender_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -14760,14 +14318,6 @@ qpq_extradition_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -14922,11 +14472,6 @@ qpq_extradition_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -15157,14 +14702,6 @@ qpq_buy_a_councillor_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -15319,11 +14856,6 @@ qpq_buy_a_councillor_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -15560,14 +15092,6 @@ qpq_stay_home_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -15722,11 +15246,6 @@ qpq_stay_home_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -15958,14 +15477,6 @@ qpq_defection_pact_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -16120,11 +15631,6 @@ qpq_defection_pact_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -16376,14 +15882,6 @@ qpq_secret_clause_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -16538,11 +16036,6 @@ qpq_secret_clause_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -16801,14 +16294,6 @@ qpq_hire_the_hashashin_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -16963,11 +16448,6 @@ qpq_hire_the_hashashin_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -17230,14 +16710,6 @@ qpq_excommunication_for_hire_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -17392,11 +16864,6 @@ qpq_excommunication_for_hire_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -17648,14 +17115,6 @@ qpq_dispensation_for_gold_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -17810,11 +17269,6 @@ qpq_dispensation_for_gold_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -18071,14 +17525,6 @@ qpq_steer_the_holy_war_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -18233,11 +17679,6 @@ qpq_steer_the_holy_war_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -18486,14 +17927,6 @@ qpq_purchase_a_mitre_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -18648,11 +18081,6 @@ qpq_purchase_a_mitre_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -18909,14 +18337,6 @@ qpq_bought_claim_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -19071,11 +18491,6 @@ qpq_bought_claim_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -19305,14 +18720,6 @@ qpq_absolution_by_concession_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -19467,11 +18874,6 @@ qpq_absolution_by_concession_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -19731,14 +19133,6 @@ qpq_holy_warrant_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -19893,11 +19287,6 @@ qpq_holy_warrant_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -20158,14 +19547,6 @@ qpq_buy_a_bull_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -20320,11 +19701,6 @@ qpq_buy_a_bull_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -20577,14 +19953,6 @@ qpq_conclave_votes_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -20739,11 +20107,6 @@ qpq_conclave_votes_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -20974,14 +20337,6 @@ qpq_council_lobbying_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -21136,11 +20491,6 @@ qpq_council_lobbying_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -21370,14 +20720,6 @@ qpq_caliphal_investiture_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -21532,11 +20874,6 @@ qpq_caliphal_investiture_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -21771,14 +21108,6 @@ qpq_name_in_the_khutba_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -21933,11 +21262,6 @@ qpq_name_in_the_khutba_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -22200,14 +21524,6 @@ qpq_fatwa_for_hire_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -22362,11 +21678,6 @@ qpq_fatwa_for_hire_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -22626,14 +21937,6 @@ qpq_fund_the_dawa_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -22788,11 +22091,6 @@ qpq_fund_the_dawa_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -23027,14 +22325,6 @@ qpq_crowning_the_usurper_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -23189,11 +22479,6 @@ qpq_crowning_the_usurper_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -23425,14 +22710,6 @@ qpq_pliant_patriarch_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -23587,11 +22864,6 @@ qpq_pliant_patriarch_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -23853,14 +23125,6 @@ qpq_favourable_omens_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -24015,11 +23279,6 @@ qpq_favourable_omens_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -24252,14 +23511,6 @@ qpq_consecration_rites_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -24414,11 +23665,6 @@ qpq_consecration_rites_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -24678,14 +23924,6 @@ qpq_temple_patronage_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -24840,11 +24078,6 @@ qpq_temple_patronage_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value
@@ -25069,14 +24302,6 @@ qpq_barter_interaction = {
 		}
 	}
 	send_option = {
-		flag = qpq_o_marriage
-		localization = qpq_offer_marriage
-		current_description = qpq_offer_marriage_desc
-		is_shown = {
-			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-		}
-	}
-	send_option = {
 		flag = qpq_o_release_hook
 		localization = qpq_offer_release_hook
 		current_description = qpq_offer_release_hook_desc
@@ -25231,11 +24456,6 @@ qpq_barter_interaction = {
 			add = qpq_offer_office_points_value
 			scope:qpq_o_office ?= yes
 			desc = QPQ_REASON_OFFER_OFFICE
-		}
-		modifier = {
-			add = qpq_offer_marriage_points_value
-			scope:qpq_o_marriage ?= yes
-			desc = QPQ_REASON_OFFER_MARRIAGE
 		}
 		modifier = {
 			add = qpq_offer_release_hook_points_value

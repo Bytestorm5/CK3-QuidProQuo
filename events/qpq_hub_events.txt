@@ -2127,10 +2127,6 @@ qpq_hub.50 = {
 			desc = qpq_hub.50.term_office
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_o_marriage ?= yes }
-			desc = qpq_hub.50.term_marriage
-		}
-		triggered_desc = {
 			trigger = { scope:qpq_o_release_hook ?= yes }
 			desc = qpq_hub.50.term_release_hook
 		}
@@ -2188,7 +2184,6 @@ qpq_hub.50 = {
 					scope:qpq_o_land ?= yes
 					scope:qpq_o_claim ?= yes
 					scope:qpq_o_office ?= yes
-					scope:qpq_o_marriage ?= yes
 					scope:qpq_o_release_hook ?= yes
 					scope:qpq_o_my_word ?= yes
 					scope:qpq_o_secret ?= yes

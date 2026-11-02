@@ -37,11 +37,13 @@ GS = ("GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.Make
       ".AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End")
 GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 # Charter is a property of the whole deal, not of one leg's goods
-UI_OFFERS = ["gold", "land", "claim", "office", "marriage", "release_hook", "my_word", "secret", "contract",
+UI_OFFERS = ["gold", "land", "claim", "office", "release_hook", "my_word", "secret", "contract",
              "succession", "clemency", "arms", "artifact", "church", "restraint", "hook"]
 TIMINGS = ["up_front", "on_delivery"]
 GOLD_STEPS = [10, 100, 1000]
 CANDIDATE_CAP = 120
+# Goods that are named, not waved at: each is chosen item by item from what the payer has. (good, list name, kind)
+PICKED = [("land", "land", "title"), ("artifact", "gift_artifact", "artifact"), ("secret", "gift_secret", "char")]
 
 TITLE_SOURCES = {
     "realm_counties": "every_realm_county",
@@ -165,7 +167,7 @@ def seal_scope_names():
 def all_flag_scopes():
     """The scope values a leg's goods are loaded into for the engine (qpq_o_*, extras, charter)."""
     return ["qpq_o_%s" % o for o in UI_OFFERS] + ["qpq_o_%s" % t for t in TIMINGS[1:]] + \
-        ["qpq_o_charter"] + list(extras())
+        ["qpq_o_charter", "qpq_gift_payer", "qpq_gift_artifact_points", "qpq_gift_secret_points", "qpq_gift_artifact_cost"] + list(extras())
 
 
 # ------------------------------------------------------------------ scripted GUIs
@@ -203,9 +205,11 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
                         "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (name, L, n, L, L, L, L, sign * n, L, L)
         out += ("qpq_ui_gold_fair_%s = {\n\tscope = character\n\tis_shown = { has_variable = qpq_ui_%s_amount }\n"
                 "\teffect = {\n\t\tremove_variable = qpq_ui_%s_amount\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (L, L, L)
-        out += ("qpq_ui_land_clear_%s = {\n\tscope = character\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n"
-                "\t\t\tclear_variable_list = qpq_ui_%s_land\n\t\t}\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n"
-                "\t\t\tremove_variable = qpq_ui_%s_o_land\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % ((L,) * 5)
+        for good, lst, _kind in PICKED:
+            out += ("qpq_ui_%s_clear_%s = {\n\tscope = character\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_%s }\n"
+                    "\t\t\tclear_variable_list = qpq_ui_%s_%s\n\t\t}\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_%s }\n"
+                    "\t\t\tremove_variable = qpq_ui_%s_o_%s\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (
+                good, L, L, lst, L, lst, L, good, L, good)
         # Does the chosen deed have anything to configure (a target or terms)?
         out += ("qpq_ui_config_%s = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n\t\t\tqpq_ui_leg_%s_needs_char_trigger = yes\n"
                 "\t\t\tqpq_ui_leg_%s_needs_title_trigger = yes\n\t\t\tqpq_ui_leg_%s_needs_artifact_trigger = yes\n") % (L, L, L, L)
@@ -215,15 +219,17 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
         # Group headings (deed list)
         # Land is given as chosen titles: picking one adds it to (or takes it off) the list, and the box is
         # ticked while the list is not empty
-        out += ("qpq_ui_land_toggle_%s = {\n\tscope = character\n\tsaved_scopes = { qpq_pick }\n\teffect = {\n"
-                "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = qpq_ui_%s_land\n"
-                "\t\t\t\tis_target_in_variable_list = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t\t}\n"
-                "\t\t\tremove_list_variable = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t}\n"
-                "\t\telse = {\n\t\t\tadd_to_variable_list = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t}\n"
-                "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = qpq_ui_%s_land\n"
-                "\t\t\t\tvariable_list_size = { name = qpq_ui_%s_land value > 0 }\n\t\t\t}\n\t\t\tset_variable = qpq_ui_%s_o_land\n\t\t}\n"
-                "\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n\t\t\t\tremove_variable = qpq_ui_%s_o_land\n\t\t\t}\n\t\t}\n"
-                "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % ((L,) * 10)
+        for good, lst, _kind in PICKED:
+            v = "qpq_ui_%s_%s" % (L, lst)
+            out += ("qpq_ui_%s_toggle_%s = {\n\tscope = character\n\tsaved_scopes = { qpq_pick }\n\teffect = {\n"
+                    "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = %s\n"
+                    "\t\t\t\tis_target_in_variable_list = { name = %s target = scope:qpq_pick }\n\t\t\t}\n"
+                    "\t\t\tremove_list_variable = { name = %s target = scope:qpq_pick }\n\t\t}\n"
+                    "\t\telse = {\n\t\t\tadd_to_variable_list = { name = %s target = scope:qpq_pick }\n\t\t}\n"
+                    "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = %s\n"
+                    "\t\t\t\tvariable_list_size = { name = %s value > 0 }\n\t\t\t}\n\t\t\tset_variable = qpq_ui_%s_o_%s\n\t\t}\n"
+                    "\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_%s }\n\t\t\t\tremove_variable = qpq_ui_%s_o_%s\n\t\t\t}\n\t\t}\n"
+                    "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (good, L, v, v, v, v, v, v, L, good, L, good, L, good)
         # Group headings
         for g, _name in GROUPS:
             kinds = [k for k in DEEDS if k["group"] == g]
@@ -415,7 +421,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
     leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "fair", "term", "a_ask", "a_offers",
                 "a_other"] + ["fail_%d" % i for i in range(max_valid())]
-    lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates"]
+    lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates", "gift_artifact_candidates",
+             "gift_secret_candidates"]
 
     # Scope values the engine reads, cleared between the legs and between the kinds of one refresh
     eff += "qpq_ui_clear_scopes_effect = {\n"
@@ -429,6 +436,13 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         for o in UI_OFFERS:
             eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n" % (L, o, L, o)
             eff += "\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % o
+        eff += "\t%s = { save_scope_as = qpq_gift_payer }\n" % ("scope:qpq_deal_me" if L == "t" else "scope:qpq_deal_them")
+        for good, lst in (("artifact", "gift_artifact"), ("secret", "gift_secret")):
+            eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable_list = qpq_ui_%s_%s\n\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n"
+                    "\t\tsave_scope_value_as = { name = qpq_gift_%s_points value = qpq_ui_gift_%s_%s_value }\n") % (L, lst, L, good, good, good, L)
+            if good == "artifact":
+                eff += "\t\tsave_scope_value_as = { name = qpq_gift_artifact_cost value = qpq_ui_gift_artifact_cost_%s_value }\n" % L
+            eff += "\t}\n"
         for t in TIMINGS[1:]:
             eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_gold\n\t\t\tvar:qpq_ui_%s_timing ?= flag:%s\n" % (L, L, t)
             eff += "\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n" % (L, t)
@@ -444,8 +458,9 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         for o in UI_OFFERS:
             eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
                     "\t\tremove_variable = qpq_ui_%s_o_%s\n\t}\n") % (L, o, L, o, L, o)
-        eff += ("\tif = {\n\t\tlimit = {\n\t\t\tNOT = { has_variable = qpq_ui_%s_o_land }\n\t\t\thas_variable_list = qpq_ui_%s_land\n\t\t}\n"
-                "\t\tclear_variable_list = qpq_ui_%s_land\n\t}\n") % (L, L, L)
+        for good, lst, _kind in PICKED:
+            eff += ("\tif = {\n\t\tlimit = {\n\t\t\tNOT = { has_variable = qpq_ui_%s_o_%s }\n\t\t\thas_variable_list = qpq_ui_%s_%s\n\t\t}\n"
+                    "\t\tclear_variable_list = qpq_ui_%s_%s\n\t}\n") % (L, good, L, lst, L, lst)
         eff += ("\tif = {\n\t\tlimit = { NOT = { has_variable = qpq_ui_%s_o_gold } }\n"
                 "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n"
                 "\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_amount }\n\t\t\tremove_variable = qpq_ui_%s_amount\n\t\t}\n\t}\n") % (L, L, L, L)
@@ -468,6 +483,26 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
                 "\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_%s_land_candidates target = prev } }\n\t}\n}\n\n") % (
             L, L, CANDIDATE_CAP, L)
 
+        # Artifacts the payer could hand over, best first
+        agent = "scope:qpq_deal_them" if L == "t" else "scope:qpq_deal_me"
+        eff += "qpq_ui_fill_artifact_%s_effect = {\n" % L
+        eff += ("\t%s = {\n\t\tevery_character_artifact = {\n\t\t\tadd_to_list = qpq_ui_pool_gift_artifact_%s\n\t\t}\n\t}\n") % (payer, L)
+        eff += ("\tordered_in_list = {\n\t\tlist = qpq_ui_pool_gift_artifact_%s\n\t\tlimit = {\n\t\t\tNOT = {\n"
+                "\t\t\t\tscope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_%s_gift_artifact target = prev } }\n\t\t\t}\n\t\t}\n"
+                "\t\torder_by = artifact_rarity\n\t\tmax = %d\n\t\tcheck_range_bounds = no\n"
+                "\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_%s_gift_artifact_candidates target = prev } }\n\t}\n}\n\n") % (
+            L, L, CANDIDATE_CAP, L)
+        # People the payer knows a secret about that the other side does not (the secret is named by who it is on)
+        eff += "qpq_ui_fill_secret_%s_effect = {\n" % L
+        eff += ("\t%s = {\n\t\tevery_known_secret = {\n\t\t\tlimit = {\n\t\t\t\tNOT = { is_known_by = %s }\n"
+                "\t\t\t\tNOT = { secret_owner = %s }\n\t\t\t\tNOT = { secret_owner = %s }\n\t\t\t\tsecret_owner = { is_alive = yes }\n\t\t\t}\n"
+                "\t\t\tsecret_owner = { add_to_list = qpq_ui_pool_gift_secret_%s }\n\t\t}\n\t}\n") % (payer, agent, agent, payer, L)
+        eff += ("\tordered_in_list = {\n\t\tlist = qpq_ui_pool_gift_secret_%s\n\t\tlimit = {\n\t\t\tNOT = {\n"
+                "\t\t\t\tscope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_%s_gift_secret target = prev } }\n\t\t\t}\n\t\t}\n"
+                "\t\torder_by = qpq_ui_candidate_order_value\n\t\tmax = %d\n\t\tcheck_range_bounds = no\n"
+                "\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_%s_gift_secret_candidates target = prev } }\n\t}\n}\n\n") % (
+            L, L, CANDIDATE_CAP, L)
+
         # A different deed was picked: the old target and its terms go
         eff += "qpq_ui_clear_leg_%s_effect = {\n" % L
         for v in ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L,
@@ -477,7 +512,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
         # The whole leg: which Ask carries it, candidates for its target, tiers, price and acceptance
         eff += "qpq_ui_leg_%s_refresh_effect = {\n\tqpq_ui_prune_goods_%s_effect = yes\n" % (L, L)
-        eff += "\tif = {\n\t\tlimit = { qpq_ui_leg_%s_allows_land_trigger = yes }\n\t\tqpq_ui_fill_land_%s_effect = yes\n\t}\n" % (L, L)
+        for good, _lst, _kind in PICKED:
+            eff += "\tif = {\n\t\tlimit = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\tqpq_ui_fill_%s_%s_effect = yes\n\t}\n" % (L, good, good, L)
         eff += ("\tif = {\n\t\tlimit = { NOT = { var:qpq_ui_%s_kind = flag:none } }\n"
                 "\t\tset_variable = { name = qpq_ui_%s_ekind value = var:qpq_ui_%s_kind }\n\t}\n") % (L, L, L)
         eff += ("\telse_if = {\n\t\tlimit = { qpq_ui_leg_%s_has_goods_trigger = yes }\n"
@@ -556,7 +592,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     for v in vs:
         eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
     for L in LEGS:
-        eff += "\tif = {\n\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n\t\tclear_variable_list = qpq_ui_%s_land\n\t}\n" % (L, L)
+        for _good, lst, _kind in PICKED:
+            eff += "\tif = {\n\t\tlimit = { has_variable_list = qpq_ui_%s_%s }\n\t\tclear_variable_list = qpq_ui_%s_%s\n\t}\n" % (L, lst, L, lst)
         eff += "\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % L
         eff += "\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n" % L
     eff += "}\n\n"
@@ -588,9 +625,11 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
                 v % L, v % L, L, what)
         eff += "\t\tif = {\n\t\t\tlimit = { exists = var:qpq_ui_%s_target }\n\t\t\tvar:qpq_ui_%s_target = { save_scope_as = qpq_deal_%s_target }\n\t\t}\n" % (L, L, L)
         # The titles to hand over wait on the proposer until the deal is sealed
-        eff += "\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_deal_land_%s }\n\t\t\tclear_variable_list = qpq_deal_land_%s\n\t\t}\n" % (L, L)
-        eff += ("\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n\t\t\tevery_in_list = {\n\t\t\t\tvariable = qpq_ui_%s_land\n"
-                "\t\t\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_%s target = prev } }\n\t\t\t}\n\t\t}\n") % (L, L, L)
+        for _good, lst, _kind in PICKED:
+            eff += "\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_deal_%s_%s }\n\t\t\tclear_variable_list = qpq_deal_%s_%s\n\t\t}\n" % (lst, L, lst, L)
+            eff += ("\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_%s }\n\t\t\tevery_in_list = {\n\t\t\t\tvariable = qpq_ui_%s_%s\n"
+                    "\t\t\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_%s_%s target = prev } }\n\t\t\t}\n\t\t}\n") % (
+                L, lst, L, lst, lst, L)
         eff += "\t}\n"
     eff += "}\n\n"
 
@@ -841,7 +880,7 @@ def gen_ui_loc(write):
 
 
 # ------------------------------------------------------------------ the deal event (a human recipient)
-HUB50_TERMS = ["on_delivery", "land", "claim", "office", "marriage", "release_hook",
+HUB50_TERMS = ["on_delivery", "land", "claim", "office", "release_hook",
                "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
                "restraint", "hook"]
 HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]
@@ -888,8 +927,36 @@ def gen_deal_events(write):
     write("events/qpq_deal_events.txt", out)
 
 
+# What an artifact does, by the vanilla modifiers it can carry (tools/artifact_modifiers.txt lists every vanilla one)
+ARTIFACT_FAMILIES = {
+    "prestige": r"prestige",
+    "piety": r"piety|clergy|zealot",
+    "gold": r"income|tax|gold_cost|hire_cost|maintenance|development_growth",
+    "war": r"prowess|knight|casualty|raid|levy|advantage|pursue|retreat|controlled_province|men_at_arms|damage|siege|"
+           r"screen|counter|skirmish|supply|toughness|duel",
+    "scheme": r"scheme|secrecy",
+    "standing": r"opinion|legitimacy|influence|merit|vassal_limit|dread|tyranny|grandeur",
+}
+
+
+def gen_artifact_triggers(write):
+    path = os.path.join(ROOT, "tools/artifact_modifiers.txt")
+    with open(path, encoding="utf-8") as f:
+        names = [l.strip() for l in f if l.strip()]
+    out = ("# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - what an artifact does, from the modifiers it carries.\n"
+           "# Root: the artifact.\n\n")
+    for fam, rx in ARTIFACT_FAMILIES.items():
+        out += "qpq_artifact_grants_%s_trigger = {\n\tOR = {\n" % fam
+        for n in names:
+            if re.search(rx, n):
+                out += "\t\thas_artifact_modifier = %s\n" % n
+        out += "\t}\n}\n\n"
+    write("common/scripted_triggers/qpq_artifact_triggers.txt", out)
+
+
 def gen_all(block, fmt_shown, OFFER_DEFS, write):
     import qpq_gui_gen
+    gen_artifact_triggers(write)
     gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write)
     gen_ui_script(block, fmt_shown, OFFER_DEFS, write)
     gen_ui_custom_loc(write)

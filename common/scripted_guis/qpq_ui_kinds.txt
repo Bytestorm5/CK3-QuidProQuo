@@ -1981,6 +1981,36 @@ qpq_ui_land_clear_t = {
 	}
 }
 
+qpq_ui_artifact_clear_t = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_artifact }
+			clear_variable_list = qpq_ui_t_gift_artifact
+		}
+		if = {
+			limit = { has_variable = qpq_ui_t_o_artifact }
+			remove_variable = qpq_ui_t_o_artifact
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_secret_clear_t = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_secret }
+			clear_variable_list = qpq_ui_t_gift_secret
+		}
+		if = {
+			limit = { has_variable = qpq_ui_t_o_secret }
+			remove_variable = qpq_ui_t_o_secret
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_config_t = {
 	scope = character
 	is_shown = {
@@ -2020,6 +2050,68 @@ qpq_ui_land_toggle_t = {
 			if = {
 				limit = { has_variable = qpq_ui_t_o_land }
 				remove_variable = qpq_ui_t_o_land
+			}
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_artifact_toggle_t = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_gift_artifact
+				is_target_in_variable_list = { name = qpq_ui_t_gift_artifact target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_t_gift_artifact target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_t_gift_artifact target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_gift_artifact
+				variable_list_size = { name = qpq_ui_t_gift_artifact value > 0 }
+			}
+			set_variable = qpq_ui_t_o_artifact
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_t_o_artifact }
+				remove_variable = qpq_ui_t_o_artifact
+			}
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_secret_toggle_t = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_gift_secret
+				is_target_in_variable_list = { name = qpq_ui_t_gift_secret target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_t_gift_secret target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_t_gift_secret target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_gift_secret
+				variable_list_size = { name = qpq_ui_t_gift_secret value > 0 }
+			}
+			set_variable = qpq_ui_t_o_secret
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_t_o_secret }
+				remove_variable = qpq_ui_t_o_secret
 			}
 		}
 		qpq_ui_refresh_effect = yes
@@ -2723,30 +2815,6 @@ qpq_ui_offer_t_office = {
 		}
 		else = {
 			set_variable = qpq_ui_t_o_office
-		}
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_offer_t_marriage = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		qpq_ui_leg_t_allows_marriage_trigger = yes
-		OR = {
-			has_variable = qpq_ui_t_o_marriage
-			AND = {
-				scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_t_o_marriage }
-			remove_variable = qpq_ui_t_o_marriage
-		}
-		else = {
-			set_variable = qpq_ui_t_o_marriage
 		}
 		qpq_ui_refresh_effect = yes
 	}
@@ -5150,6 +5218,36 @@ qpq_ui_land_clear_i = {
 	}
 }
 
+qpq_ui_artifact_clear_i = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_artifact }
+			clear_variable_list = qpq_ui_i_gift_artifact
+		}
+		if = {
+			limit = { has_variable = qpq_ui_i_o_artifact }
+			remove_variable = qpq_ui_i_o_artifact
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_secret_clear_i = {
+	scope = character
+	effect = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_secret }
+			clear_variable_list = qpq_ui_i_gift_secret
+		}
+		if = {
+			limit = { has_variable = qpq_ui_i_o_secret }
+			remove_variable = qpq_ui_i_o_secret
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_config_i = {
 	scope = character
 	is_shown = {
@@ -5189,6 +5287,68 @@ qpq_ui_land_toggle_i = {
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				remove_variable = qpq_ui_i_o_land
+			}
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_artifact_toggle_i = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_gift_artifact
+				is_target_in_variable_list = { name = qpq_ui_i_gift_artifact target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_i_gift_artifact target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_i_gift_artifact target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_gift_artifact
+				variable_list_size = { name = qpq_ui_i_gift_artifact value > 0 }
+			}
+			set_variable = qpq_ui_i_o_artifact
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_i_o_artifact }
+				remove_variable = qpq_ui_i_o_artifact
+			}
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_secret_toggle_i = {
+	scope = character
+	saved_scopes = { qpq_pick }
+	effect = {
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_gift_secret
+				is_target_in_variable_list = { name = qpq_ui_i_gift_secret target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_i_gift_secret target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_i_gift_secret target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_gift_secret
+				variable_list_size = { name = qpq_ui_i_gift_secret value > 0 }
+			}
+			set_variable = qpq_ui_i_o_secret
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_i_o_secret }
+				remove_variable = qpq_ui_i_o_secret
 			}
 		}
 		qpq_ui_refresh_effect = yes
@@ -5892,30 +6052,6 @@ qpq_ui_offer_i_office = {
 		}
 		else = {
 			set_variable = qpq_ui_i_o_office
-		}
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_offer_i_marriage = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		qpq_ui_leg_i_allows_marriage_trigger = yes
-		OR = {
-			has_variable = qpq_ui_i_o_marriage
-			AND = {
-				scope:recipient = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_i_o_marriage }
-			remove_variable = qpq_ui_i_o_marriage
-		}
-		else = {
-			set_variable = qpq_ui_i_o_marriage
 		}
 		qpq_ui_refresh_effect = yes
 	}

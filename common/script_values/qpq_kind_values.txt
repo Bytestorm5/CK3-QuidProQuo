@@ -150,10 +150,6 @@ qpq_chartered_conquest_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -417,10 +413,6 @@ qpq_sanctioned_conquest_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -674,10 +666,6 @@ qpq_marcher_charge_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -917,10 +905,6 @@ qpq_holy_sponsorship_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -1164,10 +1148,6 @@ qpq_development_charter_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -1409,10 +1389,6 @@ qpq_electoral_purchase_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -1600,10 +1576,6 @@ qpq_loyal_mole_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -1789,10 +1761,6 @@ qpq_agent_provocateur_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -2034,10 +2002,6 @@ qpq_licensed_feud_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -2287,10 +2251,6 @@ qpq_dossier_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -2536,10 +2496,6 @@ qpq_quiet_removal_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -2801,10 +2757,6 @@ qpq_heir_question_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -3052,10 +3004,6 @@ qpq_snatch_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -3297,10 +3245,6 @@ qpq_dispossession_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -3540,10 +3484,6 @@ qpq_the_cloister_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -3797,10 +3737,6 @@ qpq_marriage_by_command_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -4069,10 +4005,6 @@ qpq_hand_over_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -4258,10 +4190,6 @@ qpq_hand_over_artifact_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -4505,10 +4433,6 @@ qpq_renunciation_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -4694,10 +4618,6 @@ qpq_hush_money_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -4904,7 +4824,13 @@ qpq_price_of_loyalty_offer_points_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_artifact ?= yes }
-		add = -20
+		if = {
+			limit = { exists = scope:qpq_gift_artifact_cost }
+			add = { value = scope:qpq_gift_artifact_cost multiply = -1 }
+		}
+		else = {
+			add = -20
+		}
 	}
 	if = {
 		limit = { scope:qpq_o_church ?= yes }
@@ -5076,10 +5002,6 @@ qpq_blessing_for_a_feud_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -5267,10 +5189,6 @@ qpq_clemency_bargain_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -5537,7 +5455,13 @@ qpq_electoral_capitulation_offer_points_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_artifact ?= yes }
-		add = -20
+		if = {
+			limit = { exists = scope:qpq_gift_artifact_cost }
+			add = { value = scope:qpq_gift_artifact_cost multiply = -1 }
+		}
+		else = {
+			add = -20
+		}
 	}
 	if = {
 		limit = { scope:qpq_o_church ?= yes }
@@ -5711,10 +5635,6 @@ qpq_mutual_defense_league_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -5964,10 +5884,6 @@ qpq_faction_pledge_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -6211,10 +6127,6 @@ qpq_title_swap_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -6456,10 +6368,6 @@ qpq_coup_pact_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -6682,10 +6590,6 @@ qpq_proxy_war_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -6918,10 +6822,6 @@ qpq_partition_pact_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -7109,10 +7009,6 @@ qpq_secret_alliance_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -7304,10 +7200,6 @@ qpq_bought_truce_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -7536,10 +7428,6 @@ qpq_faithless_ally_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -7766,10 +7654,6 @@ qpq_turncoat_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -7989,10 +7873,6 @@ qpq_seed_the_separatists_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -8220,10 +8100,6 @@ qpq_shelter_the_pretender_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -8459,10 +8335,6 @@ qpq_extradition_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -8675,10 +8547,6 @@ qpq_buy_a_councillor_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -8901,10 +8769,6 @@ qpq_stay_home_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -9117,10 +8981,6 @@ qpq_defection_pact_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -9337,10 +9197,6 @@ qpq_secret_clause_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -9553,10 +9409,6 @@ qpq_hire_the_hashashin_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -9773,10 +9625,6 @@ qpq_excommunication_for_hire_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -9991,10 +9839,6 @@ qpq_dispensation_for_gold_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -10207,10 +10051,6 @@ qpq_steer_the_holy_war_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -10429,10 +10269,6 @@ qpq_purchase_a_mitre_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -10647,10 +10483,6 @@ qpq_bought_claim_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -10836,10 +10668,6 @@ qpq_absolution_by_concession_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -11056,10 +10884,6 @@ qpq_holy_warrant_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -11272,10 +11096,6 @@ qpq_buy_a_bull_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -11492,10 +11312,6 @@ qpq_conclave_votes_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -11683,10 +11499,6 @@ qpq_council_lobbying_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -11872,10 +11684,6 @@ qpq_caliphal_investiture_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -12090,10 +11898,6 @@ qpq_name_in_the_khutba_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -12311,10 +12115,6 @@ qpq_fatwa_for_hire_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -12527,10 +12327,6 @@ qpq_fund_the_dawa_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -12747,10 +12543,6 @@ qpq_crowning_the_usurper_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -12936,10 +12728,6 @@ qpq_pliant_patriarch_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -13156,10 +12944,6 @@ qpq_favourable_omens_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -13357,10 +13141,6 @@ qpq_consecration_rites_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
@@ -13577,10 +13357,6 @@ qpq_temple_patronage_offer_points_value = {
 			add = qpq_offer_office_points_value
 		}
 		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
-		}
-		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }
 			add = qpq_offer_release_hook_points_value
 		}
@@ -13766,10 +13542,6 @@ qpq_barter_offer_points_value = {
 		if = {
 			limit = { scope:qpq_o_office ?= yes }
 			add = qpq_offer_office_points_value
-		}
-		if = {
-			limit = { scope:qpq_o_marriage ?= yes }
-			add = qpq_offer_marriage_points_value
 		}
 		if = {
 			limit = { scope:qpq_o_release_hook ?= yes }

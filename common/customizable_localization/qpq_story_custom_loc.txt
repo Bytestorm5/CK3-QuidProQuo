@@ -235,20 +235,6 @@ QpqGaveMarriage = {
 	type = all
 	log_loc_errors = no
 	text = {
-		trigger = {
-			exists = var:qpq_main
-			exists = var:qpq_gave_marriage
-		}
-		localization_key = qpq_sl_got_marriage
-	}
-	text = {
-		trigger = {
-			NOT = { exists = var:qpq_main }
-			exists = var:qpq_gave_marriage
-		}
-		localization_key = qpq_sl_gave_marriage
-	}
-	text = {
 		fallback = yes
 		localization_key = qpq_empty
 	}
@@ -443,7 +429,7 @@ QpqGaveNothing = {
 	log_loc_errors = no
 	text = {
 		trigger = {
-			NOR = { AND = { exists = var:qpq_paid_now } AND = { exists = var:qpq_gave_claim } AND = { exists = var:qpq_gave_marriage } AND = { exists = var:qpq_gave_hook_release } AND = { exists = var:qpq_gave_my_word } AND = { exists = var:qpq_gave_secret } AND = { exists = var:qpq_gave_clemency } AND = { exists = var:qpq_gave_arms } AND = { exists = var:qpq_gave_church } AND = { exists = var:qpq_used_hook } }
+			NOR = { AND = { exists = var:qpq_paid_now } AND = { exists = var:qpq_gave_claim } AND = { exists = var:qpq_gave_hook_release } AND = { exists = var:qpq_gave_my_word } AND = { exists = var:qpq_gave_secret } AND = { exists = var:qpq_gave_clemency } AND = { exists = var:qpq_gave_arms } AND = { exists = var:qpq_gave_church } AND = { exists = var:qpq_used_hook } }
 		}
 		localization_key = qpq_sl_gave_nothing
 	}

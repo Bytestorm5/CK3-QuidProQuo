@@ -246,7 +246,6 @@
  QPQ_UI_BULLET_OFFER_land:0 "#P •#! $qpq_offer_land$"
  QPQ_UI_BULLET_OFFER_claim:0 "#P •#! $qpq_offer_claim$"
  QPQ_UI_BULLET_OFFER_office:0 "#P •#! $qpq_offer_office$"
- QPQ_UI_BULLET_OFFER_marriage:0 "#P •#! $qpq_offer_marriage$"
  QPQ_UI_BULLET_OFFER_release_hook:0 "#P •#! $qpq_offer_release_hook$"
  QPQ_UI_BULLET_OFFER_my_word:0 "#P •#! $qpq_offer_my_word$"
  QPQ_UI_BULLET_OFFER_secret:0 "#P •#! $qpq_offer_secret$"

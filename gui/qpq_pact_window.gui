@@ -125,17 +125,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_t_marriage').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_marriage"
-						tooltip = "qpq_offer_marriage_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_t_marriage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_marriage').IsSet]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_t_release_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -164,7 +153,7 @@ window = {
 						text = "qpq_offer_secret"
 						tooltip = "qpq_offer_secret_desc"
 						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_t_secret').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_me' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_secret').IsSet]"
 					}
 
@@ -219,7 +208,7 @@ window = {
 						text = "qpq_offer_artifact"
 						tooltip = "qpq_offer_artifact_desc"
 						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_t_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_me' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_artifact').IsSet]"
 					}
 
@@ -1268,23 +1257,6 @@ window = {
 					}
 
 					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_marriage').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_marriage"
-						}
-
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_t_marriage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						}
-					}
-
-					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_release_hook').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -1329,9 +1301,30 @@ window = {
 						}
 
 						button_standard = {
+							
+							size = { 70 30 }
+							text = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_me' )]"
+						}
+
+						button_standard = {
 							size = { 90 30 }
 							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_t_secret').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_secret_clear_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+					}
+
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						margin_left = 14
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_secret')]"
+
+						item = {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								default_format = "#low"
+							}
 						}
 					}
 
@@ -1414,9 +1407,30 @@ window = {
 						}
 
 						button_standard = {
+							
+							size = { 70 30 }
+							text = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_me' )]"
+						}
+
+						button_standard = {
 							size = { 90 30 }
 							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_t_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_artifact_clear_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+					}
+
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						margin_left = 14
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_artifact')]"
+
+						item = {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "[Scope.Artifact.GetName]"
+								default_format = "#low"
+							}
 						}
 					}
 
@@ -1827,23 +1841,6 @@ window = {
 					}
 
 					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_marriage').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_marriage"
-						}
-
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_i_marriage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						}
-					}
-
-					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_release_hook').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -1888,9 +1885,30 @@ window = {
 						}
 
 						button_standard = {
+							
+							size = { 70 30 }
+							text = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_them' )]"
+						}
+
+						button_standard = {
 							size = { 90 30 }
 							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_i_secret').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_secret_clear_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+					}
+
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						margin_left = 14
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_secret')]"
+
+						item = {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								default_format = "#low"
+							}
 						}
 					}
 
@@ -1973,9 +1991,30 @@ window = {
 						}
 
 						button_standard = {
+							
+							size = { 70 30 }
+							text = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_them' )]"
+						}
+
+						button_standard = {
 							size = { 90 30 }
 							text = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_i_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_artifact_clear_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						}
+					}
+
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						margin_left = 14
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_artifact')]"
+
+						item = {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								text = "[Scope.Artifact.GetName]"
+								default_format = "#low"
+							}
 						}
 					}
 
@@ -2103,17 +2142,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_i_marriage').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_marriage"
-						tooltip = "qpq_offer_marriage_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_i_marriage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_marriage').IsSet]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_i_release_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -2142,7 +2170,7 @@ window = {
 						text = "qpq_offer_secret"
 						tooltip = "qpq_offer_secret_desc"
 						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_i_secret').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_them' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_secret').IsSet]"
 					}
 
@@ -2197,7 +2225,7 @@ window = {
 						text = "qpq_offer_artifact"
 						tooltip = "qpq_demand_artifact_desc"
 						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_i_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_them' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_artifact').IsSet]"
 					}
 
@@ -3512,6 +3540,118 @@ window = {
 				}
 
 				vbox = {
+					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'artifact_me' )]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_CHOSEN"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_artifact')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								down = yes
+								text = "[Scope.Artifact.GetName]"
+								onclick = "[GetScriptedGui('qpq_ui_artifact_toggle_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_AVAILABLE"
+						default_format = "#T"
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_artifact_candidates')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								text = "[Scope.Artifact.GetName]"
+								onclick = "[GetScriptedGui('qpq_ui_artifact_toggle_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_t_gift_artifact_candidates') )]"
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_NONE"
+						default_format = "#weak"
+					}
+				}
+
+				vbox = {
+					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'secret_me' )]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_CHOSEN"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_secret')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								down = yes
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								onclick = "[GetScriptedGui('qpq_ui_secret_toggle_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Char.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_AVAILABLE"
+						default_format = "#T"
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_t_gift_secret_candidates')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								onclick = "[GetScriptedGui('qpq_ui_secret_toggle_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Char.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_t_gift_secret_candidates') )]"
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_NONE"
+						default_format = "#weak"
+					}
+				}
+
+				vbox = {
 					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'deed_them' )]"
 					layoutpolicy_horizontal = expanding
 					spacing = 6
@@ -3824,6 +3964,118 @@ window = {
 						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_i_land_candidates') )]"
 						layoutpolicy_horizontal = expanding
 						text = "QPQ_UI_LAND_NONE"
+						default_format = "#weak"
+					}
+				}
+
+				vbox = {
+					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'artifact_them' )]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_CHOSEN"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_artifact')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								down = yes
+								text = "[Scope.Artifact.GetName]"
+								onclick = "[GetScriptedGui('qpq_ui_artifact_toggle_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_AVAILABLE"
+						default_format = "#T"
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_artifact_candidates')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								text = "[Scope.Artifact.GetName]"
+								onclick = "[GetScriptedGui('qpq_ui_artifact_toggle_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_i_gift_artifact_candidates') )]"
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_ARTIFACT_NONE"
+						default_format = "#weak"
+					}
+				}
+
+				vbox = {
+					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'secret_them' )]"
+					layoutpolicy_horizontal = expanding
+					margin = { 10 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_CHOSEN"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_secret')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								down = yes
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								onclick = "[GetScriptedGui('qpq_ui_secret_toggle_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Char.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_AVAILABLE"
+						default_format = "#T"
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_i_gift_secret_candidates')]"
+
+						item = {
+							button_standard_list = {
+								layoutpolicy_horizontal = expanding
+								size = { 0 34 }
+								text = "[Scope.Char.GetUINameNoTooltip]"
+								onclick = "[GetScriptedGui('qpq_ui_secret_toggle_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Char.MakeScope ).End )]"
+							}
+						}
+					}
+					text_single = {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_i_gift_secret_candidates') )]"
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_SECRET_NONE"
 						default_format = "#weak"
 					}
 				}

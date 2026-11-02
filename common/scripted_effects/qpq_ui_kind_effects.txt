@@ -32,10 +32,6 @@ qpq_ui_clear_scopes_effect = {
 		clear_saved_scope = qpq_o_office
 	}
 	if = {
-		limit = { exists = scope:qpq_o_marriage }
-		clear_saved_scope = qpq_o_marriage
-	}
-	if = {
 		limit = { exists = scope:qpq_o_release_hook }
 		clear_saved_scope = qpq_o_release_hook
 	}
@@ -88,6 +84,22 @@ qpq_ui_clear_scopes_effect = {
 		clear_saved_scope = qpq_o_charter
 	}
 	if = {
+		limit = { exists = scope:qpq_gift_payer }
+		clear_saved_scope = qpq_gift_payer
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_artifact_points }
+		clear_saved_scope = qpq_gift_artifact_points
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_secret_points }
+		clear_saved_scope = qpq_gift_secret_points
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_artifact_cost }
+		clear_saved_scope = qpq_gift_artifact_cost
+	}
+	if = {
 		limit = { exists = scope:qpq_x_armed }
 		clear_saved_scope = qpq_x_armed
 	}
@@ -129,13 +141,6 @@ qpq_ui_load_goods_t_effect = {
 			qpq_ui_leg_t_allows_office_trigger = yes
 		}
 		save_scope_value_as = { name = qpq_o_office value = yes }
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_t_o_marriage
-			qpq_ui_leg_t_allows_marriage_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_marriage value = yes }
 	}
 	if = {
 		limit = {
@@ -214,6 +219,22 @@ qpq_ui_load_goods_t_effect = {
 		}
 		save_scope_value_as = { name = qpq_o_hook value = yes }
 	}
+	scope:qpq_deal_me = { save_scope_as = qpq_gift_payer }
+	if = {
+		limit = {
+			has_variable_list = qpq_ui_t_gift_artifact
+			qpq_ui_leg_t_allows_artifact_trigger = yes
+		}
+		save_scope_value_as = { name = qpq_gift_artifact_points value = qpq_ui_gift_artifact_t_value }
+		save_scope_value_as = { name = qpq_gift_artifact_cost value = qpq_ui_gift_artifact_cost_t_value }
+	}
+	if = {
+		limit = {
+			has_variable_list = qpq_ui_t_gift_secret
+			qpq_ui_leg_t_allows_secret_trigger = yes
+		}
+		save_scope_value_as = { name = qpq_gift_secret_points value = qpq_ui_gift_secret_t_value }
+	}
 	if = {
 		limit = {
 			has_variable = qpq_ui_t_o_gold
@@ -277,13 +298,6 @@ qpq_ui_prune_goods_t_effect = {
 			NOT = { qpq_ui_leg_t_allows_office_trigger = yes }
 		}
 		remove_variable = qpq_ui_t_o_office
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_t_o_marriage
-			NOT = { qpq_ui_leg_t_allows_marriage_trigger = yes }
-		}
-		remove_variable = qpq_ui_t_o_marriage
 	}
 	if = {
 		limit = {
@@ -370,6 +384,20 @@ qpq_ui_prune_goods_t_effect = {
 		clear_variable_list = qpq_ui_t_land
 	}
 	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_t_o_artifact }
+			has_variable_list = qpq_ui_t_gift_artifact
+		}
+		clear_variable_list = qpq_ui_t_gift_artifact
+	}
+	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_t_o_secret }
+			has_variable_list = qpq_ui_t_gift_secret
+		}
+		clear_variable_list = qpq_ui_t_gift_secret
+	}
+	if = {
 		limit = { NOT = { has_variable = qpq_ui_t_o_gold } }
 		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
 		if = {
@@ -411,6 +439,52 @@ qpq_ui_fill_land_t_effect = {
 	}
 }
 
+qpq_ui_fill_artifact_t_effect = {
+	scope:qpq_deal_me = {
+		every_character_artifact = {
+			add_to_list = qpq_ui_pool_gift_artifact_t
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_gift_artifact_t
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_t_gift_artifact target = prev } }
+			}
+		}
+		order_by = artifact_rarity
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_gift_artifact_candidates target = prev } }
+	}
+}
+
+qpq_ui_fill_secret_t_effect = {
+	scope:qpq_deal_me = {
+		every_known_secret = {
+			limit = {
+				NOT = { is_known_by = scope:qpq_deal_them }
+				NOT = { secret_owner = scope:qpq_deal_them }
+				NOT = { secret_owner = scope:qpq_deal_me }
+				secret_owner = { is_alive = yes }
+			}
+			secret_owner = { add_to_list = qpq_ui_pool_gift_secret_t }
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_gift_secret_t
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_t_gift_secret target = prev } }
+			}
+		}
+		order_by = qpq_ui_candidate_order_value
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_gift_secret_candidates target = prev } }
+	}
+}
+
 qpq_ui_clear_leg_t_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_pick_char }
@@ -447,6 +521,14 @@ qpq_ui_leg_t_refresh_effect = {
 	if = {
 		limit = { qpq_ui_leg_t_allows_land_trigger = yes }
 		qpq_ui_fill_land_t_effect = yes
+	}
+	if = {
+		limit = { qpq_ui_leg_t_allows_artifact_trigger = yes }
+		qpq_ui_fill_artifact_t_effect = yes
+	}
+	if = {
+		limit = { qpq_ui_leg_t_allows_secret_trigger = yes }
+		qpq_ui_fill_secret_t_effect = yes
 	}
 	if = {
 		limit = { NOT = { var:qpq_ui_t_kind = flag:none } }
@@ -5889,13 +5971,6 @@ qpq_ui_load_goods_i_effect = {
 	}
 	if = {
 		limit = {
-			has_variable = qpq_ui_i_o_marriage
-			qpq_ui_leg_i_allows_marriage_trigger = yes
-		}
-		save_scope_value_as = { name = qpq_o_marriage value = yes }
-	}
-	if = {
-		limit = {
 			has_variable = qpq_ui_i_o_release_hook
 			qpq_ui_leg_i_allows_release_hook_trigger = yes
 		}
@@ -5971,6 +6046,22 @@ qpq_ui_load_goods_i_effect = {
 		}
 		save_scope_value_as = { name = qpq_o_hook value = yes }
 	}
+	scope:qpq_deal_them = { save_scope_as = qpq_gift_payer }
+	if = {
+		limit = {
+			has_variable_list = qpq_ui_i_gift_artifact
+			qpq_ui_leg_i_allows_artifact_trigger = yes
+		}
+		save_scope_value_as = { name = qpq_gift_artifact_points value = qpq_ui_gift_artifact_i_value }
+		save_scope_value_as = { name = qpq_gift_artifact_cost value = qpq_ui_gift_artifact_cost_i_value }
+	}
+	if = {
+		limit = {
+			has_variable_list = qpq_ui_i_gift_secret
+			qpq_ui_leg_i_allows_secret_trigger = yes
+		}
+		save_scope_value_as = { name = qpq_gift_secret_points value = qpq_ui_gift_secret_i_value }
+	}
 	if = {
 		limit = {
 			has_variable = qpq_ui_i_o_gold
@@ -6034,13 +6125,6 @@ qpq_ui_prune_goods_i_effect = {
 			NOT = { qpq_ui_leg_i_allows_office_trigger = yes }
 		}
 		remove_variable = qpq_ui_i_o_office
-	}
-	if = {
-		limit = {
-			has_variable = qpq_ui_i_o_marriage
-			NOT = { qpq_ui_leg_i_allows_marriage_trigger = yes }
-		}
-		remove_variable = qpq_ui_i_o_marriage
 	}
 	if = {
 		limit = {
@@ -6127,6 +6211,20 @@ qpq_ui_prune_goods_i_effect = {
 		clear_variable_list = qpq_ui_i_land
 	}
 	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_i_o_artifact }
+			has_variable_list = qpq_ui_i_gift_artifact
+		}
+		clear_variable_list = qpq_ui_i_gift_artifact
+	}
+	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_i_o_secret }
+			has_variable_list = qpq_ui_i_gift_secret
+		}
+		clear_variable_list = qpq_ui_i_gift_secret
+	}
+	if = {
 		limit = { NOT = { has_variable = qpq_ui_i_o_gold } }
 		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
 		if = {
@@ -6168,6 +6266,52 @@ qpq_ui_fill_land_i_effect = {
 	}
 }
 
+qpq_ui_fill_artifact_i_effect = {
+	scope:qpq_deal_them = {
+		every_character_artifact = {
+			add_to_list = qpq_ui_pool_gift_artifact_i
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_gift_artifact_i
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_i_gift_artifact target = prev } }
+			}
+		}
+		order_by = artifact_rarity
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_gift_artifact_candidates target = prev } }
+	}
+}
+
+qpq_ui_fill_secret_i_effect = {
+	scope:qpq_deal_them = {
+		every_known_secret = {
+			limit = {
+				NOT = { is_known_by = scope:qpq_deal_me }
+				NOT = { secret_owner = scope:qpq_deal_me }
+				NOT = { secret_owner = scope:qpq_deal_them }
+				secret_owner = { is_alive = yes }
+			}
+			secret_owner = { add_to_list = qpq_ui_pool_gift_secret_i }
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_gift_secret_i
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_i_gift_secret target = prev } }
+			}
+		}
+		order_by = qpq_ui_candidate_order_value
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_gift_secret_candidates target = prev } }
+	}
+}
+
 qpq_ui_clear_leg_i_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_pick_char }
@@ -6204,6 +6348,14 @@ qpq_ui_leg_i_refresh_effect = {
 	if = {
 		limit = { qpq_ui_leg_i_allows_land_trigger = yes }
 		qpq_ui_fill_land_i_effect = yes
+	}
+	if = {
+		limit = { qpq_ui_leg_i_allows_artifact_trigger = yes }
+		qpq_ui_fill_artifact_i_effect = yes
+	}
+	if = {
+		limit = { qpq_ui_leg_i_allows_secret_trigger = yes }
+		qpq_ui_fill_secret_i_effect = yes
 	}
 	if = {
 		limit = { NOT = { var:qpq_ui_i_kind = flag:none } }
@@ -11903,6 +12055,14 @@ qpq_ui_clear_derived_effect = {
 		clear_variable_list = qpq_ui_t_land_candidates
 	}
 	if = {
+		limit = { has_variable_list = qpq_ui_t_gift_artifact_candidates }
+		clear_variable_list = qpq_ui_t_gift_artifact_candidates
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_t_gift_secret_candidates }
+		clear_variable_list = qpq_ui_t_gift_secret_candidates
+	}
+	if = {
 		limit = { has_variable_list = qpq_ui_i_candidates }
 		clear_variable_list = qpq_ui_i_candidates
 	}
@@ -11917,6 +12077,14 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable_list = qpq_ui_i_land_candidates }
 		clear_variable_list = qpq_ui_i_land_candidates
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_i_gift_artifact_candidates }
+		clear_variable_list = qpq_ui_i_gift_artifact_candidates
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_i_gift_secret_candidates }
+		clear_variable_list = qpq_ui_i_gift_secret_candidates
 	}
 }
 
@@ -11956,10 +12124,6 @@ qpq_ui_clear_choices_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_o_office }
 		remove_variable = qpq_ui_t_o_office
-	}
-	if = {
-		limit = { has_variable = qpq_ui_t_o_marriage }
-		remove_variable = qpq_ui_t_o_marriage
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_o_release_hook }
@@ -12050,10 +12214,6 @@ qpq_ui_clear_choices_effect = {
 		remove_variable = qpq_ui_i_o_office
 	}
 	if = {
-		limit = { has_variable = qpq_ui_i_o_marriage }
-		remove_variable = qpq_ui_i_o_marriage
-	}
-	if = {
 		limit = { has_variable = qpq_ui_i_o_release_hook }
 		remove_variable = qpq_ui_i_o_release_hook
 	}
@@ -12113,11 +12273,27 @@ qpq_ui_clear_choices_effect = {
 		limit = { has_variable_list = qpq_ui_t_land }
 		clear_variable_list = qpq_ui_t_land
 	}
+	if = {
+		limit = { has_variable_list = qpq_ui_t_gift_artifact }
+		clear_variable_list = qpq_ui_t_gift_artifact
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_t_gift_secret }
+		clear_variable_list = qpq_ui_t_gift_secret
+	}
 	set_variable = { name = qpq_ui_t_kind value = flag:none }
 	set_variable = { name = qpq_ui_t_timing value = flag:up_front }
 	if = {
 		limit = { has_variable_list = qpq_ui_i_land }
 		clear_variable_list = qpq_ui_i_land
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_i_gift_artifact }
+		clear_variable_list = qpq_ui_i_gift_artifact
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_i_gift_secret }
+		clear_variable_list = qpq_ui_i_gift_secret
 	}
 	set_variable = { name = qpq_ui_i_kind value = flag:none }
 	set_variable = { name = qpq_ui_i_timing value = flag:up_front }
@@ -12409,13 +12585,6 @@ qpq_ui_save_deal_effect = {
 		}
 		if = {
 			limit = {
-				has_variable = qpq_ui_t_o_marriage
-				qpq_ui_leg_t_allows_marriage_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_t_o_marriage value = yes }
-		}
-		if = {
-			limit = {
 				has_variable = qpq_ui_t_o_release_hook
 				qpq_ui_leg_t_allows_release_hook_trigger = yes
 			}
@@ -12545,6 +12714,28 @@ qpq_ui_save_deal_effect = {
 			every_in_list = {
 				variable = qpq_ui_t_land
 				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_t target = prev } }
+			}
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_artifact_t }
+			clear_variable_list = qpq_deal_gift_artifact_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_t_gift_artifact
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_gift_artifact_t target = prev } }
+			}
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_secret_t }
+			clear_variable_list = qpq_deal_gift_secret_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_secret }
+			every_in_list = {
+				variable = qpq_ui_t_gift_secret
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_gift_secret_t target = prev } }
 			}
 		}
 	}
@@ -12829,13 +13020,6 @@ qpq_ui_save_deal_effect = {
 		}
 		if = {
 			limit = {
-				has_variable = qpq_ui_i_o_marriage
-				qpq_ui_leg_i_allows_marriage_trigger = yes
-			}
-			save_scope_value_as = { name = qpq_deal_i_o_marriage value = yes }
-		}
-		if = {
-			limit = {
 				has_variable = qpq_ui_i_o_release_hook
 				qpq_ui_leg_i_allows_release_hook_trigger = yes
 			}
@@ -12967,6 +13151,28 @@ qpq_ui_save_deal_effect = {
 				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_i target = prev } }
 			}
 		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_artifact_i }
+			clear_variable_list = qpq_deal_gift_artifact_i
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_i_gift_artifact
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_gift_artifact_i target = prev } }
+			}
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_secret_i }
+			clear_variable_list = qpq_deal_gift_secret_i
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_secret }
+			every_in_list = {
+				variable = qpq_ui_i_gift_secret
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_gift_secret_i target = prev } }
+			}
+		}
 	}
 }
 
@@ -12994,14 +13200,6 @@ qpq_deal_clear_seal_scopes_effect = {
 	if = {
 		limit = { exists = scope:qpq_ai_secret_owner }
 		clear_saved_scope = qpq_ai_secret_owner
-	}
-	if = {
-		limit = { exists = scope:qpq_bride_or_groom_agent }
-		clear_saved_scope = qpq_bride_or_groom_agent
-	}
-	if = {
-		limit = { exists = scope:qpq_bride_or_groom_payer }
-		clear_saved_scope = qpq_bride_or_groom_payer
 	}
 	if = {
 		limit = { exists = scope:qpq_charter_victim }
@@ -13056,12 +13254,20 @@ qpq_deal_clear_seal_scopes_effect = {
 		clear_saved_scope = qpq_f_tier
 	}
 	if = {
+		limit = { exists = scope:qpq_first_artifact }
+		clear_saved_scope = qpq_first_artifact
+	}
+	if = {
 		limit = { exists = scope:qpq_first_title }
 		clear_saved_scope = qpq_first_title
 	}
 	if = {
 		limit = { exists = scope:qpq_floor_zero }
 		clear_saved_scope = qpq_floor_zero
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_subject }
+		clear_saved_scope = qpq_gift_subject
 	}
 	if = {
 		limit = { exists = scope:qpq_gold_total }
@@ -13200,10 +13406,6 @@ qpq_deal_clear_seal_scopes_effect = {
 		clear_saved_scope = qpq_o_office
 	}
 	if = {
-		limit = { exists = scope:qpq_o_marriage }
-		clear_saved_scope = qpq_o_marriage
-	}
-	if = {
 		limit = { exists = scope:qpq_o_release_hook }
 		clear_saved_scope = qpq_o_release_hook
 	}
@@ -13256,6 +13458,22 @@ qpq_deal_clear_seal_scopes_effect = {
 		clear_saved_scope = qpq_o_charter
 	}
 	if = {
+		limit = { exists = scope:qpq_gift_payer }
+		clear_saved_scope = qpq_gift_payer
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_artifact_points }
+		clear_saved_scope = qpq_gift_artifact_points
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_secret_points }
+		clear_saved_scope = qpq_gift_secret_points
+	}
+	if = {
+		limit = { exists = scope:qpq_gift_artifact_cost }
+		clear_saved_scope = qpq_gift_artifact_cost
+	}
+	if = {
 		limit = { exists = scope:qpq_x_armed }
 		clear_saved_scope = qpq_x_armed
 	}
@@ -13285,10 +13503,6 @@ qpq_deal_load_goods_t_effect = {
 	if = {
 		limit = { scope:qpq_deal_t_o_office ?= yes }
 		save_scope_value_as = { name = qpq_o_office value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_t_o_marriage ?= yes }
-		save_scope_value_as = { name = qpq_o_marriage value = yes }
 	}
 	if = {
 		limit = { scope:qpq_deal_t_o_release_hook ?= yes }
@@ -13977,10 +14191,6 @@ qpq_deal_load_goods_i_effect = {
 	if = {
 		limit = { scope:qpq_deal_i_o_office ?= yes }
 		save_scope_value_as = { name = qpq_o_office value = yes }
-	}
-	if = {
-		limit = { scope:qpq_deal_i_o_marriage ?= yes }
-		save_scope_value_as = { name = qpq_o_marriage value = yes }
 	}
 	if = {
 		limit = { scope:qpq_deal_i_o_release_hook ?= yes }

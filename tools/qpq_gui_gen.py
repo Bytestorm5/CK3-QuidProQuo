@@ -22,6 +22,7 @@ SIDES = {
 def gen_gui(write):
     import qpq_ui_gen as U
     GS, GS_ROOT = U.GS, U.GS_ROOT
+    PICKED_GOODS = {g: (lst, kind) for g, lst, kind in U.PICKED}
 
     def sg(name, what, scope=GS):
         return "[GetScriptedGui('%s').%s( %s )]" % (name, what, scope)
@@ -46,8 +47,8 @@ def gen_gui(write):
 """
         for o in U.UI_OFFERS:
             tip = ("qpq_demand_%s_desc" if side == "them" and o in U.DEMAND_KEYS else "qpq_offer_%s_desc") % o
-            if o == "land":
-                clicks = '						onclick = "%s"\n' % popup("land_" + side)
+            if o in PICKED_GOODS:
+                clicks = '						onclick = "%s"\n' % popup("%s_%s" % (o, side))
             elif o == "gold":
                 clicks = ('						onclick = "%s"\n						onclick = "%s"\n') % (
                     sg("qpq_ui_gold_add_%s" % G, "Execute", GS_ROOT), popup("gold_" + side))
@@ -190,24 +191,27 @@ def gen_gui(write):
 							text = "QPQ_UI_BULLET_OFFER_%s"
 						}
 """ % o
-            if o == "land":
-                s += row("[GetPlayer.MakeScope.Var('qpq_ui_%s_o_land').IsSet]" % G, text, "land_" + side, None,
-                         sg("qpq_ui_land_clear_%s" % G, "Execute", GS_ROOT))
+            if o in PICKED_GOODS:
+                lst, kind = PICKED_GOODS[o]
+                name = {"title": "[Scope.Title.GetNameNoTooltip]", "artifact": "[Scope.Artifact.GetName]",
+                        "char": "[Scope.Char.GetUINameNoTooltip]"}[kind]
+                s += row("[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]" % (G, o), text, "%s_%s" % (o, side), None,
+                         sg("qpq_ui_%s_clear_%s" % (o, G), "Execute", GS_ROOT))
                 s += """
 					vbox = {
 						layoutpolicy_horizontal = expanding
 						margin_left = 14
-						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%s_land')]"
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%s_%s')]"
 
 						item = {
 							text_single = {
 								layoutpolicy_horizontal = expanding
-								text = "[Scope.Title.GetNameNoTooltip]"
+								text = "%s"
 								default_format = "#low"
 							}
 						}
 					}
-""" % G
+""" % (G, lst, name)
             else:
                 s += row("[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]" % (G, o), text, None, None,
                          sg("qpq_ui_offer_%s_%s" % (G, o), "Execute"))
@@ -460,11 +464,13 @@ def gen_gui(write):
 """ % dict(side=side, GU=G.upper(), timing_items=timing_items(G), steps_down=gold_steps(G, -1), steps_up=gold_steps(G, 1),
            fair_shown=sg("qpq_ui_gold_fair_%s" % G, "IsShown", GS_ROOT), fair_exec=sg("qpq_ui_gold_fair_%s" % G, "Execute", GS_ROOT))
 
-    def land_popup(side):
+    def picked_popup(side, good, lst, kind):
         G = SIDES[side]["G"]
+        K = {"title": "Title", "artifact": "Artifact", "char": "Char"}[kind]
+        NAME = {"title": "[Scope.Title.GetNameNoTooltip]", "artifact": "[Scope.Artifact.GetName]", "char": "[Scope.Char.GetUINameNoTooltip]"}[kind]
         return """
 				vbox = {
-					visible = "[GetVariableSystem.HasValue( 'qpq_popup', 'land_%(side)s' )]"
+					visible = "[GetVariableSystem.HasValue( 'qpq_popup', '%(good)s_%(side)s' )]"
 					layoutpolicy_horizontal = expanding
 					margin = { 10 8 }
 					spacing = 4
@@ -475,50 +481,50 @@ def gen_gui(write):
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_LAND_CHOSEN"
+						text = "QPQ_UI_%(GU)s_CHOSEN"
 						default_format = "#T"
 						using = Font_Size_Medium
 					}
 					vbox = {
 						layoutpolicy_horizontal = expanding
-						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_land')]"
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_%(lst)s')]"
 
 						item = {
 							button_standard_list = {
 								layoutpolicy_horizontal = expanding
 								size = { 0 34 }
 								down = yes
-								text = "[Scope.Title.GetNameNoTooltip]"
-								onclick = "[GetScriptedGui('qpq_ui_land_toggle_%(G)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
+								text = "%(NAME)s"
+								onclick = "[GetScriptedGui('qpq_ui_%(good)s_toggle_%(G)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.%(K)s.MakeScope ).End )]"
 							}
 						}
 					}
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_LAND_AVAILABLE"
+						text = "QPQ_UI_%(GU)s_AVAILABLE"
 						default_format = "#T"
 					}
 					vbox = {
 						layoutpolicy_horizontal = expanding
-						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_land_candidates')]"
+						datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_%(lst)s_candidates')]"
 
 						item = {
 							button_standard_list = {
 								layoutpolicy_horizontal = expanding
 								size = { 0 34 }
-								text = "[Scope.Title.GetNameNoTooltip]"
-								onclick = "[GetScriptedGui('qpq_ui_land_toggle_%(G)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
+								text = "%(NAME)s"
+								onclick = "[GetScriptedGui('qpq_ui_%(good)s_toggle_%(G)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.%(K)s.MakeScope ).End )]"
 							}
 						}
 					}
 					text_single = {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_land_candidates') )]"
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(G)s_%(lst)s_candidates') )]"
 						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_LAND_NONE"
+						text = "QPQ_UI_%(GU)s_NONE"
 						default_format = "#weak"
 					}
 				}
-""" % dict(side=side, G=G)
+""" % dict(side=side, G=G, good=good, lst=lst, K=K, NAME=NAME, GU=good.upper())
 
     def character(side):
         who = "GetPlayer" if side == "me" else "GetPlayer.MakeScope.Var('qpq_ui_recipient').Char"
@@ -576,7 +582,8 @@ def gen_gui(write):
 				}
 """ % ("QPQ_UI_YOUR_HALF" if side == "me" else "QPQ_UI_THEIR_HALF", SIDES[side]["tier"], SIDES[side]["conseq"])
 
-    popups = "".join(deed_popup(s) + gold_popup(s) + land_popup(s) for s in ("me", "them"))
+    popups = "".join(deed_popup(s) + gold_popup(s) + "".join(picked_popup(s, g, lst, kind) for g, lst, kind in U.PICKED)
+                     for s in ("me", "them"))
     # The pop-out has something to show unless a deed with nothing to configure was just picked
     visible = ("[And( GetVariableSystem.Exists( 'qpq_popup' ), And( "
                "Or( Not( GetVariableSystem.HasValue( 'qpq_popup', 'deed_me' ) ), %s ), "

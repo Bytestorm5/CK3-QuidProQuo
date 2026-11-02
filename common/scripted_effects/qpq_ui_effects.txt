@@ -124,6 +124,22 @@ qpq_seal_deal_effect = {
 			limit = { has_variable_list = qpq_deal_land_i }
 			clear_variable_list = qpq_deal_land_i
 		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_artifact_t }
+			clear_variable_list = qpq_deal_gift_artifact_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_artifact_i }
+			clear_variable_list = qpq_deal_gift_artifact_i
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_secret_t }
+			clear_variable_list = qpq_deal_gift_secret_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_gift_secret_i }
+			clear_variable_list = qpq_deal_gift_secret_i
+		}
 	}
 }
 

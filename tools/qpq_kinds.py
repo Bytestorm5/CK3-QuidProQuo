@@ -244,7 +244,7 @@ if = {
 }
 """
 
-ALL_OFFERS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "marriage",
+ALL_OFFERS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office",
               "release_hook", "my_word", "secret", "contract", "succession", "clemency", "arms",
               "artifact", "church", "restraint", "hook", "charter"]
 NO_CLAIM = [o for o in ALL_OFFERS if o != "claim"]

@@ -488,7 +488,7 @@ def main():
     for vname, where in sorted(used_vars.items()):
         if vname in set_vars or vname.startswith("$"):
             continue
-        if vname in ("pam_forced_papal_vote_target",):
+        if vname in ("pam_forced_papal_vote_target", "cursed_artifact"):
             continue
         report("VAR-NEVER-SET %s (%s)" % (vname, where[0]))
 
@@ -503,7 +503,7 @@ def main():
     for vname in sorted(set_vars):
         if vname in used_vars or vname in read_in_loc or vname.startswith("$"):
             continue
-        if vname in ("pam_forced_papal_vote_target",):
+        if vname in ("pam_forced_papal_vote_target", "cursed_artifact"):
             continue
         report("VAR-NEVER-READ %s" % vname)
 

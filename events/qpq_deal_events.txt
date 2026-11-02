@@ -279,10 +279,6 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_office
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_marriage ?= yes }
-			desc = qpq_hub.50.term_marriage
-		}
-		triggered_desc = {
 			trigger = { scope:qpq_deal_t_o_release_hook ?= yes }
 			desc = qpq_hub.50.term_release_hook
 		}
@@ -346,7 +342,6 @@ qpq_deal.1 = {
 				NOT = { scope:qpq_deal_t_o_land ?= yes }
 				NOT = { scope:qpq_deal_t_o_claim ?= yes }
 				NOT = { scope:qpq_deal_t_o_office ?= yes }
-				NOT = { scope:qpq_deal_t_o_marriage ?= yes }
 				NOT = { scope:qpq_deal_t_o_release_hook ?= yes }
 				NOT = { scope:qpq_deal_t_o_my_word ?= yes }
 				NOT = { scope:qpq_deal_t_o_secret ?= yes }
@@ -633,10 +628,6 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_office
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_marriage ?= yes }
-			desc = qpq_hub.50.term_marriage
-		}
-		triggered_desc = {
 			trigger = { scope:qpq_deal_i_o_release_hook ?= yes }
 			desc = qpq_hub.50.term_release_hook
 		}
@@ -700,7 +691,6 @@ qpq_deal.1 = {
 				NOT = { scope:qpq_deal_i_o_land ?= yes }
 				NOT = { scope:qpq_deal_i_o_claim ?= yes }
 				NOT = { scope:qpq_deal_i_o_office ?= yes }
-				NOT = { scope:qpq_deal_i_o_marriage ?= yes }
 				NOT = { scope:qpq_deal_i_o_release_hook ?= yes }
 				NOT = { scope:qpq_deal_i_o_my_word ?= yes }
 				NOT = { scope:qpq_deal_i_o_secret ?= yes }

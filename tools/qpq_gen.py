@@ -152,7 +152,10 @@ def gen_values():
         else:
             out += "\tvalue = 0\n"
             for o in k["offers"]:
-                if o in DEMAND_COST:
+                if o == "artifact":
+                    out += ("\tif = {\n\t\tlimit = { scope:qpq_o_artifact ?= yes }\n\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_artifact_cost }\n"
+                            "\t\t\tadd = { value = scope:qpq_gift_artifact_cost multiply = -1 }\n\t\t}\n\t\telse = {\n\t\t\tadd = %d\n\t\t}\n\t}\n" % DEMAND_COST[o])
+                elif o in DEMAND_COST:
                     out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, DEMAND_COST[o])
             out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_gold ?= yes\n\t\t\tscope:recipient = { has_trait = greedy }\n"
                     "\t\t}\n\t\tadd = -10\n\t}\n")
@@ -203,7 +206,6 @@ custom_description = {
     NOT = { is_councillor_of = {P} }
 }
 """),
-    "marriage": dict(shown="{P} = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }"),
     "release_hook": dict(shown="{P} = { has_hook = {A} }"),
     "my_word": dict(shown="always = yes"),
     "secret": dict(shown="""
@@ -238,7 +240,6 @@ OFFER_POINTS = {
     "land": "qpq_offer_land_points_value",
     "claim": "qpq_offer_claim_points_value",
     "office": "qpq_offer_office_points_value",
-    "marriage": "qpq_offer_marriage_points_value",
     "release_hook": "qpq_offer_release_hook_points_value",
     "my_word": "qpq_offer_my_word_points_value",
     "secret": "qpq_offer_secret_points_value",
@@ -258,7 +259,7 @@ DEMAND_COST = {"gold": -30, "on_delivery": 10, "split": 5, "stipend": 5, "land":
 
 
 # Terms listed in the proposal event (qpq_hub.50), in this order
-HUB50_TERMS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "marriage", "release_hook",
+HUB50_TERMS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "release_hook",
                "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
                "restraint", "hook", "charter"]
 # Ask-specific terms (they change the tiers), listed after the offers

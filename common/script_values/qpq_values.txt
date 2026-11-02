@@ -276,17 +276,6 @@ qpq_offer_office_points_value = {
 	}
 }
 
-qpq_offer_marriage_points_value = {
-	value = 20
-	if = {
-		limit = {
-			exists = scope:actor.dynasty
-			scope:actor.dynasty = { dynasty_prestige_level >= 4 }
-		}
-		add = 10
-	}
-}
-
 qpq_offer_release_hook_points_value = {
 	value = 30
 	if = {
@@ -303,11 +292,13 @@ qpq_offer_my_word_points_value = {
 	}
 }
 
+# A secret is worth what it can do to the one it is on, to the one who gets it. With a person named, this is the
+# sum of what each is worth (qpq_gift_secret_points_value); with none named it is a modest, unexamined sum.
 qpq_offer_secret_points_value = {
-	value = 15
+	value = 12
 	if = {
-		limit = { scope:recipient = { has_trait = schemer } }
-		add = 10
+		limit = { exists = scope:qpq_gift_secret_points }
+		value = scope:qpq_gift_secret_points
 	}
 }
 
@@ -335,11 +326,13 @@ qpq_offer_arms_points_value = {
 	}
 }
 
+# An artifact is worth what it is and what it does for the one who gets it (qpq_gift_artifact_points_value, summed
+# over the artifacts named); with none named it is a modest, unexamined sum.
 qpq_offer_artifact_points_value = {
-	value = 18
+	value = 14
 	if = {
-		limit = { scope:recipient = { has_trait = greedy } }
-		add = 8
+		limit = { exists = scope:qpq_gift_artifact_points }
+		value = scope:qpq_gift_artifact_points
 	}
 }
 
@@ -703,5 +696,251 @@ qpq_ui_title_order_value = {
 	if = {
 		limit = { tier = tier_county }
 		add = development_level
+	}
+}
+
+############################################################
+# Gifts that are named: artifacts and secrets
+############################################################
+
+# What an artifact is worth in itself: its rarity, and how much of it is left
+qpq_gift_artifact_cost_value = {
+	value = 0
+	if = {
+		limit = { rarity = common }
+		add = 5
+	}
+	else_if = {
+		limit = { rarity = masterwork }
+		add = 10
+	}
+	else_if = {
+		limit = { rarity = famed }
+		add = 18
+	}
+	else_if = {
+		limit = { rarity = illustrious }
+		add = 28
+	}
+	multiply = {
+		value = 0.5
+		add = {
+			value = artifact_durability
+			divide = { value = artifact_max_durability min = 1 }
+			multiply = 0.5
+		}
+	}
+	round = yes
+}
+
+# What an artifact is worth to scope:recipient: its worth, plus a share for each thing it does that they want.
+# Root: the artifact.
+qpq_gift_artifact_points_value = {
+	value = qpq_gift_artifact_cost_value
+	# prestige for one short of it
+	if = {
+		limit = {
+			qpq_artifact_grants_prestige_trigger = yes
+			scope:recipient = { prestige_level <= 1 }
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			qpq_artifact_grants_piety_trigger = yes
+			scope:recipient = {
+				OR = {
+					piety_level <= 1
+					has_trait = zealous
+				}
+			}
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			qpq_artifact_grants_gold_trigger = yes
+			scope:recipient = { gold < 300 }
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			qpq_artifact_grants_war_trigger = yes
+			scope:recipient = { is_at_war = yes }
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			qpq_artifact_grants_scheme_trigger = yes
+			scope:recipient = {
+				OR = {
+					has_trait = schemer
+					has_trait = deceitful
+				}
+			}
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			qpq_artifact_grants_standing_trigger = yes
+			scope:recipient = {
+				is_ruler = yes
+				OR = {
+					legitimacy_level <= 1
+					any_vassal = { opinion = { target = prev value < 0 } }
+				}
+			}
+		}
+		add = 12
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		add = 5
+	}
+	# A cursed artifact is a burden
+	if = {
+		limit = { has_variable = cursed_artifact }
+		add = -30
+	}
+	min = 0
+}
+
+# The sum over the artifacts named in the panel's leg t / i (the lists are on the player)
+qpq_ui_gift_artifact_t_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_t_gift_artifact
+				add = qpq_gift_artifact_points_value
+			}
+		}
+	}
+}
+
+qpq_ui_gift_artifact_i_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_i_gift_artifact
+				add = qpq_gift_artifact_points_value
+			}
+		}
+	}
+}
+
+qpq_ui_gift_artifact_cost_t_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_t_gift_artifact
+				add = qpq_gift_artifact_cost_value
+			}
+		}
+	}
+}
+
+qpq_ui_gift_artifact_cost_i_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_artifact }
+			every_in_list = {
+				variable = qpq_ui_i_gift_artifact
+				add = qpq_gift_artifact_cost_value
+			}
+		}
+	}
+}
+
+# What dirt on a person is worth to scope:recipient. Root: that person; scope:qpq_gift_payer knows the secrets.
+# What it is worth depends on how bad the worst of it is for them, and on who they are to the one getting it.
+qpq_gift_secret_points_value = {
+	value = 8
+	if = {
+		limit = {
+			any_secret = {
+				is_known_by = scope:qpq_gift_payer
+				NOT = { is_known_by = scope:recipient }
+				is_criminal_for = secret_owner
+			}
+		}
+		value = 28
+	}
+	else_if = {
+		limit = {
+			any_secret = {
+				is_known_by = scope:qpq_gift_payer
+				NOT = { is_known_by = scope:recipient }
+				is_shunned_for = secret_owner
+			}
+		}
+		value = 18
+	}
+	# How much their ruin would mean to the one who gets it
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:recipient
+				has_relation_nemesis = scope:recipient
+			}
+		}
+		add = 14
+	}
+	if = {
+		limit = { scope:recipient = { liege ?= prev } }
+		add = 8
+	}
+	if = {
+		limit = { liege ?= scope:recipient }
+		add = 6
+	}
+	if = {
+		limit = { is_close_family_of = scope:recipient }
+		add = 4
+	}
+	# A secret on someone with nothing to lose is worth little
+	if = {
+		limit = { is_landed = no }
+		multiply = 0.5
+	}
+	else_if = {
+		limit = { highest_held_title_tier >= tier_kingdom }
+		multiply = 1.4
+	}
+	round = yes
+}
+
+qpq_ui_gift_secret_t_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_gift_secret }
+			every_in_list = {
+				variable = qpq_ui_t_gift_secret
+				add = qpq_gift_secret_points_value
+			}
+		}
+	}
+}
+
+qpq_ui_gift_secret_i_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_gift_secret }
+			every_in_list = {
+				variable = qpq_ui_i_gift_secret
+				add = qpq_gift_secret_points_value
+			}
+		}
 	}
 }

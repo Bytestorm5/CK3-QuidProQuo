@@ -386,12 +386,6 @@ qpq_store_and_pay_offers_effect = {
 		}
 	}
 
-	# --- Marriage: betroth one of your family into theirs ---
-	if = {
-		limit = { scope:qpq_o_marriage ?= yes }
-		qpq_offer_marriage_effect = yes
-	}
-
 	# --- Hooks ---
 	if = {
 		limit = { scope:qpq_o_release_hook ?= yes }
@@ -411,9 +405,42 @@ qpq_store_and_pay_offers_effect = {
 		scope:qpq_payer = { use_hook = scope:qpq_agent }
 	}
 
-	# --- Secrets: hand over dirt you hold ---
+	# --- Secrets: the dirt you hold on the people named, the worst of it on each ---
 	if = {
-		limit = { scope:qpq_o_secret ?= yes }
+		limit = {
+			scope:qpq_o_secret ?= yes
+			exists = scope:qpq_deal_land_src
+		}
+		scope:qpq_deal_land_src = {
+			if = {
+				limit = {
+					scope:qpq_land_leg ?= flag:t
+					has_variable_list = qpq_deal_gift_secret_t
+				}
+				every_in_list = {
+					variable = qpq_deal_gift_secret_t
+					qpq_hand_over_secret_effect = yes
+				}
+			}
+			else_if = {
+				limit = {
+					scope:qpq_land_leg ?= flag:i
+					has_variable_list = qpq_deal_gift_secret_i
+				}
+				every_in_list = {
+					variable = qpq_deal_gift_secret_i
+					qpq_hand_over_secret_effect = yes
+				}
+			}
+		}
+	}
+
+	# Proposals that name no one (the old hub): any secret you hold that they do not know
+	if = {
+		limit = {
+			scope:qpq_o_secret ?= yes
+			NOT = { exists = scope:qpq_deal_land_src }
+		}
 		scope:qpq_payer = {
 			random_known_secret = {
 				limit = {
@@ -482,7 +509,10 @@ qpq_store_and_pay_offers_effect = {
 		}
 	}
 	if = {
-		limit = { scope:qpq_o_artifact ?= yes }
+		limit = {
+			scope:qpq_o_artifact ?= yes
+			NOT = { exists = scope:qpq_deal_land_src }
+		}
 		scope:qpq_payer = {
 			ordered_character_artifact = {
 				order_by = artifact_rarity
@@ -564,6 +594,38 @@ qpq_store_and_pay_offers_effect = {
 				limit = { exists = scope:qpq_offer_artifact }
 				set_variable = { name = qpq_offer_artifact value = scope:qpq_offer_artifact }
 			}
+			# Artifacts named in the deal panel: the payer's own, handed over on delivery
+			if = {
+				limit = {
+					scope:qpq_o_artifact ?= yes
+					exists = scope:qpq_deal_land_src
+				}
+				scope:qpq_deal_land_src = {
+					if = {
+						limit = { scope:qpq_land_leg ?= flag:t }
+						every_in_list = {
+							variable = qpq_deal_gift_artifact_t
+							limit = { artifact_owner ?= scope:qpq_payer }
+							scope:qpq_story = { add_to_variable_list = { name = qpq_offer_artifacts target = prev } }
+						}
+					}
+					else = {
+						every_in_list = {
+							variable = qpq_deal_gift_artifact_i
+							limit = { artifact_owner ?= scope:qpq_payer }
+							scope:qpq_story = { add_to_variable_list = { name = qpq_offer_artifacts target = prev } }
+						}
+					}
+				}
+				if = {
+					limit = { has_variable_list = qpq_offer_artifacts }
+					random_in_list = {
+						variable = qpq_offer_artifacts
+						save_scope_as = qpq_first_artifact
+					}
+					set_variable = { name = qpq_offer_artifact value = scope:qpq_first_artifact }
+				}
+			}
 			if = {
 				limit = { scope:qpq_o_office ?= yes }
 				set_variable = qpq_offer_office
@@ -586,10 +648,6 @@ qpq_store_and_pay_offers_effect = {
 			if = {
 				limit = { scope:qpq_o_claim ?= yes }
 				set_variable = qpq_gave_claim
-			}
-			if = {
-				limit = { scope:qpq_o_marriage ?= yes }
-				set_variable = qpq_gave_marriage
 			}
 			if = {
 				limit = { scope:qpq_o_release_hook ?= yes }
@@ -623,6 +681,63 @@ qpq_store_and_pay_offers_effect = {
 	}
 }
 
+# Root: the person the secrets are on. Hands scope:qpq_agent the worst secret scope:qpq_payer holds on them that
+# the agent does not know: a crime first, then what shames, then anything.
+qpq_hand_over_secret_effect = {
+	save_temporary_scope_as = qpq_gift_subject
+	scope:qpq_payer = {
+		if = {
+			limit = {
+				any_known_secret = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+					is_criminal_for = secret_owner
+				}
+			}
+			random_known_secret = {
+				limit = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+					is_criminal_for = secret_owner
+				}
+				reveal_to = scope:qpq_agent
+			}
+		}
+		else_if = {
+			limit = {
+				any_known_secret = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+					is_shunned_for = secret_owner
+				}
+			}
+			random_known_secret = {
+				limit = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+					is_shunned_for = secret_owner
+				}
+				reveal_to = scope:qpq_agent
+			}
+		}
+		else_if = {
+			limit = {
+				any_known_secret = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+				}
+			}
+			random_known_secret = {
+				limit = {
+					secret_owner = scope:qpq_gift_subject
+					NOT = { is_known_by = scope:qpq_agent }
+				}
+				reveal_to = scope:qpq_agent
+			}
+		}
+	}
+}
+
 qpq_appoint_best_council_seat_effect = {
 	if = {
 		limit = { $WHO$ = { is_councillor_of = prev } }
@@ -642,61 +757,6 @@ qpq_appoint_best_council_seat_effect = {
 	}
 	else = {
 		assign_councillor_type = { type = councillor_chancellor remove_existing_councillor = yes target = $WHO$ }
-	}
-}
-
-qpq_offer_marriage_effect = {
-	scope:qpq_payer = {
-		random_close_family_member = {
-			limit = {
-				is_married = no
-				NOT = { exists = betrothed }
-				is_alive = yes
-			}
-			save_scope_as = qpq_bride_or_groom_payer
-		}
-	}
-	if = {
-		limit = {
-			scope:qpq_agent = {
-				is_married = no
-				NOT = { exists = betrothed }
-			}
-		}
-		scope:qpq_agent = { save_scope_as = qpq_bride_or_groom_agent }
-	}
-	else = {
-		scope:qpq_agent = {
-			random_close_family_member = {
-				limit = {
-					is_married = no
-					NOT = { exists = betrothed }
-					is_alive = yes
-				}
-				save_scope_as = qpq_bride_or_groom_agent
-			}
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:qpq_bride_or_groom_payer
-			exists = scope:qpq_bride_or_groom_agent
-			scope:qpq_bride_or_groom_payer = {
-				can_marry_character_trigger = { CHARACTER = scope:qpq_bride_or_groom_agent }
-			}
-		}
-		scope:qpq_bride_or_groom_payer = {
-			if = {
-				limit = {
-					is_adult = yes
-					scope:qpq_bride_or_groom_agent = { is_adult = yes }
-				}
-				marry = scope:qpq_bride_or_groom_agent
-			}
-			else = {
-				create_betrothal = scope:qpq_bride_or_groom_agent
-			}
-		}
 	}
 }
 
@@ -991,6 +1051,21 @@ qpq_pay_on_delivery_effect = {
 			resolve_title_and_vassal_change = scope:qpq_pay_change
 		}
 		if = {
+			limit = { has_variable_list = qpq_offer_artifacts }
+			every_in_list = {
+				variable = qpq_offer_artifacts
+				limit = { artifact_owner ?= scope:qpq_payer }
+				set_owner = {
+					target = scope:qpq_agent
+					history = {
+						type = given
+						actor = scope:qpq_payer
+						recipient = scope:qpq_agent
+					}
+				}
+			}
+		}
+		else_if = {
 			limit = {
 				exists = var:qpq_offer_artifact
 				var:qpq_offer_artifact.artifact_owner ?= scope:qpq_payer
@@ -1989,7 +2064,6 @@ qpq_sync_mirror_effect = {
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_office }
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_restraint }
 			qpq_mirror_copy_var_effect = { VAR = qpq_gave_claim }
-			qpq_mirror_copy_var_effect = { VAR = qpq_gave_marriage }
 			qpq_mirror_copy_var_effect = { VAR = qpq_gave_hook_release }
 			qpq_mirror_copy_var_effect = { VAR = qpq_gave_my_word }
 			qpq_mirror_copy_var_effect = { VAR = qpq_gave_secret }
