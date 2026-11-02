@@ -252,74 +252,174 @@ qpq_offer_land_points_value = {
 	}
 }
 
+# A claim is worth the land it is on: the target's capital county (or the title named), by how developed it is, and
+# nothing at all to someone who already has the claim. scope:actor gives it, scope:recipient gets it.
 qpq_offer_claim_points_value = {
-	value = 18
+	value = 8
+	if = {
+		limit = { exists = scope:secondary_recipient }
+		add = {
+			value = 0
+			if = {
+				limit = { exists = scope:secondary_recipient.capital_county }
+				scope:secondary_recipient.capital_county = {
+					add = {
+						value = development_level
+						multiply = 0.8
+						max = 14
+					}
+				}
+			}
+		}
+	}
 	if = {
 		limit = { scope:recipient = { has_trait = ambitious } }
-		add = 10
+		add = 6
 	}
 	if = {
 		limit = { scope:recipient = { has_trait = content } }
-		add = -10
+		add = -6
 	}
+	if = {
+		limit = {
+			exists = scope:secondary_recipient.capital_county
+			scope:recipient = { has_claim_on = scope:secondary_recipient.capital_county }
+		}
+		multiply = 0
+	}
+	min = 0
 }
 
+# A council seat is worth what the holder can do in it: their skills, and their ambition. Nothing if they already sit.
 qpq_offer_office_points_value = {
-	value = 22
+	value = 8
+	add = {
+		value = scope:recipient.diplomacy
+		add = scope:recipient.martial
+		add = scope:recipient.stewardship
+		add = scope:recipient.intrigue
+		divide = 4
+		multiply = 0.9
+	}
 	if = {
 		limit = { scope:recipient = { has_trait = ambitious } }
 		add = 8
 	}
 	if = {
 		limit = { scope:recipient = { is_councillor_of = scope:actor } }
-		add = -22
+		multiply = 0
 	}
 }
 
+# Letting go of a hold over them: worth what the hold was worth. A strong hook is a leash; a weak one a nuisance.
 qpq_offer_release_hook_points_value = {
-	value = 30
+	value = 14
 	if = {
 		limit = { scope:actor = { has_strong_hook = scope:recipient } }
-		add = 20
+		add = 31
 	}
 }
 
+# The payer's word is worth their standing and their reputation for keeping it
 qpq_offer_my_word_points_value = {
-	value = 12
-	if = {
-		limit = { scope:actor = { highest_held_title_tier >= tier_kingdom } }
-		add = 8
+	value = 6
+	add = {
+		value = scope:actor.prestige_level
+		multiply = 3
+		max = 15
 	}
+	if = {
+		limit = { scope:actor = { has_trait = honest } }
+		add = 6
+	}
+	if = {
+		limit = {
+			scope:actor = {
+				OR = {
+					has_trait = deceitful
+					has_trait = arbitrary
+				}
+			}
+		}
+		add = -8
+	}
+	min = 0
 }
 
 # A secret is worth what it can do to the one it is on, to the one who gets it. With a person named, this is the
 # sum of what each is worth (qpq_gift_secret_points_value); with none named it is a modest, unexamined sum.
 qpq_offer_secret_points_value = {
-	value = 12
+	value = 0
 	if = {
 		limit = { exists = scope:qpq_gift_secret_points }
-		value = scope:qpq_gift_secret_points
+		add = scope:qpq_gift_secret_points
+	}
+	else = {
+		add = 12
 	}
 }
 
+# Easier terms are worth most to a vassal who is strong enough to use them, and to one who feels wronged
 qpq_offer_contract_points_value = {
-	value = 35
+	value = 22
 	if = {
 		limit = { scope:recipient = { has_trait = greedy } }
 		add = 5
 	}
+	if = {
+		limit = { scope:recipient = { opinion = { target = scope:actor value < 0 } } }
+		add = 8
+	}
+	if = {
+		limit = { scope:recipient = { is_powerful_vassal = yes } }
+		add = 10
+	}
 }
 
+# Being named heir is worth the crown it leads to
 qpq_offer_succession_points_value = {
-	value = 40
+	value = 18
+	if = {
+		limit = { scope:actor = { highest_held_title_tier = tier_county } }
+		add = 6
+	}
+	else_if = {
+		limit = { scope:actor = { highest_held_title_tier = tier_duchy } }
+		add = 16
+	}
+	else_if = {
+		limit = { scope:actor = { highest_held_title_tier = tier_kingdom } }
+		add = 28
+	}
+	else_if = {
+		limit = { scope:actor = { highest_held_title_tier = tier_empire } }
+		add = 40
+	}
 }
 
+# Freedom is worth most to the one held, then to the family of those held, and nothing to someone with no one in a cell
 qpq_offer_clemency_points_value = {
-	value = 30
+	value = 0
+	if = {
+		limit = { scope:recipient = { is_imprisoned_by = scope:actor } }
+		add = 45
+	}
+	if = {
+		limit = { scope:actor = { any_prisoner = { is_close_family_of = scope:recipient } } }
+		add = 30
+	}
+	max = 60
 }
 
+# Men lent are worth their number against the borrower's own, and most to one at war
 qpq_offer_arms_points_value = {
-	value = 12
+	value = 6
+	add = {
+		value = scope:actor.max_military_strength
+		divide = { value = scope:recipient.max_military_strength min = 1 }
+		multiply = 12
+		max = 24
+	}
 	if = {
 		limit = { scope:recipient = { is_at_war = yes } }
 		add = 15
@@ -329,30 +429,41 @@ qpq_offer_arms_points_value = {
 # An artifact is worth what it is and what it does for the one who gets it (qpq_gift_artifact_points_value, summed
 # over the artifacts named); with none named it is a modest, unexamined sum.
 qpq_offer_artifact_points_value = {
-	value = 14
+	value = 0
 	if = {
 		limit = { exists = scope:qpq_gift_artifact_points }
-		value = scope:qpq_gift_artifact_points
+		add = scope:qpq_gift_artifact_points
+	}
+	else = {
+		add = 14
 	}
 }
 
+# Favour from the church is worth most to the damned and the devout
 qpq_offer_church_points_value = {
-	value = 25
-	if = {
-		limit = { scope:recipient = { has_trait = zealous } }
-		add = 15
-	}
+	value = 14
 	if = {
 		limit = { scope:recipient = { has_trait = excommunicated } }
-		add = 25
+		add = 35
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = zealous } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { piety_level <= 1 } }
+		add = 8
 	}
 }
 
+# A promise not to strike is worth the threat it lifts: the stronger the promiser against the one promised, the more
 qpq_offer_restraint_points_value = {
-	value = 15
-	if = {
-		limit = { scope:recipient = { liege ?= scope:actor } }
-		add = 10
+	value = 6
+	add = {
+		value = scope:actor.max_military_strength
+		divide = { value = scope:recipient.max_military_strength min = 1 }
+		multiply = 14
+		max = 28
 	}
 	if = {
 		limit = { scope:recipient = { has_trait = paranoid } }
@@ -873,7 +984,7 @@ qpq_gift_secret_points_value = {
 				is_criminal_for = secret_owner
 			}
 		}
-		value = 28
+		add = 20
 	}
 	else_if = {
 		limit = {
@@ -883,7 +994,7 @@ qpq_gift_secret_points_value = {
 				is_shunned_for = secret_owner
 			}
 		}
-		value = 18
+		add = 10
 	}
 	# How much their ruin would mean to the one who gets it
 	if = {

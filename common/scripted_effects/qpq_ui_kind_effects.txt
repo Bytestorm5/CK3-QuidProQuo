@@ -2549,7 +2549,11 @@ qpq_ui_leg_t_refresh_effect = {
 					multiply = -1
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_other value = 0 }
+			set_variable = { name = qpq_ui_t_a_other value = qpq_price_of_loyalty_goal_sw_value }
+			if = {
+				limit = { qpq_price_of_loyalty_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+			}
 			if = {
 				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value } }
 				set_variable = { name = qpq_ui_t_a_other value = -1000 }
@@ -2803,7 +2807,11 @@ qpq_ui_leg_t_refresh_effect = {
 					multiply = -1
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_other value = 0 }
+			set_variable = { name = qpq_ui_t_a_other value = qpq_electoral_capitulation_goal_sw_value }
+			if = {
+				limit = { qpq_electoral_capitulation_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+			}
 			if = {
 				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value } }
 				set_variable = { name = qpq_ui_t_a_other value = -1000 }
@@ -6458,7 +6466,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_chartered_conquest_goal_sw_value }
+			if = {
+				limit = { qpq_chartered_conquest_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -6572,7 +6584,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_sanctioned_conquest_goal_sw_value }
+			if = {
+				limit = { qpq_sanctioned_conquest_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -6683,7 +6699,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_marcher_charge_goal_sw_value }
+			if = {
+				limit = { qpq_marcher_charge_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -6788,7 +6808,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_holy_sponsorship_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7008,7 +7028,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_electoral_purchase_goal_sw_value }
+			if = {
+				limit = { qpq_electoral_purchase_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7210,7 +7234,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_licensed_feud_goal_sw_value }
+			if = {
+				limit = { qpq_licensed_feud_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7316,7 +7344,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_dossier_goal_sw_value }
+			if = {
+				limit = { qpq_dossier_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7439,7 +7471,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_quiet_removal_goal_sw_value }
+			if = {
+				limit = { qpq_quiet_removal_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7551,7 +7587,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_heir_question_goal_sw_value }
+			if = {
+				limit = { qpq_heir_question_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7670,7 +7710,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_snatch_goal_sw_value }
+			if = {
+				limit = { qpq_snatch_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7773,7 +7817,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_dispossession_goal_sw_value }
+			if = {
+				limit = { qpq_dispossession_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -7880,7 +7928,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_the_cloister_goal_sw_value }
+			if = {
+				limit = { qpq_the_cloister_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8109,7 +8161,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_hand_over_goal_sw_value }
+			if = {
+				limit = { qpq_hand_over_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8203,7 +8259,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_hand_over_artifact_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8305,7 +8361,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_renunciation_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8507,7 +8563,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_blessing_for_a_feud_goal_sw_value }
+			if = {
+				limit = { qpq_blessing_for_a_feud_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8712,7 +8772,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_mutual_defense_league_goal_sw_value }
+			if = {
+				limit = { qpq_mutual_defense_league_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8765,7 +8829,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_faction_pledge_goal_sw_value }
+			if = {
+				limit = { qpq_faction_pledge_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8869,7 +8937,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_title_swap_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -8923,7 +8991,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_coup_pact_goal_sw_value }
+			if = {
+				limit = { qpq_coup_pact_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9029,7 +9101,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_proxy_war_goal_sw_value }
+			if = {
+				limit = { qpq_proxy_war_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9135,7 +9211,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_partition_pact_goal_sw_value }
+			if = {
+				limit = { qpq_partition_pact_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9184,7 +9264,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_secret_alliance_goal_sw_value }
+			if = {
+				limit = { qpq_secret_alliance_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9232,7 +9316,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_bought_truce_goal_sw_value }
+			if = {
+				limit = { qpq_bought_truce_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9345,7 +9433,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_faithless_ally_goal_sw_value }
+			if = {
+				limit = { qpq_faithless_ally_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9399,7 +9491,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_turncoat_goal_sw_value }
+			if = {
+				limit = { qpq_turncoat_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9452,7 +9548,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_seed_the_separatists_goal_sw_value }
+			if = {
+				limit = { qpq_seed_the_separatists_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9659,7 +9759,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_extradition_goal_sw_value }
+			if = {
+				limit = { qpq_extradition_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9712,7 +9816,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_buy_a_councillor_goal_sw_value }
+			if = {
+				limit = { qpq_buy_a_councillor_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9765,7 +9873,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_stay_home_goal_sw_value }
+			if = {
+				limit = { qpq_stay_home_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9818,7 +9930,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_defection_pact_goal_sw_value }
+			if = {
+				limit = { qpq_defection_pact_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -9919,7 +10035,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_secret_clause_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10038,7 +10154,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_hire_the_hashashin_goal_sw_value }
+			if = {
+				limit = { qpq_hire_the_hashashin_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10159,7 +10279,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_excommunication_for_hire_goal_sw_value }
+			if = {
+				limit = { qpq_excommunication_for_hire_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10263,7 +10387,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_dispensation_for_gold_goal_sw_value }
+			if = {
+				limit = { qpq_dispensation_for_gold_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10378,7 +10506,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_steer_the_holy_war_goal_sw_value }
+			if = {
+				limit = { qpq_steer_the_holy_war_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10485,7 +10617,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_purchase_a_mitre_goal_sw_value }
+			if = {
+				limit = { qpq_purchase_a_mitre_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10600,7 +10736,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_bought_claim_goal_sw_value }
+			if = {
+				limit = { qpq_bought_claim_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10649,7 +10789,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_absolution_by_concession_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10766,7 +10906,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_holy_warrant_goal_sw_value }
+			if = {
+				limit = { qpq_holy_warrant_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10887,7 +11031,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_buy_a_bull_goal_sw_value }
+			if = {
+				limit = { qpq_buy_a_bull_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10998,7 +11146,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_conclave_votes_goal_sw_value }
+			if = {
+				limit = { qpq_conclave_votes_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11047,7 +11199,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_council_lobbying_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11095,7 +11247,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_caliphal_investiture_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11148,7 +11300,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_name_in_the_khutba_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11262,7 +11414,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_fatwa_for_hire_goal_sw_value }
+			if = {
+				limit = { qpq_fatwa_for_hire_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11377,7 +11533,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_fund_the_dawa_goal_sw_value }
+			if = {
+				limit = { qpq_fund_the_dawa_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11431,7 +11591,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_crowning_the_usurper_goal_sw_value }
+			if = {
+				limit = { qpq_crowning_the_usurper_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11479,7 +11643,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_pliant_patriarch_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11595,7 +11759,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_favourable_omens_goal_sw_value }
+			if = {
+				limit = { qpq_favourable_omens_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11644,7 +11812,7 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_consecration_rites_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11758,7 +11926,11 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_temple_patronage_goal_sw_value }
+			if = {
+				limit = { qpq_temple_patronage_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {

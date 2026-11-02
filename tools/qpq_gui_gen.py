@@ -108,6 +108,9 @@ def gen_gui(write):
 			scrollbox = {
 				layoutpolicy_vertical = expanding
 				size = { 290 400 }
+				min_width = 290
+				max_width = 290
+				min_height = 400
 
 				blockoverride "scrollbox_content" {
 					vbox = {
@@ -124,10 +127,10 @@ def gen_gui(write):
         edit = ""
         if edit_popup:
             edit = """
-						button_standard = {
+						button_edit_text = {
 							%s
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "%s"
 						}
 """ % ('visible = "%s"' % edit_visible if edit_visible else "", popup(edit_popup))
@@ -137,9 +140,9 @@ def gen_gui(write):
 						layoutpolicy_horizontal = expanding
 						spacing = 4
 %s%s
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "%s"
 						}
 					}
@@ -151,6 +154,9 @@ def gen_gui(write):
 			vbox = {
 				layoutpolicy_vertical = expanding
 				size = { 330 400 }
+				min_width = 330
+				max_width = 330
+				min_height = 400
 				margin = { 12 8 }
 				spacing = 4
 

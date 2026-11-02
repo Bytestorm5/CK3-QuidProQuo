@@ -65,6 +65,9 @@ window = {
 			scrollbox = {
 				layoutpolicy_vertical = expanding
 				size = { 290 400 }
+				min_width = 290
+				max_width = 290
+				min_height = 400
 
 				blockoverride "scrollbox_content" {
 					vbox = {
@@ -1118,6 +1121,9 @@ window = {
 			vbox = {
 				layoutpolicy_vertical = expanding
 				size = { 330 400 }
+				min_width = 330
+				max_width = 330
+				min_height = 400
 				margin = { 12 8 }
 				spacing = 4
 
@@ -1144,16 +1150,16 @@ window = {
 							text = "QPQ_UI_BULLET_DEED_I"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							visible = "[GetScriptedGui('qpq_ui_config_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_nodeed_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1170,16 +1176,16 @@ window = {
 							text = "[GetPlayer.Custom('QpqUiGoldLine_t')]"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'gold_me' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_gold').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1194,16 +1200,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_land"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'land_me' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_land_clear_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1232,9 +1238,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_claim"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_claim').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1249,9 +1255,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_office"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_office').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1266,9 +1272,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_release_hook"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_release_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1283,9 +1289,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_my_word"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_my_word').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1300,16 +1306,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_secret"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_me' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_secret_clear_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1338,9 +1344,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_contract"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1355,9 +1361,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_succession"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_succession').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1372,9 +1378,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_clemency"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_clemency').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1389,9 +1395,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_arms"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_arms').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1406,16 +1412,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_artifact"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_me' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_artifact_clear_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1444,9 +1450,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_church"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_church').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1461,9 +1467,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_restraint"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1478,9 +1484,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_hook"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1702,6 +1708,9 @@ window = {
 			vbox = {
 				layoutpolicy_vertical = expanding
 				size = { 330 400 }
+				min_width = 330
+				max_width = 330
+				min_height = 400
 				margin = { 12 8 }
 				spacing = 4
 
@@ -1728,16 +1737,16 @@ window = {
 							text = "QPQ_UI_BULLET_DEED_T"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							visible = "[GetScriptedGui('qpq_ui_config_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_nodeed_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1754,16 +1763,16 @@ window = {
 							text = "[GetPlayer.Custom('QpqUiGoldLine_i')]"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'gold_them' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_gold').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1778,16 +1787,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_land"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'land_them' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_land_clear_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1816,9 +1825,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_claim"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_claim').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1833,9 +1842,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_office"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_office').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1850,9 +1859,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_release_hook"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_release_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1867,9 +1876,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_my_word"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_my_word').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1884,16 +1893,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_secret"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_them' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_secret_clear_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -1922,9 +1931,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_contract"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1939,9 +1948,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_succession"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_succession').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1956,9 +1965,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_clemency"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_clemency').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1973,9 +1982,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_arms"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_arms').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -1990,16 +1999,16 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_artifact"
 						}
 
-						button_standard = {
+						button_edit_text = {
 							
-							size = { 70 30 }
-							text = "QPQ_UI_EDIT"
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
 							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'artifact_them' )]"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_artifact_clear_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						}
 					}
@@ -2028,9 +2037,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_church"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_church').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -2045,9 +2054,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_restraint"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -2062,9 +2071,9 @@ window = {
 							text = "QPQ_UI_BULLET_OFFER_hook"
 						}
 
-						button_standard = {
-							size = { 90 30 }
-							text = "QPQ_UI_REMOVE"
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
@@ -2082,6 +2091,9 @@ window = {
 			scrollbox = {
 				layoutpolicy_vertical = expanding
 				size = { 290 400 }
+				min_width = 290
+				max_width = 290
+				min_height = 400
 
 				blockoverride "scrollbox_content" {
 					vbox = {

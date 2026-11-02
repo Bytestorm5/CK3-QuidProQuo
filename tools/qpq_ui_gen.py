@@ -19,6 +19,7 @@ Hand-written companions:
 import os
 import re
 from qpq_kinds import KINDS, GROUPS
+import qpq_goals as goals
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -346,6 +347,18 @@ def keep_pick(k, L):
     return ""
 
 
+def goal_a_other(k, L):
+    """What the AI on the other side of the table wants from this Ask, when it is the one deciding (swapped
+    orientation: scope:actor is them)."""
+    if not goals.goal_value(k, True):
+        return "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+    s = "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = qpq_%s_goal_sw_value }\n" % (L, k["key"])
+    if goals.goal_refusal(k, True):
+        s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_%s_goal_sw_refuses_trigger = yes }\n"
+              "\t\t\t\tset_variable = { name = qpq_ui_%s_a_other value = -1000 }\n\t\t\t}\n") % (k["key"], L)
+    return s
+
+
 def compute_kind(k, L, block):
     key = k["key"]
     s = ""
@@ -380,12 +393,12 @@ def compute_kind(k, L, block):
         # They are the payer: they gain the deed and pay the goods
         s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_ask\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_demand_value\n\t\t\t\t\tmultiply = -0.6\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
         s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -0.8\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
-        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+        s += goal_a_other(k, L)
     else:
         # They do the deed and are paid
         s += "\t\t\tset_variable = { name = qpq_ui_%s_a_ask value = qpq_%s_demand_value }\n" % (L, key)
         s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -1\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
-        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+        s += goal_a_other(k, L)
         # They do the deed: some deeds they will not do at any price
         s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value } }\n"
               "\t\t\t\tset_variable = { name = qpq_ui_%s_a_other value = -1000 }\n\t\t\t}\n") % (key, L)

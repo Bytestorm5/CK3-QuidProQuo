@@ -609,3 +609,4 @@
  QPQ_UI_SECRET_CHOSEN:0 "People to hand over a secret on"
  QPQ_UI_SECRET_AVAILABLE:0 "People a secret is known about, that the other side does not know"
  QPQ_UI_SECRET_NONE:0 "No other secret could be handed over."
+ QPQ_REASON_GOALS:0 "What they want, and what it does to those they care about"

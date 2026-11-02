@@ -407,6 +407,15 @@ qpq_chartered_conquest_interaction = {
 			scope:qpq_o_charter ?= yes
 			desc = QPQ_REASON_HONOURABLE_CHARTER
 		}
+		modifier = {
+			add = qpq_chartered_conquest_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_chartered_conquest_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -833,6 +842,15 @@ qpq_sanctioned_conquest_interaction = {
 			scope:recipient = { has_trait = craven }
 			desc = QPQ_REASON_CRAVEN_WAR
 		}
+		modifier = {
+			add = qpq_sanctioned_conquest_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_sanctioned_conquest_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -1232,6 +1250,15 @@ qpq_marcher_charge_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_marcher_charge_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_marcher_charge_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -1633,6 +1660,10 @@ qpq_holy_sponsorship_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_holy_sponsorship_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -2430,6 +2461,15 @@ qpq_electoral_purchase_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_electoral_purchase_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_electoral_purchase_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -3597,6 +3637,15 @@ qpq_licensed_feud_interaction = {
 			scope:recipient = { has_relation_rival = scope:secondary_recipient }
 			desc = QPQ_REASON_HATES_TARGET
 		}
+		modifier = {
+			add = qpq_licensed_feud_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_licensed_feud_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -4004,6 +4053,15 @@ qpq_dossier_interaction = {
 			add = { value = scope:recipient.intrigue multiply = 1 max = 20 }
 			always = yes
 			desc = QPQ_REASON_INTRIGUE_SKILL
+		}
+		modifier = {
+			add = qpq_dossier_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_dossier_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -4440,6 +4498,15 @@ qpq_quiet_removal_interaction = {
 			scope:recipient = { OR = { has_trait = sadistic has_trait = callous } }
 			desc = QPQ_REASON_RUTHLESS
 		}
+		modifier = {
+			add = qpq_quiet_removal_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_quiet_removal_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -4848,6 +4915,15 @@ qpq_heir_question_interaction = {
 			add = -30
 			scope:recipient = { is_close_family_of = scope:secondary_recipient }
 			desc = QPQ_REASON_TARGET_IS_KIN
+		}
+		modifier = {
+			add = qpq_heir_question_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_heir_question_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -5265,6 +5341,15 @@ qpq_snatch_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_snatch_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_snatch_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -5661,6 +5746,15 @@ qpq_dispossession_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_dispossession_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_dispossession_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -6071,6 +6165,15 @@ qpq_the_cloister_interaction = {
 			add = 10
 			scope:recipient = { has_trait = zealous }
 			desc = QPQ_REASON_ZEALOUS_VOWS
+		}
+		modifier = {
+			add = qpq_the_cloister_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_the_cloister_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -6879,6 +6982,15 @@ qpq_hand_over_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_hand_over_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_hand_over_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -7274,6 +7386,10 @@ qpq_hand_over_artifact_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_hand_over_artifact_goal_value
+			desc = QPQ_REASON_GOALS
+		}
 	}
 
 	on_accept = {
@@ -7668,6 +7784,10 @@ qpq_renunciation_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_renunciation_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -8316,6 +8436,15 @@ qpq_price_of_loyalty_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_price_of_loyalty_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_price_of_loyalty_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -8715,6 +8844,15 @@ qpq_blessing_for_a_feud_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_blessing_for_a_feud_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_blessing_for_a_feud_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -9387,6 +9525,15 @@ qpq_electoral_capitulation_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_electoral_capitulation_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_electoral_capitulation_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -9784,6 +9931,15 @@ qpq_mutual_defense_league_interaction = {
 			scope:recipient = { opinion = { target = scope:actor.liege value <= -20 } }
 			desc = QPQ_REASON_RESENTS_LIEGE
 		}
+		modifier = {
+			add = qpq_mutual_defense_league_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_mutual_defense_league_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -10168,6 +10324,15 @@ qpq_faction_pledge_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_faction_pledge_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_faction_pledge_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -10577,6 +10742,10 @@ qpq_title_swap_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_title_swap_goal_value
+			desc = QPQ_REASON_GOALS
+		}
 	}
 
 	on_accept = {
@@ -10968,6 +11137,15 @@ qpq_coup_pact_interaction = {
 			add = 20
 			scope:recipient = { opinion = { target = scope:actor.liege value <= -30 } }
 			desc = QPQ_REASON_RESENTS_LIEGE
+		}
+		modifier = {
+			add = qpq_coup_pact_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_coup_pact_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -11395,6 +11573,15 @@ qpq_proxy_war_interaction = {
 			scope:recipient = { is_allied_to = scope:secondary_recipient }
 			desc = QPQ_REASON_ALLIED_TO_TARGET
 		}
+		modifier = {
+			add = qpq_proxy_war_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_proxy_war_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -11810,6 +11997,15 @@ qpq_partition_pact_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_partition_pact_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_partition_pact_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -12188,6 +12384,15 @@ qpq_secret_alliance_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_secret_alliance_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_secret_alliance_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -12581,6 +12786,15 @@ qpq_bought_truce_interaction = {
 			add = -60
 			scope:recipient = { qpq_is_head_of_faith_trigger = yes }
 			desc = QPQ_REASON_HEAD_OF_FAITH
+		}
+		modifier = {
+			add = qpq_bought_truce_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_bought_truce_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -12991,6 +13205,15 @@ qpq_faithless_ally_interaction = {
 			scope:recipient = { has_trait = honest }
 			desc = QPQ_REASON_HONOUR_BOUND
 		}
+		modifier = {
+			add = qpq_faithless_ally_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_faithless_ally_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -13374,6 +13597,15 @@ qpq_turncoat_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_turncoat_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_turncoat_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -13769,6 +14001,15 @@ qpq_seed_the_separatists_interaction = {
 			add = 10
 			scope:recipient = { has_trait = ambitious }
 			desc = QPQ_REASON_AMBITIOUS_CONQUEST
+		}
+		modifier = {
+			add = qpq_seed_the_separatists_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_seed_the_separatists_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -14585,6 +14826,15 @@ qpq_extradition_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_extradition_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_extradition_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -14974,6 +15224,15 @@ qpq_buy_a_councillor_interaction = {
 			scope:recipient = { opinion = { target = scope:recipient.liege value >= 40 } }
 			desc = QPQ_REASON_LOVES_TARGET
 		}
+		modifier = {
+			add = qpq_buy_a_councillor_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_buy_a_councillor_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -15359,6 +15618,15 @@ qpq_stay_home_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_stay_home_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_stay_home_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -15743,6 +16011,15 @@ qpq_defection_pact_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_defection_pact_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_defection_pact_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -16148,6 +16425,10 @@ qpq_secret_clause_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_secret_clause_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -16560,6 +16841,15 @@ qpq_hire_the_hashashin_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_hire_the_hashashin_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_hire_the_hashashin_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -16977,6 +17267,15 @@ qpq_excommunication_for_hire_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_excommunication_for_hire_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_excommunication_for_hire_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -17381,6 +17680,15 @@ qpq_dispensation_for_gold_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_dispensation_for_gold_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_dispensation_for_gold_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -17792,6 +18100,15 @@ qpq_steer_the_holy_war_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_steer_the_holy_war_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_steer_the_holy_war_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -18193,6 +18510,15 @@ qpq_purchase_a_mitre_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_purchase_a_mitre_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_purchase_a_mitre_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -18604,6 +18930,15 @@ qpq_bought_claim_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_bought_claim_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_bought_claim_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -18986,6 +19321,10 @@ qpq_absolution_by_concession_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_absolution_by_concession_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -19399,6 +19738,15 @@ qpq_holy_warrant_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_holy_warrant_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_holy_warrant_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
@@ -19814,6 +20162,15 @@ qpq_buy_a_bull_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_buy_a_bull_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_buy_a_bull_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -20220,6 +20577,15 @@ qpq_conclave_votes_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_conclave_votes_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_conclave_votes_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -20604,6 +20970,10 @@ qpq_council_lobbying_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_council_lobbying_goal_value
+			desc = QPQ_REASON_GOALS
+		}
 	}
 
 	on_accept = {
@@ -20986,6 +21356,10 @@ qpq_caliphal_investiture_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_caliphal_investiture_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -21374,6 +21748,10 @@ qpq_name_in_the_khutba_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_name_in_the_khutba_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -21791,6 +22169,15 @@ qpq_fatwa_for_hire_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_fatwa_for_hire_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_fatwa_for_hire_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -22204,6 +22591,15 @@ qpq_fund_the_dawa_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_fund_the_dawa_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_fund_the_dawa_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -22592,6 +22988,15 @@ qpq_crowning_the_usurper_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_crowning_the_usurper_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_crowning_the_usurper_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -22976,6 +23381,10 @@ qpq_pliant_patriarch_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_pliant_patriarch_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -23392,6 +23801,15 @@ qpq_favourable_omens_interaction = {
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
 		}
+		modifier = {
+			add = qpq_favourable_omens_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_favourable_omens_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
+		}
 	}
 
 	on_accept = {
@@ -23777,6 +24195,10 @@ qpq_consecration_rites_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_consecration_rites_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -24190,6 +24612,15 @@ qpq_temple_patronage_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_temple_patronage_goal_value
+			desc = QPQ_REASON_GOALS
+		}
+		modifier = {
+			add = -1000
+			qpq_temple_patronage_goal_refuses_trigger = yes
+			desc = QPQ_REASON_REFUSES
 		}
 	}
 
