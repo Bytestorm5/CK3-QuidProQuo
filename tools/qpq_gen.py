@@ -633,7 +633,7 @@ qpq_hub.1 = {
 
 """
     for gi, (g, _gname) in enumerate(GROUPS):
-        kinds = [k for k in KINDS if k["group"] == g]
+        kinds = [k for k in KINDS if k["group"] == g and not k.get("carrier")]
         out += "\toption = {\n\t\tname = qpq_hub.group.%s\n\t\ttrigger = {\n\t\t\tOR = {\n" % g
         for k in kinds:
             out += "\t\t\t\tAND = {\n%s" % block(k["rel"], 5)
@@ -644,7 +644,7 @@ qpq_hub.1 = {
         out += "\t\ttrigger_event = qpq_hub.%d\n\t}\n" % (10 + gi)
     out += "\toption = {\n\t\tname = qpq_hub.cancel\n\t}\n}\n\n"
     for gi, (g, _gname) in enumerate(GROUPS):
-        kinds = [k for k in KINDS if k["group"] == g]
+        kinds = [k for k in KINDS if k["group"] == g and not k.get("carrier")]
         out += "qpq_hub.%d = {\n\ttype = character_event\n\ttitle = qpq_hub.group.%s\n" % (10 + gi, g)
         out += "\tdesc = qpq_hub.%d.desc\n\ttheme = intrigue\n\tleft_portrait = root\n\tright_portrait = scope:recipient\n\n" % (10 + gi)
         for k in kinds:

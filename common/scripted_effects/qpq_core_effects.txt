@@ -712,6 +712,11 @@ qpq_story_tick_effect = {
 			qpq_void_pact_effect = yes
 		}
 		else_if = {
+			# The other half of the deal was broken: this one is off
+			limit = { has_variable = qpq_released }
+			qpq_void_pact_effect = yes
+		}
+		else_if = {
 			limit = { qpq_kind_invalid_trigger = yes }
 			qpq_void_pact_effect = yes
 		}
@@ -986,6 +991,16 @@ qpq_breach_pact_effect = {
 			left_icon = $BREACHER$
 		}
 	}
+	# The other half of the same deal is released: whoever broke one side cannot hold the other to theirs
+	if = {
+		limit = { has_variable = qpq_mate }
+		var:qpq_mate = {
+			if = {
+				limit = { qpq_story_is_active_trigger = yes }
+				set_variable = qpq_released
+			}
+		}
+	}
 	end_story = yes
 }
 
@@ -1183,6 +1198,12 @@ qpq_on_pact_exposed_effect = {
 		if = {
 			limit = { exists = scope:qpq_dead_story }
 			scope:qpq_dead_story = { end_story = yes }
+		}
+
+		# The other half of the same deal comes out with this one
+		if = {
+			limit = { exists = var:qpq_mate_secret }
+			var:qpq_mate_secret = { expose_secret = scope:qpq_exposer }
 		}
 	}
 }

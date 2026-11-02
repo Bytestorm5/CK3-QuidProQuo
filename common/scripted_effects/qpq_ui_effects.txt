@@ -1,19 +1,36 @@
-﻿# Quid Pro Quo - the Propose-a-Pact panel (gui/qpq_pact_window.gui)
+# Quid Pro Quo - the Backroom Deal panel (gui/qpq_pact_window.gui)
 #
 # Root is always the player. The panel's state lives in variables on the player, so it is the same on
 # every machine in multiplayer:
 #   qpq_ui_open                     the window is shown
-#   qpq_ui_recipient                who the pact is proposed to
-#   qpq_ui_kind                     the chosen Ask (flag:none until one is picked)
-#   qpq_ui_pick_char / qpq_ui_target_title / qpq_ui_target_artifact   the picked target
-#   qpq_ui_o_<offer>, qpq_ui_timing, qpq_ui_qpq_x_<term>              the ticked boxes
-# Everything else (tiers, price, acceptance, candidate lists) is recomputed by qpq_ui_refresh_effect
-# from those, by the generated helpers in qpq_ui_kind_effects.txt.
+#   qpq_ui_recipient                who the deal is put to
+#   qpq_ui_charter                  publish the deal as a Charter
+# and, for each of the deal's two legs ("t": they do the deed and you give the goods; "i": you do the deed
+# and they give the goods):
+#   qpq_ui_<leg>_kind               the chosen deed (flag:none for goods only)
+#   qpq_ui_<leg>_pick_char / _target_title / _target_artifact   the picked target
+#   qpq_ui_<leg>_o_<good>, _timing, _qpq_x_<term>               the ticked boxes
+# Everything else (tiers, prices, acceptance, candidate lists) is recomputed by qpq_ui_refresh_effect from
+# those, by the generated helpers in qpq_ui_kind_effects.txt.
+#
+# scope:qpq_deal_me and scope:qpq_deal_them are the two characters. scope:actor and scope:recipient are
+# whichever of them is the proposer of the Ask being worked on (see qpq_deal_orient_*_effect).
+
+# The proposer is me
+qpq_deal_orient_normal_effect = {
+	scope:qpq_deal_me = { save_scope_as = actor }
+	scope:qpq_deal_them = { save_scope_as = recipient }
+}
+
+# The proposer is them: they put the Ask to me
+qpq_deal_orient_swapped_effect = {
+	scope:qpq_deal_them = { save_scope_as = actor }
+	scope:qpq_deal_me = { save_scope_as = recipient }
+}
 
 # Open the panel on RECIPIENT
 qpq_ui_open_effect = {
 	set_variable = { name = qpq_ui_recipient value = $RECIPIENT$ }
-	set_variable = { name = qpq_ui_kind value = flag:none }
 	qpq_ui_clear_choices_effect = yes
 	qpq_ui_refresh_effect = yes
 	set_variable = qpq_ui_open
@@ -26,39 +43,15 @@ qpq_ui_close_effect = {
 	}
 	qpq_ui_clear_choices_effect = yes
 	qpq_ui_clear_derived_effect = yes
-	set_variable = { name = qpq_ui_kind value = flag:none }
 }
 
-# The parties and the picked target, as the scopes the pact engine reads
+# The two characters of the deal
 qpq_ui_load_parties_effect = {
-	save_scope_as = actor
+	save_scope_as = qpq_deal_me
 	if = {
 		limit = { exists = var:qpq_ui_recipient }
-		var:qpq_ui_recipient = { save_scope_as = recipient }
-	}
-}
-
-qpq_ui_load_pick_effect = {
-	if = {
-		limit = {
-			exists = var:qpq_ui_pick_char
-			qpq_ui_kind_needs_char_target_trigger = yes
-		}
-		var:qpq_ui_pick_char = { save_scope_as = secondary_recipient }
-	}
-	else_if = {
-		limit = {
-			exists = var:qpq_ui_target_title
-			qpq_ui_kind_needs_title_target_trigger = yes
-		}
-		var:qpq_ui_target_title = { save_scope_as = target }
-	}
-	else_if = {
-		limit = {
-			exists = var:qpq_ui_target_artifact
-			qpq_ui_kind_needs_artifact_target_trigger = yes
-		}
-		var:qpq_ui_target_artifact = { save_scope_as = target }
+		var:qpq_ui_recipient = { save_scope_as = qpq_deal_them }
+		qpq_deal_orient_normal_effect = yes
 	}
 }
 
@@ -67,81 +60,10 @@ qpq_ui_refresh_effect = {
 	qpq_ui_clear_derived_effect = yes
 	qpq_ui_load_parties_effect = yes
 	if = {
-		limit = {
-			exists = scope:recipient
-			NOT = { var:qpq_ui_kind = flag:none }
-		}
-		qpq_ui_fill_candidates_effect = yes
-		# A pick stays while it is still eligible (it is in the full, uncapped pool qpq_ui_pool),
-		# and is kept visible even if it falls outside the capped list
-		if = {
-			limit = { exists = var:qpq_ui_pick_char }
-			if = {
-				limit = {
-					qpq_ui_kind_needs_char_target_trigger = yes
-					var:qpq_ui_pick_char = { is_in_list = qpq_ui_pool_char }
-				}
-				if = {
-					limit = {
-						NOT = { is_target_in_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char } }
-					}
-					add_to_variable_list = { name = qpq_ui_candidates target = var:qpq_ui_pick_char }
-				}
-			}
-			else = {
-				remove_variable = qpq_ui_pick_char
-			}
-		}
-		if = {
-			limit = { exists = var:qpq_ui_target_title }
-			if = {
-				limit = {
-					qpq_ui_kind_needs_title_target_trigger = yes
-					var:qpq_ui_target_title = { is_in_list = qpq_ui_pool_title }
-				}
-				if = {
-					limit = {
-						NOT = { is_target_in_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title } }
-					}
-					add_to_variable_list = { name = qpq_ui_title_candidates target = var:qpq_ui_target_title }
-				}
-			}
-			else = {
-				remove_variable = qpq_ui_target_title
-			}
-		}
-		if = {
-			limit = { exists = var:qpq_ui_target_artifact }
-			if = {
-				limit = {
-					qpq_ui_kind_needs_artifact_target_trigger = yes
-					var:qpq_ui_target_artifact = { is_in_list = qpq_ui_pool_artifact }
-				}
-				if = {
-					limit = {
-						NOT = { is_target_in_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact } }
-					}
-					add_to_variable_list = { name = qpq_ui_artifact_candidates target = var:qpq_ui_target_artifact }
-				}
-			}
-			else = {
-				remove_variable = qpq_ui_target_artifact
-			}
-		}
-		# Filling the pickers reuses the target scopes, so the real pick is loaded after it
-		clear_saved_scope = secondary_recipient
-		clear_saved_scope = target
-		qpq_ui_load_pick_effect = yes
-		qpq_ui_load_choices_effect = yes
-		qpq_ui_compute_effect = yes
-		set_variable = {
-			name = qpq_ui_acc_other
-			value = {
-				value = var:qpq_ui_acc_total
-				subtract = var:qpq_ui_acc_ask
-				subtract = var:qpq_ui_acc_offers
-			}
-		}
+		limit = { exists = scope:qpq_deal_them }
+		qpq_ui_leg_t_refresh_effect = yes
+		qpq_ui_leg_i_refresh_effect = yes
+		qpq_ui_deal_finish_effect = yes
 	}
 }
 
@@ -155,28 +77,73 @@ qpq_ui_propose_effect = {
 		send_interface_toast = {
 			type = event_toast_effect_neutral
 			title = qpq_msg_proposal_changed_title
-			left_icon = scope:recipient
+			left_icon = scope:qpq_deal_them
 			custom_tooltip = qpq_msg_proposal_changed_tt
 		}
 	}
 	else = {
-		qpq_ui_save_proposed_kind_effect = yes
+		qpq_ui_save_deal_effect = yes
 		if = {
-			limit = { scope:recipient = { is_ai = yes } }
-			qpq_seal_proposed_kind_effect = yes
+			limit = { scope:qpq_deal_them = { is_ai = yes } }
+			qpq_seal_deal_effect = yes
 		}
 		else = {
-			scope:recipient = {
+			scope:qpq_deal_them = {
 				add_character_flag = { flag = qpq_considering_proposal days = 30 }
-				trigger_event = qpq_hub.50
+				trigger_event = qpq_deal.1
 			}
 			send_interface_toast = {
 				type = event_toast_effect_neutral
 				title = qpq_msg_proposal_sent_title
-				left_icon = scope:recipient
+				left_icon = scope:qpq_deal_them
 				custom_tooltip = qpq_msg_proposal_sent_tt
 			}
 		}
 		qpq_ui_close_effect = yes
+	}
+}
+
+# Seal the deal: each leg is a pact of the engine, and the two are tied to each other.
+# Scopes: qpq_deal_me, qpq_deal_them, qpq_deal_<leg>_kind and the rest of what qpq_ui_save_deal_effect saved.
+qpq_seal_deal_effect = {
+	if = {
+		limit = { exists = scope:qpq_deal_t_kind }
+		qpq_deal_seal_leg_t_effect = yes
+	}
+	if = {
+		limit = { exists = scope:qpq_deal_i_kind }
+		qpq_deal_seal_leg_i_effect = yes
+	}
+	qpq_deal_link_effect = yes
+}
+
+# Tie the two pacts of a deal together: breaking one releases the other, and exposing one exposes both
+qpq_deal_link_effect = {
+	if = {
+		limit = {
+			exists = scope:qpq_deal_t_story
+			exists = scope:qpq_deal_i_story
+		}
+		scope:qpq_deal_t_story = {
+			set_variable = { name = qpq_mate value = scope:qpq_deal_i_story }
+			qpq_deal_link_secrets_effect = { MATE = scope:qpq_deal_i_story }
+		}
+		scope:qpq_deal_i_story = {
+			set_variable = { name = qpq_mate value = scope:qpq_deal_t_story }
+			qpq_deal_link_secrets_effect = { MATE = scope:qpq_deal_t_story }
+		}
+	}
+}
+
+# Root: a pact story. Points both of its secrets at the first secret of the mate's pact.
+qpq_deal_link_secrets_effect = {
+	if = {
+		limit = {
+			exists = var:qpq_payer_secret
+			exists = var:qpq_agent_secret
+			exists = $MATE$.var:qpq_payer_secret
+		}
+		var:qpq_payer_secret = { set_variable = { name = qpq_mate_secret value = $MATE$.var:qpq_payer_secret } }
+		var:qpq_agent_secret = { set_variable = { name = qpq_mate_secret value = $MATE$.var:qpq_payer_secret } }
 	}
 }

@@ -2074,6 +2074,10 @@ qpq_hub.50 = {
 				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
 				desc = qpq_temple_patronage_proposal_desc
 			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:barter }
+				desc = qpq_barter_proposal_desc
+			}
 			desc = qpq_unknown_pact
 		}
 		first_valid = {

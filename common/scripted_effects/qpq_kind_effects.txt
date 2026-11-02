@@ -4316,6 +4316,51 @@ qpq_k_temple_patronage_exposed_effect = {
 	scope:qpq_payer = { add_piety = minor_piety_loss }
 }
 
+#### Exchange of Goods
+qpq_k_barter_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_barter_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_barter_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_barter_price_value }
+	}
+	if = {
+		limit = {
+			qpq_barter_payer_tier_value <= 0
+			qpq_barter_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = barter SECRET = exchange TERM = 1 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_barter_on_seal_effect = {
+	# nothing
+}
+qpq_k_barter_on_deliver_effect = {
+	# nothing
+}
+qpq_k_barter_on_end_effect = {
+	# nothing
+}
+qpq_k_barter_tick_effect = {
+	# nothing
+}
+qpq_k_barter_perform_effect = {
+	# nothing
+}
+qpq_k_barter_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_barter_exposed_effect = {
+	# nothing
+}
+
 ############ Dispatch (root: a pact story or pact secret) ############
 qpq_kind_on_deliver_effect = {
 	if = {
@@ -4561,6 +4606,10 @@ qpq_kind_on_deliver_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:barter }
+		qpq_k_barter_on_deliver_effect = yes
 	}
 }
 
@@ -4808,6 +4857,10 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:barter }
+		qpq_k_barter_on_end_effect = yes
 	}
 }
 
@@ -5177,6 +5230,10 @@ qpq_kind_ai_attempt_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:barter }
+		qpq_k_barter_ai_attempt_effect = yes
 	}
 }
 
@@ -5756,5 +5813,9 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:barter }
+		qpq_k_barter_seal_from_scopes_effect = yes
 	}
 }

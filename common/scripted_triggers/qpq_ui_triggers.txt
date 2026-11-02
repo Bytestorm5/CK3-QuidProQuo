@@ -1,31 +1,49 @@
-﻿# Quid Pro Quo - Propose-a-Pact panel: can the proposal be sent? (hand-written)
+# Quid Pro Quo - Backroom Deal panel: can the proposal be sent? (hand-written)
 # Root and this: the player. Scopes: actor (the player), recipient.
 # Used by the Propose button (as its failure reasons) and again when the proposal is sent,
 # after a last refresh, since the world may have moved on while the panel was open.
+# Each leg's own checks are generated (qpq_ui_leg_<leg>_ready_trigger in qpq_ui_kind_triggers.txt).
 
 qpq_ui_can_propose_trigger = {
 	custom_description = {
-		text = QPQ_UI_FAIL_NO_ASK
-		NOT = { var:qpq_ui_kind = flag:none }
+		text = QPQ_UI_FAIL_EMPTY
+		OR = {
+			has_variable = qpq_ui_t_ekind
+			has_variable = qpq_ui_i_ekind
+		}
 	}
-	custom_description = {
-		text = QPQ_UI_FAIL_NOT_POSSIBLE
-		qpq_ui_kind_still_possible_trigger = yes
+	qpq_ui_leg_t_ready_trigger = yes
+	qpq_ui_leg_i_ready_trigger = yes
+	# A deal of two deeds makes two pacts on each side
+	trigger_if = {
+		limit = {
+			has_variable = qpq_ui_t_ekind
+			has_variable = qpq_ui_i_ekind
+		}
+		custom_description = {
+			text = QPQ_UI_FAIL_ROOM
+			scope:actor = {
+				OR = {
+					NOT = { has_variable_list = qpq_pacts }
+					variable_list_size = { name = qpq_pacts value < qpq_pact_cap_minus_one_value }
+				}
+			}
+			scope:recipient = {
+				OR = {
+					NOT = { has_variable_list = qpq_pacts }
+					variable_list_size = { name = qpq_pacts value < qpq_pact_cap_minus_one_value }
+				}
+			}
+		}
 	}
-	custom_description = {
-		text = QPQ_UI_FAIL_NO_TARGET
-		has_variable = qpq_ui_target_ok
+	trigger_else = {
+		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
 	}
-	qpq_ui_ask_valid_trigger = yes
-	custom_description = {
-		text = QPQ_UI_FAIL_SAME_PACT
-		qpq_ui_no_same_pact_trigger = yes
-	}
-	qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
 	custom_description = {
 		text = QPQ_UI_FAIL_IMPRISONED
 		OR = {
-			var:qpq_ui_kind = flag:clemency_bargain
+			var:qpq_ui_t_ekind ?= flag:clemency_bargain
+			var:qpq_ui_i_ekind ?= flag:clemency_bargain
 			AND = {
 				is_imprisoned = no
 				scope:recipient = { is_imprisoned = no }
@@ -37,55 +55,6 @@ qpq_ui_can_propose_trigger = {
 		scope:recipient = {
 			is_alive = yes
 			NOT = { has_character_flag = qpq_considering_proposal }
-		}
-	}
-	custom_description = {
-		text = QPQ_UI_FAIL_OFFERS
-		qpq_ui_offers_still_possible_trigger = yes
-	}
-	# Gold paid when the pact is sealed must be in hand
-	custom_description = {
-		text = QPQ_UI_FAIL_GOLD_YOU
-		trigger_if = {
-			limit = {
-				has_variable = qpq_ui_o_gold
-				NOT = { has_variable = qpq_ui_agent_init }
-				var:qpq_ui_timing = flag:up_front
-			}
-			gold >= var:qpq_ui_price
-		}
-		trigger_else_if = {
-			limit = {
-				has_variable = qpq_ui_o_gold
-				NOT = { has_variable = qpq_ui_agent_init }
-				var:qpq_ui_timing = flag:split
-			}
-			gold >= { value = var:qpq_ui_price divide = 2 }
-		}
-		trigger_else = {
-			always = yes
-		}
-	}
-	custom_description = {
-		text = QPQ_UI_FAIL_GOLD_THEM
-		trigger_if = {
-			limit = {
-				has_variable = qpq_ui_o_gold
-				has_variable = qpq_ui_agent_init
-				var:qpq_ui_timing = flag:up_front
-			}
-			scope:recipient = { gold >= scope:actor.var:qpq_ui_price }
-		}
-		trigger_else_if = {
-			limit = {
-				has_variable = qpq_ui_o_gold
-				has_variable = qpq_ui_agent_init
-				var:qpq_ui_timing = flag:split
-			}
-			scope:recipient = { gold >= { value = scope:actor.var:qpq_ui_price divide = 2 } }
-		}
-		trigger_else = {
-			always = yes
 		}
 	}
 	custom_description = {

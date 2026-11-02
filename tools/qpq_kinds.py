@@ -3010,6 +3010,20 @@ scope:qpq_target = { add_character_modifier = { modifier = qpq_clerical_denuncia
 """,
   exposed="scope:qpq_payer = { add_piety = minor_piety_loss }")
 
+###############################################################################
+# The carrier: a deal whose side asks for no deed, only goods. Not offered as an Ask in the panel
+# (carrier=True); it exists so that "I give gold, you give land" has a deal to live in.
+###############################################################################
+
+K(key="barter", cat="E", group="favours", secret="exchange", icon="icon_gold", carrier=True,
+  name="Exchange of Goods",
+  ask="hand over what was agreed, and nothing more",
+  desc="No deed on either side: only goods change hands, gold for land, favours for favours.",
+  payer_base=0, agent_base=0, target="none", term=1, effort=0,
+  rel="NOT = { scope:actor = scope:recipient }",
+  deliver="always = yes",
+  exposed="")
+
 
 GROUPS = [
     ("war", "Commission a war"),
@@ -3034,6 +3048,7 @@ SECRET_CATEGORIES = {
     "betrayal": ("civil", "Betrayal"),
     "simony": ("religious", "Simony"),
     "rites": ("religious", "Sacred Rites"),
+    "exchange": ("civil", "Exchange"),
 }
 
 TIER_NAMES = {0: "Charter", 1: "Discreet", 2: "Unseemly", 3: "Scandalous", 4: "Disgraceful", 5: "Damnable"}

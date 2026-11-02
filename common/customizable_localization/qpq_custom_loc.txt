@@ -248,6 +248,10 @@ QpqKindName = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_kind ?= flag:barter }
+		localization_key = qpq_barter_name
+	}
+	text = {
 		fallback = yes
 		localization_key = qpq_unknown_pact
 	}
@@ -499,6 +503,10 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:barter }
+		localization_key = qpq_barter_ask_story
 	}
 	text = {
 		fallback = yes

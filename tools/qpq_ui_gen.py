@@ -1,29 +1,44 @@
-"""Generate the custom Propose-a-Pact panel: scripted GUIs, UI effects/triggers, custom loc, loc and the .gui window.
+"""Generate the custom Backroom Deal panel: scripted GUIs, UI effects/triggers, custom loc, loc, the deal
+event and the .gui window.
 
-Called from tools/qpq_gen.py. Panel state lives in variables on the player character (qpq_ui_*), so it is
-synced in multiplayer; the open tab is UI-only state in the GUI variable system (qpq_tab).
+A deal is two legs, each of them an ordinary pact of the engine:
+    leg "t"  They do the deed, you give the goods.   payer = you,  agent = them.
+    leg "i"  You do the deed, they give the goods.   payer = them, agent = you.
+Either side may be empty. A leg with goods but no deed is carried by the "barter" kind. Which character is
+scope:actor (the proposer) when a kind's own snippets run depends on the kind: see proposer_me().
+
+Panel state lives in variables on the player (qpq_ui_*, and qpq_ui_t_* / qpq_ui_i_* per leg), so it is synced
+in multiplayer; the open tab is UI-only state in the GUI variable system (qpq_tab).
 
 Hand-written companions:
-    common/scripted_effects/qpq_ui_effects.txt   open / close / refresh / propose
-    common/scripted_guis/qpq_ui.txt               close, target pickers, propose
+    common/scripted_effects/qpq_ui_effects.txt   open / close / refresh / propose / seal the deal
+    common/scripted_triggers/qpq_ui_triggers.txt can the deal be proposed
+    common/scripted_guis/qpq_ui.txt               close, refresh, propose
     localization/english/qpq_l_english.yml        QPQ_UI_* strings
 """
+import os
+import re
 from qpq_kinds import KINDS, GROUPS
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+LEGS = ("t", "i")
 
 
 def deal_words(t):
-    import re
     for a, b in (("Pacts", "Deals"), ("pacts", "deals"), ("Pact", "Deal"), ("pact", "deal")):
         t = re.sub(r"(?<![\w])%s(?![\w])" % a, b, t)
     return t
+
 
 # GuiScope with the player as root, actor = the player and recipient = the character the panel was opened on.
 # AddScope needs a real object scope (X.MakeScope, as vanilla does); a raw .Var('x') is not one.
 GS = ("GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope )"
       ".AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End")
 GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
+# Charter is a property of the whole deal, not of one leg's goods
 UI_OFFERS = ["gold", "land", "claim", "office", "marriage", "release_hook", "my_word", "secret", "contract",
-             "succession", "clemency", "arms", "artifact", "church", "restraint", "hook", "charter"]
+             "succession", "clemency", "arms", "artifact", "church", "restraint", "hook"]
 TIMINGS = ["up_front", "on_delivery", "split", "stipend"]
 CANDIDATE_CAP = 120
 
@@ -33,25 +48,83 @@ TITLE_SOURCES = {
     "claimed_titles": "every_claim",
 }
 
-# Panel text for an Ask: the story/secret ask text, with the panel's own variables standing in for the parties
-def ask_ui(k):
+DEEDS = [k for k in KINDS if not k.get("carrier")]
+BARTER = [k for k in KINDS if k.get("carrier")][0]
+DEMAND_KEYS = {"gold", "on_delivery", "split", "stipend", "land", "office", "contract", "release_hook",
+               "my_word", "clemency", "artifact", "church"}
+
+
+# ------------------------------------------------------------------ orientation helpers
+def sw(text):
+    """Swap scope:actor and scope:recipient in a snippet written from the proposer's point of view."""
+    if not text:
+        return text
+    return re.sub(r"scope:(actor|recipient)(?![A-Za-z0-9_])",
+                  lambda m: "scope:" + ("recipient" if m.group(1) == "actor" else "actor"), text)
+
+
+def proposer_me(k, L):
+    """Is the player the proposer (scope:actor) when kind k runs in leg L?"""
+    return (k["initiator"] == "payer") == (L == "t")
+
+
+def oriented(k, L, text):
+    return text if proposer_me(k, L) else sw(text)
+
+
+def orient_effect(k, L):
+    return "qpq_deal_orient_%s_effect = yes" % ("normal" if proposer_me(k, L) else "swapped")
+
+
+def leg_pa(L):
+    """(payer, agent) as scope names in the panel's scripted GUIs (actor = you, recipient = them)."""
+    return ("scope:actor", "scope:recipient") if L == "t" else ("scope:recipient", "scope:actor")
+
+
+def retarget(text, k, L):
+    """A snippet that reads the target as scope:secondary_recipient / scope:target, for the deal event, where
+    the targets are saved per leg."""
+    if not text:
+        return text
+    text = re.sub(r"scope:secondary_recipient(?![A-Za-z0-9_])", "scope:qpq_deal_%s_char" % L, text)
+    tgt = "scope:qpq_deal_%s_%s" % (L, "artifact" if k["target"] == "artifact" else "title")
+    return re.sub(r"scope:target(?![A-Za-z0-9_])", tgt, text)
+
+
+def ask_ui(k, L):
+    """Panel text for an Ask in leg L: the story/secret ask text with the panel's variables standing in."""
     me, them = "GetPlayer", "GetPlayer.MakeScope.Var('qpq_ui_recipient').Char"
-    payer, agent = (me, them) if k["initiator"] == "payer" else (them, me)
+    payer, agent = (me, them) if L == "t" else (them, me)
     return (k["ask"]
-            .replace("[qpq_target_title.", "[GetPlayer.MakeScope.Var('qpq_ui_target_title').Title.")
-            .replace("[qpq_target_artifact.", "[GetPlayer.MakeScope.Var('qpq_ui_target_artifact').Artifact.")
-            .replace("[qpq_target.", "[GetPlayer.MakeScope.Var('qpq_ui_target').Char.")
+            .replace("[qpq_target_title.", "[GetPlayer.MakeScope.Var('qpq_ui_%s_target_title').Title." % L)
+            .replace("[qpq_target_artifact.", "[GetPlayer.MakeScope.Var('qpq_ui_%s_target_artifact').Artifact." % L)
+            .replace("[qpq_target.", "[GetPlayer.MakeScope.Var('qpq_ui_%s_target').Char." % L)
             .replace("[qpq_payer.", "[%s." % payer)
             .replace("[qpq_agent.", "[%s." % agent))
 
 
-def kind_check(k):
-    return "var:qpq_ui_kind = flag:%s" % k["key"]
+def ask_ev(k, L):
+    """The same Ask in the proposal event (root: the recipient; actor = the proposer)."""
+    payer, agent = ("actor", "recipient") if L == "t" else ("recipient", "actor")
+    return (k["ask"]
+            .replace("[qpq_target_title.", "[qpq_deal_%s_title." % L)
+            .replace("[qpq_target_artifact.", "[qpq_deal_%s_artifact." % L)
+            .replace("[qpq_target.", "[qpq_deal_%s_target." % L)
+            .replace("[qpq_payer.", "[%s." % payer)
+            .replace("[qpq_agent.", "[%s." % agent))
+
+
+def vkind(L, k):
+    return "var:qpq_ui_%s_kind = flag:%s" % (L, k["key"])
+
+
+def vekind(L, k):
+    return "var:qpq_ui_%s_ekind = flag:%s" % (L, k["key"])
 
 
 def extras():
     seen = {}
-    for k in KINDS:
+    for k in DEEDS:
         for x in k.get("extra_options", []):
             seen.setdefault(x["flag"], (x, []))[1].append(k)
     return seen
@@ -61,264 +134,570 @@ def max_valid():
     return max(len(k.get("valid", [])) for k in KINDS)
 
 
-def offer_shown(block, fmt_shown, OFFER_DEFS, o, level):
-    """The offer's availability, with payer/agent swapped when the player is the agent."""
-    d = OFFER_DEFS[o]
-    t = "\t" * level
-    if o == "charter":
-        return "%sexists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0\n%sexists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0\n" % (t, t)
-    s = "%strigger_if = {\n%s\tlimit = { has_variable = qpq_ui_agent_init }\n" % (t, t)
-    s += block(fmt_shown(d["shown"], "scope:recipient", "scope:actor"), level + 1)
-    s += "%s}\n%strigger_else = {\n" % (t, t)
-    s += block(fmt_shown(d["shown"], "scope:actor", "scope:recipient"), level + 1)
-    s += "%s}\n" % t
-    return s
+def offer_shown(block, fmt_shown, OFFER_DEFS, o, L, level):
+    """The good's availability: the payer of leg L must be able to give it to the agent."""
+    p, a = leg_pa(L)
+    return block(fmt_shown(OFFER_DEFS[o]["shown"], p, a), level)
+
+
+def seal_scope_names():
+    """Every saved scope the pact-sealing chain creates: cleared between the two legs of a deal."""
+    names = set()
+    pats = (r"save_(?:temporary_)?scope_as\s*=\s*([A-Za-z0-9_$]+)",
+            r"save_(?:temporary_)?scope_value_as\s*=\s*\{\s*name\s*=\s*([A-Za-z0-9_$]+)")
+    texts = []
+    with open(os.path.join(ROOT, "common/scripted_effects/qpq_core_effects.txt"), encoding="utf-8-sig") as f:
+        texts.append(f.read())
+    for k in KINDS:
+        texts.append(k.get("on_seal") or "")
+    for t in texts:
+        for p in pats:
+            names.update(re.findall(p, t))
+    names.update(["qpq_payer", "qpq_agent", "qpq_target", "qpq_target_title", "qpq_target_artifact", "qpq_price",
+                  "qpq_payer_tier", "qpq_agent_tier", "qpq_floor_zero", "qpq_term_months", "qpq_story",
+                  "qpq_mirror", "qpq_payer_secret", "qpq_agent_secret", "qpq_is_charter", "secondary_recipient",
+                  "target"])
+    return sorted(n for n in names if "$" not in n and not n.startswith("qpq_deal_") and n not in
+                  ("actor", "recipient", "qpq_exposer", "qpq_exposed_half"))
+
+
+def all_flag_scopes():
+    """The scope values a leg's goods are loaded into for the engine (qpq_o_*, extras, charter)."""
+    return ["qpq_o_%s" % o for o in UI_OFFERS] + ["qpq_o_%s" % t for t in TIMINGS[1:]] + \
+        ["qpq_o_charter"] + list(extras())
 
 
 # ------------------------------------------------------------------ scripted GUIs
 def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
-    out = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Propose-a-Pact panel buttons.\n\n"
-    # One button per Ask
-    for k in KINDS:
-        out += "qpq_ui_kind_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n" % k["key"]
-        # Every Ask is listed; one that is not open between these two is greyed out and its tooltip says why
-        # Church Asks that cannot apply between these two (no church, wrong faith, not a head of faith) are
-        # not listed at all; every other Ask is listed and greyed out with its reasons.
-        if k["group"].startswith("church_"):
-            shown = block(k.get("dlc") or "", 2) + block(k["rel"], 2)
-        else:
-            shown = block(k["dlc"], 2) if k.get("dlc") else "\t\talways = yes\n"
-        out += "\tis_shown = {\n%s\t}\n" % shown
-        out += "\tis_valid = {\n%s\t}\n" % block(k["rel"], 2)
-        out += "\teffect = {\n\t\tset_variable = { name = qpq_ui_kind value = flag:%s }\n" % k["key"]
-        out += "\t\tqpq_ui_clear_choices_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
-    # Group headings
-    for g, _name in GROUPS:
-        kinds = [k for k in KINDS if k["group"] == g]
-        if g.startswith("church_"):
-            gs = "\t\tOR = {\n"
-            for k in kinds:
-                gs += "\t\t\tAND = {\n%s%s\t\t\t}\n" % (block(k.get("dlc") or "", 4), block(k["rel"], 4))
-            gs += "\t\t}\n"
-        else:
-            gs = "\t\talways = yes\n"
-        out += "qpq_ui_group_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n%s\t}\n}\n\n" % (g, gs)
-    # Offers (or demands, when the player is the one doing the deed). A ticked box always stays visible
-    # so it can be unticked.
-    for o in UI_OFFERS:
-        out += "qpq_ui_offer_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n" % o
-        out += "\t\tqpq_ui_kind_allows_offer_%s_trigger = yes\n" % o
-        out += "\t\tOR = {\n\t\t\thas_variable = qpq_ui_o_%s\n\t\t\tAND = {\n" % o
-        out += offer_shown(block, fmt_shown, OFFER_DEFS, o, 4)
-        out += "\t\t\t}\n\t\t}\n\t}\n"
-        out += "\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_o_%s }\n\t\t\tremove_variable = qpq_ui_o_%s\n\t\t}\n" % (o, o)
-        out += "\t\telse = {\n\t\t\tset_variable = qpq_ui_o_%s\n\t\t}\n" % o
-        out += "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
-    # Payment timing (only with gold)
-    for t in TIMINGS:
-        out += "qpq_ui_timing_%s = {\n\tscope = character\n\tis_shown = {\n\t\thas_variable = qpq_ui_o_gold\n" % t
-        if t != "up_front":
-            out += "\t\tqpq_ui_kind_allows_offer_%s_trigger = yes\n" % t
-        out += "\t}\n\teffect = {\n\t\tset_variable = { name = qpq_ui_timing value = flag:%s }\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % t
-    # Ask-specific extra terms
-    for flag, (x, kinds) in extras().items():
-        out += "qpq_ui_extra_%s = {\n\tscope = character\n\tis_shown = {\n\t\tqpq_ui_kind_has_extra_%s_trigger = yes\n\t}\n" % (flag, flag)
-        out += "\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s }\n\t\t\tremove_variable = qpq_ui_%s\n\t\t}\n" % (flag, flag)
-        out += "\t\telse = {\n\t\t\tset_variable = qpq_ui_%s\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % flag
-    # Helpers for the window: any box ticked, any Ask-specific terms, which picker to show
-    out += "qpq_ui_any_offer = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n"
-    for o in UI_OFFERS:
-        out += "\t\t\thas_variable = qpq_ui_o_%s\n" % o
-    out += "\t\t}\n\t}\n}\n\n"
-    out += "qpq_ui_has_extras = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n"
-    for flag in extras():
-        out += "\t\t\tqpq_ui_kind_has_extra_%s_trigger = yes\n" % flag
-    out += "\t\t}\n\t}\n}\n\n"
-    for t in ("char", "title", "artifact"):
-        out += "qpq_ui_needs_%s_target = {\n\tscope = character\n\tis_shown = {\n\t\tqpq_ui_kind_needs_%s_target_trigger = yes\n\t}\n}\n\n" % (t, t)
-    out += ("qpq_ui_needs_any_target = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n"
-            "\t\t\tqpq_ui_kind_needs_char_target_trigger = yes\n\t\t\tqpq_ui_kind_needs_title_target_trigger = yes\n"
-            "\t\t\tqpq_ui_kind_needs_artifact_target_trigger = yes\n\t\t}\n\t}\n}\n\n")
+    out = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Backroom Deal panel buttons.\n\n"
+    for L in LEGS:
+        # One button per deed
+        for k in DEEDS:
+            out += "qpq_ui_kind_%s_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n" % (L, k["key"])
+            rel = block(oriented(k, L, k["rel"]), 2)
+            dlc = block(oriented(k, L, k.get("dlc") or ""), 2)
+            # Church deeds that cannot apply between these two (no church, wrong faith, not a head of faith)
+            # are not listed at all; every other deed is listed and greyed out with its reasons.
+            if k["group"].startswith("church_"):
+                shown = dlc + rel
+            else:
+                shown = dlc if k.get("dlc") else "\t\talways = yes\n"
+            out += "\tis_shown = {\n%s\t}\n" % shown
+            out += "\tis_valid = {\n%s\t}\n" % rel
+            out += "\teffect = {\n"
+            out += "\t\tif = {\n\t\t\tlimit = { %s }\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n\t\t}\n" % (vkind(L, k), L)
+            out += "\t\telse = {\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:%s }\n\t\t}\n" % (L, k["key"])
+            out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
+        out += "qpq_ui_nodeed_%s = {\n\tscope = character\n\tis_shown = {\n\t\talways = yes\n\t}\n" % L
+        out += "\teffect = {\n\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % L
+        out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
+        # Group headings
+        for g, _name in GROUPS:
+            kinds = [k for k in DEEDS if k["group"] == g]
+            if not kinds:
+                continue
+            if g.startswith("church_"):
+                gs = "\t\tOR = {\n"
+                for k in kinds:
+                    gs += "\t\t\tAND = {\n%s%s\t\t\t}\n" % (block(oriented(k, L, k.get("dlc") or ""), 4),
+                                                          block(oriented(k, L, k["rel"]), 4))
+                gs += "\t\t}\n"
+            else:
+                gs = "\t\talways = yes\n"
+            out += "qpq_ui_group_%s_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n%s\t}\n}\n\n" % (L, g, gs)
+        # Goods. A ticked box always stays visible so it can be unticked.
+        for o in UI_OFFERS:
+            out += "qpq_ui_offer_%s_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n" % (L, o)
+            out += "\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n" % (L, o)
+            out += "\t\tOR = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tAND = {\n" % (L, o)
+            out += offer_shown(block, fmt_shown, OFFER_DEFS, o, L, 4)
+            out += "\t\t\t}\n\t\t}\n\t}\n"
+            out += "\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_%s }\n\t\t\tremove_variable = qpq_ui_%s_o_%s\n\t\t}\n" % (L, o, L, o)
+            out += "\t\telse = {\n\t\t\tset_variable = qpq_ui_%s_o_%s\n\t\t}\n" % (L, o)
+            out += "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
+        # Payment timing (only with gold)
+        for t in TIMINGS:
+            out += "qpq_ui_timing_%s_%s = {\n\tscope = character\n\tis_shown = {\n\t\thas_variable = qpq_ui_%s_o_gold\n" % (L, t, L)
+            if t != "up_front":
+                out += "\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n" % (L, t)
+            out += "\t}\n\teffect = {\n\t\tset_variable = { name = qpq_ui_%s_timing value = flag:%s }\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % (L, t)
+        # Ask-specific extra terms
+        for flag, (x, kinds) in extras().items():
+            out += "qpq_ui_extra_%s_%s = {\n\tscope = character\n\tis_shown = {\n\t\tqpq_ui_leg_%s_has_extra_%s_trigger = yes\n\t}\n" % (L, flag, L, flag)
+            out += "\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_%s }\n\t\t\tremove_variable = qpq_ui_%s_%s\n\t\t}\n" % (L, flag, L, flag)
+            out += "\t\telse = {\n\t\t\tset_variable = qpq_ui_%s_%s\n\t\t}\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % (L, flag)
+        out += "qpq_ui_has_extras_%s = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n" % L
+        for flag in extras():
+            out += "\t\t\tqpq_ui_leg_%s_has_extra_%s_trigger = yes\n" % (L, flag)
+        out += "\t\t}\n\t}\n}\n\n"
+        for t in ("char", "title", "artifact"):
+            out += "qpq_ui_needs_%s_target_%s = {\n\tscope = character\n\tis_shown = {\n\t\tqpq_ui_leg_%s_needs_%s_trigger = yes\n\t}\n}\n\n" % (t, L, L, t)
+        out += ("qpq_ui_needs_any_target_%s = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n"
+                "\t\t\tqpq_ui_leg_%s_needs_char_trigger = yes\n\t\t\tqpq_ui_leg_%s_needs_title_trigger = yes\n"
+                "\t\t\tqpq_ui_leg_%s_needs_artifact_trigger = yes\n\t\t}\n\t}\n}\n\n") % (L, L, L, L)
+        # Picking a target from the lists
+        for what, var in (("char", "qpq_ui_%s_pick_char"), ("title", "qpq_ui_%s_target_title"),
+                          ("artifact", "qpq_ui_%s_target_artifact")):
+            out += ("qpq_ui_pick_%s_%s = {\n\tscope = character\n\tsaved_scopes = { qpq_pick }\n\teffect = {\n"
+                    "\t\tset_variable = { name = %s value = scope:qpq_pick }\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % (
+                what, L, var % L)
+    # Side summaries: "You will" is your deed (leg i) and your goods (leg t); "They will" the reverse
+    out += ("qpq_ui_me_empty = {\n\tscope = character\n\tis_shown = {\n\t\tvar:qpq_ui_i_kind = flag:none\n"
+            "\t\tNOT = { qpq_ui_leg_t_has_goods_trigger = yes }\n\t}\n}\n\n")
+    out += ("qpq_ui_them_empty = {\n\tscope = character\n\tis_shown = {\n\t\tvar:qpq_ui_t_kind = flag:none\n"
+            "\t\tNOT = { qpq_ui_leg_i_has_goods_trigger = yes }\n\t}\n}\n\n")
+    out += ("qpq_ui_charter = {\n\tscope = character\n\tis_shown = {\n\t\tOR = {\n\t\t\thas_variable = qpq_ui_charter_ok\n"
+            "\t\t\thas_variable = qpq_ui_charter\n\t\t}\n\t}\n\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_charter }\n"
+            "\t\t\tremove_variable = qpq_ui_charter\n\t\t}\n\t\telse = {\n\t\t\tset_variable = qpq_ui_charter\n\t\t}\n"
+            "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n")
     write("common/scripted_guis/qpq_ui_kinds.txt", out)
 
 
 # ------------------------------------------------------------------ UI effects and triggers
+def fill_pickers(k, L, block):
+    """Candidates for the Ask's target, capped, best first. Runs with the kind's orientation in place."""
+    me = "scope:qpq_deal_me"
+    if k["target"] == "char":
+        pick = k["pick"].replace("add_to_list = characters", "add_to_list = qpq_ui_chars_%s" % L)
+        s = block(pick, 3)
+        s += ("\t\t\tevery_in_list = {\n\t\t\t\tlist = qpq_ui_chars_%s\n\t\t\t\tsave_temporary_scope_as = secondary_recipient\n"
+              "\t\t\t\tif = {\n\t\t\t\t\tlimit = {\n%s\t\t\t\t\t}\n\t\t\t\t\tadd_to_list = qpq_ui_pool_char_%s\n\t\t\t\t}\n\t\t\t}\n") % (
+            L, block(k.get("target_valid") or "always = yes", 6), L)
+        s += ("\t\t\tordered_in_list = {\n\t\t\t\tlist = qpq_ui_pool_char_%s\n\t\t\t\torder_by = qpq_ui_candidate_order_value\n"
+              "\t\t\t\tmax = %d\n\t\t\t\tcheck_range_bounds = no\n"
+              "\t\t\t\t%s = { add_to_variable_list = { name = qpq_ui_%s_candidates target = prev } }\n\t\t\t}\n") % (L, CANDIDATE_CAP, me, L)
+        return s
+    pk = k["pick"]
+    src = {"actor": "scope:actor", "recipient": "scope:recipient"}[pk["source"]]
+    if k["target"] == "artifact":
+        it, lst, order, pool = "every_character_artifact", "qpq_ui_%s_artifact_candidates" % L, "artifact_rarity", "qpq_ui_pool_artifact_%s" % L
+    else:
+        it, lst, order, pool = TITLE_SOURCES[pk["filter"]], "qpq_ui_%s_title_candidates" % L, "qpq_ui_title_order_value", "qpq_ui_pool_title_%s" % L
+    s = "\t\t\t%s = {\n\t\t\t\t%s = {\n\t\t\t\t\tsave_temporary_scope_as = target\n" % (src, it)
+    s += "\t\t\t\t\tif = {\n\t\t\t\t\t\tlimit = {\n%s%s\t\t\t\t\t\t}\n\t\t\t\t\t\tadd_to_list = %s\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n" % (
+        block(pk["can_pick"], 7), block(k.get("target_valid") or "always = yes", 7), pool)
+    s += ("\t\t\tordered_in_list = {\n\t\t\t\tlist = %s\n\t\t\t\torder_by = %s\n\t\t\t\tmax = %d\n"
+          "\t\t\t\tcheck_range_bounds = no\n"
+          "\t\t\t\t%s = { add_to_variable_list = { name = %s target = prev } }\n\t\t\t}\n") % (pool, order, CANDIDATE_CAP, me, lst)
+    return s
+
+
+def keep_pick(k, L):
+    """A pick stays while it is still eligible (it is in the full, uncapped pool), and is kept visible even if
+    it falls outside the capped list; then the real pick is loaded as the scope the engine reads."""
+    t = k["target"]
+    me = "scope:qpq_deal_me"
+    if t == "char":
+        v, lst, pool = "qpq_ui_%s_pick_char" % L, "qpq_ui_%s_candidates" % L, "qpq_ui_pool_char_%s" % L
+        s = ("\t\t\tif = {\n\t\t\t\tlimit = { exists = var:%s }\n\t\t\t\tif = {\n\t\t\t\t\tlimit = { var:%s = { is_in_list = %s } }\n"
+             "\t\t\t\t\tif = {\n\t\t\t\t\t\tlimit = {\n\t\t\t\t\t\t\tNOT = { is_target_in_variable_list = { name = %s target = var:%s } }\n\t\t\t\t\t\t}\n"
+             "\t\t\t\t\t\tadd_to_variable_list = { name = %s target = var:%s }\n\t\t\t\t\t}\n\t\t\t\t}\n"
+             "\t\t\t\telse = {\n\t\t\t\t\tremove_variable = %s\n\t\t\t\t}\n\t\t\t}\n") % (v, v, pool, lst, v, lst, v, v)
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { exists = var:%s }\n\t\t\t\tvar:%s = { save_scope_as = secondary_recipient }\n\t\t\t}\n" % (v, v)
+        return s
+    if t in ("title", "artifact"):
+        v = "qpq_ui_%s_target_%s" % (L, t)
+        lst = "qpq_ui_%s_%s_candidates" % (L, t)
+        pool = "qpq_ui_pool_%s_%s" % (t, L)
+        s = ("\t\t\tif = {\n\t\t\t\tlimit = { exists = var:%s }\n\t\t\t\tif = {\n\t\t\t\t\tlimit = { var:%s = { is_in_list = %s } }\n"
+             "\t\t\t\t\tif = {\n\t\t\t\t\t\tlimit = {\n\t\t\t\t\t\t\tNOT = { is_target_in_variable_list = { name = %s target = var:%s } }\n\t\t\t\t\t\t}\n"
+             "\t\t\t\t\t\tadd_to_variable_list = { name = %s target = var:%s }\n\t\t\t\t\t}\n\t\t\t\t}\n"
+             "\t\t\t\telse = {\n\t\t\t\t\tremove_variable = %s\n\t\t\t\t}\n\t\t\t}\n") % (v, v, pool, lst, v, lst, v, v)
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { exists = var:%s }\n\t\t\t\tvar:%s = { save_scope_as = target }\n\t\t\t}\n" % (v, v)
+        return s
+    return ""
+
+
+def compute_kind(k, L, block):
+    key = k["key"]
+    s = ""
+    # the target shown in the Ask text
+    if k["target"] == "char":
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { exists = scope:secondary_recipient }\n"
+        s += "\t\t\t\tset_variable = { name = qpq_ui_%s_target value = scope:secondary_recipient }\n\t\t\t}\n" % L
+    elif k["target"] == "derived":
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { exists = %s }\n\t\t\t\t%s = { save_scope_as = secondary_recipient }\n" % (k["derive"], k["derive"])
+        s += "\t\t\t\tset_variable = { name = qpq_ui_%s_target value = scope:secondary_recipient }\n\t\t\t}\n" % L
+    elif k["target"] == "title":
+        s += "\t\t\tif = {\n\t\t\t\tlimit = {\n\t\t\t\t\texists = scope:target\n\t\t\t\t\tscope:target = { exists = holder }\n\t\t\t\t}\n"
+        s += "\t\t\t\tset_variable = { name = qpq_ui_%s_target value = scope:target.holder }\n\t\t\t}\n" % L
+    s += "\t\t\tset_variable = { name = qpq_ui_%s_term value = %d }\n" % (L, k["term"])
+    s += "\t\t\tset_variable = { name = qpq_ui_%s_payer_tier value = qpq_%s_payer_tier_value }\n" % (L, key)
+    s += "\t\t\tset_variable = { name = qpq_ui_%s_agent_tier value = qpq_%s_agent_tier_value }\n" % (L, key)
+    s += "\t\t\tsave_scope_value_as = { name = qpq_price value = qpq_%s_price_value }\n" % key
+    s += "\t\t\tset_variable = { name = qpq_ui_%s_price value = scope:qpq_price }\n" % L
+    # How the recipient of the deal (the other character) sees this leg
+    if proposer_me(k, L):
+        # You put it to them: their view is exactly the pact's own acceptance
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_ask value = qpq_%s_ask_value }\n" % (L, key)
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_offers value = qpq_%s_offer_points_value }\n" % (L, key)
+        s += ("\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_other\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_ai_acceptance_value\n"
+              "\t\t\t\t\tsubtract = qpq_%s_ask_value\n\t\t\t\t\tsubtract = qpq_%s_offer_points_value\n"
+              "\t\t\t\t\tsubtract = {\n\t\t\t\t\t\tvalue = \"scope:recipient.opinion(scope:actor)\"\n\t\t\t\t\t\tmultiply = 0.5\n\t\t\t\t\t}\n"
+              "\t\t\t\t}\n\t\t\t}\n") % (L, key, key, key)
+    elif k["initiator"] == "payer":
+        # They are the payer: they gain the deed and pay the goods
+        s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_ask\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_demand_value\n\t\t\t\t\tmultiply = -0.6\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
+        s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -0.8\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+    else:
+        # They do the deed and are paid
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_ask value = qpq_%s_demand_value }\n" % (L, key)
+        s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -1\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+    # Is the target in place?
+    if k["target"] == "char":
+        need = "exists = scope:secondary_recipient\n" + (k.get("target_valid") or "")
+    elif k["target"] in ("title", "artifact"):
+        need = "exists = scope:target\n" + (k.get("target_valid") or "")
+    elif k["target"] == "derived":
+        need = "exists = scope:secondary_recipient"
+    else:
+        need = "always = yes"
+    s += "\t\t\tif = {\n\t\t\t\tlimit = {\n%s\t\t\t\t}\n\t\t\t\tset_variable = qpq_ui_%s_target_ok\n\t\t\t}\n" % (block(need, 5), L)
+    # The Ask's own conditions (shown as reasons on the Propose button), once the target is in place
+    if k.get("valid"):
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_target_ok }\n" % L
+        for i, (_loc, trig) in enumerate(k["valid"]):
+            s += "\t\t\t\tif = {\n\t\t\t\t\tlimit = {\n\t\t\t\t\t\tNOT = {\n%s\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tset_variable = qpq_ui_%s_fail_%d\n\t\t\t\t}\n" % (
+                block(trig, 7), L, i)
+        s += "\t\t\t}\n"
+    return s
+
+
 def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
-    eff = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Propose-a-Pact panel logic, per Ask.\n"
-    eff += "# Root: the player. Scopes: actor (the player), recipient, secondary_recipient / target (the pick).\n\n"
+    eff = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Backroom Deal panel logic, per leg and Ask.\n"
+    eff += "# Root: the player. scope:qpq_deal_me / qpq_deal_them are the two characters; actor / recipient are set by\n"
+    eff += "# qpq_deal_orient_*_effect to whichever of them is the proposer of the Ask being worked on.\n\n"
 
-    # Load the ticked boxes into the scope values the pact engine and acceptance values read
-    eff += "qpq_ui_load_choices_effect = {\n"
-    for o in UI_OFFERS:
-        eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_o_%s\n\t\t\tqpq_ui_kind_allows_offer_%s_trigger = yes\n\t\t}\n" % (o, o)
-        eff += "\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % o
-    for t in TIMINGS[1:]:
-        eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_o_gold\n\t\t\tvar:qpq_ui_timing ?= flag:%s\n" % t
-        eff += "\t\t\tqpq_ui_kind_allows_offer_%s_trigger = yes\n\t\t}\n" % t
-        eff += "\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % t
-    for flag in extras():
-        eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s\n\t\t\tqpq_ui_kind_has_extra_%s_trigger = yes\n\t\t}\n" % (flag, flag)
-        eff += "\t\tsave_scope_value_as = { name = %s value = yes }\n\t}\n" % flag
+    leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "term", "a_ask", "a_offers",
+                "a_other"] + ["fail_%d" % i for i in range(max_valid())]
+    lists = ["candidates", "title_candidates", "artifact_candidates"]
+
+    # Scope values the engine reads, cleared between the legs and between the kinds of one refresh
+    eff += "qpq_ui_clear_scopes_effect = {\n"
+    for n in ["secondary_recipient", "target", "qpq_price"] + all_flag_scopes():
+        eff += "\tif = {\n\t\tlimit = { exists = scope:%s }\n\t\tclear_saved_scope = %s\n\t}\n" % (n, n)
     eff += "}\n\n"
 
-    # Fill the target picker for the chosen Ask (capped, best candidates first)
-    eff += "qpq_ui_fill_candidates_effect = {\n"
-    first = True
-    for k in KINDS:
-        if k["target"] not in ("char", "title", "artifact"):
-            continue
-        eff += "\t%s = {\n\t\tlimit = { %s }\n" % ("if" if first else "else_if", kind_check(k))
-        first = False
-        if k["target"] == "char":
-            eff += block(k["pick"], 2)
-            eff += ("\t\tevery_in_list = {\n\t\t\tlist = characters\n\t\t\tsave_temporary_scope_as = secondary_recipient\n"
-                    "\t\t\tif = {\n\t\t\t\tlimit = {\n%s\t\t\t\t}\n\t\t\t\tadd_to_list = qpq_ui_pool_char\n\t\t\t}\n\t\t}\n") % block(
-                k.get("target_valid") or "always = yes", 5)
-            eff += ("\t\tordered_in_list = {\n\t\t\tlist = qpq_ui_pool_char\n\t\t\torder_by = qpq_ui_candidate_order_value\n"
-                    "\t\t\tmax = %d\n\t\t\tcheck_range_bounds = no\n"
-                    "\t\t\tscope:actor = { add_to_variable_list = { name = qpq_ui_candidates target = prev } }\n\t\t}\n") % CANDIDATE_CAP
-        else:
-            pk = k["pick"]
-            src = {"actor": "scope:actor", "recipient": "scope:recipient"}[pk["source"]]
-            if k["target"] == "artifact":
-                it, lst, order, pool = "every_character_artifact", "qpq_ui_artifact_candidates", "artifact_rarity", "qpq_ui_pool_artifact"
-            else:
-                it, lst, order, pool = TITLE_SOURCES[pk["filter"]], "qpq_ui_title_candidates", "qpq_ui_title_order_value", "qpq_ui_pool_title"
-            eff += "\t\t%s = {\n\t\t\t%s = {\n\t\t\t\tsave_temporary_scope_as = target\n" % (src, it)
-            eff += "\t\t\t\tif = {\n\t\t\t\t\tlimit = {\n%s%s\t\t\t\t\t}\n\t\t\t\t\tadd_to_list = %s\n\t\t\t\t}\n\t\t\t}\n\t\t}\n" % (
-                block(pk["can_pick"], 6), block(k.get("target_valid") or "always = yes", 6), pool)
-            eff += ("\t\tordered_in_list = {\n\t\t\tlist = %s\n\t\t\torder_by = %s\n\t\t\tmax = %d\n"
-                    "\t\t\tcheck_range_bounds = no\n"
-                    "\t\t\tscope:actor = { add_to_variable_list = { name = %s target = prev } }\n\t\t}\n") % (pool, order, CANDIDATE_CAP, lst)
-        eff += "\t}\n"
-    eff += "}\n\n"
+    for L in LEGS:
+        # Load the ticked boxes into the scope values the pact engine and acceptance values read
+        eff += "qpq_ui_load_goods_%s_effect = {\n" % L
+        for o in UI_OFFERS:
+            eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n" % (L, o, L, o)
+            eff += "\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % o
+        for t in TIMINGS[1:]:
+            eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_gold\n\t\t\tvar:qpq_ui_%s_timing ?= flag:%s\n" % (L, L, t)
+            eff += "\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n" % (L, t)
+            eff += "\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % t
+        for flag in extras():
+            eff += "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_%s\n\t\t\tqpq_ui_leg_%s_has_extra_%s_trigger = yes\n\t\t}\n" % (L, flag, L, flag)
+            eff += "\t\tsave_scope_value_as = { name = %s value = yes }\n\t}\n" % flag
+        eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_charter }\n\t\tsave_scope_value_as = { name = qpq_o_charter value = yes }\n\t}\n"
+        eff += "}\n\n"
 
-    # Tiers, price, acceptance and validity for the chosen Ask
-    eff += "qpq_ui_compute_effect = {\n"
-    first = True
-    for k in KINDS:
-        key = k["key"]
-        eff += "\t%s = {\n\t\tlimit = { %s }\n" % ("if" if first else "else_if", kind_check(k))
-        first = False
-        if k["initiator"] == "agent":
-            eff += "\t\tset_variable = qpq_ui_agent_init\n"
-        # The target shown in the parties strip
-        if k["target"] == "char":
-            eff += "\t\tif = {\n\t\t\tlimit = { exists = scope:secondary_recipient }\n"
-            eff += "\t\t\tset_variable = { name = qpq_ui_target value = scope:secondary_recipient }\n\t\t}\n"
-        elif k["target"] == "derived":
-            eff += "\t\tif = {\n\t\t\tlimit = { exists = %s }\n\t\t\t%s = { save_scope_as = secondary_recipient }\n" % (k["derive"], k["derive"])
-            eff += "\t\t\tset_variable = { name = qpq_ui_target value = scope:secondary_recipient }\n\t\t}\n"
-        elif k["target"] == "title":
-            eff += "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\texists = scope:target\n\t\t\t\tscope:target = { exists = holder }\n\t\t\t}\n"
-            eff += "\t\t\tset_variable = { name = qpq_ui_target value = scope:target.holder }\n\t\t}\n"
-        eff += "\t\tset_variable = { name = qpq_ui_term value = %d }\n" % k["term"]
-        eff += "\t\tset_variable = { name = qpq_ui_payer_tier value = qpq_%s_payer_tier_value }\n" % key
-        eff += "\t\tset_variable = { name = qpq_ui_agent_tier value = qpq_%s_agent_tier_value }\n" % key
-        eff += "\t\tsave_scope_value_as = { name = qpq_price value = qpq_%s_price_value }\n" % key
-        eff += "\t\tset_variable = { name = qpq_ui_price value = scope:qpq_price }\n"
-        eff += "\t\tset_variable = { name = qpq_ui_acc_ask value = qpq_%s_ask_value }\n" % key
-        eff += "\t\tset_variable = { name = qpq_ui_acc_offers value = qpq_%s_offer_points_value }\n" % key
-        eff += "\t\tset_variable = { name = qpq_ui_acc_total value = qpq_%s_ai_acceptance_value }\n" % key
-        # Is the target in place?
-        if k["target"] == "char":
-            need = "exists = scope:secondary_recipient\n" + (k.get("target_valid") or "")
-        elif k["target"] in ("title", "artifact"):
-            need = "exists = scope:target\n" + (k.get("target_valid") or "")
-        elif k["target"] == "derived":
-            need = "exists = scope:secondary_recipient"
-        else:
-            need = "always = yes"
-        eff += "\t\tif = {\n\t\t\tlimit = {\n%s\t\t\t}\n\t\t\tset_variable = qpq_ui_target_ok\n\t\t}\n" % block(need, 4)
-        # The Ask's own conditions (shown as reasons on the Propose button), once the target is in place
-        if k.get("valid"):
-            eff += "\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_target_ok }\n"
-            for i, (_loc, trig) in enumerate(k["valid"]):
-                eff += "\t\t\tif = {\n\t\t\t\tlimit = {\n\t\t\t\t\tNOT = {\n%s\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tset_variable = qpq_ui_fail_%d\n\t\t\t}\n" % (
-                    block(trig, 6), i)
+        # Goods the chosen deed does not allow are put down again
+        eff += "qpq_ui_prune_goods_%s_effect = {\n" % L
+        for o in UI_OFFERS:
+            eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
+                    "\t\tremove_variable = qpq_ui_%s_o_%s\n\t}\n") % (L, o, L, o, L, o)
+        eff += ("\tif = {\n\t\tlimit = { NOT = { has_variable = qpq_ui_%s_o_gold } }\n"
+                "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n\t}\n") % (L, L)
+        for t in TIMINGS[1:]:
+            eff += ("\tif = {\n\t\tlimit = {\n\t\t\tvar:qpq_ui_%s_timing = flag:%s\n"
+                    "\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
+                    "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n\t}\n") % (L, t, L, t, L)
+        eff += "}\n\n"
+
+        # A different deed was picked: the old target and its terms go
+        eff += "qpq_ui_clear_leg_%s_effect = {\n" % L
+        for v in ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
+                 ["qpq_ui_%s_%s" % (L, f) for f in extras()]:
+            eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
+        eff += "}\n\n"
+
+        # The whole leg: which Ask carries it, candidates for its target, tiers, price and acceptance
+        eff += "qpq_ui_leg_%s_refresh_effect = {\n\tqpq_ui_prune_goods_%s_effect = yes\n" % (L, L)
+        eff += ("\tif = {\n\t\tlimit = { NOT = { var:qpq_ui_%s_kind = flag:none } }\n"
+                "\t\tset_variable = { name = qpq_ui_%s_ekind value = var:qpq_ui_%s_kind }\n\t}\n") % (L, L, L)
+        eff += ("\telse_if = {\n\t\tlimit = { qpq_ui_leg_%s_has_goods_trigger = yes }\n"
+                "\t\tset_variable = { name = qpq_ui_%s_ekind value = flag:barter }\n\t}\n") % (L, L)
+        eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n\t\tqpq_ui_clear_scopes_effect = yes\n" % L
+        first = True
+        for k in KINDS:
+            eff += "\t\t%s = {\n\t\t\tlimit = { %s }\n" % ("if" if first else "else_if", vekind(L, k))
+            first = False
+            eff += "\t\t\t%s\n" % orient_effect(k, L)
+            if k["target"] in ("char", "title", "artifact"):
+                eff += fill_pickers(k, L, block)
+                # Filling the pickers reuses the target scopes, so the real pick is loaded after it
+                for n in ("secondary_recipient", "target"):
+                    eff += "\t\t\tif = {\n\t\t\t\tlimit = { exists = scope:%s }\n\t\t\t\tclear_saved_scope = %s\n\t\t\t}\n" % (n, n)
+                eff += keep_pick(k, L)
+            eff += "\t\t\tqpq_ui_load_goods_%s_effect = yes\n" % L
+            eff += compute_kind(k, L, block)
             eff += "\t\t}\n"
+        eff += "\t}\n}\n\n"
+
+    # Put the two legs together
+    eff += "qpq_ui_deal_finish_effect = {\n\tqpq_deal_orient_normal_effect = yes\n"
+    eff += "\tset_variable = { name = qpq_ui_acc_ask value = 0 }\n\tset_variable = { name = qpq_ui_acc_offers value = 0 }\n"
+    eff += "\tset_variable = { name = qpq_ui_acc_other value = 0 }\n"
+    for L in LEGS:
+        eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
+        eff += "\t\tset_variable = qpq_ui_deal_active\n"
+        eff += "\t\tchange_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_%s_a_ask }\n" % L
+        eff += "\t\tchange_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_%s_a_offers }\n" % L
+        eff += "\t\tchange_variable = { name = qpq_ui_acc_other add = var:qpq_ui_%s_a_other }\n\t}\n" % L
+    eff += "\tchange_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }\n"
+    eff += ("\tset_variable = {\n\t\tname = qpq_ui_acc_total\n\t\tvalue = {\n\t\t\tvalue = var:qpq_ui_acc_ask\n"
+            "\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\tadd = var:qpq_ui_acc_other\n\t\t}\n\t}\n")
+    # Each side's scandal: the worse of its two halves
+    eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
+    eff += "\t\tset_variable = { name = qpq_ui_my_tier value = 0 }\n\t\tset_variable = { name = qpq_ui_their_tier value = 0 }\n"
+    for L, mine, theirs in (("t", "payer", "agent"), ("i", "agent", "payer")):
+        eff += "\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
+        eff += ("\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_%s_%s_tier > var:qpq_ui_my_tier }\n"
+                "\t\t\t\tset_variable = { name = qpq_ui_my_tier value = var:qpq_ui_%s_%s_tier }\n\t\t\t}\n") % (L, mine, L, mine)
+        eff += ("\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_%s_%s_tier > var:qpq_ui_their_tier }\n"
+                "\t\t\t\tset_variable = { name = qpq_ui_their_tier value = var:qpq_ui_%s_%s_tier }\n\t\t\t}\n\t\t}\n") % (L, theirs, L, theirs)
+    # Only a deal whose halves would all be Tier 0 may be published as a Charter; anything private is Tier I
+    eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\tvar:qpq_ui_my_tier <= 0\n\t\t\t\tvar:qpq_ui_their_tier <= 0\n\t\t\t}\n"
+            "\t\t\tset_variable = qpq_ui_charter_ok\n\t\t}\n")
+    eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\tOR = {\n\t\t\t\t\tNOT = { has_variable = qpq_ui_charter_ok }\n"
+            "\t\t\t\t\tNOT = { has_variable = qpq_ui_charter }\n\t\t\t\t}\n\t\t\t}\n")
+    eff += ("\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_my_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_my_tier value = 1 }\n\t\t\t}\n"
+            "\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_their_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_their_tier value = 1 }\n\t\t\t}\n\t\t}\n")
+    eff += "\t}\n}\n\n"
+
+    # Clear everything the compute steps derive
+    eff += "qpq_ui_clear_derived_effect = {\n"
+    gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_charter_ok", "qpq_ui_acc_ask",
+          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total"]
+    for L in LEGS:
+        gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
+    for v in gv:
+        eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
+    for L in LEGS:
+        for lst in lists:
+            eff += ("\tif = {\n\t\tlimit = { has_variable_list = qpq_ui_%s_%s }\n\t\tclear_variable_list = qpq_ui_%s_%s\n\t}\n") % (L, lst, L, lst)
+    eff += "}\n\n"
+
+    # Clear the player's choices (on opening and closing)
+    eff += "qpq_ui_clear_choices_effect = {\n"
+    vs = ["qpq_ui_charter"]
+    for L in LEGS:
+        vs += ["qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
+              ["qpq_ui_%s_o_%s" % (L, o) for o in UI_OFFERS] + ["qpq_ui_%s_%s" % (L, f) for f in extras()]
+    for v in vs:
+        eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
+    for L in LEGS:
+        eff += "\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % L
+        eff += "\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n" % L
+    eff += "}\n\n"
+
+    # Save the deal as scope values and scopes: for the proposal event and for sealing
+    eff += "qpq_ui_save_deal_effect = {\n"
+    eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_charter has_variable = qpq_ui_charter_ok }\n\t\tsave_scope_value_as = { name = qpq_deal_charter value = yes }\n\t}\n"
+    for L in LEGS:
+        eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
+        first = True
+        for k in KINDS:
+            eff += "\t\t%s = {\n\t\t\tlimit = { %s }\n\t\t\tsave_scope_value_as = { name = qpq_deal_%s_kind value = flag:%s }\n\t\t}\n" % (
+                "if" if first else "else_if", vekind(L, k), L, k["key"])
+            first = False
+        eff += "\t\tsave_scope_value_as = { name = qpq_deal_%s_price value = var:qpq_ui_%s_price }\n" % (L, L)
+        for o in UI_OFFERS:
+            eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t\t}\n"
+                    "\t\t\tsave_scope_value_as = { name = qpq_deal_%s_o_%s value = yes }\n\t\t}\n") % (L, o, L, o, L, o)
+        for t in TIMINGS[1:]:
+            eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable = qpq_ui_%s_o_gold\n\t\t\t\tvar:qpq_ui_%s_timing ?= flag:%s\n"
+                    "\t\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t\t}\n"
+                    "\t\t\tsave_scope_value_as = { name = qpq_deal_%s_o_%s value = yes }\n\t\t}\n") % (L, L, t, L, t, L, t)
+        for flag in extras():
+            eff += ("\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable = qpq_ui_%s_%s\n\t\t\t\tqpq_ui_leg_%s_has_extra_%s_trigger = yes\n\t\t\t}\n"
+                    "\t\t\tsave_scope_value_as = { name = qpq_deal_%s_%s value = yes }\n\t\t}\n") % (L, flag, L, flag, L, flag)
+        for what, v in (("char", "qpq_ui_%s_pick_char"), ("title", "qpq_ui_%s_target_title"),
+                        ("artifact", "qpq_ui_%s_target_artifact")):
+            eff += "\t\tif = {\n\t\t\tlimit = { exists = var:%s }\n\t\t\tvar:%s = { save_scope_as = qpq_deal_%s_%s }\n\t\t}\n" % (
+                v % L, v % L, L, what)
+        eff += "\t\tif = {\n\t\t\tlimit = { exists = var:qpq_ui_%s_target }\n\t\t\tvar:qpq_ui_%s_target = { save_scope_as = qpq_deal_%s_target }\n\t\t}\n" % (L, L, L)
         eff += "\t}\n"
     eff += "}\n\n"
 
-    # Clear everything the compute step derives
-    eff += "qpq_ui_clear_derived_effect = {\n"
-    for v in ["qpq_ui_agent_init", "qpq_ui_target", "qpq_ui_target_ok", "qpq_ui_payer_tier", "qpq_ui_agent_tier",
-              "qpq_ui_price", "qpq_ui_term", "qpq_ui_acc_ask", "qpq_ui_acc_offers", "qpq_ui_acc_total", "qpq_ui_acc_other"] + \
-             ["qpq_ui_fail_%d" % i for i in range(max_valid())]:
-        eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
-    for lst in ("qpq_ui_candidates", "qpq_ui_title_candidates", "qpq_ui_artifact_candidates"):
-        eff += "\tif = {\n\t\tlimit = { has_variable_list = %s }\n\t\tclear_variable_list = %s\n\t}\n" % (lst, lst)
+    # Sealing one leg (root and saved scopes: qpq_deal_me / qpq_deal_them, and the qpq_deal_<leg>_* values)
+    names = seal_scope_names()
+    eff += "qpq_deal_clear_seal_scopes_effect = {\n"
+    for n in names + all_flag_scopes():
+        eff += "\tif = {\n\t\tlimit = { exists = scope:%s }\n\t\tclear_saved_scope = %s\n\t}\n" % (n, n)
     eff += "}\n\n"
-
-    # Clear the player's choices (on opening, and when a different Ask is picked)
-    eff += "qpq_ui_clear_choices_effect = {\n"
-    for v in ["qpq_ui_pick_char", "qpq_ui_target_title", "qpq_ui_target_artifact"] + \
-             ["qpq_ui_o_%s" % o for o in UI_OFFERS] + ["qpq_ui_%s" % f for f in extras()]:
-        eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
-    eff += "\tset_variable = { name = qpq_ui_timing value = flag:up_front }\n}\n\n"
-
-    # Which kind is being proposed (for the proposal event and sealing)
-    eff += "qpq_ui_save_proposed_kind_effect = {\n"
-    first = True
-    for k in KINDS:
-        eff += "\t%s = {\n\t\tlimit = { %s }\n\t\tsave_scope_value_as = { name = qpq_proposed_kind value = flag:%s }\n\t}\n" % (
-            "if" if first else "else_if", kind_check(k), k["key"])
-        first = False
-    eff += "}\n"
+    for L in LEGS:
+        eff += "qpq_deal_load_goods_%s_effect = {\n" % L
+        for o in UI_OFFERS + TIMINGS[1:]:
+            eff += "\tif = {\n\t\tlimit = { scope:qpq_deal_%s_o_%s ?= yes }\n\t\tsave_scope_value_as = { name = qpq_o_%s value = yes }\n\t}\n" % (L, o, o)
+        for flag in extras():
+            eff += "\tif = {\n\t\tlimit = { scope:qpq_deal_%s_%s ?= yes }\n\t\tsave_scope_value_as = { name = %s value = yes }\n\t}\n" % (L, flag, flag)
+        eff += "\tif = {\n\t\tlimit = { scope:qpq_deal_charter ?= yes }\n\t\tsave_scope_value_as = { name = qpq_o_charter value = yes }\n\t}\n"
+        eff += "}\n\n"
+        eff += "qpq_deal_seal_leg_%s_effect = {\n\tqpq_deal_clear_seal_scopes_effect = yes\n" % L
+        first = True
+        for k in KINDS:
+            eff += "\t%s = {\n\t\tlimit = { scope:qpq_deal_%s_kind ?= flag:%s }\n" % ("if" if first else "else_if", L, k["key"])
+            first = False
+            eff += "\t\t%s\n" % orient_effect(k, L)
+            if k["target"] == "char":
+                eff += "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_deal_%s_char }\n\t\t\tscope:qpq_deal_%s_char = { save_scope_as = secondary_recipient }\n\t\t}\n" % (L, L)
+            elif k["target"] in ("title", "artifact"):
+                w = k["target"]
+                eff += "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_deal_%s_%s }\n\t\t\tscope:qpq_deal_%s_%s = { save_scope_as = target }\n\t\t}\n" % (L, w, L, w)
+            eff += "\t\tqpq_deal_load_goods_%s_effect = yes\n" % L
+            eff += "\t\tsave_scope_value_as = { name = qpq_price value = scope:qpq_deal_%s_price }\n" % L
+            eff += "\t\tqpq_k_%s_seal_from_scopes_effect = yes\n" % k["key"]
+            eff += "\t}\n"
+        eff += "\tscope:qpq_story ?= { save_scope_as = qpq_deal_%s_story }\n}\n\n" % L
     write("common/scripted_effects/qpq_ui_kind_effects.txt", eff)
 
-    trg = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Propose-a-Pact panel conditions (root: the player).\n\n"
-    for o in UI_OFFERS + TIMINGS[1:]:
-        kinds = [k for k in KINDS if o in k["offers"]]
-        trg += "qpq_ui_kind_allows_offer_%s_trigger = {\n\tOR = {\n" % o
-        for k in kinds:
-            trg += "\t\t%s\n" % kind_check(k)
-        if not kinds:
-            trg += "\t\talways = no\n"
+    # ---------------------------------------------------------------- triggers
+    trg = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - Backroom Deal panel conditions (root: the player).\n\n"
+    for L in LEGS:
+        for o in UI_OFFERS + TIMINGS[1:]:
+            trg += "qpq_ui_leg_%s_allows_%s_trigger = {\n\tOR = {\n" % (L, o)
+            n = 0
+            for k in DEEDS:
+                if o in k["offers"]:
+                    trg += "\t\t%s\n" % vkind(L, k)
+                    n += 1
+            if o in BARTER["offers"]:
+                trg += "\t\tvar:qpq_ui_%s_kind = flag:none\n" % L
+                n += 1
+            if not n:
+                trg += "\t\talways = no\n"
+            trg += "\t}\n}\n\n"
+        trg += "qpq_ui_leg_%s_has_goods_trigger = {\n\tOR = {\n" % L
+        for o in UI_OFFERS:
+            trg += "\t\thas_variable = qpq_ui_%s_o_%s\n" % (L, o)
         trg += "\t}\n}\n\n"
-    for flag, (_x, kinds) in extras().items():
-        trg += "qpq_ui_kind_has_extra_%s_trigger = {\n\tOR = {\n" % flag
-        for k in kinds:
-            trg += "\t\t%s\n" % kind_check(k)
-        trg += "\t}\n}\n\n"
-    for t in ("char", "title", "artifact"):
-        trg += "qpq_ui_kind_needs_%s_target_trigger = {\n\tOR = {\n" % t
+        for flag, (_x, kinds) in extras().items():
+            trg += "qpq_ui_leg_%s_has_extra_%s_trigger = {\n\tOR = {\n" % (L, flag)
+            for k in kinds:
+                trg += "\t\t%s\n" % vkind(L, k)
+            trg += "\t}\n}\n\n"
+        for t in ("char", "title", "artifact"):
+            trg += "qpq_ui_leg_%s_needs_%s_trigger = {\n\tOR = {\n" % (L, t)
+            n = 0
+            for k in DEEDS:
+                if k["target"] == t:
+                    trg += "\t\t%s\n" % vkind(L, k)
+                    n += 1
+            if not n:
+                trg += "\t\talways = no\n"
+            trg += "\t}\n}\n\n"
+        # The Ask's own conditions, as Propose failure reasons
+        trg += "qpq_ui_leg_%s_ask_valid_trigger = {\n" % L
         for k in KINDS:
-            if k["target"] == t:
-                trg += "\t\t%s\n" % kind_check(k)
-        trg += "\t}\n}\n\n"
+            if not k.get("valid"):
+                continue
+            trg += "\ttrigger_if = {\n\t\tlimit = { %s }\n" % vekind(L, k)
+            for i, (loc, _trig) in enumerate(k["valid"]):
+                trg += "\t\tcustom_description = {\n\t\t\ttext = %s\n\t\t\tNOT = { has_variable = qpq_ui_%s_fail_%d }\n\t\t}\n" % (loc, L, i)
+            trg += "\t}\n"
+        trg += "\talways = yes\n}\n\n"
+        # The Ask is still open between these two (things can change while the panel is open)
+        trg += "qpq_ui_leg_%s_still_possible_trigger = {\n" % L
+        first = True
+        for k in KINDS:
+            trg += "\t%s = {\n\t\tlimit = { %s }\n%s%s\t}\n" % ("trigger_if" if first else "trigger_else_if", vekind(L, k),
+                                                              block(oriented(k, L, k["rel"]), 2),
+                                                              block(oriented(k, L, k.get("dlc") or ""), 2))
+            first = False
+        trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n\n"
+        # No second deal of the same Ask between the same two characters
+        trg += "qpq_ui_leg_%s_no_same_pact_trigger = {\n" % L
+        first = True
+        for k in DEEDS:
+            trg += "\t%s = {\n\t\tlimit = { %s }\n\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n\t}\n" % (
+                "trigger_if" if first else "trigger_else_if", vekind(L, k), k["key"])
+            first = False
+        trg += "\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
+        # Every ticked good must still be possible (actor, recipient saved)
+        trg += "qpq_ui_leg_%s_offers_still_possible_trigger = {\n" % L
+        for o in UI_OFFERS:
+            trg += "\ttrigger_if = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n\t\t}\n" % (L, o, L, o)
+            trg += offer_shown(block, fmt_shown, OFFER_DEFS, o, L, 2)
+            trg += "\t}\n"
+        trg += "\talways = yes\n}\n\n"
+        # One leg of the Propose button's failure reasons
+        trg += "qpq_ui_leg_%s_ready_trigger = {\n\ttrigger_if = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % (L, L)
+        trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_NOT_POSSIBLE_%s\n\t\t\tqpq_ui_leg_%s_still_possible_trigger = yes\n\t\t}\n") % (L.upper(), L)
+        trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_NO_TARGET_%s\n\t\t\thas_variable = qpq_ui_%s_target_ok\n\t\t}\n") % (L.upper(), L)
+        trg += "\t\tqpq_ui_leg_%s_ask_valid_trigger = yes\n" % L
+        trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_SAME_PACT\n\t\t\tqpq_ui_leg_%s_no_same_pact_trigger = yes\n\t\t}\n") % L
+        trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_OFFERS_%s\n\t\t\tqpq_ui_leg_%s_offers_still_possible_trigger = yes\n\t\t}\n") % (L.upper(), L)
+        # Gold paid when the deal is sealed must be in the payer's hands
+        if L == "t":
+            trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_GOLD_YOU\n\t\t\ttrigger_if = {\n\t\t\t\tlimit = {\n"
+                    "\t\t\t\t\thas_variable = qpq_ui_t_o_gold\n\t\t\t\t\tvar:qpq_ui_t_timing = flag:up_front\n\t\t\t\t}\n"
+                    "\t\t\t\tgold >= var:qpq_ui_t_price\n\t\t\t}\n\t\t\ttrigger_else_if = {\n\t\t\t\tlimit = {\n"
+                    "\t\t\t\t\thas_variable = qpq_ui_t_o_gold\n\t\t\t\t\tvar:qpq_ui_t_timing = flag:split\n\t\t\t\t}\n"
+                    "\t\t\t\tgold >= { value = var:qpq_ui_t_price divide = 2 }\n\t\t\t}\n\t\t\ttrigger_else = {\n\t\t\t\talways = yes\n\t\t\t}\n\t\t}\n")
+        else:
+            trg += ("\t\tcustom_description = {\n\t\t\ttext = QPQ_UI_FAIL_GOLD_THEM\n\t\t\ttrigger_if = {\n\t\t\t\tlimit = {\n"
+                    "\t\t\t\t\thas_variable = qpq_ui_i_o_gold\n\t\t\t\t\tvar:qpq_ui_i_timing = flag:up_front\n\t\t\t\t}\n"
+                    "\t\t\t\tscope:recipient = { gold >= scope:actor.var:qpq_ui_i_price }\n\t\t\t}\n\t\t\ttrigger_else_if = {\n\t\t\t\tlimit = {\n"
+                    "\t\t\t\t\thas_variable = qpq_ui_i_o_gold\n\t\t\t\t\tvar:qpq_ui_i_timing = flag:split\n\t\t\t\t}\n"
+                    "\t\t\t\tscope:recipient = { gold >= { value = scope:actor.var:qpq_ui_i_price divide = 2 } }\n"
+                    "\t\t\t}\n\t\t\ttrigger_else = {\n\t\t\t\talways = yes\n\t\t\t}\n\t\t}\n")
+        trg += "\t}\n\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
+
+    # ---- the deal as sent: is it still sound when it is answered? (event qpq_deal.1; root: the recipient;
+    # scope:actor = the proposer, scope:recipient = root, the legs saved as qpq_deal_<leg>_*)
+    for L in LEGS:
+        trg += "qpq_deal_leg_%s_valid_trigger = {\n\ttrigger_if = {\n\t\tlimit = { exists = scope:qpq_deal_%s_kind }\n" % (L, L)
+        first = True
+        for k in KINDS:
+            body = block(oriented(k, L, k["rel"]), 3) + block(oriented(k, L, k.get("dlc") or ""), 3)
+            if k["target"] == "char":
+                body += "\t\t\texists = scope:qpq_deal_%s_char\n\t\t\tscope:qpq_deal_%s_char = { is_alive = yes }\n" % (L, L)
+                body += block(retarget(oriented(k, L, k.get("target_valid") or ""), k, L), 3)
+            elif k["target"] in ("title", "artifact"):
+                body += "\t\t\texists = scope:qpq_deal_%s_%s\n" % (L, k["target"])
+                body += block(retarget(oriented(k, L, k.get("target_valid") or ""), k, L), 3)
+            elif k["target"] == "derived":
+                body += block("exists = %s" % oriented(k, L, k["derive"]), 3)
+            for loc, trig in k.get("valid", []):
+                body += "\t\t\tcustom_description = {\n\t\t\t\ttext = %s\n%s\t\t\t}\n" % (loc, block(retarget(oriented(k, L, trig), k, L), 4))
+            if k["key"] != "clemency_bargain":
+                body += "\t\t\tscope:actor = { is_imprisoned = no }\n\t\t\tscope:recipient = { is_imprisoned = no }\n"
+            if not k.get("carrier"):
+                body += "\t\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n" % k["key"]
+            trg += "\t\t%s = {\n\t\t\tlimit = { scope:qpq_deal_%s_kind = flag:%s }\n%s\t\t}\n" % (
+                "trigger_if" if first else "trigger_else_if", L, k["key"], body)
+            first = False
+        trg += "\t\ttrigger_else = {\n\t\t\talways = no\n\t\t}\n\t}\n\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
+    # Gold due at sealing is in the payer's hands (leg t: the proposer pays; leg i: the recipient pays)
+    trg += "qpq_deal_gold_ok_trigger = {\n"
+    for L, payer in (("t", "scope:actor"), ("i", "scope:recipient")):
+        trg += ("\ttrigger_if = {\n\t\tlimit = {\n\t\t\tscope:qpq_deal_%s_o_gold ?= yes\n\t\t\tNOT = { scope:qpq_deal_%s_o_on_delivery ?= yes }\n"
+                "\t\t\tNOT = { scope:qpq_deal_%s_o_stipend ?= yes }\n\t\t}\n\t\ttrigger_if = {\n\t\t\tlimit = { scope:qpq_deal_%s_o_split ?= yes }\n"
+                "\t\t\t%s = { gold >= { value = scope:qpq_deal_%s_price divide = 2 } }\n\t\t}\n\t\ttrigger_else = {\n"
+                "\t\t\t%s = { gold >= scope:qpq_deal_%s_price }\n\t\t}\n\t}\n") % (L, L, L, L, payer, L, payer, L)
+    trg += "\talways = yes\n}\n\n"
+    # Room for the deal's pacts on both sides
+    trg += ("qpq_deal_room_trigger = {\n\ttrigger_if = {\n\t\tlimit = {\n\t\t\texists = scope:qpq_deal_t_kind\n\t\t\texists = scope:qpq_deal_i_kind\n\t\t}\n"
+            "\t\tscope:actor = {\n\t\t\tOR = {\n\t\t\t\tNOT = { has_variable_list = qpq_pacts }\n"
+            "\t\t\t\tvariable_list_size = { name = qpq_pacts value < qpq_pact_cap_minus_one_value }\n\t\t\t}\n\t\t}\n"
+            "\t\tscope:recipient = {\n\t\t\tOR = {\n\t\t\t\tNOT = { has_variable_list = qpq_pacts }\n"
+            "\t\t\t\tvariable_list_size = { name = qpq_pacts value < qpq_pact_cap_minus_one_value }\n\t\t\t}\n\t\t}\n\t}\n"
+            "\ttrigger_else = {\n\t\tqpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }\n\t}\n}\n\n")
+    trg += ("qpq_deal_valid_trigger = {\n\tqpq_deal_leg_t_valid_trigger = yes\n\tqpq_deal_leg_i_valid_trigger = yes\n"
+            "\tqpq_deal_room_trigger = yes\n\tqpq_deal_gold_ok_trigger = yes\n}\n\n")
+
+    # ---- single-leg proposals made by the AI to a player (event qpq_hub.50) keep their own checks
     trg += "qpq_proposed_kind_is_agent_init_trigger = {\n\tOR = {\n"
     for k in KINDS:
         if k["initiator"] == "agent":
             trg += "\t\tscope:qpq_proposed_kind ?= flag:%s\n" % k["key"]
     trg += "\t}\n}\n\n"
-    # The Ask's own conditions, as Propose failure reasons
-    trg += "qpq_ui_ask_valid_trigger = {\n"
-    for k in KINDS:
-        if not k.get("valid"):
-            continue
-        trg += "\ttrigger_if = {\n\t\tlimit = { %s }\n" % kind_check(k)
-        for i, (loc, _trig) in enumerate(k["valid"]):
-            trg += "\t\tcustom_description = {\n\t\t\ttext = %s\n\t\t\tNOT = { has_variable = qpq_ui_fail_%d }\n\t\t}\n" % (loc, i)
-        trg += "\t}\n"
-    trg += "\talways = yes\n}\n\n"
-    # The Ask is still open between these two (things can change while the panel is open)
-    trg += "qpq_ui_kind_still_possible_trigger = {\n"
-    first = True
-    for k in KINDS:
-        trg += "\t%s = {\n\t\tlimit = { %s }\n%s%s\t}\n" % ("trigger_if" if first else "trigger_else_if", kind_check(k),
-                                                         block(k["rel"], 2), block(k.get("dlc") or "", 2))
-        first = False
-    trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n\n"
-    # No second pact of the same Ask between the same two characters
-    trg += "qpq_ui_no_same_pact_trigger = {\n"
-    first = True
-    for k in KINDS:
-        trg += "\t%s = {\n\t\tlimit = { %s }\n\t\tNOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = %s } }\n\t}\n" % (
-            "trigger_if" if first else "trigger_else_if", kind_check(k), k["key"])
-        first = False
-    trg += "\ttrigger_else = {\n\t\talways = yes\n\t}\n}\n\n"
-    # A proposal answered later (event qpq_hub.50): is it still sound? Same scopes as the panel saved.
     trg += "qpq_proposed_kind_still_valid_trigger = {\n"
     first = True
     for k in KINDS:
@@ -338,14 +717,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         trg += "\t%s = {\n\t\tlimit = { scope:qpq_proposed_kind = flag:%s }\n%s\t}\n" % (
             "trigger_if" if first else "trigger_else_if", k["key"], body)
         first = False
-    trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n\n"
-    # Every ticked offer must still be possible (actor, recipient saved)
-    trg += "qpq_ui_offers_still_possible_trigger = {\n"
-    for o in UI_OFFERS:
-        trg += "\ttrigger_if = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_o_%s\n\t\t\tqpq_ui_kind_allows_offer_%s_trigger = yes\n\t\t}\n" % (o, o)
-        trg += offer_shown(block, fmt_shown, OFFER_DEFS, o, 2)
-        trg += "\t}\n"
-    trg += "\talways = yes\n}\n"
+    trg += "\ttrigger_else = {\n\t\talways = no\n\t}\n}\n"
     write("common/scripted_triggers/qpq_ui_kind_triggers.txt", trg)
 
 
@@ -357,50 +729,21 @@ def gen_ui_custom_loc(write):
             s += "\ttext = {\n\t\ttrigger = { %s }\n\t\tlocalization_key = %s\n\t}\n" % (trig, key)
         s += "\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = %s\n\t}\n}\n\n" % fallback
         return s
-    out = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - text for the Propose-a-Pact panel (root: the player).\n\n"
-    out += cl("QpqUiKindName", [("var:qpq_ui_kind ?= flag:%s" % k["key"], "qpq_%s_name" % k["key"]) for k in KINDS], "QPQ_UI_NO_ASK")
-    out += cl("QpqUiKindDesc", [("var:qpq_ui_kind ?= flag:%s" % k["key"], "qpq_%s_interaction_desc" % k["key"]) for k in KINDS], "QPQ_UI_NO_ASK_DESC")
-    out += cl("QpqUiKindAsk", [("var:qpq_ui_kind ?= flag:%s" % k["key"], "qpq_%s_ask_ui" % k["key"]) for k in KINDS], "qpq_empty")
-    hint = {"condition": "QPQ_UI_HINT_CONDITION", "perform": "QPQ_UI_HINT_PERFORM", "restraint": "QPQ_UI_HINT_RESTRAINT"}
-    out += cl("QpqUiKindHint", [("var:qpq_ui_kind ?= flag:%s" % k["key"], hint[k["mode"]]) for k in KINDS], "qpq_empty")
-    # Each side's half: "mine" is the payer's half unless the player is the agent
-    mine, theirs = [], []
-    for t in range(6):
-        shown = "qpq_tier_%d" % t
-        if t == 0:
-            # a private pact is raised to Tier I when sealed; Tier 0 only as a published Charter
-            for cond, key in ((" has_variable = qpq_ui_o_charter", "qpq_tier_0"), ("", "qpq_tier_1")):
-                mine.append(("has_variable = qpq_ui_agent_init exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0" + cond, key))
-                mine.append(("NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0" + cond, key))
-                theirs.append(("has_variable = qpq_ui_agent_init exists = var:qpq_ui_payer_tier var:qpq_ui_payer_tier <= 0" + cond, key))
-                theirs.append(("NOT = { has_variable = qpq_ui_agent_init } exists = var:qpq_ui_agent_tier var:qpq_ui_agent_tier <= 0" + cond, key))
-            continue
-        mine.append(("has_variable = qpq_ui_agent_init var:qpq_ui_agent_tier ?= %d" % t, shown))
-        mine.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_payer_tier ?= %d" % t, shown))
-        theirs.append(("has_variable = qpq_ui_agent_init var:qpq_ui_payer_tier ?= %d" % t, shown))
-        theirs.append(("NOT = { has_variable = qpq_ui_agent_init } var:qpq_ui_agent_tier ?= %d" % t, shown))
-    out += cl("QpqUiMyTier", mine, "qpq_empty")
-    out += cl("QpqUiTheirTier", theirs, "qpq_empty")
-    # Offer and timing labels: demands when the player is the one doing the deed
-    demand_keys = {"gold", "on_delivery", "split", "stipend", "land", "office", "contract", "release_hook",
-                   "my_word", "clemency", "artifact", "church"}
-    for o in UI_OFFERS + TIMINGS:
-        lab = "qpq_offer_%s" % o
-        dem = ("qpq_demand_%s" % o) if o in demand_keys else lab
-        if o == "up_front":
-            dem = "qpq_demand_up_front"
-        out += cl("QpqUiOffer_%s" % o, [("has_variable = qpq_ui_agent_init", dem)], lab)
-        out += cl("QpqUiOfferTt_%s" % o, [("has_variable = qpq_ui_agent_init", dem + "_desc")], lab + "_desc")
-    out += cl("QpqUiDoer", [("has_variable = qpq_ui_agent_init", "QPQ_UI_DOER_YOU")], "QPQ_UI_DOER_THEM")
-    out += cl("QpqUiOfferHeader", [("has_variable = qpq_ui_agent_init", "QPQ_UI_DEMAND_HEADER")], "QPQ_UI_OFFER_HEADER")
-    out += cl("QpqUiGiveHeader", [("has_variable = qpq_ui_agent_init", "QPQ_UI_YOU_GET_HEADER")], "QPQ_UI_YOU_GIVE_HEADER")
-    out += cl("QpqUiDoHeader", [("has_variable = qpq_ui_agent_init", "QPQ_UI_YOU_DO_HEADER")], "QPQ_UI_THEY_DO_HEADER")
-    out += cl("QpqUiGoldLine", [
-        ("NOT = { has_variable = qpq_ui_o_gold }", "qpq_empty"),
-        ("var:qpq_ui_timing ?= flag:on_delivery", "QPQ_UI_GOLD_ON_DELIVERY"),
-        ("var:qpq_ui_timing ?= flag:split", "QPQ_UI_GOLD_SPLIT"),
-        ("var:qpq_ui_timing ?= flag:stipend", "QPQ_UI_GOLD_STIPEND"),
-    ], "QPQ_UI_GOLD_UP_FRONT")
+    out = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - text for the Backroom Deal panel (root: the player).\n\n"
+    for L in LEGS:
+        out += cl("QpqUiKindName_%s" % L, [("var:qpq_ui_%s_kind ?= flag:%s" % (L, k["key"]), "qpq_%s_name" % k["key"]) for k in DEEDS], "QPQ_UI_NO_DEED")
+        out += cl("QpqUiKindDesc_%s" % L, [("var:qpq_ui_%s_kind ?= flag:%s" % (L, k["key"]), "qpq_%s_interaction_desc" % k["key"]) for k in DEEDS], "QPQ_UI_NO_DEED_DESC_%s" % L.upper())
+        out += cl("QpqUiKindAsk_%s" % L, [("var:qpq_ui_%s_kind ?= flag:%s" % (L, k["key"]), "qpq_%s_ask_ui_%s" % (k["key"], L)) for k in DEEDS], "qpq_empty")
+        hint = {"condition": "QPQ_UI_HINT_CONDITION", "perform": "QPQ_UI_HINT_PERFORM", "restraint": "QPQ_UI_HINT_RESTRAINT"}
+        out += cl("QpqUiKindHint_%s" % L, [("var:qpq_ui_%s_kind ?= flag:%s" % (L, k["key"]), hint[k["mode"]]) for k in DEEDS], "qpq_empty")
+        out += cl("QpqUiGoldLine_%s" % L, [
+            ("NOT = { has_variable = qpq_ui_%s_o_gold }" % L, "qpq_empty"),
+            ("var:qpq_ui_%s_timing ?= flag:on_delivery" % L, "QPQ_UI_GOLD_ON_DELIVERY_%s" % L.upper()),
+            ("var:qpq_ui_%s_timing ?= flag:split" % L, "QPQ_UI_GOLD_SPLIT_%s" % L.upper()),
+            ("var:qpq_ui_%s_timing ?= flag:stipend" % L, "QPQ_UI_GOLD_STIPEND_%s" % L.upper()),
+        ], "QPQ_UI_GOLD_UP_FRONT_%s" % L.upper())
+    for who in ("my", "their"):
+        out += cl("QpqUi%sTier" % who.capitalize(), [("var:qpq_ui_%s_tier ?= %d" % (who, t), "qpq_tier_%d" % t) for t in range(6)], "qpq_empty")
     out += cl("QpqUiAcceptance", [
         ("NOT = { exists = var:qpq_ui_acc_total }", "QPQ_UI_ACC_NONE"),
         ("var:qpq_ui_recipient = { is_ai = no }", "QPQ_UI_ACC_PLAYER"),
@@ -410,13 +753,68 @@ def gen_ui_custom_loc(write):
 
 
 def gen_ui_loc(write):
-    """Generated loc: the panel's version of each Ask's text."""
-    L = ["l_english:"]
-    for k in KINDS:
-        L.append(' qpq_%s_ask_ui:0 "%s"' % (k["key"], deal_words(ask_ui(k)).replace('"', '\\"')))
+    """Generated loc: the panel's and the event's version of each Ask's text."""
+    L_ = ["l_english:"]
+    for k in DEEDS:
+        for L in LEGS:
+            L_.append(' qpq_%s_ask_ui_%s:0 "%s"' % (k["key"], L, deal_words(ask_ui(k, L)).replace('"', '\\"')))
+            L_.append(' qpq_%s_ask_ev_%s:0 "%s"' % (k["key"], L, ("\\n #P •#! " + deal_words(ask_ev(k, L))).replace('"', '\\"')))
     for o in UI_OFFERS[1:]:
-        L.append(' QPQ_UI_BULLET_OFFER_%s:0 "#P •#! $qpq_offer_%s$"' % (o, o))
-    write("localization/english/qpq_ui_kinds_l_english.yml", "\n".join(L) + "\n")
+        L_.append(' QPQ_UI_BULLET_OFFER_%s:0 "#P •#! $qpq_offer_%s$"' % (o, o))
+    for L in LEGS:
+        for t, txt in (("UP_FRONT", "paid when sealed"), ("ON_DELIVERY", "paid on delivery"),
+                       ("SPLIT", "half now and half on delivery"), ("STIPEND", "in yearly installments")):
+            L_.append(' QPQ_UI_GOLD_%s_%s:0 "#P •#! [GetPlayer.MakeScope.Var(\'qpq_ui_%s_price\').GetValue|0] gold, %s"' % (t, L.upper(), L, txt))
+        L_.append(' qpq_deal.1.gold_%s:0 "\\n #P •#! [qpq_deal_%s_price|0] gold"' % (L, L))
+    write("localization/english/qpq_ui_kinds_l_english.yml", "\n".join(L_) + "\n")
+
+
+# ------------------------------------------------------------------ the deal event (a human recipient)
+HUB50_TERMS = ["on_delivery", "split", "stipend", "land", "claim", "office", "marriage", "release_hook",
+               "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
+               "restraint", "hook"]
+HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]
+
+
+def gen_deal_events(write):
+    out = "# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py) - a deal put to a person.\n\nnamespace = qpq_deal\n\n"
+    out += "qpq_deal.1 = {\n\ttype = character_event\n\ttitle = qpq_deal.1.t\n\tdesc = {\n\t\tdesc = qpq_deal.1.intro\n"
+
+    def side(deed_leg, goods_leg, header, nothing_trig):
+        s = "\t\ttriggered_desc = {\n\t\t\ttrigger = { always = yes }\n\t\t\tdesc = %s\n\t\t}\n" % header
+        s += "\t\tfirst_valid = {\n"
+        for k in DEEDS:
+            s += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_deal_%s_kind ?= flag:%s }\n\t\t\t\tdesc = qpq_%s_ask_ev_%s\n\t\t\t}\n" % (deed_leg, k["key"], k["key"], deed_leg)
+        s += "\t\t\tdesc = qpq_empty\n\t\t}\n"
+        s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_o_gold ?= yes }\n\t\t\tdesc = qpq_deal.1.gold_%s\n\t\t}\n" % (goods_leg, goods_leg)
+        for o in HUB50_TERMS:
+            s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_o_%s ?= yes }\n\t\t\tdesc = qpq_hub.50.term_%s\n\t\t}\n" % (goods_leg, o, o)
+        for x in HUB50_EXTRAS:
+            s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_%s ?= yes }\n\t\t\tdesc = qpq_hub.50.term_%s\n\t\t}\n" % (deed_leg, x, x)
+        s += "\t\ttriggered_desc = {\n\t\t\ttrigger = {\n\t\t\t\tNOT = { exists = scope:qpq_deal_%s_kind }\n\t\t\t\tNOT = { scope:qpq_deal_%s_o_gold ?= yes }\n" % (deed_leg, goods_leg)
+        for o in HUB50_TERMS:
+            s += "\t\t\t\tNOT = { scope:qpq_deal_%s_o_%s ?= yes }\n" % (goods_leg, o)
+        s += "\t\t\t}\n\t\t\tdesc = qpq_deal.1.nothing\n\t\t}\n"
+        return s
+
+    # What the proposer will do: their deed is leg i's, their goods are leg t's
+    out += side("i", "t", "qpq_deal.1.they_will", None)
+    out += side("t", "i", "qpq_deal.1.you_will", None)
+    out += ("\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_charter ?= yes }\n\t\t\tdesc = qpq_hub.50.term_charter\n\t\t}\n")
+    out += "\t\tdesc = qpq_deal.1.price\n\t}\n"
+    out += "\ttheme = intrigue\n\tleft_portrait = root\n\tright_portrait = scope:actor\n\n"
+    ok = "qpq_deal_valid_trigger = yes"
+    out += ("\toption = {\n\t\tname = qpq_hub.50.a\n\t\ttrigger = { %s }\n\t\tremove_character_flag = qpq_considering_proposal\n"
+            "\t\tqpq_seal_deal_effect = yes\n\t}\n") % ok
+    out += ("\toption = {\n\t\tname = qpq_hub.50.c\n\t\ttrigger = { NOT = { %s } }\n\t\tcustom_tooltip = qpq_hub.50.c_tt\n"
+            "\t\tremove_character_flag = qpq_considering_proposal\n\t\tscope:actor = {\n\t\t\tsend_interface_toast = {\n"
+            "\t\t\t\ttype = event_toast_effect_neutral\n\t\t\t\ttitle = qpq_msg_proposal_lapsed_title\n\t\t\t\tleft_icon = root\n"
+            "\t\t\t\tcustom_tooltip = qpq_msg_proposal_lapsed_tt\n\t\t\t}\n\t\t}\n\t}\n") % ok
+    out += ("\toption = {\n\t\tname = qpq_hub.50.b\n\t\tremove_character_flag = qpq_considering_proposal\n\t\tscope:actor = {\n"
+            "\t\t\tadd_opinion = { target = root modifier = qpq_declined_pact_opinion }\n\t\t\tsend_interface_toast = {\n"
+            "\t\t\t\ttype = event_toast_effect_neutral\n\t\t\t\ttitle = qpq_msg_proposal_declined_title\n\t\t\t\tleft_icon = root\n"
+            "\t\t\t\tcustom_tooltip = qpq_msg_proposal_declined_tt\n\t\t\t}\n\t\t}\n\t}\n}\n")
+    write("events/qpq_deal_events.txt", out)
 
 
 # ------------------------------------------------------------------ the window
@@ -424,111 +822,402 @@ def gen_gui(write):
     def sg(name, what, scope=GS):
         return "[GetScriptedGui('%s').%s( %s )]" % (name, what, scope)
 
-    ask_items = ""
-    for g, _gname in GROUPS:
-        ask_items += """
-						text_single = {
-							visible = "%s"
-							layoutpolicy_horizontal = expanding
-							margin = { 6 4 }
-							text = "qpq_hub.group.%s"
-							default_format = "#T"
-							using = Font_Size_Medium
-						}
-""" % (sg("qpq_ui_group_%s" % g, "IsShown"), g)
-        for k in [k for k in KINDS if k["group"] == g]:
-            ask_items += """
-						button_standard_list = {
-							visible = "%s"
-							layoutpolicy_horizontal = expanding
-							size = { 0 32 }
-							text = "qpq_%s_name"
-							enabled = "%s"
-							tooltip = "[Select_CString( %s, Localize( 'qpq_%s_hub_tt' ), %s )]"
-							using = tooltip_ne
-							onclick = "%s"
-							down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, '%s' )]"
-						}
-""" % (sg("qpq_ui_kind_%s" % k["key"], "IsShown"), k["key"], sg("qpq_ui_kind_%s" % k["key"], "IsValid"),
-               sg("qpq_ui_kind_%s" % k["key"], "IsValid")[1:-1], k["key"], sg("qpq_ui_kind_%s" % k["key"], "BuildTooltip")[1:-1],
-               sg("qpq_ui_kind_%s" % k["key"], "Execute"), k["key"])
+    def ask_items(L):
+        s = ""
+        for g, _gname in GROUPS:
+            kinds = [k for k in DEEDS if k["group"] == g]
+            if not kinds:
+                continue
+            s += """
+							text_single = {
+								visible = "%s"
+								layoutpolicy_horizontal = expanding
+								margin = { 6 4 }
+								text = "qpq_hub.group.%s"
+								default_format = "#T"
+								using = Font_Size_Medium
+							}
+""" % (sg("qpq_ui_group_%s_%s" % (L, g), "IsShown"), g)
+            for k in kinds:
+                n = "qpq_ui_kind_%s_%s" % (L, k["key"])
+                s += """
+							button_standard_list = {
+								visible = "%s"
+								layoutpolicy_horizontal = expanding
+								size = { 0 32 }
+								text = "qpq_%s_name"
+								enabled = "%s"
+								tooltip = "[Select_CString( %s, Localize( 'qpq_%s_hub_tt' ), %s )]"
+								using = tooltip_ne
+								onclick = "%s"
+								down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%s_kind').GetFlagName, '%s' )]"
+							}
+""" % (sg(n, "IsShown"), k["key"], sg(n, "IsValid"), sg(n, "IsValid")[1:-1], k["key"], sg(n, "BuildTooltip")[1:-1],
+                sg(n, "Execute"), L, k["key"])
+        return s
 
-    offer_items = ""
-    for o in UI_OFFERS:
-        offer_items += """
+    def offer_items(L):
+        s = ""
+        for o in UI_OFFERS:
+            label = ("qpq_demand_%s" % o) if (L == "i" and o in DEMAND_KEYS) else ("qpq_offer_%s" % o)
+            s += """
+							button_checkbox_label = {
+								visible = "%s"
+								onclick = "%s"
+								tooltip = "%s_desc"
+								blockoverride "checkbox" {
+									checked = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]"
+								}
+								blockoverride "text" {
+									text = "%s"
+								}
+							}
+""" % (sg("qpq_ui_offer_%s_%s" % (L, o), "IsShown"), sg("qpq_ui_offer_%s_%s" % (L, o), "Execute"), label, L, o, label)
+        return s
+
+    def timing_items(L):
+        s = ""
+        for t in TIMINGS:
+            if t == "up_front":
+                label = "qpq_demand_up_front" if L == "i" else "QPQ_UI_TIMING_UP_FRONT"
+            else:
+                label = ("qpq_demand_%s" % t) if L == "i" else ("qpq_offer_%s" % t)
+            s += """
+						button_radio_label = {
+							visible = "%s"
+							onclick = "%s"
+							tooltip = "%s_desc"
+							blockoverride "radio" {
+								frame = "[BoolTo1And2( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%s_timing').GetFlagName, '%s' ) )]"
+							}
+							blockoverride "text" {
+								text = "%s"
+							}
+						}
+""" % (sg("qpq_ui_timing_%s_%s" % (L, t), "IsShown", GS_ROOT), sg("qpq_ui_timing_%s_%s" % (L, t), "Execute", GS_ROOT),
+                label, L, t, label)
+        return s
+
+    def extra_items(L):
+        s = ""
+        for flag, (x, _kinds) in extras().items():
+            s += """
 						button_checkbox_label = {
 							visible = "%s"
 							onclick = "%s"
-							tooltip = "[GetPlayer.Custom('QpqUiOfferTt_%s')]"
+							tooltip = "%s"
 							blockoverride "checkbox" {
-								checked = "[GetPlayer.MakeScope.Var('qpq_ui_o_%s').IsSet]"
+								checked = "[GetPlayer.MakeScope.Var('qpq_ui_%s_%s').IsSet]"
 							}
 							blockoverride "text" {
-								text = "[GetPlayer.Custom('QpqUiOffer_%s')]"
+								text = "%s"
 							}
 						}
-""" % (sg("qpq_ui_offer_%s" % o, "IsShown"), sg("qpq_ui_offer_%s" % o, "Execute"), o, o, o)
+""" % (sg("qpq_ui_extra_%s_%s" % (L, flag), "IsShown", GS_ROOT), sg("qpq_ui_extra_%s_%s" % (L, flag), "Execute", GS_ROOT),
+                x["desc"], L, flag, x["loc"])
+        return s
 
-    timing_items = ""
-    for t in TIMINGS:
-        timing_items += """
-					button_radio_label = {
-						visible = "%s"
-						onclick = "%s"
-						tooltip = "[GetPlayer.Custom('QpqUiOfferTt_%s')]"
-						blockoverride "radio" {
-							frame = "[BoolTo1And2( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_timing').GetFlagName, '%s' ) )]"
-						}
-						blockoverride "text" {
-							text = "[GetPlayer.Custom('QpqUiOffer_%s')]"
-						}
-					}
-""" % (sg("qpq_ui_timing_%s" % t, "IsShown", GS_ROOT), sg("qpq_ui_timing_%s" % t, "Execute", GS_ROOT), t, t, t)
+    def bullets(L):
+        """Summary lines for the goods of leg L: one per ticked box (a fixed, short list)."""
+        s = """
+							text_single = {
+								visible = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_gold').IsSet]"
+								layoutpolicy_horizontal = expanding
+								text = "[GetPlayer.Custom('QpqUiGoldLine_%s')]"
+							}
+""" % (L, L)
+        for o in UI_OFFERS[1:]:
+            s += """
+							text_single = {
+								visible = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]"
+								layoutpolicy_horizontal = expanding
+								text = "QPQ_UI_BULLET_OFFER_%s"
+							}
+""" % (L, o, o)
+        return s
 
-    extra_items = ""
-    for flag, (x, _kinds) in extras().items():
-        extra_items += """
-					button_checkbox_label = {
-						visible = "%s"
-						onclick = "%s"
-						tooltip = "%s"
-						blockoverride "checkbox" {
-							checked = "[GetPlayer.MakeScope.Var('qpq_ui_%s').IsSet]"
-						}
-						blockoverride "text" {
-							text = "%s"
-						}
-					}
-""" % (sg("qpq_ui_extra_%s" % flag, "IsShown", GS_ROOT), sg("qpq_ui_extra_%s" % flag, "Execute", GS_ROOT), x["desc"], flag, x["loc"])
+    def deed_tab(L, tab):
+        return """
+		############ TAB: %(title)s ############
+		hbox = {
+			visible = "[GetVariableSystem.HasValue( 'qpq_tab', '%(tab)s' )]"
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			spacing = 8
 
-    # Seal tab: what each side gives, one line per ticked box (a fixed, short list)
-    give_items = """
-					text_single = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_o_gold').IsSet]"
+			# The deeds on offer
+			scrollbox = {
+				size = { 280 400 }
+
+				blockoverride "scrollbox_content" {
+					vbox = {
 						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiGoldLine')]"
+						spacing = 2
+
+						button_standard_list = {
+							visible = "%(nodeed_shown)s"
+							layoutpolicy_horizontal = expanding
+							size = { 0 32 }
+							text = "QPQ_UI_NO_DEED"
+							onclick = "%(nodeed_exec)s"
+							down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_kind').GetFlagName, 'none' )]"
+						}
+%(ask_items)s
 					}
-"""
-    for o in UI_OFFERS[1:]:
-        give_items += """
-					text_single = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_o_%s').IsSet]"
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_BULLET_OFFER_%s"
+				}
+			}
+
+			# The chosen deed, its target and its terms
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				spacing = 6
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					margin = { 12 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
 					}
-""" % (o, o)
-    give_items += """
+
 					text_single = {
-						visible = "[Not( GetScriptedGui('qpq_ui_any_offer').IsShown( @@GS_ROOT@@ ) )]"
 						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_NOTHING_OFFERED"
+						text = "[GetPlayer.Custom('QpqUiKindName_%(L)s')]"
+						default_format = "#T"
+						using = Font_Size_Big
+					}
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						max_width = 500
+						autoresize = yes
+						text = "[GetPlayer.Custom('QpqUiKindDesc_%(L)s')]"
+					}
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						max_width = 500
+						autoresize = yes
 						default_format = "#weak"
+						text = "[GetPlayer.Custom('QpqUiKindHint_%(L)s')]"
 					}
-"""
+				}
+
+				text_single = {
+					visible = "%(any_target)s"
+					layoutpolicy_horizontal = expanding
+					margin_left = 6
+					text = "QPQ_UI_PICK_TARGET"
+					default_format = "#T"
+				}
+
+				# Characters
+				scrollbox = {
+					visible = "%(needs_char)s"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					size = { 0 170 }
+
+					blockoverride "scrollbox_content" {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_candidates')]"
+
+							item = {
+								potential_selectable_target_portrait_widget = {
+									datacontext = "[Scope.Char]"
+
+									blockoverride "onclick" {
+										onclick = "[GetScriptedGui('qpq_ui_pick_char_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Character.MakeScope ).End )]"
+										down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_pick_char').Char, Character.Self )]"
+									}
+								}
+							}
+						}
+					}
+					blockoverride "scrollbox_empty" {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_candidates') )]"
+						text = "QPQ_UI_NO_CANDIDATES"
+					}
+				}
+
+				# Titles
+				scrollbox = {
+					visible = "%(needs_title)s"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					size = { 0 170 }
+
+					blockoverride "scrollbox_content" {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_title_candidates')]"
+
+							item = {
+								button_standard_list = {
+									layoutpolicy_horizontal = expanding
+									size = { 0 34 }
+									text = "[Scope.Title.GetNameNoTooltip]"
+									onclick = "[GetScriptedGui('qpq_ui_pick_title_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
+									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_target_title').Title, Scope.Title )]"
+								}
+							}
+						}
+					}
+					blockoverride "scrollbox_empty" {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_title_candidates') )]"
+						text = "QPQ_UI_NO_CANDIDATES"
+					}
+				}
+
+				# Artifacts
+				scrollbox = {
+					visible = "%(needs_artifact)s"
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					size = { 0 170 }
+
+					blockoverride "scrollbox_content" {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_artifact_candidates')]"
+
+							item = {
+								button_standard_list = {
+									layoutpolicy_horizontal = expanding
+									size = { 0 34 }
+									text = "[Scope.Artifact.GetName]"
+									onclick = "[GetScriptedGui('qpq_ui_pick_artifact_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
+									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_target_artifact').Artifact, Scope.Artifact )]"
+								}
+							}
+						}
+					}
+					blockoverride "scrollbox_empty" {
+						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_artifact_candidates') )]"
+						text = "QPQ_UI_NO_CANDIDATES"
+					}
+				}
+
+				vbox = {
+					visible = "%(has_extras)s"
+					layoutpolicy_horizontal = expanding
+					margin = { 12 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_EXTRAS_HEADER"
+						default_format = "#T"
+					}
+%(extra_items)s
+				}
+
+				expand = {}
+			}
+		}
+""" % dict(
+            title=("You will…" if L == "i" else "They will…"), tab=tab, L=L,
+            nodeed_shown=sg("qpq_ui_nodeed_%s" % L, "IsShown", GS_ROOT), nodeed_exec=sg("qpq_ui_nodeed_%s" % L, "Execute", GS_ROOT),
+            ask_items=ask_items(L), any_target=sg("qpq_ui_needs_any_target_%s" % L, "IsShown", GS_ROOT),
+            needs_char=sg("qpq_ui_needs_char_target_%s" % L, "IsShown", GS_ROOT),
+            needs_title=sg("qpq_ui_needs_title_target_%s" % L, "IsShown", GS_ROOT),
+            needs_artifact=sg("qpq_ui_needs_artifact_target_%s" % L, "IsShown", GS_ROOT),
+            has_extras=sg("qpq_ui_has_extras_%s" % L, "IsShown", GS_ROOT), extra_items=extra_items(L))
+
+    def goods_tab(L, tab):
+        return """
+		############ TAB: %(title)s ############
+		hbox = {
+			visible = "[GetVariableSystem.HasValue( 'qpq_tab', '%(tab)s' )]"
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			spacing = 8
+
+			vbox = {
+				layoutpolicy_vertical = expanding
+				spacing = 4
+
+				text_single = {
+					layoutpolicy_horizontal = expanding
+					margin_left = 6
+					text = "%(header)s"
+					default_format = "#T"
+				}
+
+				scrollbox = {
+					size = { 400 360 }
+
+					blockoverride "scrollbox_content" {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+%(offer_items)s
+						}
+					}
+				}
+			}
+
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				spacing = 6
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					margin = { 12 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TERMS_HEADER"
+						default_format = "#T"
+					}
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						max_width = 370
+						autoresize = yes
+						text = "QPQ_UI_PRICE_LINE_%(LU)s"
+					}
+				}
+
+				vbox = {
+					visible = "[GetPlayer.MakeScope.Var('qpq_ui_%(L)s_o_gold').IsSet]"
+					layoutpolicy_horizontal = expanding
+					margin = { 12 8 }
+					spacing = 4
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_TIMING_HEADER"
+						default_format = "#T"
+					}
+%(timing_items)s
+				}
+
+				expand = {}
+			}
+		}
+""" % dict(title=("You give" if L == "t" else "They give"), tab=tab, L=L, LU=L.upper(),
+           header=("QPQ_UI_YOU_GIVE_HEADER" if L == "t" else "QPQ_UI_THEY_GIVE_HEADER"),
+           offer_items=offer_items(L), timing_items=timing_items(L))
 
     gui = GUI_TEMPLATE
-    for tag, val in (("@@ASK_ITEMS@@", ask_items), ("@@OFFER_ITEMS@@", offer_items), ("@@TIMING_ITEMS@@", timing_items),
-                     ("@@EXTRA_ITEMS@@", extra_items), ("@@GIVE_ITEMS@@", give_items)):
+    for tag, val in (("@@DEED_I@@", deed_tab("i", "youdo")), ("@@DEED_T@@", deed_tab("t", "theydo")),
+                     ("@@GOODS_T@@", goods_tab("t", "yougive")), ("@@GOODS_I@@", goods_tab("i", "theygive")),
+                     ("@@BULLETS_T@@", bullets("t")), ("@@BULLETS_I@@", bullets("i"))):
         gui = gui.replace(tag, val)
     gui = gui.replace("@@GS@@", GS).replace("@@GS_ROOT@@", GS_ROOT)
     assert "@@" not in gui
@@ -542,11 +1231,12 @@ def gen_all(block, fmt_shown, OFFER_DEFS, write):
     gen_ui_script(block, fmt_shown, OFFER_DEFS, write)
     gen_ui_custom_loc(write)
     gen_ui_loc(write)
+    gen_deal_events(write)
     gen_gui(write)
 
 
 GUI_TEMPLATE = r'''######################################################
-################ QUID PRO QUO: PROPOSE A PACT ########
+################ QUID PRO QUO: A BACKROOM DEAL #######
 ######################################################
 # GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py). Built from vanilla parts: the interaction
 # window frame and header, button_tab, scrollbox, button_checkbox_label / button_radio_label,
@@ -560,7 +1250,7 @@ window = {
 	allow_outside = yes
 	layer = middle
 	movable = yes
-	size = { 900 830 }
+	size = { 900 920 }
 	datacontext = "[GetPlayer]"
 
 	visible = "[GetPlayer.MakeScope.Var('qpq_ui_open').IsSet]"
@@ -570,7 +1260,7 @@ window = {
 
 	state = {
 		name = _show
-		on_start = "[GetVariableSystem.Set( 'qpq_tab', 'ask' )]"
+		on_start = "[GetVariableSystem.Set( 'qpq_tab', 'youdo' )]"
 		using = Animation_FadeIn_Quick
 		using = Sound_WindowShow_Standard
 	}
@@ -600,81 +1290,132 @@ window = {
 			}
 		}
 
-		############ THE PARTIES ############
+		############ THE TABLE: WHAT EACH SIDE WILL DO ############
 		hbox = {
 			layoutpolicy_horizontal = expanding
-			margin = { 30 6 }
-			spacing = 10
+			spacing = 8
+
+			# You
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				margin = { 12 8 }
+				spacing = 3
+
+				background = {
+					using = Background_Area_Dark
+				}
+
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 6
+					portrait_head_small = {
+						datacontext = "[GetPlayer]"
+					}
+					vbox = {
+						text_single = {
+							text = "QPQ_UI_YOU_WILL"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "[GetPlayer.Custom('QpqUiMyTier')]"
+							default_format = "#low"
+							align = left|nobaseline
+							tooltip = "QPQ_UI_TIER_TT"
+						}
+					}
+				}
+
+				text_multi = {
+					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'none' ) )]"
+					layoutpolicy_horizontal = expanding
+					max_width = 400
+					autoresize = yes
+					text = "QPQ_UI_BULLET_DEED_I"
+				}
+@@BULLETS_T@@
+				text_single = {
+					visible = "[GetScriptedGui('qpq_ui_me_empty').IsShown( @@GS_ROOT@@ )]"
+					layoutpolicy_horizontal = expanding
+					text = "QPQ_UI_NOTHING_YET"
+					default_format = "#weak"
+				}
+			}
+
+			# Them
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				margin = { 12 8 }
+				spacing = 3
+
+				background = {
+					using = Background_Area_Dark
+				}
+
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 6
+					portrait_head_small = {
+						datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char]"
+					}
+					vbox = {
+						text_single = {
+							text = "QPQ_UI_THEY_WILL"
+							default_format = "#T"
+							align = left|nobaseline
+						}
+						text_single = {
+							text = "[GetPlayer.Custom('QpqUiTheirTier')]"
+							default_format = "#low"
+							align = left|nobaseline
+							tooltip = "QPQ_UI_TIER_TT"
+						}
+					}
+				}
+
+				text_multi = {
+					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'none' ) )]"
+					layoutpolicy_horizontal = expanding
+					max_width = 400
+					autoresize = yes
+					text = "QPQ_UI_BULLET_DEED_T"
+				}
+@@BULLETS_I@@
+				text_single = {
+					visible = "[GetScriptedGui('qpq_ui_them_empty').IsShown( @@GS_ROOT@@ )]"
+					layoutpolicy_horizontal = expanding
+					text = "QPQ_UI_NOTHING_YET"
+					default_format = "#weak"
+				}
+			}
+		}
+
+		############ THE SCANDAL ############
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			margin = { 12 6 }
+			spacing = 8
 
 			background = {
 				using = Background_Area_Dark
 			}
 
-			hbox = {
-				spacing = 6
-				portrait_head_small = {
-					datacontext = "[GetPlayer]"
-				}
-				vbox = {
-					text_single = {
-						text = "QPQ_UI_YOU_LABEL"
-						default_format = "#T"
-						align = left|nobaseline
-					}
-					text_single = {
-						text = "[GetPlayer.Custom('QpqUiMyTier')]"
-						default_format = "#low"
-						align = left|nobaseline
-						tooltip = "QPQ_UI_TIER_TT"
-					}
-				}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 600
+				autoresize = yes
+				text = "QPQ_UI_SCANDAL_TEXT"
 			}
 
-			expand = {}
-
-			hbox = {
-				visible = "[GetPlayer.MakeScope.Var('qpq_ui_target').IsSet]"
-				spacing = 6
-				portrait_head_small = {
-					datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_target').Char]"
+			button_checkbox_label = {
+				visible = "[GetScriptedGui('qpq_ui_charter').IsShown( @@GS_ROOT@@ )]"
+				onclick = "[GetScriptedGui('qpq_ui_charter').Execute( @@GS_ROOT@@ )]"
+				tooltip = "qpq_offer_charter_desc"
+				blockoverride "checkbox" {
+					checked = "[GetPlayer.MakeScope.Var('qpq_ui_charter').IsSet]"
 				}
-				vbox = {
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TARGET_LABEL"
-						default_format = "#low"
-						align = left|nobaseline
-					}
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TARGET_NAME"
-						default_format = "#high"
-						align = left|nobaseline
-					}
-				}
-			}
-
-			expand = {}
-
-			hbox = {
-				spacing = 6
-				vbox = {
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_THEM_LABEL"
-						default_format = "#T"
-						align = right|nobaseline
-					}
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiTheirTier')]"
-						default_format = "#low"
-						align = right|nobaseline
-						tooltip = "QPQ_UI_TIER_TT"
-					}
-				}
-				portrait_head_small = {
-					datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char]"
+				blockoverride "text" {
+					text = "qpq_offer_charter"
 				}
 			}
 		}
@@ -684,395 +1425,35 @@ window = {
 			layoutpolicy_horizontal = expanding
 
 			button_tab = {
-				text = "QPQ_UI_TAB_ASK"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'ask' )]"
+				text = "QPQ_UI_TAB_YOU_DO"
+				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'youdo' )]"
 				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'ask' )]"
+				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'youdo' )]"
 			}
 			button_tab = {
-				text = "QPQ_UI_TAB_OFFER"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
+				text = "QPQ_UI_TAB_THEY_DO"
+				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'theydo' )]"
 				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'offer' )]"
+				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'theydo' )]"
 			}
 			button_tab = {
-				text = "QPQ_UI_TAB_SEAL"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
+				text = "QPQ_UI_TAB_YOU_GIVE"
+				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'yougive' )]"
 				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'seal' )]"
+				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'yougive' )]"
+			}
+			button_tab = {
+				text = "QPQ_UI_TAB_THEY_GIVE"
+				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'theygive' )]"
+				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
+				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'theygive' )]"
 			}
 		}
-
-		############ TAB 1: THE ASK ############
-		hbox = {
-			visible = "[GetVariableSystem.HasValue( 'qpq_tab', 'ask' )]"
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			spacing = 8
-
-			# What can be asked of them
-			scrollbox = {
-				size = { 280 480 }
-
-				blockoverride "scrollbox_content" {
-					vbox = {
-						layoutpolicy_horizontal = expanding
-						spacing = 2
-@@ASK_ITEMS@@
-					}
-				}
-			}
-
-			# The chosen Ask, and its target
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				layoutpolicy_vertical = expanding
-				spacing = 6
-
-				vbox = {
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiKindName')]"
-						default_format = "#T"
-						using = Font_Size_Big
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 500
-						autoresize = yes
-						text = "[GetPlayer.Custom('QpqUiKindDesc')]"
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 500
-						autoresize = yes
-						default_format = "#weak"
-						text = "[GetPlayer.Custom('QpqUiKindHint')]"
-					}
-				}
-
-				text_single = {
-					visible = "[GetScriptedGui('qpq_ui_needs_any_target').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					margin_left = 6
-					text = "QPQ_UI_PICK_TARGET"
-					default_format = "#T"
-				}
-
-				# Characters
-				scrollbox = {
-					visible = "[GetScriptedGui('qpq_ui_needs_char_target').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 250 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_candidates')]"
-
-							item = {
-								potential_selectable_target_portrait_widget = {
-									datacontext = "[Scope.Char]"
-
-									blockoverride "onclick" {
-										onclick = "[GetScriptedGui('qpq_ui_pick_target').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Character.MakeScope ).End )]"
-										down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_pick_char').Char, Character.Self )]"
-									}
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				# Titles
-				scrollbox = {
-					visible = "[GetScriptedGui('qpq_ui_needs_title_target').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 250 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_title_candidates')]"
-
-							item = {
-								button_standard_list = {
-									layoutpolicy_horizontal = expanding
-									size = { 0 34 }
-									text = "[Scope.Title.GetNameNoTooltip]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_title').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
-									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_target_title').Title, Scope.Title )]"
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_title_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				# Artifacts
-				scrollbox = {
-					visible = "[GetScriptedGui('qpq_ui_needs_artifact_target').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 250 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_artifact_candidates')]"
-
-							item = {
-								button_standard_list = {
-									layoutpolicy_horizontal = expanding
-									size = { 0 34 }
-									text = "[Scope.Artifact.GetName]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_artifact').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
-									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_target_artifact').Artifact, Scope.Artifact )]"
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_artifact_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				expand = {}
-
-				button_standard = {
-					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, 'none' ) )]"
-					layoutpolicy_horizontal = expanding
-					text = "QPQ_UI_NEXT_OFFER"
-					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'offer' )]"
-					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				}
-			}
-		}
-
-		############ TAB 2: THE TERMS ############
-		hbox = {
-			visible = "[GetVariableSystem.HasValue( 'qpq_tab', 'offer' )]"
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			spacing = 8
-
-			# Currencies
-			vbox = {
-				layoutpolicy_vertical = expanding
-				spacing = 4
-
-				text_single = {
-					layoutpolicy_horizontal = expanding
-					margin_left = 6
-					text = "[GetPlayer.Custom('QpqUiOfferHeader')]"
-					default_format = "#T"
-				}
-
-				scrollbox = {
-					size = { 400 450 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							spacing = 4
-@@OFFER_ITEMS@@
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, 'none' )]"
-						text = "QPQ_UI_NO_ASK_YET"
-					}
-				}
-			}
-
-			# Payment timing, price and Ask-specific terms
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				layoutpolicy_vertical = expanding
-				spacing = 6
-
-				vbox = {
-					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_kind').GetFlagName, 'none' ) )]"
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TERMS_HEADER"
-						default_format = "#T"
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 370
-						autoresize = yes
-						text = "QPQ_UI_PRICE_LINE"
-					}
-				}
-
-				vbox = {
-					visible = "[GetPlayer.MakeScope.Var('qpq_ui_o_gold').IsSet]"
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TIMING_HEADER"
-						default_format = "#T"
-					}
-@@TIMING_ITEMS@@
-				}
-
-				vbox = {
-					visible = "[GetScriptedGui('qpq_ui_has_extras').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_EXTRAS_HEADER"
-						default_format = "#T"
-					}
-@@EXTRA_ITEMS@@
-				}
-
-				expand = {}
-
-				button_standard = {
-					layoutpolicy_horizontal = expanding
-					text = "QPQ_UI_NEXT_SEAL"
-					onclick = "[GetVariableSystem.Set( 'qpq_tab', 'seal' )]"
-					onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				}
-			}
-		}
-
-		############ TAB 3: SEAL ############
-		vbox = {
-			visible = "[GetVariableSystem.HasValue( 'qpq_tab', 'seal' )]"
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			spacing = 6
-
-			hbox = {
-				layoutpolicy_horizontal = expanding
-				spacing = 8
-
-				# What the doer does
-				vbox = {
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					margin = { 14 10 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiDoHeader')]"
-						default_format = "#T"
-					}
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiKindName')]"
-						using = Font_Size_Medium
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 370
-						autoresize = yes
-						text = "QPQ_UI_SEAL_ASK"
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 370
-						autoresize = yes
-						default_format = "#weak"
-						text = "QPQ_UI_SEAL_DEADLINE"
-					}
-					expand = {}
-				}
-
-				# What the payer gives
-				vbox = {
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					margin = { 14 10 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiGiveHeader')]"
-						default_format = "#T"
-					}
-@@GIVE_ITEMS@@
-					expand = {}
-				}
-			}
-
-			# The secret both of you will keep
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				margin = { 14 10 }
-				spacing = 4
-
-				background = {
-					using = Background_Area_Dark
-				}
-
-				text_single = {
-					layoutpolicy_horizontal = expanding
-					text = "QPQ_UI_SCANDAL_HEADER"
-					default_format = "#T"
-				}
-				text_multi = {
-					layoutpolicy_horizontal = expanding
-					max_width = 780
-					autoresize = yes
-					text = "QPQ_UI_SCANDAL_TEXT"
-				}
-			}
-
-			expand = {}
-		}
+@@DEED_I@@
+@@DEED_T@@
+@@GOODS_T@@
+@@GOODS_I@@
+		expand = {}
 
 		############ FOOTER: ACCEPTANCE AND PROPOSE ############
 		hbox = {

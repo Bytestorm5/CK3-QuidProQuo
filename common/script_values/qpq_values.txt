@@ -8,6 +8,18 @@ qpq_pact_cap_value = {
 	add = 2
 }
 
+# Room for the two pacts of a deal that has a deed on each side: the cap, less one
+qpq_pact_cap_minus_one_value = {
+	value = qpq_pact_cap_value
+	subtract = 1
+}
+
+# How the other character (scope:recipient) feels about the one proposing (scope:actor), in acceptance points
+qpq_ui_deal_opinion_value = {
+	value = "scope:recipient.opinion(scope:actor)"
+	multiply = 0.5
+}
+
 # How many pacts the character currently has running
 qpq_active_pacts_value = {
 	value = 0

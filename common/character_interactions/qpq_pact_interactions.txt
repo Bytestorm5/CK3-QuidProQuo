@@ -24687,3 +24687,389 @@ qpq_temple_patronage_interaction = {
 	}
 }
 
+##### Exchange of Goods (Catalogue E)
+qpq_barter_interaction = {
+	category = interaction_category_diplomacy
+	hidden = yes
+	icon = icon_gold
+	desc = qpq_barter_interaction_desc
+	send_name = qpq_send_pact
+	popup_on_receive = yes
+	pause_on_receive = yes
+	ai_maybe = no
+	ai_min_reply_days = 1
+	ai_max_reply_days = 3
+	send_options_exclusive = no
+	cooldown_against_recipient = { months = 6 }
+
+	is_shown = {
+		NOT = { scope:actor = scope:recipient }
+	}
+
+	is_valid_showing_failures_only = {
+		qpq_both_have_pact_capacity_trigger = { ACTOR = scope:actor RECIPIENT = scope:recipient }
+		scope:recipient = { is_imprisoned = no }
+		scope:actor = { is_imprisoned = no }
+	}
+
+	send_option = {
+		flag = qpq_o_gold
+		localization = qpq_offer_gold
+		current_description = qpq_offer_gold_desc
+		is_shown = {
+			always = yes
+		}
+		is_valid = {
+			custom_description = {
+				text = qpq_offer_need_gold
+				scope:actor = { gold >= { value = qpq_barter_price_value multiply = 0.5 } }
+			}
+		}
+	}
+	send_option = {
+		flag = qpq_o_on_delivery
+		localization = qpq_offer_on_delivery
+		current_description = qpq_offer_on_delivery_desc
+		is_shown = {
+			always = yes
+		}
+	}
+	send_option = {
+		flag = qpq_o_split
+		localization = qpq_offer_split
+		current_description = qpq_offer_split_desc
+		is_shown = {
+			always = yes
+		}
+	}
+	send_option = {
+		flag = qpq_o_stipend
+		localization = qpq_offer_stipend
+		current_description = qpq_offer_stipend_desc
+		is_shown = {
+			always = yes
+		}
+	}
+	send_option = {
+		flag = qpq_o_land
+		localization = qpq_offer_land
+		current_description = qpq_offer_land_desc
+		is_shown = {
+			scope:actor = { any_held_title = { tier = tier_county count >= 2 } }
+		}
+	}
+	send_option = {
+		flag = qpq_o_office
+		localization = qpq_offer_office
+		current_description = qpq_offer_office_desc
+		is_shown = {
+			scope:actor = { is_landed = yes }
+			scope:recipient = {
+				OR = {
+					liege ?= scope:actor
+					is_courtier_of = scope:actor
+				}
+				NOT = { is_councillor_of = scope:actor }
+			}
+		}
+	}
+	send_option = {
+		flag = qpq_o_marriage
+		localization = qpq_offer_marriage
+		current_description = qpq_offer_marriage_desc
+		is_shown = {
+			scope:actor = { any_close_family_member = { is_married = no NOT = { exists = betrothed } is_alive = yes } }
+		}
+	}
+	send_option = {
+		flag = qpq_o_release_hook
+		localization = qpq_offer_release_hook
+		current_description = qpq_offer_release_hook_desc
+		is_shown = {
+			scope:actor = { has_hook = scope:recipient }
+		}
+	}
+	send_option = {
+		flag = qpq_o_my_word
+		localization = qpq_offer_my_word
+		current_description = qpq_offer_my_word_desc
+		is_shown = {
+			always = yes
+		}
+	}
+	send_option = {
+		flag = qpq_o_secret
+		localization = qpq_offer_secret
+		current_description = qpq_offer_secret_desc
+		is_shown = {
+			scope:actor = {
+				any_known_secret = {
+					NOT = { secret_owner = scope:recipient }
+					NOT = { is_known_by = scope:recipient }
+				}
+			}
+		}
+	}
+	send_option = {
+		flag = qpq_o_contract
+		localization = qpq_offer_contract
+		current_description = qpq_offer_contract_desc
+		is_shown = {
+			scope:recipient = { liege ?= scope:actor }
+		}
+	}
+	send_option = {
+		flag = qpq_o_succession
+		localization = qpq_offer_succession
+		current_description = qpq_offer_succession_desc
+		is_shown = {
+			scope:recipient = { is_child_of = scope:actor } NOT = { scope:actor.primary_heir ?= scope:recipient }
+		}
+	}
+	send_option = {
+		flag = qpq_o_clemency
+		localization = qpq_offer_clemency
+		current_description = qpq_offer_clemency_desc
+		is_shown = {
+			OR = {
+				scope:recipient = { is_imprisoned_by = scope:actor }
+				scope:actor = { any_prisoner = { is_close_family_of = scope:recipient } }
+				scope:actor = { has_opinion_modifier = { target = scope:recipient modifier = qpq_criminal_pact_opinion } }
+			}
+		}
+	}
+	send_option = {
+		flag = qpq_o_arms
+		localization = qpq_offer_arms
+		current_description = qpq_offer_arms_desc
+		is_shown = {
+			scope:actor = { is_landed = yes }
+		}
+	}
+	send_option = {
+		flag = qpq_o_artifact
+		localization = qpq_offer_artifact
+		current_description = qpq_offer_artifact_desc
+		is_shown = {
+			scope:actor = { any_character_artifact = { always = yes } }
+		}
+	}
+	send_option = {
+		flag = qpq_o_church
+		localization = qpq_offer_church
+		current_description = qpq_offer_church_desc
+		is_shown = {
+			scope:actor = { qpq_is_head_of_faith_trigger = yes faith = { qpq_faith_has_church_trigger = yes } }
+		}
+	}
+	send_option = {
+		flag = qpq_o_restraint
+		localization = qpq_offer_restraint
+		current_description = qpq_offer_restraint_desc
+		is_shown = {
+			scope:recipient = { liege ?= scope:actor }
+		}
+	}
+	send_option = {
+		flag = qpq_o_hook
+		localization = qpq_offer_hook
+		current_description = qpq_offer_hook_desc
+		is_shown = {
+			scope:actor = { has_usable_hook = scope:recipient }
+		}
+	}
+	send_option = {
+		flag = qpq_o_charter
+		localization = qpq_offer_charter
+		current_description = qpq_offer_charter_desc
+		is_shown = {
+			qpq_barter_payer_tier_value <= 0
+			qpq_barter_agent_tier_value <= 0
+		}
+	}
+
+	can_send = {
+		custom_description = {
+			text = qpq_offer_one_timing
+			NOT = {
+				OR = {
+					AND = { scope:qpq_o_on_delivery ?= yes scope:qpq_o_split ?= yes }
+					AND = { scope:qpq_o_on_delivery ?= yes scope:qpq_o_stipend ?= yes }
+					AND = { scope:qpq_o_split ?= yes scope:qpq_o_stipend ?= yes }
+				}
+			}
+		}
+	}
+
+	ai_accept = {
+		base = 0
+		modifier = {
+			add = qpq_barter_demand_value
+			desc = QPQ_REASON_DEMAND
+		}
+		modifier = {
+			add = qpq_barter_gold_points_value
+			scope:qpq_o_gold ?= yes
+			desc = QPQ_REASON_OFFER_GOLD
+		}
+		modifier = {
+			add = -8
+			scope:qpq_o_on_delivery ?= yes
+			desc = QPQ_REASON_ON_DELIVERY
+		}
+		modifier = {
+			add = -3
+			scope:qpq_o_split ?= yes
+			desc = QPQ_REASON_SPLIT
+		}
+		modifier = {
+			add = -5
+			scope:qpq_o_stipend ?= yes
+			desc = QPQ_REASON_STIPEND
+		}
+		modifier = {
+			add = qpq_offer_land_points_value
+			scope:qpq_o_land ?= yes
+			desc = QPQ_REASON_OFFER_LAND
+		}
+		modifier = {
+			add = qpq_offer_office_points_value
+			scope:qpq_o_office ?= yes
+			desc = QPQ_REASON_OFFER_OFFICE
+		}
+		modifier = {
+			add = qpq_offer_marriage_points_value
+			scope:qpq_o_marriage ?= yes
+			desc = QPQ_REASON_OFFER_MARRIAGE
+		}
+		modifier = {
+			add = qpq_offer_release_hook_points_value
+			scope:qpq_o_release_hook ?= yes
+			desc = QPQ_REASON_OFFER_RELEASE_HOOK
+		}
+		modifier = {
+			add = qpq_offer_my_word_points_value
+			scope:qpq_o_my_word ?= yes
+			desc = QPQ_REASON_OFFER_MY_WORD
+		}
+		modifier = {
+			add = qpq_offer_secret_points_value
+			scope:qpq_o_secret ?= yes
+			desc = QPQ_REASON_OFFER_SECRET
+		}
+		modifier = {
+			add = qpq_offer_contract_points_value
+			scope:qpq_o_contract ?= yes
+			desc = QPQ_REASON_OFFER_CONTRACT
+		}
+		modifier = {
+			add = qpq_offer_succession_points_value
+			scope:qpq_o_succession ?= yes
+			desc = QPQ_REASON_OFFER_SUCCESSION
+		}
+		modifier = {
+			add = qpq_offer_clemency_points_value
+			scope:qpq_o_clemency ?= yes
+			desc = QPQ_REASON_OFFER_CLEMENCY
+		}
+		modifier = {
+			add = qpq_offer_arms_points_value
+			scope:qpq_o_arms ?= yes
+			desc = QPQ_REASON_OFFER_ARMS
+		}
+		modifier = {
+			add = qpq_offer_artifact_points_value
+			scope:qpq_o_artifact ?= yes
+			desc = QPQ_REASON_OFFER_ARTIFACT
+		}
+		modifier = {
+			add = qpq_offer_church_points_value
+			scope:qpq_o_church ?= yes
+			desc = QPQ_REASON_OFFER_CHURCH
+		}
+		modifier = {
+			add = qpq_offer_restraint_points_value
+			scope:qpq_o_restraint ?= yes
+			desc = QPQ_REASON_OFFER_RESTRAINT
+		}
+		modifier = {
+			add = 40
+			scope:qpq_o_hook ?= yes
+			desc = QPQ_REASON_HOOK
+		}
+		modifier = {
+			add = 60
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+			desc = QPQ_REASON_STRONG_HOOK
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = -6 }
+			scope:recipient = { has_trait = honest }
+			desc = QPQ_REASON_TRAIT_HONEST
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = -5 }
+			scope:recipient = { has_trait = just }
+			desc = QPQ_REASON_TRAIT_JUST
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = 4 }
+			scope:recipient = { has_trait = deceitful }
+			desc = QPQ_REASON_TRAIT_DECEITFUL
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = 3 }
+			scope:recipient = { has_trait = arbitrary }
+			desc = QPQ_REASON_TRAIT_ARBITRARY
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = 3 }
+			scope:recipient = { has_trait = schemer }
+			desc = QPQ_REASON_TRAIT_SCHEMER
+		}
+		modifier = {
+			add = { value = qpq_barter_agent_tier_value multiply = -3 }
+			scope:recipient = { has_trait = paranoid }
+			desc = QPQ_REASON_TRAIT_PARANOID
+		}
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+			desc = AI_OPINION_REASON
+		}
+		modifier = {
+			add = intimidated_halved_reason_value
+			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
+			desc = QPQ_REASON_INTIMIDATED
+		}
+		modifier = {
+			add = cowed_halved_reason_value
+			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
+			desc = QPQ_REASON_COWED
+		}
+	}
+
+	on_accept = {
+		qpq_k_barter_seal_from_scopes_effect = yes
+	}
+
+	on_decline = {
+		scope:actor = {
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = qpq_msg_proposal_declined_title
+				left_icon = scope:recipient
+				custom_tooltip = qpq_msg_proposal_declined_tt
+			}
+		}
+	}
+
+	auto_accept = no
+
+	ai_will_do = {
+		base = 0
+	}
+}
+

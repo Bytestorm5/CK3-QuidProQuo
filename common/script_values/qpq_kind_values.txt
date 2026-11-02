@@ -12714,3 +12714,178 @@ qpq_temple_patronage_ai_acceptance_value = {
 	}
 }
 
+#### Exchange of Goods
+qpq_barter_payer_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_barter_agent_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_barter_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_barter_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_barter_gold_points_value = {
+	value = 15
+	add = {
+		value = qpq_barter_price_value
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 20
+		max = 45
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_barter_demand_value = {
+	value = qpq_barter_agent_tier_value
+	multiply = -18
+	add = -12
+	add = 0
+}
+qpq_barter_ask_value = {
+	value = qpq_barter_demand_value
+}
+qpq_barter_offer_points_value = {
+	value = 0
+	if = {
+		limit = { scope:qpq_o_gold ?= yes }
+		add = qpq_barter_gold_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_on_delivery ?= yes }
+		add = -8
+	}
+	if = {
+		limit = { scope:qpq_o_split ?= yes }
+		add = -3
+	}
+	if = {
+		limit = { scope:qpq_o_stipend ?= yes }
+		add = -5
+	}
+	if = {
+		limit = { scope:qpq_o_land ?= yes }
+		add = qpq_offer_land_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_office ?= yes }
+		add = qpq_offer_office_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_marriage ?= yes }
+		add = qpq_offer_marriage_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_release_hook ?= yes }
+		add = qpq_offer_release_hook_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_my_word ?= yes }
+		add = qpq_offer_my_word_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_secret ?= yes }
+		add = qpq_offer_secret_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_contract ?= yes }
+		add = qpq_offer_contract_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_succession ?= yes }
+		add = qpq_offer_succession_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_clemency ?= yes }
+		add = qpq_offer_clemency_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_arms ?= yes }
+		add = qpq_offer_arms_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_artifact ?= yes }
+		add = qpq_offer_artifact_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_church ?= yes }
+		add = qpq_offer_church_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_restraint ?= yes }
+		add = qpq_offer_restraint_points_value
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_barter_ai_acceptance_value = {
+	value = qpq_barter_ask_value
+	add = qpq_barter_offer_points_value
+	add = {
+		value = "scope:recipient.opinion(scope:actor)"
+		multiply = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_barter_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_barter_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_barter_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_barter_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_barter_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_barter_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+}
+

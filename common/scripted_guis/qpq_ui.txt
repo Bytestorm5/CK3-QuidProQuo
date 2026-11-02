@@ -1,5 +1,5 @@
-﻿# Quid Pro Quo - Propose-a-Pact panel buttons (hand-written; per-Ask buttons are in qpq_ui_kinds.txt)
-# Root is always the player.
+# Quid Pro Quo - Backroom Deal panel buttons (hand-written; the per-Ask buttons and pickers are in
+# qpq_ui_kinds.txt). Root is always the player.
 
 qpq_ui_close = {
 	scope = character
@@ -8,38 +8,10 @@ qpq_ui_close = {
 	}
 }
 
-# Recompute the panel (tab changes and Next): numbers go stale while the game runs
+# Recompute the panel (tab changes): numbers go stale while the game runs
 qpq_ui_refresh = {
 	scope = character
 	effect = {
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-# Pick a target from the panel's lists
-qpq_ui_pick_target = {
-	scope = character
-	saved_scopes = { qpq_pick }
-	effect = {
-		set_variable = { name = qpq_ui_pick_char value = scope:qpq_pick }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_pick_title = {
-	scope = character
-	saved_scopes = { qpq_pick }
-	effect = {
-		set_variable = { name = qpq_ui_target_title value = scope:qpq_pick }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_pick_artifact = {
-	scope = character
-	saved_scopes = { qpq_pick }
-	effect = {
-		set_variable = { name = qpq_ui_target_artifact value = scope:qpq_pick }
 		qpq_ui_refresh_effect = yes
 	}
 }

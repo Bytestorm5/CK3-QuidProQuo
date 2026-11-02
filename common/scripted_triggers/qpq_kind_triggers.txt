@@ -917,6 +917,20 @@ qpq_k_temple_patronage_can_perform_trigger = {
 	always = yes
 }
 
+#### Exchange of Goods
+qpq_k_barter_delivered_trigger = {
+	always = yes
+}
+qpq_k_barter_breached_trigger = {
+	always = no
+}
+qpq_k_barter_invalid_trigger = {
+	always = no
+}
+qpq_k_barter_can_perform_trigger = {
+	always = no
+}
+
 ############ Dispatch (root: a pact story or pact secret) ############
 qpq_kind_delivered_trigger = {
 	OR = {
@@ -1027,6 +1041,10 @@ qpq_kind_delivered_trigger = {
 		AND = {
 			var:qpq_kind = flag:fund_the_dawa
 			qpq_k_fund_the_dawa_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:barter
+			qpq_k_barter_delivered_trigger = yes
 		}
 	}
 }
@@ -2006,6 +2024,9 @@ qpq_any_pact_possible_trigger = {
 				}
 			}
 			NOT = { exists = scope:actor.faith.religious_head }
+		}
+		AND = {
+			NOT = { scope:actor = scope:recipient }
 		}
 	}
 }
