@@ -20,6 +20,37 @@ qpq_ui_deal_opinion_value = {
 	multiply = 0.5
 }
 
+# Titles chosen to be handed over beyond the first, in the panel (leg t: yours, leg i: theirs)
+qpq_ui_land_extra_t_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_t_land }
+			every_in_list = {
+				variable = qpq_ui_t_land
+				add = 1
+			}
+		}
+	}
+	subtract = 1
+	min = 0
+}
+
+qpq_ui_land_extra_i_value = {
+	value = 0
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_ui_i_land }
+			every_in_list = {
+				variable = qpq_ui_i_land
+				add = 1
+			}
+		}
+	}
+	subtract = 1
+	min = 0
+}
+
 # How many pacts the character currently has running
 qpq_active_pacts_value = {
 	value = 0

@@ -188,9 +188,17 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             out += "\t\tif = {\n\t\t\tlimit = { %s }\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n\t\t}\n" % (vkind(L, k), L)
             out += "\t\telse = {\n\t\t\tset_variable = { name = qpq_ui_%s_kind value = flag:%s }\n\t\t}\n" % (L, k["key"])
             out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
-        out += "qpq_ui_nodeed_%s = {\n\tscope = character\n\tis_shown = {\n\t\talways = yes\n\t}\n" % L
-        out += "\teffect = {\n\t\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % L
-        out += "\t\tqpq_ui_clear_leg_%s_effect = yes\n\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n" % L
+        # Land is given as chosen titles: picking one adds it to (or takes it off) the list, and the box is
+        # ticked while the list is not empty
+        out += ("qpq_ui_land_toggle_%s = {\n\tscope = character\n\tsaved_scopes = { qpq_pick }\n\teffect = {\n"
+                "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = qpq_ui_%s_land\n"
+                "\t\t\t\tis_target_in_variable_list = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t\t}\n"
+                "\t\t\tremove_list_variable = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t}\n"
+                "\t\telse = {\n\t\t\tadd_to_variable_list = { name = qpq_ui_%s_land target = scope:qpq_pick }\n\t\t}\n"
+                "\t\tif = {\n\t\t\tlimit = {\n\t\t\t\thas_variable_list = qpq_ui_%s_land\n"
+                "\t\t\t\tvariable_list_size = { name = qpq_ui_%s_land value > 0 }\n\t\t\t}\n\t\t\tset_variable = qpq_ui_%s_o_land\n\t\t}\n"
+                "\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n\t\t\t\tremove_variable = qpq_ui_%s_o_land\n\t\t\t}\n\t\t}\n"
+                "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n") % ((L,) * 10)
         # Group headings
         for g, _name in GROUPS:
             kinds = [k for k in DEEDS if k["group"] == g]
@@ -345,6 +353,11 @@ def compute_kind(k, L, block):
         s += "\t\t\tset_variable = { name = qpq_ui_%s_a_ask value = qpq_%s_demand_value }\n" % (L, key)
         s += "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%s_a_offers\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\t\t\tmultiply = -1\n\t\t\t\t}\n\t\t\t}\n" % (L, key)
         s += "\t\t\tset_variable = { name = qpq_ui_%s_a_other value = 0 }\n" % L
+    # Every title beyond the first counts again (land is chosen title by title)
+    sign = "1" if proposer_me(k, L) else ("-0.8" if k["initiator"] == "payer" else "-1")
+    s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n\t\t\t\tchange_variable = {\n\t\t\t\t\tname = qpq_ui_%s_a_offers\n"
+          "\t\t\t\t\tadd = {\n\t\t\t\t\t\tvalue = qpq_offer_land_points_value\n\t\t\t\t\t\tmultiply = qpq_ui_land_extra_%s_value\n"
+          "\t\t\t\t\t\tmultiply = %s\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n") % (L, L, L, sign)
     # Is the target in place?
     if k["target"] == "char":
         need = "exists = scope:secondary_recipient\n" + (k.get("target_valid") or "")
@@ -372,7 +385,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
     leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "term", "a_ask", "a_offers",
                 "a_other"] + ["fail_%d" % i for i in range(max_valid())]
-    lists = ["candidates", "title_candidates", "artifact_candidates"]
+    lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates"]
 
     # Scope values the engine reads, cleared between the legs and between the kinds of one refresh
     eff += "qpq_ui_clear_scopes_effect = {\n"
@@ -401,6 +414,8 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         for o in UI_OFFERS:
             eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
                     "\t\tremove_variable = qpq_ui_%s_o_%s\n\t}\n") % (L, o, L, o, L, o)
+        eff += ("\tif = {\n\t\tlimit = {\n\t\t\tNOT = { has_variable = qpq_ui_%s_o_land }\n\t\t\thas_variable_list = qpq_ui_%s_land\n\t\t}\n"
+                "\t\tclear_variable_list = qpq_ui_%s_land\n\t}\n") % (L, L, L)
         eff += ("\tif = {\n\t\tlimit = { NOT = { has_variable = qpq_ui_%s_o_gold } }\n"
                 "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n\t}\n") % (L, L)
         for t in TIMINGS[1:]:
@@ -408,6 +423,19 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
                     "\t\t\tNOT = { qpq_ui_leg_%s_allows_%s_trigger = yes }\n\t\t}\n"
                     "\t\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n\t}\n") % (L, t, L, t, L)
         eff += "}\n\n"
+
+        # Titles the payer of this leg could hand over (never the capital or the primary title), minus those
+        # already chosen; the chosen ones are the variable list qpq_ui_<leg>_land
+        payer = "scope:qpq_deal_me" if L == "t" else "scope:qpq_deal_them"
+        eff += "qpq_ui_fill_land_%s_effect = {\n" % L
+        eff += ("\t%s = {\n\t\tevery_held_title = {\n\t\t\tlimit = {\n\t\t\t\ttier >= tier_county\n"
+                "\t\t\t\tNOT = { this = %s.capital_county }\n\t\t\t\tNOT = { this = %s.primary_title }\n\t\t\t}\n"
+                "\t\t\tadd_to_list = qpq_ui_pool_land_%s\n\t\t}\n\t}\n") % (payer, payer, payer, L)
+        eff += ("\tordered_in_list = {\n\t\tlist = qpq_ui_pool_land_%s\n\t\tlimit = {\n\t\t\tNOT = {\n"
+                "\t\t\t\tscope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_%s_land target = prev } }\n\t\t\t}\n\t\t}\n"
+                "\t\torder_by = qpq_ui_title_order_value\n\t\tmax = %d\n\t\tcheck_range_bounds = no\n"
+                "\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_%s_land_candidates target = prev } }\n\t}\n}\n\n") % (
+            L, L, CANDIDATE_CAP, L)
 
         # A different deed was picked: the old target and its terms go
         eff += "qpq_ui_clear_leg_%s_effect = {\n" % L
@@ -418,6 +446,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
         # The whole leg: which Ask carries it, candidates for its target, tiers, price and acceptance
         eff += "qpq_ui_leg_%s_refresh_effect = {\n\tqpq_ui_prune_goods_%s_effect = yes\n" % (L, L)
+        eff += "\tif = {\n\t\tlimit = { qpq_ui_leg_%s_allows_land_trigger = yes }\n\t\tqpq_ui_fill_land_%s_effect = yes\n\t}\n" % (L, L)
         eff += ("\tif = {\n\t\tlimit = { NOT = { var:qpq_ui_%s_kind = flag:none } }\n"
                 "\t\tset_variable = { name = qpq_ui_%s_ekind value = var:qpq_ui_%s_kind }\n\t}\n") % (L, L, L)
         eff += ("\telse_if = {\n\t\tlimit = { qpq_ui_leg_%s_has_goods_trigger = yes }\n"
@@ -492,6 +521,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     for v in vs:
         eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
     for L in LEGS:
+        eff += "\tif = {\n\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n\t\tclear_variable_list = qpq_ui_%s_land\n\t}\n" % (L, L)
         eff += "\tset_variable = { name = qpq_ui_%s_kind value = flag:none }\n" % L
         eff += "\tset_variable = { name = qpq_ui_%s_timing value = flag:up_front }\n" % L
     eff += "}\n\n"
@@ -522,6 +552,10 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
             eff += "\t\tif = {\n\t\t\tlimit = { exists = var:%s }\n\t\t\tvar:%s = { save_scope_as = qpq_deal_%s_%s }\n\t\t}\n" % (
                 v % L, v % L, L, what)
         eff += "\t\tif = {\n\t\t\tlimit = { exists = var:qpq_ui_%s_target }\n\t\t\tvar:qpq_ui_%s_target = { save_scope_as = qpq_deal_%s_target }\n\t\t}\n" % (L, L, L)
+        # The titles to hand over wait on the proposer until the deal is sealed
+        eff += "\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_deal_land_%s }\n\t\t\tclear_variable_list = qpq_deal_land_%s\n\t\t}\n" % (L, L)
+        eff += ("\t\tif = {\n\t\t\tlimit = { has_variable_list = qpq_ui_%s_land }\n\t\t\tevery_in_list = {\n\t\t\t\tvariable = qpq_ui_%s_land\n"
+                "\t\t\t\tscope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_%s target = prev } }\n\t\t\t}\n\t\t}\n") % (L, L, L)
         eff += "\t}\n"
     eff += "}\n\n"
 
@@ -540,6 +574,11 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
         eff += "\tif = {\n\t\tlimit = { scope:qpq_deal_charter ?= yes }\n\t\tsave_scope_value_as = { name = qpq_o_charter value = yes }\n\t}\n"
         eff += "}\n\n"
         eff += "qpq_deal_seal_leg_%s_effect = {\n\tqpq_deal_clear_seal_scopes_effect = yes\n" % L
+        # Where the engine finds the titles chosen to be handed over, and which list is this leg's
+        for n in ("qpq_deal_land_src", "qpq_land_leg"):
+            eff += "\tif = {\n\t\tlimit = { exists = scope:%s }\n\t\tclear_saved_scope = %s\n\t}\n" % (n, n)
+        eff += "\tscope:qpq_deal_me = { save_scope_as = qpq_deal_land_src }\n"
+        eff += "\tsave_scope_value_as = { name = qpq_land_leg value = flag:%s }\n" % L
         first = True
         for k in KINDS:
             eff += "\t%s = {\n\t\tlimit = { scope:qpq_deal_%s_kind ?= flag:%s }\n" % ("if" if first else "else_if", L, k["key"])
@@ -817,677 +856,11 @@ def gen_deal_events(write):
     write("events/qpq_deal_events.txt", out)
 
 
-# ------------------------------------------------------------------ the window
-def gen_gui(write):
-    def sg(name, what, scope=GS):
-        return "[GetScriptedGui('%s').%s( %s )]" % (name, what, scope)
-
-    def ask_items(L):
-        s = ""
-        for g, _gname in GROUPS:
-            kinds = [k for k in DEEDS if k["group"] == g]
-            if not kinds:
-                continue
-            s += """
-							text_single = {
-								visible = "%s"
-								layoutpolicy_horizontal = expanding
-								margin = { 6 4 }
-								text = "qpq_hub.group.%s"
-								default_format = "#T"
-								using = Font_Size_Medium
-							}
-""" % (sg("qpq_ui_group_%s_%s" % (L, g), "IsShown"), g)
-            for k in kinds:
-                n = "qpq_ui_kind_%s_%s" % (L, k["key"])
-                s += """
-							button_standard_list = {
-								visible = "%s"
-								layoutpolicy_horizontal = expanding
-								size = { 0 32 }
-								text = "qpq_%s_name"
-								enabled = "%s"
-								tooltip = "[Select_CString( %s, Localize( 'qpq_%s_hub_tt' ), %s )]"
-								using = tooltip_ne
-								onclick = "%s"
-								down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%s_kind').GetFlagName, '%s' )]"
-							}
-""" % (sg(n, "IsShown"), k["key"], sg(n, "IsValid"), sg(n, "IsValid")[1:-1], k["key"], sg(n, "BuildTooltip")[1:-1],
-                sg(n, "Execute"), L, k["key"])
-        return s
-
-    def offer_items(L):
-        s = ""
-        for o in UI_OFFERS:
-            label = ("qpq_demand_%s" % o) if (L == "i" and o in DEMAND_KEYS) else ("qpq_offer_%s" % o)
-            s += """
-							button_checkbox_label = {
-								visible = "%s"
-								onclick = "%s"
-								tooltip = "%s_desc"
-								blockoverride "checkbox" {
-									checked = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]"
-								}
-								blockoverride "text" {
-									text = "%s"
-								}
-							}
-""" % (sg("qpq_ui_offer_%s_%s" % (L, o), "IsShown"), sg("qpq_ui_offer_%s_%s" % (L, o), "Execute"), label, L, o, label)
-        return s
-
-    def timing_items(L):
-        s = ""
-        for t in TIMINGS:
-            if t == "up_front":
-                label = "qpq_demand_up_front" if L == "i" else "QPQ_UI_TIMING_UP_FRONT"
-            else:
-                label = ("qpq_demand_%s" % t) if L == "i" else ("qpq_offer_%s" % t)
-            s += """
-						button_radio_label = {
-							visible = "%s"
-							onclick = "%s"
-							tooltip = "%s_desc"
-							blockoverride "radio" {
-								frame = "[BoolTo1And2( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%s_timing').GetFlagName, '%s' ) )]"
-							}
-							blockoverride "text" {
-								text = "%s"
-							}
-						}
-""" % (sg("qpq_ui_timing_%s_%s" % (L, t), "IsShown", GS_ROOT), sg("qpq_ui_timing_%s_%s" % (L, t), "Execute", GS_ROOT),
-                label, L, t, label)
-        return s
-
-    def extra_items(L):
-        s = ""
-        for flag, (x, _kinds) in extras().items():
-            s += """
-						button_checkbox_label = {
-							visible = "%s"
-							onclick = "%s"
-							tooltip = "%s"
-							blockoverride "checkbox" {
-								checked = "[GetPlayer.MakeScope.Var('qpq_ui_%s_%s').IsSet]"
-							}
-							blockoverride "text" {
-								text = "%s"
-							}
-						}
-""" % (sg("qpq_ui_extra_%s_%s" % (L, flag), "IsShown", GS_ROOT), sg("qpq_ui_extra_%s_%s" % (L, flag), "Execute", GS_ROOT),
-                x["desc"], L, flag, x["loc"])
-        return s
-
-    def bullets(L):
-        """Summary lines for the goods of leg L: one per ticked box (a fixed, short list)."""
-        s = """
-							text_single = {
-								visible = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_gold').IsSet]"
-								layoutpolicy_horizontal = expanding
-								text = "[GetPlayer.Custom('QpqUiGoldLine_%s')]"
-							}
-""" % (L, L)
-        for o in UI_OFFERS[1:]:
-            s += """
-							text_single = {
-								visible = "[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]"
-								layoutpolicy_horizontal = expanding
-								text = "QPQ_UI_BULLET_OFFER_%s"
-							}
-""" % (L, o, o)
-        return s
-
-    def deed_tab(L, tab):
-        return """
-		############ TAB: %(title)s ############
-		hbox = {
-			visible = "[GetVariableSystem.HasValue( 'qpq_tab', '%(tab)s' )]"
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			spacing = 8
-
-			# The deeds on offer
-			scrollbox = {
-				size = { 280 400 }
-
-				blockoverride "scrollbox_content" {
-					vbox = {
-						layoutpolicy_horizontal = expanding
-						spacing = 2
-
-						button_standard_list = {
-							visible = "%(nodeed_shown)s"
-							layoutpolicy_horizontal = expanding
-							size = { 0 32 }
-							text = "QPQ_UI_NO_DEED"
-							onclick = "%(nodeed_exec)s"
-							down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_kind').GetFlagName, 'none' )]"
-						}
-%(ask_items)s
-					}
-				}
-			}
-
-			# The chosen deed, its target and its terms
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				layoutpolicy_vertical = expanding
-				spacing = 6
-
-				vbox = {
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "[GetPlayer.Custom('QpqUiKindName_%(L)s')]"
-						default_format = "#T"
-						using = Font_Size_Big
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 500
-						autoresize = yes
-						text = "[GetPlayer.Custom('QpqUiKindDesc_%(L)s')]"
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 500
-						autoresize = yes
-						default_format = "#weak"
-						text = "[GetPlayer.Custom('QpqUiKindHint_%(L)s')]"
-					}
-				}
-
-				text_single = {
-					visible = "%(any_target)s"
-					layoutpolicy_horizontal = expanding
-					margin_left = 6
-					text = "QPQ_UI_PICK_TARGET"
-					default_format = "#T"
-				}
-
-				# Characters
-				scrollbox = {
-					visible = "%(needs_char)s"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 170 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_candidates')]"
-
-							item = {
-								potential_selectable_target_portrait_widget = {
-									datacontext = "[Scope.Char]"
-
-									blockoverride "onclick" {
-										onclick = "[GetScriptedGui('qpq_ui_pick_char_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Character.MakeScope ).End )]"
-										down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_pick_char').Char, Character.Self )]"
-									}
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				# Titles
-				scrollbox = {
-					visible = "%(needs_title)s"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 170 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_title_candidates')]"
-
-							item = {
-								button_standard_list = {
-									layoutpolicy_horizontal = expanding
-									size = { 0 34 }
-									text = "[Scope.Title.GetNameNoTooltip]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_title_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Title.MakeScope ).End )]"
-									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_target_title').Title, Scope.Title )]"
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_title_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				# Artifacts
-				scrollbox = {
-					visible = "%(needs_artifact)s"
-					layoutpolicy_horizontal = expanding
-					layoutpolicy_vertical = expanding
-					size = { 0 170 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							datamodel = "[GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_artifact_candidates')]"
-
-							item = {
-								button_standard_list = {
-									layoutpolicy_horizontal = expanding
-									size = { 0 34 }
-									text = "[Scope.Artifact.GetName]"
-									onclick = "[GetScriptedGui('qpq_ui_pick_artifact_%(L)s').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'qpq_pick', Scope.Artifact.MakeScope ).End )]"
-									down = "[ObjectsEqual( GetPlayer.MakeScope.Var('qpq_ui_%(L)s_target_artifact').Artifact, Scope.Artifact )]"
-								}
-							}
-						}
-					}
-					blockoverride "scrollbox_empty" {
-						visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('qpq_ui_%(L)s_artifact_candidates') )]"
-						text = "QPQ_UI_NO_CANDIDATES"
-					}
-				}
-
-				vbox = {
-					visible = "%(has_extras)s"
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_EXTRAS_HEADER"
-						default_format = "#T"
-					}
-%(extra_items)s
-				}
-
-				expand = {}
-			}
-		}
-""" % dict(
-            title=("You will…" if L == "i" else "They will…"), tab=tab, L=L,
-            nodeed_shown=sg("qpq_ui_nodeed_%s" % L, "IsShown", GS_ROOT), nodeed_exec=sg("qpq_ui_nodeed_%s" % L, "Execute", GS_ROOT),
-            ask_items=ask_items(L), any_target=sg("qpq_ui_needs_any_target_%s" % L, "IsShown", GS_ROOT),
-            needs_char=sg("qpq_ui_needs_char_target_%s" % L, "IsShown", GS_ROOT),
-            needs_title=sg("qpq_ui_needs_title_target_%s" % L, "IsShown", GS_ROOT),
-            needs_artifact=sg("qpq_ui_needs_artifact_target_%s" % L, "IsShown", GS_ROOT),
-            has_extras=sg("qpq_ui_has_extras_%s" % L, "IsShown", GS_ROOT), extra_items=extra_items(L))
-
-    def goods_tab(L, tab):
-        return """
-		############ TAB: %(title)s ############
-		hbox = {
-			visible = "[GetVariableSystem.HasValue( 'qpq_tab', '%(tab)s' )]"
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			spacing = 8
-
-			vbox = {
-				layoutpolicy_vertical = expanding
-				spacing = 4
-
-				text_single = {
-					layoutpolicy_horizontal = expanding
-					margin_left = 6
-					text = "%(header)s"
-					default_format = "#T"
-				}
-
-				scrollbox = {
-					size = { 400 360 }
-
-					blockoverride "scrollbox_content" {
-						vbox = {
-							layoutpolicy_horizontal = expanding
-							spacing = 4
-%(offer_items)s
-						}
-					}
-				}
-			}
-
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				layoutpolicy_vertical = expanding
-				spacing = 6
-
-				vbox = {
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TERMS_HEADER"
-						default_format = "#T"
-					}
-					text_multi = {
-						layoutpolicy_horizontal = expanding
-						max_width = 370
-						autoresize = yes
-						text = "QPQ_UI_PRICE_LINE_%(LU)s"
-					}
-				}
-
-				vbox = {
-					visible = "[GetPlayer.MakeScope.Var('qpq_ui_%(L)s_o_gold').IsSet]"
-					layoutpolicy_horizontal = expanding
-					margin = { 12 8 }
-					spacing = 4
-
-					background = {
-						using = Background_Area_Dark
-					}
-
-					text_single = {
-						layoutpolicy_horizontal = expanding
-						text = "QPQ_UI_TIMING_HEADER"
-						default_format = "#T"
-					}
-%(timing_items)s
-				}
-
-				expand = {}
-			}
-		}
-""" % dict(title=("You give" if L == "t" else "They give"), tab=tab, L=L, LU=L.upper(),
-           header=("QPQ_UI_YOU_GIVE_HEADER" if L == "t" else "QPQ_UI_THEY_GIVE_HEADER"),
-           offer_items=offer_items(L), timing_items=timing_items(L))
-
-    gui = GUI_TEMPLATE
-    for tag, val in (("@@DEED_I@@", deed_tab("i", "youdo")), ("@@DEED_T@@", deed_tab("t", "theydo")),
-                     ("@@GOODS_T@@", goods_tab("t", "yougive")), ("@@GOODS_I@@", goods_tab("i", "theygive")),
-                     ("@@BULLETS_T@@", bullets("t")), ("@@BULLETS_I@@", bullets("i"))):
-        gui = gui.replace(tag, val)
-    gui = gui.replace("@@GS@@", GS).replace("@@GS_ROOT@@", GS_ROOT)
-    assert "@@" not in gui
-    write("gui/qpq_pact_window.gui", gui)
-    # No byte-order mark here: the line is read as a file path
-    write("gui/scripted_widgets/qpq_scripted_widgets.txt", "gui/qpq_pact_window.gui = qpq_pact_window\n")  # the game wants utf8-bom here too
-
-
 def gen_all(block, fmt_shown, OFFER_DEFS, write):
+    import qpq_gui_gen
     gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write)
     gen_ui_script(block, fmt_shown, OFFER_DEFS, write)
     gen_ui_custom_loc(write)
     gen_ui_loc(write)
     gen_deal_events(write)
-    gen_gui(write)
-
-
-GUI_TEMPLATE = r'''######################################################
-################ QUID PRO QUO: A BACKROOM DEAL #######
-######################################################
-# GENERATED by tools/qpq_gen.py (tools/qpq_ui_gen.py). Built from vanilla parts: the interaction
-# window frame and header, button_tab, scrollbox, button_checkbox_label / button_radio_label,
-# button_primary and the activity planner's selectable portrait rows.
-# Every list sits in its own scrollbox, and the character / title pickers are capped.
-
-window = {
-	name = "qpq_pact_window"
-	parentanchor = center
-	position = { 0 10 }
-	allow_outside = yes
-	layer = middle
-	movable = yes
-	size = { 900 920 }
-	datacontext = "[GetPlayer]"
-
-	visible = "[GetPlayer.MakeScope.Var('qpq_ui_open').IsSet]"
-
-	using = Window_Background
-	using = Window_Decoration_Spike
-
-	state = {
-		name = _show
-		on_start = "[GetVariableSystem.Set( 'qpq_tab', 'youdo' )]"
-		using = Animation_FadeIn_Quick
-		using = Sound_WindowShow_Standard
-	}
-
-	state = {
-		name = _hide
-		using = Animation_FadeOut_Quick
-		using = Sound_WindowHide_Standard
-	}
-
-	vbox = {
-		using = Window_Margins
-		layoutpolicy_horizontal = expanding
-		layoutpolicy_vertical = expanding
-		spacing = 6
-
-		############ HEADER ############
-		header_pattern_interaction = {
-			layoutpolicy_horizontal = expanding
-
-			blockoverride "header_text" {
-				text = "QPQ_UI_TITLE"
-			}
-
-			blockoverride "button_close" {
-				onclick = "[GetScriptedGui('qpq_ui_close').Execute( @@GS_ROOT@@ )]"
-			}
-		}
-
-		############ THE TABLE: WHAT EACH SIDE WILL DO ############
-		hbox = {
-			layoutpolicy_horizontal = expanding
-			spacing = 8
-
-			# You
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				margin = { 12 8 }
-				spacing = 3
-
-				background = {
-					using = Background_Area_Dark
-				}
-
-				hbox = {
-					layoutpolicy_horizontal = expanding
-					spacing = 6
-					portrait_head_small = {
-						datacontext = "[GetPlayer]"
-					}
-					vbox = {
-						text_single = {
-							text = "QPQ_UI_YOU_WILL"
-							default_format = "#T"
-							align = left|nobaseline
-						}
-						text_single = {
-							text = "[GetPlayer.Custom('QpqUiMyTier')]"
-							default_format = "#low"
-							align = left|nobaseline
-							tooltip = "QPQ_UI_TIER_TT"
-						}
-					}
-				}
-
-				text_multi = {
-					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'none' ) )]"
-					layoutpolicy_horizontal = expanding
-					max_width = 400
-					autoresize = yes
-					text = "QPQ_UI_BULLET_DEED_I"
-				}
-@@BULLETS_T@@
-				text_single = {
-					visible = "[GetScriptedGui('qpq_ui_me_empty').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					text = "QPQ_UI_NOTHING_YET"
-					default_format = "#weak"
-				}
-			}
-
-			# Them
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				margin = { 12 8 }
-				spacing = 3
-
-				background = {
-					using = Background_Area_Dark
-				}
-
-				hbox = {
-					layoutpolicy_horizontal = expanding
-					spacing = 6
-					portrait_head_small = {
-						datacontext = "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char]"
-					}
-					vbox = {
-						text_single = {
-							text = "QPQ_UI_THEY_WILL"
-							default_format = "#T"
-							align = left|nobaseline
-						}
-						text_single = {
-							text = "[GetPlayer.Custom('QpqUiTheirTier')]"
-							default_format = "#low"
-							align = left|nobaseline
-							tooltip = "QPQ_UI_TIER_TT"
-						}
-					}
-				}
-
-				text_multi = {
-					visible = "[Not( EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'none' ) )]"
-					layoutpolicy_horizontal = expanding
-					max_width = 400
-					autoresize = yes
-					text = "QPQ_UI_BULLET_DEED_T"
-				}
-@@BULLETS_I@@
-				text_single = {
-					visible = "[GetScriptedGui('qpq_ui_them_empty').IsShown( @@GS_ROOT@@ )]"
-					layoutpolicy_horizontal = expanding
-					text = "QPQ_UI_NOTHING_YET"
-					default_format = "#weak"
-				}
-			}
-		}
-
-		############ THE SCANDAL ############
-		hbox = {
-			layoutpolicy_horizontal = expanding
-			margin = { 12 6 }
-			spacing = 8
-
-			background = {
-				using = Background_Area_Dark
-			}
-
-			text_multi = {
-				layoutpolicy_horizontal = expanding
-				max_width = 600
-				autoresize = yes
-				text = "QPQ_UI_SCANDAL_TEXT"
-			}
-
-			button_checkbox_label = {
-				visible = "[GetScriptedGui('qpq_ui_charter').IsShown( @@GS_ROOT@@ )]"
-				onclick = "[GetScriptedGui('qpq_ui_charter').Execute( @@GS_ROOT@@ )]"
-				tooltip = "qpq_offer_charter_desc"
-				blockoverride "checkbox" {
-					checked = "[GetPlayer.MakeScope.Var('qpq_ui_charter').IsSet]"
-				}
-				blockoverride "text" {
-					text = "qpq_offer_charter"
-				}
-			}
-		}
-
-		############ TABS ############
-		hbox = {
-			layoutpolicy_horizontal = expanding
-
-			button_tab = {
-				text = "QPQ_UI_TAB_YOU_DO"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'youdo' )]"
-				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'youdo' )]"
-			}
-			button_tab = {
-				text = "QPQ_UI_TAB_THEY_DO"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'theydo' )]"
-				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'theydo' )]"
-			}
-			button_tab = {
-				text = "QPQ_UI_TAB_YOU_GIVE"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'yougive' )]"
-				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'yougive' )]"
-			}
-			button_tab = {
-				text = "QPQ_UI_TAB_THEY_GIVE"
-				onclick = "[GetVariableSystem.Set( 'qpq_tab', 'theygive' )]"
-				onclick = "[GetScriptedGui('qpq_ui_refresh').Execute( @@GS_ROOT@@ )]"
-				down = "[GetVariableSystem.HasValue( 'qpq_tab', 'theygive' )]"
-			}
-		}
-@@DEED_I@@
-@@DEED_T@@
-@@GOODS_T@@
-@@GOODS_I@@
-		expand = {}
-
-		############ FOOTER: ACCEPTANCE AND PROPOSE ############
-		hbox = {
-			layoutpolicy_horizontal = expanding
-			margin = { 10 8 }
-			spacing = 10
-
-			background = {
-				using = Background_Area_Dark
-			}
-
-			button_standard = {
-				size = { 160 44 }
-				text = "QPQ_UI_CANCEL"
-				onclick = "[GetScriptedGui('qpq_ui_close').Execute( @@GS_ROOT@@ )]"
-			}
-
-			text_multi = {
-				layoutpolicy_horizontal = expanding
-				max_width = 340
-				autoresize = yes
-				align = center|nobaseline
-				text = "[GetPlayer.Custom('QpqUiAcceptance')]"
-				tooltip = "QPQ_UI_ACC_BREAKDOWN"
-			}
-
-			button_primary = {
-				size = { 260 44 }
-				text = "QPQ_UI_PROPOSE"
-				enabled = "[GetScriptedGui('qpq_ui_propose').IsValid( @@GS@@ )]"
-				tooltip = "[GetScriptedGui('qpq_ui_propose').BuildTooltip( @@GS@@ )]"
-				onclick = "[GetScriptedGui('qpq_ui_propose').Execute( @@GS@@ )]"
-			}
-		}
-	}
-}
-'''
+    qpq_gui_gen.gen_gui(write)

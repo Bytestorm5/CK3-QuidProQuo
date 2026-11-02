@@ -431,7 +431,10 @@ qpq_store_and_pay_offers_effect = {
 
 	# --- Things handed over on delivery are chosen now ---
 	if = {
-		limit = { scope:qpq_o_land ?= yes }
+		limit = {
+			scope:qpq_o_land ?= yes
+			NOT = { exists = scope:qpq_deal_land_src }
+		}
 		scope:qpq_payer = {
 			ordered_held_title = {
 				limit = {
@@ -489,6 +492,38 @@ qpq_store_and_pay_offers_effect = {
 			if = {
 				limit = { exists = scope:qpq_offer_title }
 				set_variable = { name = qpq_offer_title value = scope:qpq_offer_title }
+			}
+			# Titles chosen in the deal panel: the payer's own, handed over on delivery
+			if = {
+				limit = {
+					scope:qpq_o_land ?= yes
+					exists = scope:qpq_deal_land_src
+				}
+				scope:qpq_deal_land_src = {
+					if = {
+						limit = { scope:qpq_land_leg ?= flag:t }
+						every_in_list = {
+							variable = qpq_deal_land_t
+							limit = { holder ?= scope:qpq_payer }
+							scope:qpq_story = { add_to_variable_list = { name = qpq_offer_titles target = prev } }
+						}
+					}
+					else = {
+						every_in_list = {
+							variable = qpq_deal_land_i
+							limit = { holder ?= scope:qpq_payer }
+							scope:qpq_story = { add_to_variable_list = { name = qpq_offer_titles target = prev } }
+						}
+					}
+				}
+				if = {
+					limit = { has_variable_list = qpq_offer_titles }
+					random_in_list = {
+						variable = qpq_offer_titles
+						save_scope_as = qpq_first_title
+					}
+					set_variable = { name = qpq_offer_title value = scope:qpq_first_title }
+				}
 			}
 			if = {
 				limit = { exists = scope:qpq_offer_artifact }
@@ -881,6 +916,27 @@ qpq_pay_on_delivery_effect = {
 			}
 		}
 		if = {
+			limit = { has_variable_list = qpq_offer_titles }
+			every_in_list = {
+				variable = qpq_offer_titles
+				limit = { holder ?= scope:qpq_payer }
+				if = {
+					limit = { exists = scope:qpq_pay_change }
+					clear_saved_scope = qpq_pay_change
+				}
+				create_title_and_vassal_change = {
+					type = granted
+					save_scope_as = qpq_pay_change
+					add_claim_on_loss = no
+				}
+				change_title_holder = {
+					holder = scope:qpq_agent
+					change = scope:qpq_pay_change
+				}
+				resolve_title_and_vassal_change = scope:qpq_pay_change
+			}
+		}
+		else_if = {
 			limit = {
 				exists = var:qpq_offer_title
 				var:qpq_offer_title.holder ?= scope:qpq_payer

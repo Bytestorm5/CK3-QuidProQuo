@@ -387,6 +387,13 @@ qpq_ui_prune_goods_t_effect = {
 		remove_variable = qpq_ui_t_o_hook
 	}
 	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_t_o_land }
+			has_variable_list = qpq_ui_t_land
+		}
+		clear_variable_list = qpq_ui_t_land
+	}
+	if = {
 		limit = { NOT = { has_variable = qpq_ui_t_o_gold } }
 		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
 	}
@@ -410,6 +417,31 @@ qpq_ui_prune_goods_t_effect = {
 			NOT = { qpq_ui_leg_t_allows_stipend_trigger = yes }
 		}
 		set_variable = { name = qpq_ui_t_timing value = flag:up_front }
+	}
+}
+
+qpq_ui_fill_land_t_effect = {
+	scope:qpq_deal_me = {
+		every_held_title = {
+			limit = {
+				tier >= tier_county
+				NOT = { this = scope:qpq_deal_me.capital_county }
+				NOT = { this = scope:qpq_deal_me.primary_title }
+			}
+			add_to_list = qpq_ui_pool_land_t
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_land_t
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_t_land target = prev } }
+			}
+		}
+		order_by = qpq_ui_title_order_value
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_land_candidates target = prev } }
 	}
 }
 
@@ -442,6 +474,10 @@ qpq_ui_clear_leg_t_effect = {
 
 qpq_ui_leg_t_refresh_effect = {
 	qpq_ui_prune_goods_t_effect = yes
+	if = {
+		limit = { qpq_ui_leg_t_allows_land_trigger = yes }
+		qpq_ui_fill_land_t_effect = yes
+	}
 	if = {
 		limit = { NOT = { var:qpq_ui_t_kind = flag:none } }
 		set_variable = { name = qpq_ui_t_ekind value = var:qpq_ui_t_kind }
@@ -534,6 +570,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -634,6 +681,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 
@@ -727,6 +785,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes NOT = { top_liege = scope:actor.top_liege } }
@@ -810,6 +879,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -909,6 +989,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:target = { tier = tier_county }
@@ -998,6 +1089,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:recipient } }
@@ -1029,6 +1131,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -1055,6 +1168,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -1146,6 +1270,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }
@@ -1230,6 +1365,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -1339,6 +1485,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 
@@ -1429,6 +1586,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -1534,6 +1702,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } }
@@ -1615,6 +1794,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -1708,6 +1898,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { has_trait = devoted } NOT = { this = scope:actor } }
@@ -1793,6 +1994,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -1901,6 +2113,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -1973,6 +2196,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2061,6 +2295,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:recipient = { has_claim_on = scope:target }
@@ -2092,6 +2337,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -2116,6 +2372,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_t_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = -1
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -2205,6 +2472,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { liege ?= scope:recipient }
@@ -2232,6 +2510,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2316,6 +2605,17 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_t_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = -1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } }
@@ -2352,6 +2652,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -2383,6 +2694,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2473,6 +2795,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:target = { tier = tier_county holder ?= scope:recipient }
@@ -2505,6 +2838,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2597,6 +2941,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }
@@ -2685,6 +3040,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:recipient } }
@@ -2716,6 +3082,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -2742,6 +3119,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2841,6 +3229,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:recipient = { is_allied_to = scope:secondary_recipient }
@@ -2877,6 +3276,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -2908,6 +3318,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -2991,6 +3412,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3083,6 +3515,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -3114,6 +3557,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3153,6 +3607,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -3184,6 +3649,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3267,6 +3743,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3368,6 +3855,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3475,6 +3973,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { faith = scope:recipient.faith NOT = { has_trait = excommunicated } }
@@ -3557,6 +4066,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3658,6 +4178,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes highest_held_title_tier >= tier_kingdom NOT = { this = scope:actor } }
@@ -3743,6 +4274,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3844,6 +4386,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }
@@ -3871,6 +4424,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -3970,6 +4534,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4077,6 +4652,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -4170,6 +4756,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -4201,6 +4798,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -4227,6 +4835,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4262,6 +4881,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4358,6 +4988,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4459,6 +5100,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes NOT = { faith = scope:actor.faith } }
@@ -4495,6 +5147,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -4521,6 +5184,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4623,6 +5297,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -4650,6 +5335,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -4750,6 +5446,17 @@ qpq_ui_leg_t_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -4777,6 +5484,17 @@ qpq_ui_leg_t_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
 					}
 				}
 			}
@@ -5068,6 +5786,13 @@ qpq_ui_prune_goods_i_effect = {
 		remove_variable = qpq_ui_i_o_hook
 	}
 	if = {
+		limit = {
+			NOT = { has_variable = qpq_ui_i_o_land }
+			has_variable_list = qpq_ui_i_land
+		}
+		clear_variable_list = qpq_ui_i_land
+	}
+	if = {
 		limit = { NOT = { has_variable = qpq_ui_i_o_gold } }
 		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
 	}
@@ -5091,6 +5816,31 @@ qpq_ui_prune_goods_i_effect = {
 			NOT = { qpq_ui_leg_i_allows_stipend_trigger = yes }
 		}
 		set_variable = { name = qpq_ui_i_timing value = flag:up_front }
+	}
+}
+
+qpq_ui_fill_land_i_effect = {
+	scope:qpq_deal_them = {
+		every_held_title = {
+			limit = {
+				tier >= tier_county
+				NOT = { this = scope:qpq_deal_them.capital_county }
+				NOT = { this = scope:qpq_deal_them.primary_title }
+			}
+			add_to_list = qpq_ui_pool_land_i
+		}
+	}
+	ordered_in_list = {
+		list = qpq_ui_pool_land_i
+		limit = {
+			NOT = {
+				scope:qpq_deal_me = { is_target_in_variable_list = { name = qpq_ui_i_land target = prev } }
+			}
+		}
+		order_by = qpq_ui_title_order_value
+		max = 120
+		check_range_bounds = no
+		scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_land_candidates target = prev } }
 	}
 }
 
@@ -5123,6 +5873,10 @@ qpq_ui_clear_leg_i_effect = {
 
 qpq_ui_leg_i_refresh_effect = {
 	qpq_ui_prune_goods_i_effect = yes
+	if = {
+		limit = { qpq_ui_leg_i_allows_land_trigger = yes }
+		qpq_ui_fill_land_i_effect = yes
+	}
 	if = {
 		limit = { NOT = { var:qpq_ui_i_kind = flag:none } }
 		set_variable = { name = qpq_ui_i_ekind value = var:qpq_ui_i_kind }
@@ -5219,6 +5973,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -5317,6 +6082,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 
@@ -5411,6 +6187,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes NOT = { top_liege = scope:actor.top_liege } }
@@ -5498,6 +6285,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:target
@@ -5595,6 +6393,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:target = { tier = tier_county }
@@ -5685,6 +6494,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:recipient } }
@@ -5717,6 +6537,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -5747,6 +6578,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -5836,6 +6678,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }
@@ -5924,6 +6777,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -6031,6 +6895,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 
@@ -6125,6 +7000,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -6228,6 +7114,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } }
@@ -6313,6 +7210,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -6404,6 +7312,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { has_trait = devoted } NOT = { this = scope:actor } }
@@ -6493,6 +7412,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -6599,6 +7529,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -6675,6 +7616,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:target
@@ -6761,6 +7713,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:recipient = { has_claim_on = scope:target }
@@ -6793,6 +7756,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -6819,6 +7793,17 @@ qpq_ui_leg_i_refresh_effect = {
 					subtract = {
 						value = "scope:recipient.opinion(scope:actor)"
 						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = 1
 					}
 				}
 			}
@@ -6912,6 +7897,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { liege ?= scope:recipient }
@@ -6943,6 +7939,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -7029,6 +8036,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } }
@@ -7066,6 +8084,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -7101,6 +8130,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -7189,6 +8229,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:target
 					scope:target = { tier = tier_county holder ?= scope:recipient }
@@ -7225,6 +8276,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -7315,6 +8377,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }
@@ -7404,6 +8477,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { NOT = { this = scope:recipient } }
@@ -7436,6 +8520,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -7466,6 +8561,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -7563,6 +8669,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:recipient = { is_allied_to = scope:secondary_recipient }
@@ -7600,6 +8717,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -7635,6 +8763,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -7719,6 +8858,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:target
@@ -7809,6 +8959,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -7844,6 +9005,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -7881,6 +9053,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -7916,6 +9099,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -8000,6 +9194,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:target
@@ -8102,6 +9307,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -8207,6 +9423,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { faith = scope:recipient.faith NOT = { has_trait = excommunicated } }
@@ -8293,6 +9520,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -8392,6 +9630,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes highest_held_title_tier >= tier_kingdom NOT = { this = scope:actor } }
@@ -8481,6 +9730,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -8580,6 +9840,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }
@@ -8611,6 +9882,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -8711,6 +9993,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -8816,6 +10109,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -8910,6 +10214,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -8942,6 +10257,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					always = yes
 				}
@@ -8972,6 +10298,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -9008,6 +10345,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -9105,6 +10453,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					exists = scope:secondary_recipient
@@ -9204,6 +10563,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					scope:secondary_recipient = { is_landed = yes NOT = { faith = scope:actor.faith } }
@@ -9241,6 +10611,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 				}
@@ -9271,6 +10652,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -9371,6 +10763,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -9402,6 +10805,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -9500,6 +10914,17 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
 			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
 				limit = {
 					exists = scope:secondary_recipient
 					exists = scope:secondary_recipient
@@ -9531,6 +10956,17 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
 			if = {
 				limit = {
 					always = yes
@@ -9755,6 +11191,10 @@ qpq_ui_clear_derived_effect = {
 		clear_variable_list = qpq_ui_t_artifact_candidates
 	}
 	if = {
+		limit = { has_variable_list = qpq_ui_t_land_candidates }
+		clear_variable_list = qpq_ui_t_land_candidates
+	}
+	if = {
 		limit = { has_variable_list = qpq_ui_i_candidates }
 		clear_variable_list = qpq_ui_i_candidates
 	}
@@ -9765,6 +11205,10 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable_list = qpq_ui_i_artifact_candidates }
 		clear_variable_list = qpq_ui_i_artifact_candidates
+	}
+	if = {
+		limit = { has_variable_list = qpq_ui_i_land_candidates }
+		clear_variable_list = qpq_ui_i_land_candidates
 	}
 }
 
@@ -9949,8 +11393,16 @@ qpq_ui_clear_choices_effect = {
 		limit = { has_variable = qpq_ui_i_qpq_x_armies }
 		remove_variable = qpq_ui_i_qpq_x_armies
 	}
+	if = {
+		limit = { has_variable_list = qpq_ui_t_land }
+		clear_variable_list = qpq_ui_t_land
+	}
 	set_variable = { name = qpq_ui_t_kind value = flag:none }
 	set_variable = { name = qpq_ui_t_timing value = flag:up_front }
+	if = {
+		limit = { has_variable_list = qpq_ui_i_land }
+		clear_variable_list = qpq_ui_i_land
+	}
 	set_variable = { name = qpq_ui_i_kind value = flag:none }
 	set_variable = { name = qpq_ui_i_timing value = flag:up_front }
 }
@@ -10384,6 +11836,17 @@ qpq_ui_save_deal_effect = {
 			limit = { exists = var:qpq_ui_t_target }
 			var:qpq_ui_t_target = { save_scope_as = qpq_deal_t_target }
 		}
+		if = {
+			limit = { has_variable_list = qpq_deal_land_t }
+			clear_variable_list = qpq_deal_land_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_t_land }
+			every_in_list = {
+				variable = qpq_ui_t_land
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_t target = prev } }
+			}
+		}
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_ekind }
@@ -10809,6 +12272,17 @@ qpq_ui_save_deal_effect = {
 			limit = { exists = var:qpq_ui_i_target }
 			var:qpq_ui_i_target = { save_scope_as = qpq_deal_i_target }
 		}
+		if = {
+			limit = { has_variable_list = qpq_deal_land_i }
+			clear_variable_list = qpq_deal_land_i
+		}
+		if = {
+			limit = { has_variable_list = qpq_ui_i_land }
+			every_in_list = {
+				variable = qpq_ui_i_land
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_deal_land_i target = prev } }
+			}
+		}
 	}
 }
 
@@ -10896,6 +12370,10 @@ qpq_deal_clear_seal_scopes_effect = {
 	if = {
 		limit = { exists = scope:qpq_f_tier }
 		clear_saved_scope = qpq_f_tier
+	}
+	if = {
+		limit = { exists = scope:qpq_first_title }
+		clear_saved_scope = qpq_first_title
 	}
 	if = {
 		limit = { exists = scope:qpq_floor_zero }
@@ -11212,6 +12690,16 @@ qpq_deal_load_goods_t_effect = {
 
 qpq_deal_seal_leg_t_effect = {
 	qpq_deal_clear_seal_scopes_effect = yes
+	if = {
+		limit = { exists = scope:qpq_deal_land_src }
+		clear_saved_scope = qpq_deal_land_src
+	}
+	if = {
+		limit = { exists = scope:qpq_land_leg }
+		clear_saved_scope = qpq_land_leg
+	}
+	scope:qpq_deal_me = { save_scope_as = qpq_deal_land_src }
+	save_scope_value_as = { name = qpq_land_leg value = flag:t }
 	if = {
 		limit = { scope:qpq_deal_t_kind ?= flag:chartered_conquest }
 		qpq_deal_orient_normal_effect = yes
@@ -11902,6 +13390,16 @@ qpq_deal_load_goods_i_effect = {
 
 qpq_deal_seal_leg_i_effect = {
 	qpq_deal_clear_seal_scopes_effect = yes
+	if = {
+		limit = { exists = scope:qpq_deal_land_src }
+		clear_saved_scope = qpq_deal_land_src
+	}
+	if = {
+		limit = { exists = scope:qpq_land_leg }
+		clear_saved_scope = qpq_land_leg
+	}
+	scope:qpq_deal_me = { save_scope_as = qpq_deal_land_src }
+	save_scope_value_as = { name = qpq_land_leg value = flag:i }
 	if = {
 		limit = { scope:qpq_deal_i_kind ?= flag:chartered_conquest }
 		qpq_deal_orient_swapped_effect = yes

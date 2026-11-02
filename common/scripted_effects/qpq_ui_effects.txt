@@ -1,4 +1,4 @@
-# Quid Pro Quo - the Backroom Deal panel (gui/qpq_pact_window.gui)
+﻿# Quid Pro Quo - the Backroom Deal panel (gui/qpq_pact_window.gui)
 #
 # Root is always the player. The panel's state lives in variables on the player, so it is the same on
 # every machine in multiplayer:
@@ -115,6 +115,16 @@ qpq_seal_deal_effect = {
 		qpq_deal_seal_leg_i_effect = yes
 	}
 	qpq_deal_link_effect = yes
+	scope:qpq_deal_me = {
+		if = {
+			limit = { has_variable_list = qpq_deal_land_t }
+			clear_variable_list = qpq_deal_land_t
+		}
+		if = {
+			limit = { has_variable_list = qpq_deal_land_i }
+			clear_variable_list = qpq_deal_land_i
+		}
+	}
 }
 
 # Tie the two pacts of a deal together: breaking one releases the other, and exposing one exposes both

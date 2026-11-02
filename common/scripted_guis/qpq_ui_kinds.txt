@@ -1817,14 +1817,33 @@ qpq_ui_kind_t_temple_patronage = {
 	}
 }
 
-qpq_ui_nodeed_t = {
+qpq_ui_land_toggle_t = {
 	scope = character
-	is_shown = {
-		always = yes
-	}
+	saved_scopes = { qpq_pick }
 	effect = {
-		set_variable = { name = qpq_ui_t_kind value = flag:none }
-		qpq_ui_clear_leg_t_effect = yes
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_land
+				is_target_in_variable_list = { name = qpq_ui_t_land target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_t_land target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_t_land target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_t_land
+				variable_list_size = { name = qpq_ui_t_land value > 0 }
+			}
+			set_variable = qpq_ui_t_o_land
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				remove_variable = qpq_ui_t_o_land
+			}
+		}
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -4471,14 +4490,33 @@ qpq_ui_kind_i_temple_patronage = {
 	}
 }
 
-qpq_ui_nodeed_i = {
+qpq_ui_land_toggle_i = {
 	scope = character
-	is_shown = {
-		always = yes
-	}
+	saved_scopes = { qpq_pick }
 	effect = {
-		set_variable = { name = qpq_ui_i_kind value = flag:none }
-		qpq_ui_clear_leg_i_effect = yes
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_land
+				is_target_in_variable_list = { name = qpq_ui_i_land target = scope:qpq_pick }
+			}
+			remove_list_variable = { name = qpq_ui_i_land target = scope:qpq_pick }
+		}
+		else = {
+			add_to_variable_list = { name = qpq_ui_i_land target = scope:qpq_pick }
+		}
+		if = {
+			limit = {
+				has_variable_list = qpq_ui_i_land
+				variable_list_size = { name = qpq_ui_i_land value > 0 }
+			}
+			set_variable = qpq_ui_i_o_land
+		}
+		else = {
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				remove_variable = qpq_ui_i_o_land
+			}
+		}
 		qpq_ui_refresh_effect = yes
 	}
 }
