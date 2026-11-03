@@ -152,8 +152,28 @@ def goal_value(k, swapped=False):
     return "\tvalue = 0\n" + body
 
 
-def goal_refusal(k, swapped=False):
-    """Trigger text: D will not, for any price. Only an AI refuses; None if the Ask has no such rule."""
+# The reasons an AI will not do a deed at any price, whatever the deed (qpq_ai_refuses_<why>_trigger) and the
+# arguments each takes. The hatred one is judged once for the whole deal in the panel.
+REFUSE_GENERIC = [("hatred", "AP"), ("rival", "APT"), ("virtue", "AT"), ("damnable", "APT"), ("no_leverage", "APT")]
+
+
+def refuse_args(args, agent, payer, tier):
+    parts = []
+    if "A" in args:
+        parts.append("AGENT = %s" % agent)
+    if "P" in args:
+        parts.append("PAYER = %s" % payer)
+    if "T" in args:
+        parts.append("TIER = %s" % tier)
+    return " ".join(parts)
+
+
+# Why an AI will not do an Ask at any price: one label per rule, shown to the player as a reason
+REFUSAL_LABELS = ["ally", "kin", "stronger", "liked_ally", "friend", "rival_target", "rival_you"]
+
+
+def goal_refusal_parts(k, swapped=False):
+    """[(label, trigger text)]: each rule under which D will not, for any price. Only an AI refuses."""
     archs = KIND_GOALS.get(k["key"]) or []
     T = third_party(k)
     D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
@@ -161,23 +181,33 @@ def goal_refusal(k, swapped=False):
         T = sw(T)
     parts = []
     if "war" in archs and T:
-        parts.append("%s = { is_allied_to = %s }" % (D, T))
-        parts.append("%s = { is_close_family_of = %s }" % (D, T))
+        parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
+        parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
         # Nobody fights a realm that outweighs them hopelessly, however loyal or well paid. The faith's own armies
         # are not the decider's, and a partner who joins the war is counted in.
         if k["key"] in JOINT_WARS:
-            parts.append("%s = { max_military_strength > { value = %s.max_military_strength add = %s.max_military_strength multiply = 2 } }" % (T, D, P))
+            parts.append(("stronger", "%s = { max_military_strength > { value = %s.max_military_strength add = %s.max_military_strength multiply = 2 } }" % (T, D, P)))
         elif k["key"] not in HOLY_WARS:
-            parts.append("%s = { %s }" % (T, STRONGER % (D, "2")))
+            parts.append(("stronger", "%s = { %s }" % (T, STRONGER % (D, "2"))))
     if "harm" in archs and T:
-        parts.append("%s = { is_close_family_of = %s }" % (D, T))
-        parts.append("AND = {\n\t\t%s = { is_allied_to = %s }\n\t\t%s = { opinion = { target = %s value >= 30 } }\n\t}" % (D, T, D, T))
-        parts.append("OR = {\n\t\t%s = { has_relation_friend = %s }\n\t\t%s = { has_relation_lover = %s }\n\t\t%s = { has_relation_best_friend = %s }\n\t}" % (D, T, D, T, D, T))
+        parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
+        parts.append(("liked_ally", "AND = {\n\t\t%s = { is_allied_to = %s }\n\t\t%s = { opinion = { target = %s value >= 30 } }\n\t}" % (D, T, D, T)))
+        parts.append(("friend", "OR = {\n\t\t%s = { has_relation_friend = %s }\n\t\t%s = { has_relation_lover = %s }\n\t\t%s = { has_relation_best_friend = %s }\n\t}" % (D, T, D, T, D, T)))
     if "favour" in archs and T:
-        parts.append("OR = {\n\t\t%s = { has_relation_rival = %s }\n\t\t%s = { has_relation_nemesis = %s }\n\t}" % (D, T, D, T))
+        parts.append(("rival_target", "OR = {\n\t\t%s = { has_relation_rival = %s }\n\t\t%s = { has_relation_nemesis = %s }\n\t}" % (D, T, D, T)))
     if "pact" in archs:
-        parts.append("%s = { has_relation_rival = %s }" % (D, P))
-    parts = [p for p in parts if p]
+        parts.append(("rival_you", "%s = { has_relation_rival = %s }" % (D, P)))
+    seen, out = set(), []
+    for label, text in parts:
+        if label not in seen:
+            seen.add(label)
+            out.append((label, text))
+    return out
+
+
+def goal_refusal(k, swapped=False):
+    """Trigger text: D will not, for any price. Only an AI refuses; None if the Ask has no such rule."""
+    parts = [t for _l, t in goal_refusal_parts(k, swapped)]
     if not parts:
         return None
     out = "\tOR = {\n"

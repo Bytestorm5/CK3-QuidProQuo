@@ -2211,6 +2211,266 @@ QpqUiSecrecyNote = {
 	}
 }
 
+QpqUiRef_hatred = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_hatred }
+		localization_key = QPQ_UI_REF_HATRED
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_rival = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_rival }
+		localization_key = QPQ_UI_REF_RIVAL_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_virtue = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_virtue }
+		localization_key = QPQ_UI_REF_VIRTUE_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_damnable = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_damnable }
+		localization_key = QPQ_UI_REF_DAMNABLE_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_no_leverage = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_no_leverage }
+		localization_key = QPQ_UI_REF_NO_LEVERAGE_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_ally = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_ally }
+		localization_key = QPQ_UI_REF_ALLY_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_kin = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_kin }
+		localization_key = QPQ_UI_REF_KIN_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_stronger = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_stronger }
+		localization_key = QPQ_UI_REF_STRONGER_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_liked_ally = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_liked_ally }
+		localization_key = QPQ_UI_REF_LIKED_ALLY_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_friend = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_friend }
+		localization_key = QPQ_UI_REF_FRIEND_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_rival_target = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_rival_target }
+		localization_key = QPQ_UI_REF_RIVAL_TARGET_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_t_rival_you = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_t_rival_you }
+		localization_key = QPQ_UI_REF_RIVAL_YOU_T
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_ally = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_ally }
+		localization_key = QPQ_UI_REF_ALLY_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_kin = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_kin }
+		localization_key = QPQ_UI_REF_KIN_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_stronger = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_stronger }
+		localization_key = QPQ_UI_REF_STRONGER_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_liked_ally = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_liked_ally }
+		localization_key = QPQ_UI_REF_LIKED_ALLY_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_friend = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_friend }
+		localization_key = QPQ_UI_REF_FRIEND_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_rival_target = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_rival_target }
+		localization_key = QPQ_UI_REF_RIVAL_TARGET_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRef_i_rival_you = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { has_variable = qpq_ui_ref_i_rival_you }
+		localization_key = QPQ_UI_REF_RIVAL_YOU_I
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiRefuseBlock = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_other var:qpq_ui_acc_other <= -500 }
+		localization_key = QPQ_UI_REFUSE_BLOCK
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
 QpqUiAcceptance = {
 	type = character
 	log_loc_errors = no

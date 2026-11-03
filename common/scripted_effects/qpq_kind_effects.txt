@@ -174,16 +174,20 @@ qpq_k_sanctioned_conquest_ai_attempt_effect = {
 	}
 }
 qpq_k_sanctioned_conquest_exposed_effect = {
-	# The target's liege treats the war as yours; truce-breaker by proxy if you had a truce
+	# The target's liege treats the war as yours
 	if = {
 		limit = { scope:qpq_target = { is_alive = yes } }
 		scope:qpq_target = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
 		}
-		if = {
-			limit = { scope:qpq_payer = { has_truce = scope:qpq_target } }
-			scope:qpq_payer = { add_prestige = major_prestige_loss }
+	}
+
+	if = {
+		limit = {
+			exists = scope:qpq_target
+			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
 		}
+		scope:qpq_payer = { add_prestige = major_prestige_loss }
 	}
 }
 qpq_k_sanctioned_conquest_ai_find_effect = {
@@ -2179,6 +2183,14 @@ qpq_k_proxy_war_exposed_effect = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_my_ally_opinion }
 		}
 	}
+
+	if = {
+		limit = {
+			exists = scope:qpq_target
+			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
+		}
+		scope:qpq_payer = { add_prestige = major_prestige_loss }
+	}
 }
 qpq_k_proxy_war_ai_find_effect = {
 	random_relation = {
@@ -2274,6 +2286,14 @@ qpq_k_partition_pact_exposed_effect = {
 				add_opinion = { target = scope:qpq_target modifier = qpq_feared_partition_opinion }
 			}
 		}
+	}
+
+	if = {
+		limit = {
+			exists = scope:qpq_target
+			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
+		}
+		scope:qpq_payer = { add_prestige = major_prestige_loss }
 	}
 }
 
@@ -3588,6 +3608,14 @@ qpq_k_holy_warrant_exposed_effect = {
 		every_ally = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_my_ally_opinion }
 		}
+	}
+
+	if = {
+		limit = {
+			exists = scope:qpq_target
+			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
+		}
+		scope:qpq_payer = { add_prestige = major_prestige_loss }
 	}
 }
 

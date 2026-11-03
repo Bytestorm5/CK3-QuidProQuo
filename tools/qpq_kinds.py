@@ -204,6 +204,18 @@ scope:actor = { add_to_list = characters }
 """ + PICK_RIVALS
 
 # ---------------------------------------------------------------- story helpers
+# Exposure of a war paid for against someone the payer was bound to by truce or tribute:
+# a truce-breaker by proxy (a suzerain setting a war on its own tributary counts the same)
+TRUCE_BREAKER = """
+if = {
+    limit = {
+        exists = scope:qpq_target
+        qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
+    }
+    scope:qpq_payer = { add_prestige = major_prestige_loss }
+}
+"""
+
 AGENT_BEAT_TARGET = "qpq_beat_trigger = { LIST = qpq_agent_beat WHO = scope:qpq_target }"
 PAYER_BEAT_TARGET = "qpq_beat_trigger = { LIST = qpq_payer_beat WHO = scope:qpq_target }"
 TARGET_DEAD = "scope:qpq_target = { is_alive = no }"
@@ -378,18 +390,14 @@ scope:secondary_recipient = {
   deliver=AGENT_BEAT_TARGET, invalid=TARGET_GONE_INVALID,
   on_seal=GRANT_LICENCE, attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
   exposed="""
-# The target's liege treats the war as yours; truce-breaker by proxy if you had a truce
+# The target's liege treats the war as yours
 if = {
     limit = { scope:qpq_target = { is_alive = yes } }
     scope:qpq_target = {
         add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
     }
-    if = {
-        limit = { scope:qpq_payer = { has_truce = scope:qpq_target } }
-        scope:qpq_payer = { add_prestige = major_prestige_loss }
-    }
 }
-""",
+""" + TRUCE_BREAKER,
   ai=dict(weight=8, valid="""
 is_landed = yes
 any_vassal = { is_landed = yes is_ai = yes }
@@ -1717,7 +1725,7 @@ scope:qpq_payer = {
         add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_my_ally_opinion }
     }
 }
-"""
+""" + TRUCE_BREAKER
 
 K(key="proxy_war", licence=True, cat="C", group="war", secret="conquest", icon="declare_war_interaction",
   name="Proxy War",
@@ -1815,7 +1823,7 @@ if = {
         }
     }
 }
-""")
+""" + TRUCE_BREAKER)
 
 K(key="secret_alliance", cat="C", group="abroad", secret="betrayal", icon="alliance",
   name="Secret Alliance",

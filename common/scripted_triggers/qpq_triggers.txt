@@ -20,14 +20,22 @@ qpq_ctx_hostile_foreigner_trigger = {
 	}
 }
 
-# Target is a co-religionist you have a truce or alliance with (+1)
+# A and B are bound to keep the peace: a truce, or tribute either way (a suzerain and its tributary).
+# Sanctioning a war on someone you are bound to counts the same whichever bond it is.
+qpq_bound_by_peace_trigger = {
+	OR = {
+		$A$ = { has_truce = $B$ }
+		$B$ = { is_tributary_of = $A$ }
+		$A$ = { is_tributary_of = $B$ }
+	}
+}
+
+# Target is a co-religionist you are allied to, or bound to by truce or tribute (+1)
 qpq_ctx_coreligionist_ally_trigger = {
 	$TARGET$.faith = $PARTY$.faith
-	$PARTY$ = {
-		OR = {
-			is_allied_to = $TARGET$
-			has_truce = $TARGET$
-		}
+	OR = {
+		$PARTY$ = { is_allied_to = $TARGET$ }
+		qpq_bound_by_peace_trigger = { A = $PARTY$ B = $TARGET$ }
 	}
 }
 
@@ -348,52 +356,65 @@ qpq_proposal_gold_ok_trigger = {
 # Used by the acceptance values, the interaction acceptance and the Backroom Deal panel.
 qpq_ai_refuses_trigger = {
 	OR = {
-		# They hate the one asking
-		$AGENT$ = {
-			is_ai = yes
-			opinion = { target = $PAYER$ value <= -60 }
+		qpq_ai_refuses_hatred_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ }
+		qpq_ai_refuses_rival_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ TIER = $TIER$ }
+		qpq_ai_refuses_virtue_trigger = { AGENT = $AGENT$ TIER = $TIER$ }
+		qpq_ai_refuses_damnable_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ TIER = $TIER$ }
+		qpq_ai_refuses_no_leverage_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ TIER = $TIER$ }
+	}
+}
+
+# Each reason on its own, so the panel and the acceptance breakdown can say which one holds
+# They hate the one asking
+qpq_ai_refuses_hatred_trigger = {
+	$AGENT$ = {
+		is_ai = yes
+		opinion = { target = $PAYER$ value <= -60 }
+	}
+}
+
+# A rival or nemesis gets nothing that risks anything
+qpq_ai_refuses_rival_trigger = {
+	$TIER$ >= 2
+	$AGENT$ = {
+		is_ai = yes
+		OR = {
+			has_relation_rival = $PAYER$
+			has_relation_nemesis = $PAYER$
 		}
-		# A rival or nemesis gets nothing that risks anything
-		AND = {
-			$TIER$ >= 2
-			$AGENT$ = {
-				is_ai = yes
-				OR = {
-					has_relation_rival = $PAYER$
-					has_relation_nemesis = $PAYER$
-				}
-			}
+	}
+}
+
+# The honest, the just, the zealous and the compassionate will not commit a crime for gold
+qpq_ai_refuses_virtue_trigger = {
+	$TIER$ >= 4
+	$AGENT$ = {
+		is_ai = yes
+		OR = {
+			has_trait = honest
+			has_trait = just
+			has_trait = zealous
+			has_trait = compassionate
 		}
-		# The honest, the just and the pious will not commit a crime for gold
-		AND = {
-			$TIER$ >= 4
-			$AGENT$ = {
-				is_ai = yes
-				OR = {
-					has_trait = honest
-					has_trait = just
-					has_trait = zealous
-					has_trait = compassionate
-				}
-			}
-		}
-		# Anyone not cowed refuses what would brand them a kinslayer or an outcast
-		AND = {
-			$TIER$ >= 5
-			$AGENT$ = {
-				is_ai = yes
-				NOT = { has_dread_level_towards = { target = $PAYER$ level = 2 } }
-			}
-		}
-		# A ruler who has been asked for more than they are worth to anyone, within a short while
-		AND = {
-			$TIER$ >= 3
-			$AGENT$ = {
-				is_ai = yes
-				opinion = { target = $PAYER$ value < 0 }
-				NOT = { has_strong_hook = $PAYER$ }
-				NOT = { has_dread_level_towards = { target = $PAYER$ level = 1 } }
-			}
-		}
+	}
+}
+
+# Anyone not cowed refuses what would brand them a kinslayer or an outcast
+qpq_ai_refuses_damnable_trigger = {
+	$TIER$ >= 5
+	$AGENT$ = {
+		is_ai = yes
+		NOT = { has_dread_level_towards = { target = $PAYER$ level = 2 } }
+	}
+}
+
+# Something this dirty, for someone they dislike, who holds no strong hook on them and does not frighten them
+qpq_ai_refuses_no_leverage_trigger = {
+	$TIER$ >= 3
+	$AGENT$ = {
+		is_ai = yes
+		opinion = { target = $PAYER$ value < 0 }
+		NOT = { has_strong_hook = $PAYER$ }
+		NOT = { has_dread_level_towards = { target = $PAYER$ level = 1 } }
 	}
 }

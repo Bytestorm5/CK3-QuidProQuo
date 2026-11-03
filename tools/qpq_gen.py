@@ -386,9 +386,12 @@ def interaction(k):
             s += "\t\tmodifier = {\n\t\t\tadd = 40\n\t\t\tscope:qpq_o_hook ?= yes\n\t\t\tdesc = QPQ_REASON_HOOK\n\t\t}\n"
             s += ("\t\tmodifier = {\n\t\t\tadd = 60\n\t\t\tscope:qpq_o_hook ?= yes\n"
                   "\t\t\tscope:actor = { has_strong_hook = scope:recipient }\n\t\t\tdesc = QPQ_REASON_STRONG_HOOK\n\t\t}\n")
-        s += ("\t\tmodifier = {\n\t\t\tadd = -1000\n"
-              "\t\t\tqpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_%s_agent_tier_value }\n"
-              "\t\t\tdesc = QPQ_REASON_REFUSES\n\t\t}\n") % key
+        # Will not, at any price: one line per reason, so the breakdown says which
+        for why, args in goals.REFUSE_GENERIC:
+            s += ("\t\tmodifier = {\n\t\t\tadd = -1000\n"
+                  "\t\t\tqpq_ai_refuses_%s_trigger = { %s }\n"
+                  "\t\t\tdesc = QPQ_REASON_REFUSES_%s\n\t\t}\n") % (
+                why, goals.refuse_args(args, "scope:recipient", "scope:actor", "qpq_%s_agent_tier_value" % key), why.upper())
         for trig, mult in TRAIT_MODS:
             s += ("\t\tmodifier = {\n\t\t\tadd = { value = qpq_%s_agent_tier_value multiply = %d }\n"
                   "\t\t\tscope:recipient = { has_trait = %s }\n\t\t\tdesc = QPQ_REASON_TRAIT_%s\n\t\t}\n") % (
@@ -414,8 +417,8 @@ def interaction(k):
         s += "\t\tmodifier = {\n\t\t\tadd = %s\n%s\t\t\tdesc = %s\n\t\t}\n" % (add, block(trig, 3), desc)
     if goals.goal_value(k):
         s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_goal_value\n\t\t\tdesc = QPQ_REASON_GOALS\n\t\t}\n" % key
-        if goals.goal_refusal(k):
-            s += "\t\tmodifier = {\n\t\t\tadd = -1000\n\t\t\tqpq_%s_goal_refuses_trigger = yes\n\t\t\tdesc = QPQ_REASON_REFUSES\n\t\t}\n" % key
+        for why, trig in goals.goal_refusal_parts(k):
+            s += "\t\tmodifier = {\n\t\t\tadd = -1000\n%s\t\t\tdesc = QPQ_REASON_REFUSES_%s\n\t\t}\n" % (block(trig, 3), why.upper())
     s += "\t}\n"
     s += "\n\ton_accept = {\n\t\tqpq_k_%s_seal_from_scopes_effect = yes\n\t}\n" % key
     s += ("\n\ton_decline = {\n\t\tscope:actor = {\n\t\t\tsend_interface_toast = {\n"

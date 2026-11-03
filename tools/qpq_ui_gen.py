@@ -359,6 +359,39 @@ def goal_a_other(k, L):
     return s
 
 
+REFUSE_WHYS = [w for w, _a in goals.REFUSE_GENERIC if w != "hatred"] + goals.REFUSAL_LABELS
+# On your side (leg i) you do the deed and they only pay for it: only what they want for others can stop them
+WHYS = {"t": REFUSE_WHYS, "i": list(goals.REFUSAL_LABELS)}
+
+
+def refusal_flags(k, L, block):
+    """Flags for each reason the AI deciding this leg will not do it at any price. Mirrors where the -1000 is
+    applied: the pact's own acceptance when you put it to them, the swapped goals and refusals otherwise. Hatred is
+    judged once for the whole deal (qpq_ui_ref_hatred)."""
+    def flag(why, trig):
+        return "\t\t\tif = {\n\t\t\t\tlimit = {\n%s\t\t\t\t}\n\t\t\t\tset_variable = qpq_ui_ref_%s_%s\n\t\t\t}\n" % (
+            block(trig, 5), L, why)
+    tier = "qpq_%s_agent_tier_value" % k["key"]
+    s = ""
+    if proposer_me(k, L):
+        if k["initiator"] == "payer":
+            for why, args in goals.REFUSE_GENERIC:
+                if why != "hatred":
+                    s += flag(why, "qpq_ai_refuses_%s_trigger = { %s }" % (why, goals.refuse_args(args, "scope:recipient", "scope:actor", tier)))
+        if goals.goal_value(k):
+            for why, trig in goals.goal_refusal_parts(k):
+                s += flag(why, trig)
+    else:
+        if goals.goal_value(k, True):
+            for why, trig in goals.goal_refusal_parts(k, True):
+                s += flag(why, trig)
+        if k["initiator"] != "payer":
+            for why, args in goals.REFUSE_GENERIC:
+                if why != "hatred":
+                    s += flag(why, "qpq_ai_refuses_%s_trigger = { %s }" % (why, goals.refuse_args(args, "scope:actor", "scope:recipient", tier)))
+    return s
+
+
 def compute_kind(k, L, block):
     key = k["key"]
     s = ""
@@ -402,6 +435,7 @@ def compute_kind(k, L, block):
         # They do the deed: some deeds they will not do at any price
         s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value } }\n"
               "\t\t\t\tset_variable = { name = qpq_ui_%s_a_other value = -1000 }\n\t\t\t}\n") % (key, L)
+    s += refusal_flags(k, L, block)
     # Every title beyond the first counts again (land is chosen title by title)
     sign = "1" if proposer_me(k, L) else ("-0.8" if k["initiator"] == "payer" else "-1")
     s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_o_land }\n\t\t\t\tchange_variable = {\n\t\t\t\t\tname = qpq_ui_%s_a_offers\n"
@@ -561,7 +595,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "\tchange_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }\n"
     eff += ("\tif = {\n\t\tlimit = {\n\t\t\tvar:qpq_ui_recipient = { is_ai = yes }\n"
             "\t\t\tvar:qpq_ui_recipient = { opinion = { target = root value <= -60 } }\n\t\t}\n"
-            "\t\tchange_variable = { name = qpq_ui_acc_other add = -1000 }\n\t}\n")
+            "\t\tchange_variable = { name = qpq_ui_acc_other add = -1000 }\n\t\tset_variable = qpq_ui_ref_hatred\n\t}\n")
     # Each side's scandal: the worse of its two halves
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
     eff += "\t\tset_variable = { name = qpq_ui_my_tier value = 0 }\n\t\tset_variable = { name = qpq_ui_their_tier value = 0 }\n"
@@ -586,9 +620,10 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Clear everything the compute steps derive
     eff += "qpq_ui_clear_derived_effect = {\n"
     gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_acc_ask",
-          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total"]
+          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_ref_hatred"]
     for L in LEGS:
         gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
+        gv += ["qpq_ui_ref_%s_%s" % (L, w) for w in WHYS[L]]
     for v in gv:
         eff += "\tif = {\n\t\tlimit = { has_variable = %s }\n\t\tremove_variable = %s\n\t}\n" % (v, v)
     for L in LEGS:
@@ -870,6 +905,12 @@ def gen_ui_custom_loc(write):
                   [("has_variable = qpq_ui_charter var:qpq_ui_%s_tier > 0" % who, "QPQ_UI_CONSEQ_PUBLIC_%s" % who.upper())] +
                   [("var:qpq_ui_%s_tier ?= %d" % (who, t), "QPQ_UI_CONSEQ_%d" % t) for t in range(6)], "qpq_empty")
     out += cl("QpqUiSecrecyNote", [("has_variable = qpq_ui_charter", "QPQ_UI_SECRECY_PUBLIC")], "QPQ_UI_SECRECY_SECRET")
+    # Why they will not, at any price: one line per reason that holds
+    out += cl("QpqUiRef_hatred", [("has_variable = qpq_ui_ref_hatred", "QPQ_UI_REF_HATRED")], "qpq_empty")
+    for L in LEGS:
+        for w in WHYS[L]:
+            out += cl("QpqUiRef_%s_%s" % (L, w), [("has_variable = qpq_ui_ref_%s_%s" % (L, w), "QPQ_UI_REF_%s_%s" % (w.upper(), L.upper()))], "qpq_empty")
+    out += cl("QpqUiRefuseBlock", [("exists = var:qpq_ui_acc_other var:qpq_ui_acc_other <= -500", "QPQ_UI_REFUSE_BLOCK")], "qpq_empty")
     out += cl("QpqUiAcceptance", [
         ("NOT = { exists = var:qpq_ui_acc_total }", "QPQ_UI_ACC_NONE"),
         ("var:qpq_ui_recipient = { is_ai = no }", "QPQ_UI_ACC_PLAYER"),
@@ -892,6 +933,32 @@ def gen_ui_loc(write):
         for t, txt in (("UP_FRONT", "paid at once"), ("ON_DELIVERY", "paid when the deed is done")):
             L_.append(' QPQ_UI_GOLD_%s_%s:0 "#P •#! [GetPlayer.MakeScope.Var(\'qpq_ui_%s_price\').GetValue|0] gold, %s"' % (t, L.upper(), L, txt))
         L_.append(' qpq_deal.1.gold_%s:0 "\\n #P •#! [qpq_deal_%s_price|0] gold"' % (L, L))
+    # Why they will not, at any price (the deed, then the reason)
+    them = "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.GetShortUIName]"
+    them_p = "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.GetShortUINamePossessive]"
+    for L in LEGS:
+        tgt = "[GetPlayer.MakeScope.Var('qpq_ui_%s_target').Char.GetShortUIName]" % L
+        tgt_p = "[GetPlayer.MakeScope.Var('qpq_ui_%s_target').Char.GetShortUINamePossessive]" % L
+        why = {
+            "rival": "%s will risk nothing for a rival (Tier II or worse)" % them,
+            "virtue": "%s is too honest, just, zealous or compassionate to commit a crime (Tier IV or worse)" % them,
+            "damnable": "it would damn %s (Tier V), and %s is not cowed by you" % (them, them),
+            "no_leverage": "a deed this dirty (Tier III or worse), for someone %s dislikes, who holds no strong hook on them and does not frighten them" % them,
+            "ally": "%s is allied to %s" % (them, tgt),
+            "kin": "%s is %s close family" % (tgt, them_p),
+            "stronger": "%s realm is more than twice as strong" % tgt_p,
+            "liked_ally": "%s is allied to %s, and likes them" % (them, tgt),
+            "friend": "%s is %s friend or lover" % (tgt, them_p),
+            "rival_target": "%s is %s rival" % (tgt, them_p),
+            "rival_you": "you are %s rival" % them_p,
+        }
+        for w in WHYS[L]:
+            L_.append(' QPQ_UI_REF_%s_%s:0 "\\n#N •#! [GetPlayer.Custom(\'QpqUiKindName_%s\')]: %s"' % (w.upper(), L.upper(), L, why[w]))
+    L_.append(' QPQ_UI_REF_HATRED:0 "\\n#N •#! %s despises you (opinion of -60 or worse)"' % them)
+    lines = "[GetPlayer.Custom('QpqUiRef_hatred')]" + "".join(
+        "[GetPlayer.Custom('QpqUiRef_%s_%s')]" % (L, w) for L in LEGS for w in WHYS[L])
+    L_.append(' QPQ_UI_REFUSE_LINES:0 "%s"' % lines)
+    L_.append(' QPQ_UI_REFUSE_BLOCK:0 "#T Why %s will not, at any price#!$QPQ_UI_REFUSE_LINES$\\n\\n"' % them)
     for k in DEEDS:
         L_.append(' qpq_%s_desc_them:0 "#weak [GetPlayer.MakeScope.Var(\'qpq_ui_recipient\').Char.GetShortUIName] might put it like this:#!\\n#F $qpq_%s_flavor$#!\\n\\n$qpq_%s_rules$"' % (k["key"], k["key"], k["key"]))
         L_.append(' qpq_%s_pitch_ev:0 "\\n\\n#F $qpq_%s_flavor$#!"' % (k["key"], k["key"]))
