@@ -26688,24 +26688,8 @@ qpq_make_peace_interaction = {
 			desc = QPQ_REASON_COWED
 		}
 		modifier = {
-			add = 25
-			scope:recipient = {
-				any_character_war = {
-					qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-					NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -20 } }
-				}
-			}
-			desc = QPQ_REASON_LOSING_WAR
-		}
-		modifier = {
-			add = -40
-			scope:recipient = {
-				any_character_war = {
-					qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-					qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 30 }
-				}
-			}
-			desc = QPQ_REASON_WINNING_WAR
+			add = qpq_make_peace_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -27134,24 +27118,8 @@ qpq_yield_war_interaction = {
 			desc = QPQ_REASON_COWED
 		}
 		modifier = {
-			add = 30
-			scope:recipient = {
-				any_character_war = {
-					qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-					NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -50 } }
-				}
-			}
-			desc = QPQ_REASON_LOSING_WAR
-		}
-		modifier = {
-			add = -60
-			scope:recipient = {
-				any_character_war = {
-					qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-					qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 0 }
-				}
-			}
-			desc = QPQ_REASON_WINNING_WAR
+			add = qpq_yield_war_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 
@@ -27608,7 +27576,7 @@ qpq_join_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+			qpq_join_war_goal_theirs_value > { value = qpq_join_war_goal_ours_value multiply = 2 }
 			desc = QPQ_REASON_REFUSES_STRONGER
 		}
 	}
@@ -28038,6 +28006,10 @@ qpq_leave_war_interaction = {
 			add = cowed_halved_reason_value
 			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
 			desc = QPQ_REASON_COWED
+		}
+		modifier = {
+			add = qpq_leave_war_goal_value
+			desc = QPQ_REASON_GOALS
 		}
 	}
 

@@ -187,6 +187,8 @@ def gen_values():
         out += "}\n\n"
         for sw_ in (False, True):
             gv = goals.goal_value(k, sw_)
+            for part, body in goals.goal_helpers(k, sw_):
+                out += "qpq_%s_goal%s_%s_value = {\n%s}\n\n" % (key, "_sw" if sw_ else "", part, body)
             if gv:
                 out += "qpq_%s_goal%s_value = {\n%s}\n\n" % (key, "_sw" if sw_ else "", gv)
                 gr = goals.goal_refusal(k, sw_)

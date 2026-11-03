@@ -435,6 +435,13 @@ def compute_kind(k, L, block):
         # They do the deed: some deeds they will not do at any price
         s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value } }\n"
               "\t\t\t\tset_variable = { name = qpq_ui_%s_a_other value = -1000 }\n\t\t\t}\n") % (key, L)
+    # What they want from it (their goals), shown on its own line; it is part of a_other
+    gv = goals.goal_value(k, not proposer_me(k, L))
+    if gv:
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_goal value = qpq_%s_goal%s_value }\n" % (
+            L, k["key"], "" if proposer_me(k, L) else "_sw")
+    else:
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_a_goal value = 0 }\n" % L
     s += refusal_flags(k, L, block)
     # Every title beyond the first counts again (land is chosen title by title)
     sign = "1" if proposer_me(k, L) else ("-0.8" if k["initiator"] == "payer" else "-1")
@@ -467,7 +474,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "# qpq_deal_orient_*_effect to whichever of them is the proposer of the Ask being worked on.\n\n"
 
     leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "fair", "term", "a_ask", "a_offers",
-                "a_other"] + ["fail_%d" % i for i in range(max_valid())]
+                "a_other", "a_goal"] + ["fail_%d" % i for i in range(max_valid())]
     lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates", "gift_artifact_candidates",
              "gift_secret_candidates"]
 
@@ -585,13 +592,14 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Put the two legs together
     eff += "qpq_ui_deal_finish_effect = {\n\tqpq_deal_orient_normal_effect = yes\n"
     eff += "\tset_variable = { name = qpq_ui_acc_ask value = 0 }\n\tset_variable = { name = qpq_ui_acc_offers value = 0 }\n"
-    eff += "\tset_variable = { name = qpq_ui_acc_other value = 0 }\n"
+    eff += "\tset_variable = { name = qpq_ui_acc_other value = 0 }\n\tset_variable = { name = qpq_ui_acc_goal value = 0 }\n"
     for L in LEGS:
         eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
         eff += "\t\tset_variable = qpq_ui_deal_active\n"
         eff += "\t\tchange_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_%s_a_ask }\n" % L
         eff += "\t\tchange_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_%s_a_offers }\n" % L
-        eff += "\t\tchange_variable = { name = qpq_ui_acc_other add = var:qpq_ui_%s_a_other }\n\t}\n" % L
+        eff += "\t\tchange_variable = { name = qpq_ui_acc_other add = var:qpq_ui_%s_a_other }\n" % L
+        eff += "\t\tif = {\n\t\t\tlimit = { exists = var:qpq_ui_%s_a_goal }\n\t\t\tchange_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_%s_a_goal }\n\t\t}\n\t}\n" % (L, L)
     eff += "\tchange_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }\n"
     eff += ("\tif = {\n\t\tlimit = {\n\t\t\tvar:qpq_ui_recipient = { is_ai = yes }\n"
             "\t\t\tvar:qpq_ui_recipient = { opinion = { target = root value <= -60 } }\n\t\t}\n"
@@ -613,6 +621,9 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += ("\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_my_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_my_tier value = 1 }\n\t\t\t}\n"
             "\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_their_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_their_tier value = 1 }\n\t\t\t}\n\t\t}\n")
     eff += "\t}\n"
+    # The rest of "other", once their goals are shown on their own line
+    eff += ("\tset_variable = {\n\t\tname = qpq_ui_acc_rest\n\t\tvalue = {\n\t\t\tvalue = var:qpq_ui_acc_other\n"
+            "\t\t\tsubtract = var:qpq_ui_acc_goal\n\t\t}\n\t}\n")
     # Your authority over a subordinate (Command): what it adds, and what they would have said without it
     eff += "\tqpq_ui_command_compute_effect = yes\n"
     eff += ("\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
@@ -625,7 +636,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "qpq_ui_clear_derived_effect = {\n"
     gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_acc_ask",
           "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_ref_hatred",
-          "qpq_ui_acc_before_cmd", "qpq_ui_acc_cmd", "qpq_ui_cmd_ok", "qpq_ui_cmd_level", "qpq_ui_cmd_expect",
+          "qpq_ui_acc_before_cmd", "qpq_ui_acc_cmd", "qpq_ui_acc_goal", "qpq_ui_acc_rest", "qpq_ui_cmd_ok", "qpq_ui_cmd_level", "qpq_ui_cmd_expect",
           "qpq_ui_cmd_margin"]
     for L in LEGS:
         gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
@@ -953,7 +964,7 @@ def gen_ui_loc(write):
             "no_leverage": "a deed this dirty (Tier III or worse), for someone %s dislikes, who holds no strong hook on them and does not frighten them" % them,
             "ally": "%s is allied to %s" % (them, tgt),
             "kin": "%s is %s close family" % (tgt, them_p),
-            "stronger": "%s realm is more than twice as strong" % tgt_p,
+            "stronger": "%s side is more than twice as strong" % tgt_p,
             "liked_ally": "%s is allied to %s, and likes them" % (them, tgt),
             "friend": "%s is %s friend or lover" % (tgt, them_p),
             "rival_target": "%s is %s rival" % (tgt, them_p),

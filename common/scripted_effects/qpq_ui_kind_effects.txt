@@ -631,6 +631,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_chartered_conquest_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_chartered_conquest_agent_tier_value }
@@ -786,6 +787,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_sanctioned_conquest_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_sanctioned_conquest_agent_tier_value }
@@ -938,6 +940,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_marcher_charge_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marcher_charge_agent_tier_value }
@@ -1084,6 +1087,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_sponsorship_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_sponsorship_agent_tier_value }
@@ -1220,6 +1224,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_development_charter_agent_tier_value }
@@ -1350,6 +1355,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_purchase_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_electoral_purchase_agent_tier_value }
@@ -1431,6 +1437,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_loyal_mole_agent_tier_value }
@@ -1502,6 +1509,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_agent_provocateur_agent_tier_value }
@@ -1630,6 +1638,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_licensed_feud_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_licensed_feud_agent_tier_value }
@@ -1777,6 +1786,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dossier_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dossier_agent_tier_value }
@@ -1948,6 +1958,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_quiet_removal_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_quiet_removal_agent_tier_value }
@@ -2108,6 +2119,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_heir_question_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heir_question_agent_tier_value }
@@ -2275,6 +2287,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_snatch_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_snatch_agent_tier_value }
@@ -2426,6 +2439,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispossession_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispossession_agent_tier_value }
@@ -2581,6 +2595,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_the_cloister_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_the_cloister_agent_tier_value }
@@ -2736,6 +2751,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marriage_by_command_agent_tier_value }
@@ -2881,6 +2897,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_agent_tier_value }
@@ -3023,6 +3040,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_artifact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_artifact_agent_tier_value }
@@ -3148,6 +3166,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_renunciation_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_renunciation_agent_tier_value }
@@ -3220,6 +3239,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hush_money_agent_tier_value }
@@ -3294,6 +3314,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value } }
 				set_variable = { name = qpq_ui_t_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_price_of_loyalty_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -3429,6 +3450,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_blessing_for_a_feud_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_blessing_for_a_feud_agent_tier_value }
@@ -3526,6 +3548,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_clemency_bargain_agent_tier_value }
@@ -3655,6 +3678,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value } }
 				set_variable = { name = qpq_ui_t_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_capitulation_goal_sw_value }
 			if = {
 				limit = {
 					OR = {
@@ -3741,6 +3765,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_mutual_defense_league_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_mutual_defense_league_agent_tier_value }
@@ -3823,6 +3848,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_faction_pledge_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faction_pledge_agent_tier_value }
@@ -3956,6 +3982,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_title_swap_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_title_swap_agent_tier_value }
@@ -4033,6 +4060,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_coup_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_coup_pact_agent_tier_value }
@@ -4187,6 +4215,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_proxy_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_proxy_war_agent_tier_value }
@@ -4334,6 +4363,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_partition_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_partition_pact_agent_tier_value }
@@ -4424,6 +4454,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_alliance_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_alliance_agent_tier_value }
@@ -4501,6 +4532,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_truce_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_truce_agent_tier_value }
@@ -4643,6 +4675,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_faithless_ally_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faithless_ally_agent_tier_value }
@@ -4745,6 +4778,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_turncoat_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_turncoat_agent_tier_value }
@@ -4846,6 +4880,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_seed_the_separatists_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_seed_the_separatists_agent_tier_value }
@@ -4976,6 +5011,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_shelter_the_pretender_agent_tier_value }
@@ -5105,6 +5141,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_extradition_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_extradition_agent_tier_value }
@@ -5206,6 +5243,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_councillor_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_councillor_agent_tier_value }
@@ -5307,6 +5345,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_home_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_home_agent_tier_value }
@@ -5389,6 +5428,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_defection_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_defection_pact_agent_tier_value }
@@ -5519,6 +5559,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_clause_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_clause_agent_tier_value }
@@ -5661,6 +5702,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hire_the_hashashin_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hire_the_hashashin_agent_tier_value }
@@ -5830,6 +5872,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_excommunication_for_hire_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_excommunication_for_hire_agent_tier_value }
@@ -5982,6 +6025,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispensation_for_gold_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispensation_for_gold_agent_tier_value }
@@ -6129,6 +6173,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_steer_the_holy_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_steer_the_holy_war_agent_tier_value }
@@ -6271,6 +6316,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_purchase_a_mitre_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_purchase_a_mitre_agent_tier_value }
@@ -6418,6 +6464,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_claim_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_claim_agent_tier_value }
@@ -6515,6 +6562,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_absolution_by_concession_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_absolution_by_concession_agent_tier_value }
@@ -6655,6 +6703,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_warrant_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_warrant_agent_tier_value }
@@ -6811,6 +6860,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_bull_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_bull_agent_tier_value }
@@ -6970,6 +7020,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_conclave_votes_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_conclave_votes_agent_tier_value }
@@ -7051,6 +7102,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_council_lobbying_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_council_lobbying_agent_tier_value }
@@ -7122,6 +7174,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_caliphal_investiture_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_caliphal_investiture_agent_tier_value }
@@ -7198,6 +7251,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_name_in_the_khutba_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_name_in_the_khutba_agent_tier_value }
@@ -7335,6 +7389,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_fatwa_for_hire_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fatwa_for_hire_agent_tier_value }
@@ -7498,6 +7553,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_fund_the_dawa_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fund_the_dawa_agent_tier_value }
@@ -7600,6 +7656,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_crowning_the_usurper_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_crowning_the_usurper_agent_tier_value }
@@ -7696,6 +7753,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_pliant_patriarch_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_pliant_patriarch_agent_tier_value }
@@ -7835,6 +7893,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_favourable_omens_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_favourable_omens_agent_tier_value }
@@ -7932,6 +7991,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_consecration_rites_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_consecration_rites_agent_tier_value }
@@ -8069,6 +8129,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_temple_patronage_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_temple_patronage_agent_tier_value }
@@ -8233,6 +8294,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_make_peace_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
@@ -8375,6 +8437,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_yield_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
@@ -8520,6 +8583,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_join_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
@@ -8558,7 +8622,7 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+					qpq_join_war_goal_theirs_value > { value = qpq_join_war_goal_ours_value multiply = 2 }
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -8691,6 +8755,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_leave_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
@@ -8835,6 +8900,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_out_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
@@ -8939,6 +9005,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
@@ -9021,6 +9088,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
@@ -9103,6 +9171,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
@@ -9174,6 +9243,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_accept_the_yoke_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
@@ -9267,6 +9337,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_cast_off_the_yoke_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
@@ -9363,6 +9434,7 @@ qpq_ui_leg_t_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_barter_agent_tier_value }
@@ -9931,6 +10003,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_chartered_conquest_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_chartered_conquest_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10067,6 +10140,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_sanctioned_conquest_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_sanctioned_conquest_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10200,6 +10274,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_marcher_charge_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_marcher_charge_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10323,6 +10398,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_holy_sponsorship_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_holy_sponsorship_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10436,6 +10512,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10547,6 +10624,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_electoral_purchase_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_purchase_goal_sw_value }
 			if = {
 				limit = {
 					OR = {
@@ -10605,6 +10683,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10653,6 +10732,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10762,6 +10842,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_licensed_feud_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_licensed_feud_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10890,6 +10971,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_dossier_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_dossier_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11042,6 +11124,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_quiet_removal_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_quiet_removal_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11183,6 +11266,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_heir_question_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_heir_question_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11331,6 +11415,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_snatch_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_snatch_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11463,6 +11548,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_dispossession_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_dispossession_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11599,6 +11685,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_the_cloister_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_the_cloister_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11731,6 +11818,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11857,6 +11945,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_hand_over_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_hand_over_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11976,6 +12065,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_hand_over_artifact_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_hand_over_artifact_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12078,6 +12168,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_renunciation_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_renunciation_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12127,6 +12218,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12174,6 +12266,7 @@ qpq_ui_leg_i_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_price_of_loyalty_goal_value }
 			if = {
 				limit = {
 					scope:recipient = { has_relation_rival = scope:actor }
@@ -12290,6 +12383,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_blessing_for_a_feud_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_blessing_for_a_feud_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -12364,6 +12458,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12466,6 +12561,7 @@ qpq_ui_leg_i_refresh_effect = {
 					}
 				}
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_capitulation_goal_value }
 			if = {
 				limit = {
 					OR = {
@@ -12533,6 +12629,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_mutual_defense_league_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_mutual_defense_league_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -12596,6 +12693,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_faction_pledge_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_faction_pledge_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -12706,6 +12804,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_title_swap_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_title_swap_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12764,6 +12863,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_coup_pact_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_coup_pact_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:recipient.liege }
@@ -12899,6 +12999,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_proxy_war_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_proxy_war_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -13027,6 +13128,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_partition_pact_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_partition_pact_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -13098,6 +13200,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_secret_alliance_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_secret_alliance_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13156,6 +13259,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_bought_truce_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_bought_truce_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13279,6 +13383,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_faithless_ally_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_faithless_ally_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -13362,6 +13467,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_turncoat_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_turncoat_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.liege }
@@ -13444,6 +13550,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_seed_the_separatists_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_seed_the_separatists_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13551,6 +13658,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -13661,6 +13769,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_extradition_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_extradition_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -13743,6 +13852,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_buy_a_councillor_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_buy_a_councillor_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.liege }
@@ -13825,6 +13935,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_stay_home_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_stay_home_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13888,6 +13999,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_defection_pact_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_defection_pact_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13995,6 +14107,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_secret_clause_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_secret_clause_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -14118,6 +14231,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_hire_the_hashashin_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_hire_the_hashashin_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14268,6 +14382,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_excommunication_for_hire_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_excommunication_for_hire_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14401,6 +14516,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_dispensation_for_gold_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_dispensation_for_gold_goal_sw_value }
 			if = {
 				limit = {
 					OR = {
@@ -14529,6 +14645,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_steer_the_holy_war_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_steer_the_holy_war_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -14652,6 +14769,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_purchase_a_mitre_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_purchase_a_mitre_goal_sw_value }
 			if = {
 				limit = {
 					OR = {
@@ -14780,6 +14898,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_bought_claim_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_bought_claim_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14854,6 +14973,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_absolution_by_concession_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_absolution_by_concession_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -14975,6 +15095,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_holy_warrant_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_holy_warrant_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -15112,6 +15233,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_buy_a_bull_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_buy_a_bull_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15252,6 +15374,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_conclave_votes_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_conclave_votes_goal_sw_value }
 			if = {
 				limit = {
 					OR = {
@@ -15310,6 +15433,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_council_lobbying_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_council_lobbying_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15358,6 +15482,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_caliphal_investiture_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_caliphal_investiture_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15411,6 +15536,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_name_in_the_khutba_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_name_in_the_khutba_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15529,6 +15655,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_fatwa_for_hire_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_fatwa_for_hire_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15673,6 +15800,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_fund_the_dawa_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_fund_the_dawa_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15756,6 +15884,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_crowning_the_usurper_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_crowning_the_usurper_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:recipient.top_liege }
@@ -15829,6 +15958,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_pliant_patriarch_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_pliant_patriarch_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15949,6 +16079,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_favourable_omens_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_favourable_omens_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -16023,6 +16154,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = qpq_consecration_rites_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_consecration_rites_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16141,6 +16273,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_temple_patronage_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_temple_patronage_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -16281,7 +16414,8 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_make_peace_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_make_peace_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16400,7 +16534,8 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_yield_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_yield_war_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16527,6 +16662,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_join_war_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_join_war_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -16541,7 +16677,7 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength add = scope:recipient.max_military_strength multiply = 2 } }
+					qpq_join_war_goal_sw_theirs_value > { value = qpq_join_war_goal_sw_ours_value multiply = 2 }
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -16674,7 +16810,8 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_other value = qpq_leave_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_leave_war_goal_sw_value }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16800,6 +16937,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_stay_out_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_stay_out_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -16881,6 +17019,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16940,6 +17079,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16999,6 +17139,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17051,6 +17192,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_accept_the_yoke_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_accept_the_yoke_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -17125,6 +17267,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = { qpq_cast_off_the_yoke_goal_sw_refuses_trigger = yes }
 				set_variable = { name = qpq_ui_i_a_other value = -1000 }
 			}
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_cast_off_the_yoke_goal_sw_value }
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.suzerain }
@@ -17198,6 +17341,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_goal value = 0 }
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17224,12 +17368,17 @@ qpq_ui_deal_finish_effect = {
 	set_variable = { name = qpq_ui_acc_ask value = 0 }
 	set_variable = { name = qpq_ui_acc_offers value = 0 }
 	set_variable = { name = qpq_ui_acc_other value = 0 }
+	set_variable = { name = qpq_ui_acc_goal value = 0 }
 	if = {
 		limit = { has_variable = qpq_ui_t_ekind }
 		set_variable = qpq_ui_deal_active
 		change_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_t_a_ask }
 		change_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_t_a_offers }
 		change_variable = { name = qpq_ui_acc_other add = var:qpq_ui_t_a_other }
+		if = {
+			limit = { exists = var:qpq_ui_t_a_goal }
+			change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_t_a_goal }
+		}
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_ekind }
@@ -17237,6 +17386,10 @@ qpq_ui_deal_finish_effect = {
 		change_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_i_a_ask }
 		change_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_i_a_offers }
 		change_variable = { name = qpq_ui_acc_other add = var:qpq_ui_i_a_other }
+		if = {
+			limit = { exists = var:qpq_ui_i_a_goal }
+			change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_i_a_goal }
+		}
 	}
 	change_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }
 	if = {
@@ -17289,6 +17442,13 @@ qpq_ui_deal_finish_effect = {
 				limit = { var:qpq_ui_their_tier < 1 }
 				set_variable = { name = qpq_ui_their_tier value = 1 }
 			}
+		}
+	}
+	set_variable = {
+		name = qpq_ui_acc_rest
+		value = {
+			value = var:qpq_ui_acc_other
+			subtract = var:qpq_ui_acc_goal
 		}
 	}
 	qpq_ui_command_compute_effect = yes
@@ -17354,6 +17514,14 @@ qpq_ui_clear_derived_effect = {
 		remove_variable = qpq_ui_acc_cmd
 	}
 	if = {
+		limit = { has_variable = qpq_ui_acc_goal }
+		remove_variable = qpq_ui_acc_goal
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_rest }
+		remove_variable = qpq_ui_acc_rest
+	}
+	if = {
 		limit = { has_variable = qpq_ui_cmd_ok }
 		remove_variable = qpq_ui_cmd_ok
 	}
@@ -17412,6 +17580,10 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_a_other }
 		remove_variable = qpq_ui_t_a_other
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_a_goal }
+		remove_variable = qpq_ui_t_a_goal
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_fail_0 }
@@ -17504,6 +17676,10 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_a_other }
 		remove_variable = qpq_ui_i_a_other
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_goal }
+		remove_variable = qpq_ui_i_a_goal
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_fail_0 }

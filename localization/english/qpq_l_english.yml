@@ -532,7 +532,7 @@
  QPQ_UI_HINT_CONDITION:0 "Delivered when it happens."
  QPQ_UI_TIMING_UP_FRONT:0 "All up front"
  QPQ_UI_TIMING_UP_FRONT_desc:0 "The whole price is handed over when the deal is sealed."
- QPQ_UI_ACC_BREAKDOWN:0 "[GetPlayer.Custom('QpqUiRefuseBlock')]#T Would they agree?#!\nWhat they are asked to do, and what they would get from you: [GetPlayer.MakeScope.Var('qpq_ui_acc_ask').GetValue|=+0]\nThe goods: [GetPlayer.MakeScope.Var('qpq_ui_acc_offers').GetValue|=+0]\nOpinion, character and dread: [GetPlayer.MakeScope.Var('qpq_ui_acc_other').GetValue|=+0][GetPlayer.Custom('QpqUiAccCmdLine')]\n#T Total: [GetPlayer.MakeScope.Var('qpq_ui_acc_total').GetValue|=+0]#!\n\nAn AI agrees above 0."
+ QPQ_UI_ACC_BREAKDOWN:0 "[GetPlayer.Custom('QpqUiRefuseBlock')]#T Would they agree?#!\nWhat they are asked to do, and what they would get from you: [GetPlayer.MakeScope.Var('qpq_ui_acc_ask').GetValue|=+0]\nThe goods: [GetPlayer.MakeScope.Var('qpq_ui_acc_offers').GetValue|=+0]\nWhat they want from it: [GetPlayer.MakeScope.Var('qpq_ui_acc_goal').GetValue|=+0]\nOpinion, character and dread: [GetPlayer.MakeScope.Var('qpq_ui_acc_rest').GetValue|=+0][GetPlayer.Custom('QpqUiAccCmdLine')]\n#T Total: [GetPlayer.MakeScope.Var('qpq_ui_acc_total').GetValue|=+0]#!\n\nAn AI agrees above 0."
  QPQ_UI_FAIL_EMPTY:0 "Put something in the deal: a deed or goods on either side"
  QPQ_UI_FAIL_ROOM:0 "A deal with a deed on each side counts twice towards the [qpq_deals|E] each of you can keep, and one of you has no room for it"
  QPQ_UI_FAIL_NOT_POSSIBLE_T:0 "What you ask of them is no longer open between you"
@@ -627,7 +627,7 @@
  QPQ_REASON_REFUSES_NO_LEVERAGE:0 "Too dirty a deed for someone they neither like nor fear"
  QPQ_REASON_REFUSES_ALLY:0 "Allied to the target"
  QPQ_REASON_REFUSES_KIN:0 "The target is close family"
- QPQ_REASON_REFUSES_STRONGER:0 "The target is more than twice as strong"
+ QPQ_REASON_REFUSES_STRONGER:0 "The target's side is more than twice as strong"
  QPQ_REASON_REFUSES_LIKED_ALLY:0 "Allied to the target, and fond of them"
  QPQ_REASON_REFUSES_FRIEND:0 "The target is a friend or lover"
  QPQ_REASON_REFUSES_RIVAL_TARGET:0 "The target is their rival"
@@ -668,5 +668,3 @@
  game_concept_qpq_command:0 "Command"
  game_concept_qpq_command_desc:0 "A [liege|E] may lean on their standing when putting a [qpq_deal|E] to someone under them in their realm, however far down. How hard they can lean depends on their [legitimacy_level|E] (their [prestige_level|E] without [legitimacy|E]) against what that subordinate expects of them, which grows with the liege's rank and with each step down the realm.\n\n$QPQ_UI_CMD_0_LABEL$, $QPQ_UI_CMD_1_LABEL$, $QPQ_UI_CMD_2_LABEL$ and $QPQ_UI_CMD_3_LABEL$ add nothing, 15, 30 and 45 to their acceptance, and put more [prestige|E] and [legitimacy|E] at stake if the deal comes out. A command never outweighs a refusal at any price. One who would have refused obeys, and resents it; a person who refuses a command is remembered for it."
  # ---------------- In time of war ----------------
- QPQ_REASON_LOSING_WAR:0 "Losing the war"
- QPQ_REASON_WINNING_WAR:0 "Winning the war"

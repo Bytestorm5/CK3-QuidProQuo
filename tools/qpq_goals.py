@@ -47,12 +47,29 @@ KIND_GOALS = {
     "absolution_by_concession": ["faith"],
     # tribute
     "accept_the_yoke": ["pact"], "cast_off_the_yoke": ["harm"],
-    # in time of war
-    "join_war": ["war"], "stay_out": ["harm"],
+    # in time of war: judged on the war itself (see WAR_SIDE)
+    "join_war": ["war_side"], "stay_out": ["harm", "war_side"], "make_peace": ["war_side"],
+    "yield_war": ["war_side"], "leave_war": ["war_side"],
+}
+
+# The wartime deeds are judged on the war in question, found from the deed's parties: D (deciding), P (proposer)
+# and T (the war leader of the other side, the deed's target).
+#   war:      (whose war, against whom) that names it
+#   side:     whose side D would be fighting on, in it
+#   motive:   who D would be fighting
+#   add_self: D is not in the war yet, and would add their strength to that side
+#   sign, weight: how wanting to fight and expecting to win count. Joining: for. Staying out, making peace,
+#             yielding or leaving: against (what giving up the fight costs them).
+WAR_SIDE = {
+    "join_war":   dict(war=("P", "T"), side="P", motive="T", add_self=True,  sign=1,  weight=1.0),
+    "stay_out":   dict(war=("P", "T"), side="T", motive="P", add_self=True,  sign=-1, weight=0.6),
+    "make_peace": dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
+    "yield_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=1.0),
+    "leave_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
 }
 
 # Wars where the proposer fights alongside, and wars waged by the faith
-JOINT_WARS = {"partition_pact", "join_war"}
+JOINT_WARS = {"partition_pact"}
 HOLY_WARS = {"steer_the_holy_war", "holy_warrant"}
 STRONGER = "max_military_strength > { value = %s.max_military_strength multiply = %s }"
 
@@ -131,6 +148,92 @@ def goal_body(arch, D, P, T):
     return s
 
 
+def _roles(k, swapped):
+    T = third_party(k)
+    D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
+    if swapped and T:
+        T = sw(T)
+    return D, P, T
+
+
+def _war_name(k, swapped, part):
+    return "qpq_%s_goal%s_%s_value" % (k["key"], "_sw" if swapped else "", part)
+
+
+def _in_war(who, foe, inner):
+    """Script value text: run `inner` inside the war that `who` fights against `foe`."""
+    return ("\t%s = {\n\t\tevery_character_war = {\n\t\t\tlimit = { qpq_war_foe_trigger = { WHO = %s FOE = %s } }\n%s"
+            "\t\t}\n\t}\n") % (who, who, foe, inner)
+
+
+def _side_strength(of, mine):
+    """Inside a war: add up the current strength of the side `of` is on (mine) or of the other side."""
+    a, b = ("every_war_attacker", "every_war_defender") if mine else ("every_war_defender", "every_war_attacker")
+    return ("\t\t\tif = {\n\t\t\t\tlimit = { is_attacker = %s }\n\t\t\t\t%s = { add = current_military_strength }\n\t\t\t}\n"
+            "\t\t\telse = {\n\t\t\t\t%s = { add = current_military_strength }\n\t\t\t}\n") % (of, a, b)
+
+
+def goal_helpers(k, swapped=False):
+    """[(part, script value body)]: the strength of D's side and of the other side, in the war of a wartime deed."""
+    cfg = WAR_SIDE.get(k["key"])
+    if not cfg:
+        return []
+    D, P, T = _roles(k, swapped)
+    m = {"D": D, "P": P, "T": T}
+    who, foe, side = m[cfg["war"][0]], m[cfg["war"][1]], m[cfg["side"]]
+    ours = "\tvalue = 0\n" + _in_war(who, foe, _side_strength(side, True))
+    if cfg["add_self"]:
+        ours += "\tadd = %s.current_military_strength\n" % D
+    ours += "\tmin = 1\n"
+    theirs = "\tvalue = 0\n" + _in_war(who, foe, _side_strength(side, False))
+    return [("ours", ours), ("theirs", theirs)]
+
+
+def _war_side_body(k, swapped):
+    """Does D want this fight, and would their side win it? Signed and weighted per deed (WAR_SIDE)."""
+    cfg = WAR_SIDE[k["key"]]
+    D, P, T = _roles(k, swapped)
+    m = {"D": D, "P": P, "T": T}
+    who, foe, side, M = m[cfg["war"][0]], m[cfg["war"][1]], m[cfg["side"]], m[cfg["motive"]]
+    ours, theirs = _war_name(k, swapped, "ours"), _war_name(k, swapped, "theirs")
+    t = ""
+    # --- Motivation: do they want to fight M?
+    t += _enmity(D, P, M)
+    t += "\tif = {\n\t\tlimit = { %s = { any_claim = { holder ?= %s } } }\n\t\tadd = 12\n\t}\n" % (D, M)
+    t += ("\tif = {\n\t\tlimit = {\n\t\t\t%s.faith = {\n\t\t\t\tfaith_hostility_level = {\n\t\t\t\t\ttarget = %s.faith\n"
+          "\t\t\t\t\tvalue >= faith_hostile_level\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tadd = 8\n\t}\n") % (D, M)
+    t += ("\t%s = {\n\t\tadd = {\n\t\t\tvalue = ai_boldness\n\t\t\tmultiply = 0.1\n\t\t}\n"
+          "\t\tadd = {\n\t\t\tvalue = ai_energy\n\t\t\tmultiply = 0.05\n\t\t}\n"
+          "\t\tadd = {\n\t\t\tvalue = ai_compassion\n\t\t\tmultiply = -0.05\n\t\t}\n\t}\n") % D
+    t += _traits(D, [("ambitious", 6), ("brave", 4), ("wrathful", 4), ("arrogant", 3)],
+                 [("content", 6), ("craven", 10), ("calm", 2)])
+    if cfg["add_self"]:
+        # already fighting elsewhere: little appetite for another war
+        t += "\tif = {\n\t\tlimit = { %s = { is_at_war = yes } }\n\t\tadd = -8\n\t}\n" % D
+    else:
+        # a long war wears down the will to go on; a leader who is their ally holds them to it
+        t += _in_war(who, foe, "\t\t\tif = {\n\t\t\t\tlimit = { war_days >= 1095 }\n\t\t\t\tadd = -8\n\t\t\t}\n")
+        if k["key"] == "leave_war":
+            t += _in_war(who, foe, (
+                "\t\t\tif = {\n\t\t\t\tlimit = {\n\t\t\t\t\tis_attacker = %s\n\t\t\t\t\tprimary_attacker = { is_allied_to = %s }\n\t\t\t\t}\n"
+                "\t\t\t\tadd = 15\n\t\t\t}\n"
+                "\t\t\telse_if = {\n\t\t\t\tlimit = {\n\t\t\t\t\tis_defender = %s\n\t\t\t\t\tprimary_defender = { is_allied_to = %s }\n\t\t\t\t}\n"
+                "\t\t\t\tadd = 15\n\t\t\t}\n") % (D, D, D, D))
+    # --- Prospects: would their side win? Strength now, and how the war is going
+    t += ("\tif = {\n\t\tlimit = { %s >= { value = %s multiply = 2 } }\n\t\tadd = 20\n\t}\n"
+          "\telse_if = {\n\t\tlimit = { %s >= { value = %s multiply = 1.25 } }\n\t\tadd = 10\n\t}\n"
+          "\telse_if = {\n\t\tlimit = { %s < { value = %s multiply = 0.5 } }\n\t\tadd = -30\n\t}\n"
+          "\telse_if = {\n\t\tlimit = { %s < { value = %s multiply = 0.8 } }\n\t\tadd = -15\n\t}\n") % (
+        ours, theirs, ours, theirs, ours, theirs, ours, theirs)
+    t += _in_war(who, foe, (
+        "\t\t\tif = {\n\t\t\t\tlimit = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = 40 } }\n\t\t\t\tadd = 12\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = 15 } }\n\t\t\t\tadd = 6\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -40 } } }\n\t\t\t\tadd = -12\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -15 } } }\n\t\t\t\tadd = -6\n\t\t\t}\n") % {"s": side})
+    inner = "".join("\t" + line + "\n" for line in t.rstrip("\n").split("\n"))
+    return "\tadd = {\n\t\tvalue = 0\n%s\t\tmultiply = %s\n\t}\n" % (inner, cfg["sign"] * cfg["weight"])
+
+
 import re
 
 
@@ -152,7 +255,10 @@ def goal_value(k, swapped=False):
         T = sw(T)
     body = ""
     for a in archs:
-        body += goal_body(a, D, P, T)
+        if a == "war_side":
+            body += _war_side_body(k, swapped)
+        else:
+            body += goal_body(a, D, P, T)
     return "\tvalue = 0\n" + body
 
 
@@ -193,6 +299,10 @@ def goal_refusal_parts(k, swapped=False):
             parts.append(("stronger", "%s = { max_military_strength > { value = %s.max_military_strength add = %s.max_military_strength multiply = 2 } }" % (T, D, P)))
         elif k["key"] not in HOLY_WARS:
             parts.append(("stronger", "%s = { %s }" % (T, STRONGER % (D, "2"))))
+    if "war_side" in archs and T and k["key"] == "join_war":
+        parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
+        parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
+        parts.append(("stronger", "%s > { value = %s multiply = 2 }" % (_war_name(k, swapped, "theirs"), _war_name(k, swapped, "ours"))))
     if "harm" in archs and T:
         parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
         parts.append(("liked_ally", "AND = {\n\t\t%s = { is_allied_to = %s }\n\t\t%s = { opinion = { target = %s value >= 30 } }\n\t}" % (D, T, D, T)))

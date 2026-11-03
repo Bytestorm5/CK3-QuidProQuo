@@ -3088,25 +3088,10 @@ def _find_war(who):
 """ % (who, who)
 
 
-def _war_score_demand(lose, win):
-    """Acceptance by how the recipient's war against the target is going: (points, war score) pairs."""
-    out = []
-    for pts, score, desc in lose + win:
-        out.append((pts, """
-scope:recipient = {
-    any_character_war = {
-        qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-        %s
-    }
-}
-""" % (score,), desc))
-    return out
-
-
 K(key="make_peace", cat="G", group="wartime", secret="bribery", icon="negotiate_settlement_interaction",
   name="Make Peace",
   ask="make a white peace in the war against [qpq_target.GetTitledFirstName]",
-  desc="A [war|E] leader ends their war against a named enemy with a [white_peace|E]. Winning, they ask a great deal for it; losing, they are glad of the excuse. If it comes out, their allies learn the peace was bought.",
+  desc="A [war|E] leader ends their war against a named enemy with a [white_peace|E]. The keener they are to fight, and the better their side's chances, the more they ask; losing, they are glad of the excuse. If it comes out, their allies learn the peace was bought.",
   payer_base=0, agent_base=1, payer_ctx=False, agent_ctx=False, term=12, effort=10,
   rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
   target_valid="""
@@ -3114,9 +3099,6 @@ scope:recipient = {
     any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
 }
 """,
-  demand=_war_score_demand(
-      [("25", "NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -20 } }", "QPQ_REASON_LOSING_WAR")],
-      [("-40", "qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 30 }", "QPQ_REASON_WINNING_WAR")]),
   on_seal=_find_war("scope:qpq_agent") + """
 scope:qpq_target_war ?= { end_war = white_peace }
 """,
@@ -3133,7 +3115,7 @@ scope:qpq_agent = {
 K(key="yield_war", cat="G", group="wartime", secret="betrayal", icon="negotiate_settlement_interaction",
   name="Yield the War",
   ask="concede the war against [qpq_target.GetTitledFirstName]",
-  desc="A [war|E] leader concedes their war against a named enemy, as if beaten in the field. Only a side already losing badly will consider it. If it comes out, they are branded Faithless.",
+  desc="A [war|E] leader concedes their war against a named enemy, as if beaten in the field. Only a side with no stomach for the fight, or no hope of winning it, will consider it. If it comes out, they are branded Faithless.",
   payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=35,
   rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
   target_valid="""
@@ -3141,9 +3123,6 @@ scope:recipient = {
     any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
 }
 """,
-  demand=_war_score_demand(
-      [("30", "NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -50 } }", "QPQ_REASON_LOSING_WAR")],
-      [("-60", "qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 0 }", "QPQ_REASON_WINNING_WAR")]),
   on_seal=_find_war("scope:qpq_agent") + """
 scope:qpq_target_war ?= {
     if = {
@@ -3169,7 +3148,7 @@ scope:qpq_agent = {
 K(key="join_war", cat="G", group="wartime", secret="conquest", icon="declare_war_interaction",
   name="Join the War",
   ask="join [qpq_payer.GetShortUINamePossessive] war against [qpq_target.GetTitledFirstName] and see it through",
-  desc="They join your [war|E] against a named enemy, on your side, and stay in it to the end. Leaving early is a breach; the gold due on delivery is paid when the war is over and they are still in it.",
+  desc="They join your [war|E] against a named enemy, on your side, and stay in it to the end. They weigh how much they want that fight and whether your side, with them in it, would win. Leaving early is a breach; the gold due on delivery is paid when the war is over and they are still in it.",
   payer_base=0, agent_base=1, payer_ctx=True, agent_ctx=True, term=60, effort=20, mode="restraint",
   rel="scope:actor = { is_at_war = yes }", pick=PICK_WARS_ACTOR_FIGHTS,
   target_valid="""
@@ -3222,7 +3201,7 @@ var:qpq_target_war = { NOT = { is_participant = scope:qpq_agent } }
 K(key="leave_war", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
   name="Leave the War",
   ask="leave the war against [qpq_target.GetTitledFirstName]",
-  desc="Someone fighting in a [war|E] they do not lead walks away from it, leaving their side the poorer. If it comes out, they are branded Faithless.",
+  desc="Someone fighting in a [war|E] they do not lead walks away from it, leaving their side the poorer. Keen to fight, winning, or bound to their side's leader, they ask more. If it comes out, they are branded Faithless.",
   payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=20,
   rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_FOLLOWS,
   target_valid="""
@@ -3250,7 +3229,7 @@ scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier
 K(key="stay_out", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
   name="Stay Out of the War",
   ask="stay out of [qpq_payer.GetShortUINamePossessive] war against [qpq_target.GetTitledFirstName]",
-  desc="They promise not to join a [war|E] you are fighting against a named enemy, until it ends or the deadline passes. Joining it after all is a breach. If it comes out, the enemy knows who sold them out.",
+  desc="They promise not to join a [war|E] you are fighting against a named enemy, until it ends or the deadline passes. The more they want to fight you, and the better the enemy's chances with them, the dearer the promise. Joining it after all is a breach. If it comes out, the enemy knows who sold them out.",
   payer_base=0, agent_base=1, payer_ctx=False, agent_ctx=False, term=36, effort=10, mode="restraint",
   rel="scope:actor = { is_at_war = yes }", pick=PICK_WARS_ACTOR_FIGHTS,
   target_valid="""
