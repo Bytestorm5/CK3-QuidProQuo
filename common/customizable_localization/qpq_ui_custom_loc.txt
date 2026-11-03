@@ -248,6 +248,26 @@ QpqUiKindName_t = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
+		localization_key = qpq_join_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_name
+	}
+	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
 		localization_key = qpq_heavier_tribute_name
 	}
@@ -519,6 +539,26 @@ QpqUiKindDesc_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
+		localization_key = qpq_join_war_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_interaction_desc
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
@@ -794,6 +834,26 @@ QpqUiKindAsk_t = {
 		localization_key = qpq_temple_patronage_ask_ui_t
 	}
 	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
+		localization_key = qpq_join_war_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_ask_ui_t
+	}
+	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
 		localization_key = qpq_heavier_tribute_ask_ui_t
 	}
@@ -1065,6 +1125,26 @@ QpqUiKindHint_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:temple_patronage }
 		localization_key = QPQ_UI_HINT_PERFORM
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
+		localization_key = QPQ_UI_HINT_RESTRAINT
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
+		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
@@ -1357,6 +1437,26 @@ QpqUiKindName_i = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
+		localization_key = qpq_join_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_name
+	}
+	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
 		localization_key = qpq_heavier_tribute_name
 	}
@@ -1628,6 +1728,26 @@ QpqUiKindDesc_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
+		localization_key = qpq_join_war_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_desc_them
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
@@ -1903,6 +2023,26 @@ QpqUiKindAsk_i = {
 		localization_key = qpq_temple_patronage_ask_ui_i
 	}
 	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
+		localization_key = qpq_join_war_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_ask_ui_i
+	}
+	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
 		localization_key = qpq_heavier_tribute_ask_ui_i
 	}
@@ -2174,6 +2314,26 @@ QpqUiKindHint_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:temple_patronage }
 		localization_key = QPQ_UI_HINT_PERFORM
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
+		localization_key = QPQ_UI_HINT_RESTRAINT
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
+		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }

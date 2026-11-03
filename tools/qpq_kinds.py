@@ -3019,6 +3019,279 @@ scope:qpq_target = { add_character_modifier = { modifier = qpq_clerical_denuncia
   exposed="scope:qpq_payer = { add_piety = minor_piety_loss }")
 
 ###############################################################################
+# CATALOGUE G: in time of war. A war is named by the leader of the other side: the deed's target character.
+# At sealing the deed finds that very war, and keeps it on the deal (var:qpq_target_war) where it must watch it.
+###############################################################################
+
+# The enemy leader of each war the recipient leads (for deeds that end a war)
+PICK_WARS_RECIPIENT_LEADS = """
+scope:recipient = {
+    every_character_war = {
+        limit = {
+            OR = {
+                primary_attacker = scope:recipient
+                primary_defender = scope:recipient
+            }
+        }
+        if = {
+            limit = { primary_attacker = scope:recipient }
+            primary_defender = { add_to_list = characters }
+        }
+        else = {
+            primary_attacker = { add_to_list = characters }
+        }
+    }
+}
+"""
+# The leader of the other side in each war the proposer is fighting (for deeds that join or keep out of it)
+PICK_WARS_ACTOR_FIGHTS = """
+scope:actor = {
+    every_character_war = {
+        if = {
+            limit = { is_attacker = scope:actor }
+            primary_defender = { add_to_list = characters }
+        }
+        else = {
+            primary_attacker = { add_to_list = characters }
+        }
+    }
+}
+"""
+# The leader of the other side in each war the recipient fights in without leading it (for leaving a war)
+PICK_WARS_RECIPIENT_FOLLOWS = """
+scope:recipient = {
+    every_character_war = {
+        limit = {
+            NOT = { primary_attacker = scope:recipient }
+            NOT = { primary_defender = scope:recipient }
+        }
+        if = {
+            limit = { is_attacker = scope:recipient }
+            primary_defender = { add_to_list = characters }
+        }
+        else = {
+            primary_attacker = { add_to_list = characters }
+        }
+    }
+}
+"""
+
+def _find_war(who):
+    """Story context: save the war that `who` fights against scope:qpq_target as scope:qpq_target_war."""
+    return """
+%s = {
+    random_character_war = {
+        limit = { qpq_war_foe_trigger = { WHO = %s FOE = scope:qpq_target } }
+        save_scope_as = qpq_target_war
+    }
+}
+""" % (who, who)
+
+
+def _war_score_demand(lose, win):
+    """Acceptance by how the recipient's war against the target is going: (points, war score) pairs."""
+    out = []
+    for pts, score, desc in lose + win:
+        out.append((pts, """
+scope:recipient = {
+    any_character_war = {
+        qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+        %s
+    }
+}
+""" % (score,), desc))
+    return out
+
+
+K(key="make_peace", cat="G", group="wartime", secret="bribery", icon="negotiate_settlement_interaction",
+  name="Make Peace",
+  ask="make a white peace in the war against [qpq_target.GetTitledFirstName]",
+  desc="A [war|E] leader ends their war against a named enemy with a [white_peace|E]. Winning, they ask a great deal for it; losing, they are glad of the excuse. If it comes out, their allies learn the peace was bought.",
+  payer_base=0, agent_base=1, payer_ctx=False, agent_ctx=False, term=12, effort=10,
+  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
+  target_valid="""
+scope:recipient = {
+    any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+}
+""",
+  demand=_war_score_demand(
+      [("25", "NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -20 } }", "QPQ_REASON_LOSING_WAR")],
+      [("-40", "qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 30 }", "QPQ_REASON_WINNING_WAR")]),
+  on_seal=_find_war("scope:qpq_agent") + """
+scope:qpq_target_war ?= { end_war = white_peace }
+""",
+  deliver="always = yes",
+  exposed="""
+scope:qpq_agent = {
+    every_ally = {
+        limit = { NOT = { this = scope:qpq_payer } }
+        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
+    }
+}
+""")
+
+K(key="yield_war", cat="G", group="wartime", secret="betrayal", icon="negotiate_settlement_interaction",
+  name="Yield the War",
+  ask="concede the war against [qpq_target.GetTitledFirstName]",
+  desc="A [war|E] leader concedes their war against a named enemy, as if beaten in the field. Only a side already losing badly will consider it. If it comes out, they are branded Faithless.",
+  payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=35,
+  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
+  target_valid="""
+scope:recipient = {
+    any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+}
+""",
+  demand=_war_score_demand(
+      [("30", "NOT = { qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = -50 } }", "QPQ_REASON_LOSING_WAR")],
+      [("-60", "qpq_war_side_winning_trigger = { WHO = scope:recipient SCORE = 0 }", "QPQ_REASON_WINNING_WAR")]),
+  on_seal=_find_war("scope:qpq_agent") + """
+scope:qpq_target_war ?= {
+    if = {
+        limit = { is_attacker = scope:qpq_agent }
+        end_war = defender
+    }
+    else = {
+        end_war = attacker
+    }
+}
+""",
+  deliver="always = yes",
+  exposed="""
+scope:qpq_agent = {
+    add_character_modifier = { modifier = qpq_faithless_modifier years = 10 }
+    every_ally = {
+        limit = { NOT = { this = scope:qpq_payer } }
+        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
+    }
+}
+""")
+
+K(key="join_war", cat="G", group="wartime", secret="conquest", icon="declare_war_interaction",
+  name="Join the War",
+  ask="join [qpq_payer.GetShortUINamePossessive] war against [qpq_target.GetTitledFirstName] and see it through",
+  desc="They join your [war|E] against a named enemy, on your side, and stay in it to the end. Leaving early is a breach; the gold due on delivery is paid when the war is over and they are still in it.",
+  payer_base=0, agent_base=1, payer_ctx=True, agent_ctx=True, term=60, effort=20, mode="restraint",
+  rel="scope:actor = { is_at_war = yes }", pick=PICK_WARS_ACTOR_FIGHTS,
+  target_valid="""
+NOT = { scope:secondary_recipient = scope:recipient }
+scope:recipient = {
+    is_landed = yes
+    NOT = { is_at_war_with = scope:actor }
+    NOT = { top_liege = scope:secondary_recipient.top_liege }
+}
+scope:actor = {
+    any_character_war = {
+        qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+        NOT = { is_participant = scope:recipient }
+    }
+}
+""",
+  demand=[("10", "scope:recipient = { has_relation_rival = scope:secondary_recipient }", "QPQ_REASON_HATES_TARGET"),
+          ("-15", "scope:recipient = { has_trait = craven }", "QPQ_REASON_CRAVEN_WAR")],
+  on_seal=_find_war("scope:qpq_payer") + """
+scope:qpq_target_war ?= {
+    if = {
+        limit = { NOT = { is_participant = scope:qpq_agent } }
+        if = {
+            limit = { is_attacker = scope:qpq_payer }
+            add_attacker = scope:qpq_agent
+        }
+        else = {
+            add_defender = scope:qpq_agent
+        }
+        scope:qpq_story ?= {
+            set_variable = { name = qpq_target_war value = scope:qpq_target_war }
+            set_variable = qpq_war_joined
+        }
+    }
+}
+""",
+  # Seen through: the war is over and they never left it
+  deliver="""
+has_variable = qpq_war_joined
+NOT = { exists = var:qpq_target_war }
+""",
+  breach="""
+exists = var:qpq_target_war
+var:qpq_target_war = { NOT = { is_participant = scope:qpq_agent } }
+""",
+  # They could not be brought into it after all: nobody is at fault
+  invalid="NOT = { has_variable = qpq_war_joined }",
+  exposed="")
+
+K(key="leave_war", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
+  name="Leave the War",
+  ask="leave the war against [qpq_target.GetTitledFirstName]",
+  desc="Someone fighting in a [war|E] they do not lead walks away from it, leaving their side the poorer. If it comes out, they are branded Faithless.",
+  payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=20,
+  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_FOLLOWS,
+  target_valid="""
+scope:recipient = {
+    any_character_war = {
+        qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+        NOT = { primary_attacker = scope:recipient }
+        NOT = { primary_defender = scope:recipient }
+    }
+}
+""",
+  on_seal=_find_war("scope:qpq_agent") + """
+scope:qpq_target_war ?= {
+    if = {
+        limit = { is_participant = scope:qpq_agent }
+        remove_participant = scope:qpq_agent
+    }
+}
+""",
+  deliver="always = yes",
+  exposed="""
+scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
+""")
+
+K(key="stay_out", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
+  name="Stay Out of the War",
+  ask="stay out of [qpq_payer.GetShortUINamePossessive] war against [qpq_target.GetTitledFirstName]",
+  desc="They promise not to join a [war|E] you are fighting against a named enemy, until it ends or the deadline passes. Joining it after all is a breach. If it comes out, the enemy knows who sold them out.",
+  payer_base=0, agent_base=1, payer_ctx=False, agent_ctx=False, term=36, effort=10, mode="restraint",
+  rel="scope:actor = { is_at_war = yes }", pick=PICK_WARS_ACTOR_FIGHTS,
+  target_valid="""
+NOT = { scope:secondary_recipient = scope:recipient }
+scope:actor = {
+    any_character_war = {
+        qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+        NOT = { is_participant = scope:recipient }
+    }
+}
+""",
+  demand=[("-30", "scope:recipient = { is_allied_to = scope:secondary_recipient }", "QPQ_REASON_ALLIED_TO_TARGET")],
+  on_seal=_find_war("scope:qpq_payer") + """
+scope:qpq_story ?= {
+    if = {
+        limit = { exists = scope:qpq_target_war }
+        set_variable = { name = qpq_target_war value = scope:qpq_target_war }
+        set_variable = qpq_war_watched
+    }
+}
+""",
+  # Kept: the war ended without them
+  deliver="""
+has_variable = qpq_war_watched
+NOT = { exists = var:qpq_target_war }
+""",
+  breach="""
+exists = var:qpq_target_war
+var:qpq_target_war = { is_participant = scope:qpq_agent }
+""",
+  invalid="NOT = { has_variable = qpq_war_watched }",
+  exposed="""
+if = {
+    limit = { scope:qpq_target = { is_alive = yes } }
+    scope:qpq_target = {
+        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_me_opinion opinion = -20 }
+    }
+}
+""")
+
+###############################################################################
 # CATALOGUE F: tribute, between suzerains and tributaries
 ###############################################################################
 
@@ -3191,6 +3464,7 @@ GROUPS = [
     ("church_favours", "Church favours"),
     ("church_weapons", "The Church as a weapon"),
     ("tribute", "Tribute and overlordship"),
+    ("wartime", "In time of war"),
 ]
 
 SECRET_CATEGORIES = {

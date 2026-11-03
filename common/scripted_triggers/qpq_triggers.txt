@@ -431,3 +431,49 @@ qpq_command_possible_trigger = {
 		target_is_liege_or_above = scope:actor
 	}
 }
+
+############################################################
+# Wars: a war is named by the leader of the other side (the deeds' target character)
+############################################################
+
+# Root: a war. FOE leads the side that WHO is not on.
+qpq_war_foe_trigger = {
+	OR = {
+		AND = {
+			is_attacker = $WHO$
+			primary_defender = $FOE$
+		}
+		AND = {
+			is_defender = $WHO$
+			primary_attacker = $FOE$
+		}
+	}
+}
+
+# Root: a war. WHO leads one side of it, against FOE leading the other.
+qpq_war_leaders_trigger = {
+	OR = {
+		AND = {
+			primary_attacker = $WHO$
+			primary_defender = $FOE$
+		}
+		AND = {
+			primary_defender = $WHO$
+			primary_attacker = $FOE$
+		}
+	}
+}
+
+# Root: a war. WHO's side is winning by at least SCORE (war score from their side's point of view)
+qpq_war_side_winning_trigger = {
+	OR = {
+		AND = {
+			is_attacker = $WHO$
+			attacker_war_score >= $SCORE$
+		}
+		AND = {
+			is_defender = $WHO$
+			defender_war_score >= $SCORE$
+		}
+	}
+}

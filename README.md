@@ -50,6 +50,8 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 **Command.** Putting a deal to someone under you in your realm (a vassal, a vassal's vassal, a courtier), you can lean on your standing: *Ask*, *Remind* (of their duty), *Command* or *Decree*. Your standing is your legitimacy level (prestige level without legitimacy); what they expect of you is vanilla's legitimacy expectation of a liege (your rank, de jure ties, family, how long your dynasty has ruled them), plus one level for each step further down your realm they stand. *Remind* needs you no more than one level short of that, *Command* to meet it, *Decree* to exceed it by two. The tiers add 15, 30 and 45 to their acceptance, never enough to overturn a refusal at any price, and put minor, medium or major prestige and legitimacy at stake: you pay it if the deal comes out (half as much again in prestige without legitimacy), or half of it at once if you proclaim a scandalous command as a Charter. An AI that would have refused without the command obeys and resents it (-15, -30, -45 opinion); a person who refuses a command is remembered for it.
 
+**Wartime.** A war is chosen by the leader of the other side ("the war against Duke X"): the deed finds that very war when sealed, and keeps it on the deal where it must watch it. For the side at war: *Make Peace* (a war leader ends it with a white peace; eager when losing, dear when winning) and *Yield the War* (a war leader concedes it, as if beaten; only a side already losing badly considers it). For the counterparty: *Join the War* (on your side, to the end; leaving early is a breach, and gold due on delivery is paid when the war is over with them still in it), *Leave the War* (someone who fights in a war without leading it walks away) and *Stay Out of the War* (they do not join it against you until it ends or the deadline passes).
+
 **Tribute.** A suzerain and its tributary are bound to keep the peace like a truce: a deal aimed at your own tributary or suzerain is scandalous as a co-religionist truce partner is, and a war you paid for against either makes you a truce-breaker by proxy if it comes out.
 
 **Exposure.** The exposer pays the tier's baseline cost times their own share of guilt: the payer about 60%, the agent about 40% but always the full criminal weight of the deed. The wronged party pays 25% of their share; a third party who digs it up pays nothing and both members pay in full. The fallout menu: prestige (or Dread for rulers who already lean on it), Known Schemer, legitimacy and influence, "Betrayed Me" from the victim, their house and allies, a small capped bump to faction discontent, a strong hook for the victim, the **Avenge Perfidy** casus belli, imprisonment, revocation and (Tier V) execution reasons, piety and excommunication risk, dynasty renown, kinslaying, and lost Fervor for head-of-faith deals. Each Ask adds its own consequence from the catalogue's "If exposed" column.
@@ -62,7 +64,7 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 ## The catalogue
 
-All 61 Asks from the design doc are implemented, plus five for tribute; `tools/qpq_kinds.py` is the single source for each one's tiers, targets, delivery check, AI behaviour and exposure consequence, and `tools/qpq_flavor.py` for its pitch.
+All 61 Asks from the design doc are implemented, plus five for tribute and five for wartime; `tools/qpq_kinds.py` is the single source for each one's tiers, targets, delivery check, AI behaviour and exposure consequence, and `tools/qpq_flavor.py` for its pitch.
 
 | Catalogue | Deals |
 | --- | --- |
@@ -73,6 +75,7 @@ All 61 Asks from the design doc are implemented, plus five for tribute; `tools/q
 | D2. Catholic Church (By God Alone) | Buy a Bull, Conclave Votes (uses BGA's forced papal vote), Council Lobbying |
 | D3. Signature faith deals | Caliphal Investiture, Name in the Khutba, Fatwa for Hire, Fund the Da'wa, Crowning the Usurper, Pliant Patriarch, Favourable Omens, Consecration Rites, Temple Patronage |
 | F. Tribute | Heavier Tribute, Lighter Tribute, Bought Freedom, Accept the Yoke, Cast Off the Yoke |
+| G. In time of war | Make Peace, Yield the War, Join the War, Leave the War, Stay Out of the War |
 
 ## Interpretations and simplifications
 

@@ -646,6 +646,29 @@ qpq_hub.1 = {
 		trigger_event = qpq_hub.18
 	}
 	option = {
+		name = qpq_hub.group.wartime
+		trigger = {
+			OR = {
+				AND = {
+					scope:recipient = { is_at_war = yes }
+				}
+				AND = {
+					scope:recipient = { is_at_war = yes }
+				}
+				AND = {
+					scope:actor = { is_at_war = yes }
+				}
+				AND = {
+					scope:recipient = { is_at_war = yes }
+				}
+				AND = {
+					scope:actor = { is_at_war = yes }
+				}
+			}
+		}
+		trigger_event = qpq_hub.19
+	}
+	option = {
 		name = qpq_hub.cancel
 	}
 }
@@ -1954,6 +1977,83 @@ qpq_hub.18 = {
 	}
 }
 
+qpq_hub.19 = {
+	type = character_event
+	title = qpq_hub.group.wartime
+	desc = qpq_hub.19.desc
+	theme = intrigue
+	left_portrait = root
+	right_portrait = scope:recipient
+
+	option = {
+		name = qpq_make_peace_name
+		trigger = {
+			scope:recipient = { is_at_war = yes }
+		}
+		custom_tooltip = qpq_make_peace_hub_tt
+		open_interaction_window = {
+			interaction = qpq_make_peace_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_yield_war_name
+		trigger = {
+			scope:recipient = { is_at_war = yes }
+		}
+		custom_tooltip = qpq_yield_war_hub_tt
+		open_interaction_window = {
+			interaction = qpq_yield_war_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_join_war_name
+		trigger = {
+			scope:actor = { is_at_war = yes }
+		}
+		custom_tooltip = qpq_join_war_hub_tt
+		open_interaction_window = {
+			interaction = qpq_join_war_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_leave_war_name
+		trigger = {
+			scope:recipient = { is_at_war = yes }
+		}
+		custom_tooltip = qpq_leave_war_hub_tt
+		open_interaction_window = {
+			interaction = qpq_leave_war_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_stay_out_name
+		trigger = {
+			scope:actor = { is_at_war = yes }
+		}
+		custom_tooltip = qpq_stay_out_hub_tt
+		open_interaction_window = {
+			interaction = qpq_stay_out_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_hub.back
+		trigger_event = qpq_hub.1
+	}
+	option = {
+		name = qpq_hub.cancel
+	}
+}
+
 qpq_hub.50 = {
 	type = character_event
 	title = {
@@ -2201,6 +2301,26 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
 				desc = qpq_temple_patronage_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:make_peace }
+				desc = qpq_make_peace_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:yield_war }
+				desc = qpq_yield_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:join_war }
+				desc = qpq_join_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:leave_war }
+				desc = qpq_leave_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:stay_out }
+				desc = qpq_stay_out_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:heavier_tribute }
@@ -2475,6 +2595,26 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
 				desc = qpq_temple_patronage_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:make_peace }
+				desc = qpq_make_peace_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:yield_war }
+				desc = qpq_yield_war_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:join_war }
+				desc = qpq_join_war_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:leave_war }
+				desc = qpq_leave_war_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:stay_out }
+				desc = qpq_stay_out_proposal_desc
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:heavier_tribute }

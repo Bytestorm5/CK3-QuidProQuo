@@ -248,6 +248,26 @@ QpqKindName = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:join_war }
+		localization_key = qpq_join_war_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_name
+	}
+	text = {
 		trigger = { var:qpq_kind ?= flag:heavier_tribute }
 		localization_key = qpq_heavier_tribute_name
 	}
@@ -523,6 +543,26 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:make_peace }
+		localization_key = qpq_make_peace_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:yield_war }
+		localization_key = qpq_yield_war_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:join_war }
+		localization_key = qpq_join_war_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:leave_war }
+		localization_key = qpq_leave_war_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:stay_out }
+		localization_key = qpq_stay_out_ask_story
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:heavier_tribute }

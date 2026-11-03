@@ -917,6 +917,80 @@ qpq_k_temple_patronage_can_perform_trigger = {
 	always = yes
 }
 
+#### Make Peace
+qpq_k_make_peace_delivered_trigger = {
+	always = yes
+}
+qpq_k_make_peace_breached_trigger = {
+	always = no
+}
+qpq_k_make_peace_invalid_trigger = {
+	always = no
+}
+qpq_k_make_peace_can_perform_trigger = {
+	always = no
+}
+
+#### Yield the War
+qpq_k_yield_war_delivered_trigger = {
+	always = yes
+}
+qpq_k_yield_war_breached_trigger = {
+	always = no
+}
+qpq_k_yield_war_invalid_trigger = {
+	always = no
+}
+qpq_k_yield_war_can_perform_trigger = {
+	always = no
+}
+
+#### Join the War
+qpq_k_join_war_delivered_trigger = {
+	has_variable = qpq_war_joined
+	NOT = { exists = var:qpq_target_war }
+}
+qpq_k_join_war_breached_trigger = {
+	exists = var:qpq_target_war
+	var:qpq_target_war = { NOT = { is_participant = scope:qpq_agent } }
+}
+qpq_k_join_war_invalid_trigger = {
+	NOT = { has_variable = qpq_war_joined }
+}
+qpq_k_join_war_can_perform_trigger = {
+	always = no
+}
+
+#### Leave the War
+qpq_k_leave_war_delivered_trigger = {
+	always = yes
+}
+qpq_k_leave_war_breached_trigger = {
+	always = no
+}
+qpq_k_leave_war_invalid_trigger = {
+	always = no
+}
+qpq_k_leave_war_can_perform_trigger = {
+	always = no
+}
+
+#### Stay Out of the War
+qpq_k_stay_out_delivered_trigger = {
+	has_variable = qpq_war_watched
+	NOT = { exists = var:qpq_target_war }
+}
+qpq_k_stay_out_breached_trigger = {
+	exists = var:qpq_target_war
+	var:qpq_target_war = { is_participant = scope:qpq_agent }
+}
+qpq_k_stay_out_invalid_trigger = {
+	NOT = { has_variable = qpq_war_watched }
+}
+qpq_k_stay_out_can_perform_trigger = {
+	always = no
+}
+
 #### Heavier Tribute
 qpq_k_heavier_tribute_delivered_trigger = {
 	always = yes
@@ -1113,6 +1187,26 @@ qpq_kind_delivered_trigger = {
 			qpq_k_fund_the_dawa_delivered_trigger = yes
 		}
 		AND = {
+			var:qpq_kind = flag:make_peace
+			qpq_k_make_peace_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:yield_war
+			qpq_k_yield_war_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:join_war
+			qpq_k_join_war_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:leave_war
+			qpq_k_leave_war_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:stay_out
+			qpq_k_stay_out_delivered_trigger = yes
+		}
+		AND = {
 			var:qpq_kind = flag:heavier_tribute
 			qpq_k_heavier_tribute_delivered_trigger = yes
 		}
@@ -1184,6 +1278,14 @@ qpq_kind_breached_trigger = {
 		AND = {
 			var:qpq_kind = flag:defection_pact
 			qpq_k_defection_pact_breached_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:join_war
+			qpq_k_join_war_breached_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:stay_out
+			qpq_k_stay_out_breached_trigger = yes
 		}
 	}
 }
@@ -1331,6 +1433,14 @@ qpq_kind_invalid_trigger = {
 			qpq_k_fund_the_dawa_invalid_trigger = yes
 		}
 		AND = {
+			var:qpq_kind = flag:join_war
+			qpq_k_join_war_invalid_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:stay_out
+			qpq_k_stay_out_invalid_trigger = yes
+		}
+		AND = {
 			var:qpq_kind = flag:cast_off_the_yoke
 			qpq_k_cast_off_the_yoke_invalid_trigger = yes
 		}
@@ -1454,6 +1564,8 @@ qpq_kind_is_restraint_trigger = {
 		var:qpq_kind = flag:stay_home
 		var:qpq_kind = flag:conclave_votes
 		var:qpq_kind = flag:council_lobbying
+		var:qpq_kind = flag:join_war
+		var:qpq_kind = flag:stay_out
 	}
 }
 
@@ -2118,6 +2230,21 @@ qpq_any_pact_possible_trigger = {
 				}
 			}
 			NOT = { exists = scope:actor.faith.religious_head }
+		}
+		AND = {
+			scope:recipient = { is_at_war = yes }
+		}
+		AND = {
+			scope:recipient = { is_at_war = yes }
+		}
+		AND = {
+			scope:actor = { is_at_war = yes }
+		}
+		AND = {
+			scope:recipient = { is_at_war = yes }
+		}
+		AND = {
+			scope:actor = { is_at_war = yes }
 		}
 		AND = {
 			scope:recipient = { is_tributary_of = scope:actor }

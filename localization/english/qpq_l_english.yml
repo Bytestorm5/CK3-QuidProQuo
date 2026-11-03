@@ -667,3 +667,6 @@
  qpq_defied_command_opinion:0 "Defied My Command"
  game_concept_qpq_command:0 "Command"
  game_concept_qpq_command_desc:0 "A [liege|E] may lean on their standing when putting a [qpq_deal|E] to someone under them in their realm, however far down. How hard they can lean depends on their [legitimacy_level|E] (their [prestige_level|E] without [legitimacy|E]) against what that subordinate expects of them, which grows with the liege's rank and with each step down the realm.\n\n$QPQ_UI_CMD_0_LABEL$, $QPQ_UI_CMD_1_LABEL$, $QPQ_UI_CMD_2_LABEL$ and $QPQ_UI_CMD_3_LABEL$ add nothing, 15, 30 and 45 to their acceptance, and put more [prestige|E] and [legitimacy|E] at stake if the deal comes out. A command never outweighs a refusal at any price. One who would have refused obeys, and resents it; a person who refuses a command is remembered for it."
+ # ---------------- In time of war ----------------
+ QPQ_REASON_LOSING_WAR:0 "Losing the war"
+ QPQ_REASON_WINNING_WAR:0 "Winning the war"

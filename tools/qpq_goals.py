@@ -47,10 +47,12 @@ KIND_GOALS = {
     "absolution_by_concession": ["faith"],
     # tribute
     "accept_the_yoke": ["pact"], "cast_off_the_yoke": ["harm"],
+    # in time of war
+    "join_war": ["war"], "stay_out": ["harm"],
 }
 
 # Wars where the proposer fights alongside, and wars waged by the faith
-JOINT_WARS = {"partition_pact"}
+JOINT_WARS = {"partition_pact", "join_war"}
 HOLY_WARS = {"steer_the_holy_war", "holy_warrant"}
 STRONGER = "max_military_strength > { value = %s.max_military_strength multiply = %s }"
 

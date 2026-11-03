@@ -4344,6 +4344,321 @@ qpq_k_temple_patronage_exposed_effect = {
 	scope:qpq_payer = { add_piety = minor_piety_loss }
 }
 
+#### Make Peace
+qpq_k_make_peace_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:secondary_recipient = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_make_peace_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_make_peace_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_make_peace_price_value }
+	}
+	if = {
+		limit = {
+			qpq_make_peace_payer_tier_value <= 0
+			qpq_make_peace_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = make_peace SECRET = bribery TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_make_peace_on_seal_effect = {
+	scope:qpq_agent = {
+		random_character_war = {
+			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
+			save_scope_as = qpq_target_war
+		}
+	}
+
+	scope:qpq_target_war ?= { end_war = white_peace }
+}
+qpq_k_make_peace_on_deliver_effect = {
+	# nothing
+}
+qpq_k_make_peace_on_end_effect = {
+	# nothing
+}
+qpq_k_make_peace_tick_effect = {
+	# nothing
+}
+qpq_k_make_peace_perform_effect = {
+	# nothing
+}
+qpq_k_make_peace_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_make_peace_exposed_effect = {
+	scope:qpq_agent = {
+		every_ally = {
+			limit = { NOT = { this = scope:qpq_payer } }
+			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
+		}
+	}
+}
+
+#### Yield the War
+qpq_k_yield_war_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:secondary_recipient = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_yield_war_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_yield_war_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_yield_war_price_value }
+	}
+	if = {
+		limit = {
+			qpq_yield_war_payer_tier_value <= 0
+			qpq_yield_war_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = yield_war SECRET = betrayal TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_yield_war_on_seal_effect = {
+	scope:qpq_agent = {
+		random_character_war = {
+			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
+			save_scope_as = qpq_target_war
+		}
+	}
+
+	scope:qpq_target_war ?= {
+		if = {
+			limit = { is_attacker = scope:qpq_agent }
+			end_war = defender
+		}
+		else = {
+			end_war = attacker
+		}
+	}
+}
+qpq_k_yield_war_on_deliver_effect = {
+	# nothing
+}
+qpq_k_yield_war_on_end_effect = {
+	# nothing
+}
+qpq_k_yield_war_tick_effect = {
+	# nothing
+}
+qpq_k_yield_war_perform_effect = {
+	# nothing
+}
+qpq_k_yield_war_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_yield_war_exposed_effect = {
+	scope:qpq_agent = {
+		add_character_modifier = { modifier = qpq_faithless_modifier years = 10 }
+		every_ally = {
+			limit = { NOT = { this = scope:qpq_payer } }
+			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
+		}
+	}
+}
+
+#### Join the War
+qpq_k_join_war_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:secondary_recipient = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_join_war_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_join_war_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_join_war_price_value }
+	}
+	if = {
+		limit = {
+			qpq_join_war_payer_tier_value <= 0
+			qpq_join_war_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = join_war SECRET = conquest TERM = 60 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_join_war_on_seal_effect = {
+	scope:qpq_payer = {
+		random_character_war = {
+			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_payer FOE = scope:qpq_target } }
+			save_scope_as = qpq_target_war
+		}
+	}
+
+	scope:qpq_target_war ?= {
+		if = {
+			limit = { NOT = { is_participant = scope:qpq_agent } }
+			if = {
+				limit = { is_attacker = scope:qpq_payer }
+				add_attacker = scope:qpq_agent
+			}
+			else = {
+				add_defender = scope:qpq_agent
+			}
+			scope:qpq_story ?= {
+				set_variable = { name = qpq_target_war value = scope:qpq_target_war }
+				set_variable = qpq_war_joined
+			}
+		}
+	}
+}
+qpq_k_join_war_on_deliver_effect = {
+	# nothing
+}
+qpq_k_join_war_on_end_effect = {
+	# nothing
+}
+qpq_k_join_war_tick_effect = {
+	# nothing
+}
+qpq_k_join_war_perform_effect = {
+	# nothing
+}
+qpq_k_join_war_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_join_war_exposed_effect = {
+	# nothing
+}
+
+#### Leave the War
+qpq_k_leave_war_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:secondary_recipient = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_leave_war_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_leave_war_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_leave_war_price_value }
+	}
+	if = {
+		limit = {
+			qpq_leave_war_payer_tier_value <= 0
+			qpq_leave_war_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = leave_war SECRET = betrayal TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_leave_war_on_seal_effect = {
+	scope:qpq_agent = {
+		random_character_war = {
+			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
+			save_scope_as = qpq_target_war
+		}
+	}
+
+	scope:qpq_target_war ?= {
+		if = {
+			limit = { is_participant = scope:qpq_agent }
+			remove_participant = scope:qpq_agent
+		}
+	}
+}
+qpq_k_leave_war_on_deliver_effect = {
+	# nothing
+}
+qpq_k_leave_war_on_end_effect = {
+	# nothing
+}
+qpq_k_leave_war_tick_effect = {
+	# nothing
+}
+qpq_k_leave_war_perform_effect = {
+	# nothing
+}
+qpq_k_leave_war_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_leave_war_exposed_effect = {
+	scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
+}
+
+#### Stay Out of the War
+qpq_k_stay_out_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:secondary_recipient = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_stay_out_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_stay_out_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_stay_out_price_value }
+	}
+	if = {
+		limit = {
+			qpq_stay_out_payer_tier_value <= 0
+			qpq_stay_out_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = stay_out SECRET = betrayal TERM = 36 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_stay_out_on_seal_effect = {
+	scope:qpq_payer = {
+		random_character_war = {
+			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_payer FOE = scope:qpq_target } }
+			save_scope_as = qpq_target_war
+		}
+	}
+
+	scope:qpq_story ?= {
+		if = {
+			limit = { exists = scope:qpq_target_war }
+			set_variable = { name = qpq_target_war value = scope:qpq_target_war }
+			set_variable = qpq_war_watched
+		}
+	}
+}
+qpq_k_stay_out_on_deliver_effect = {
+	# nothing
+}
+qpq_k_stay_out_on_end_effect = {
+	# nothing
+}
+qpq_k_stay_out_tick_effect = {
+	# nothing
+}
+qpq_k_stay_out_perform_effect = {
+	# nothing
+}
+qpq_k_stay_out_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_stay_out_exposed_effect = {
+	if = {
+		limit = { scope:qpq_target = { is_alive = yes } }
+		scope:qpq_target = {
+			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_me_opinion opinion = -20 }
+		}
+	}
+}
+
 #### Heavier Tribute
 qpq_k_heavier_tribute_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
@@ -4922,6 +5237,26 @@ qpq_kind_on_deliver_effect = {
 		qpq_k_temple_patronage_on_deliver_effect = yes
 	}
 	else_if = {
+		limit = { var:qpq_kind = flag:make_peace }
+		qpq_k_make_peace_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:yield_war }
+		qpq_k_yield_war_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:join_war }
+		qpq_k_join_war_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:leave_war }
+		qpq_k_leave_war_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:stay_out }
+		qpq_k_stay_out_on_deliver_effect = yes
+	}
+	else_if = {
 		limit = { var:qpq_kind = flag:heavier_tribute }
 		qpq_k_heavier_tribute_on_deliver_effect = yes
 	}
@@ -5191,6 +5526,26 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:make_peace }
+		qpq_k_make_peace_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:yield_war }
+		qpq_k_yield_war_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:join_war }
+		qpq_k_join_war_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:leave_war }
+		qpq_k_leave_war_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:stay_out }
+		qpq_k_stay_out_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:heavier_tribute }
@@ -5586,6 +5941,26 @@ qpq_kind_ai_attempt_effect = {
 		qpq_k_temple_patronage_ai_attempt_effect = yes
 	}
 	else_if = {
+		limit = { var:qpq_kind = flag:make_peace }
+		qpq_k_make_peace_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:yield_war }
+		qpq_k_yield_war_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:join_war }
+		qpq_k_join_war_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:leave_war }
+		qpq_k_leave_war_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:stay_out }
+		qpq_k_stay_out_ai_attempt_effect = yes
+	}
+	else_if = {
 		limit = { var:qpq_kind = flag:heavier_tribute }
 		qpq_k_heavier_tribute_ai_attempt_effect = yes
 	}
@@ -5815,6 +6190,22 @@ qpq_kind_exposed_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_exposed_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:make_peace }
+		qpq_k_make_peace_exposed_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:yield_war }
+		qpq_k_yield_war_exposed_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:leave_war }
+		qpq_k_leave_war_exposed_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:stay_out }
+		qpq_k_stay_out_exposed_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:cast_off_the_yoke }
@@ -6191,6 +6582,26 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:make_peace }
+		qpq_k_make_peace_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:yield_war }
+		qpq_k_yield_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:join_war }
+		qpq_k_join_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:leave_war }
+		qpq_k_leave_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:stay_out }
+		qpq_k_stay_out_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:heavier_tribute }

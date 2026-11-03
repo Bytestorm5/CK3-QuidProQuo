@@ -8138,6 +8138,779 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 		}
 		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:make_peace }
+			qpq_deal_orient_normal_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						OR = {
+							primary_attacker = scope:recipient
+							primary_defender = scope:recipient
+						}
+					}
+					if = {
+						limit = { primary_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_t }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_t }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_t
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+						}
+					}
+					add_to_list = qpq_ui_pool_char_t
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_t
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				if = {
+					limit = { var:qpq_ui_t_pick_char = { is_in_list = qpq_ui_pool_char_t } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_t_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				var:qpq_ui_t_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_make_peace_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_make_peace_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_make_peace_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_make_peace_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_make_peace_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_make_peace_ai_acceptance_value
+					subtract = qpq_make_peace_ask_value
+					subtract = qpq_make_peace_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_make_peace_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+					}
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:yield_war }
+			qpq_deal_orient_normal_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						OR = {
+							primary_attacker = scope:recipient
+							primary_defender = scope:recipient
+						}
+					}
+					if = {
+						limit = { primary_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_t }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_t }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_t
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+						}
+					}
+					add_to_list = qpq_ui_pool_char_t
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_t
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				if = {
+					limit = { var:qpq_ui_t_pick_char = { is_in_list = qpq_ui_pool_char_t } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_t_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				var:qpq_ui_t_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_yield_war_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_yield_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_yield_war_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_yield_war_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_yield_war_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_yield_war_ai_acceptance_value
+					subtract = qpq_yield_war_ask_value
+					subtract = qpq_yield_war_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_yield_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+					}
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:join_war }
+			qpq_deal_orient_normal_effect = yes
+			scope:actor = {
+				every_character_war = {
+					if = {
+						limit = { is_attacker = scope:actor }
+						primary_defender = { add_to_list = qpq_ui_chars_t }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_t }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_t
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						NOT = { scope:secondary_recipient = scope:recipient }
+						scope:recipient = {
+							is_landed = yes
+							NOT = { is_at_war_with = scope:actor }
+							NOT = { top_liege = scope:secondary_recipient.top_liege }
+						}
+						scope:actor = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+								NOT = { is_participant = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_t
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_t
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				if = {
+					limit = { var:qpq_ui_t_pick_char = { is_in_list = qpq_ui_pool_char_t } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_t_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				var:qpq_ui_t_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 60 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_join_war_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_join_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_join_war_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_join_war_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_join_war_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_join_war_ai_acceptance_value
+					subtract = qpq_join_war_ask_value
+					subtract = qpq_join_war_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_join_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = {
+					scope:recipient = { is_allied_to = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_t_ally
+			}
+			if = {
+				limit = {
+					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_t_kin
+			}
+			if = {
+				limit = {
+					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+				}
+				set_variable = qpq_ui_ref_t_stronger
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					NOT = { scope:secondary_recipient = scope:recipient }
+					scope:recipient = {
+						is_landed = yes
+						NOT = { is_at_war_with = scope:actor }
+						NOT = { top_liege = scope:secondary_recipient.top_liege }
+					}
+					scope:actor = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+							NOT = { is_participant = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:leave_war }
+			qpq_deal_orient_normal_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						NOT = { primary_attacker = scope:recipient }
+						NOT = { primary_defender = scope:recipient }
+					}
+					if = {
+						limit = { is_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_t }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_t }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_t
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+								NOT = { primary_attacker = scope:recipient }
+								NOT = { primary_defender = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_t
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_t
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				if = {
+					limit = { var:qpq_ui_t_pick_char = { is_in_list = qpq_ui_pool_char_t } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_t_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				var:qpq_ui_t_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_leave_war_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_leave_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_leave_war_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_leave_war_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_leave_war_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_leave_war_ai_acceptance_value
+					subtract = qpq_leave_war_ask_value
+					subtract = qpq_leave_war_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_leave_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+							NOT = { primary_attacker = scope:recipient }
+							NOT = { primary_defender = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:stay_out }
+			qpq_deal_orient_normal_effect = yes
+			scope:actor = {
+				every_character_war = {
+					if = {
+						limit = { is_attacker = scope:actor }
+						primary_defender = { add_to_list = qpq_ui_chars_t }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_t }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_t
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						NOT = { scope:secondary_recipient = scope:recipient }
+						scope:actor = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+								NOT = { is_participant = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_t
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_t
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_t_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				if = {
+					limit = { var:qpq_ui_t_pick_char = { is_in_list = qpq_ui_pool_char_t } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_t_candidates target = var:qpq_ui_t_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_t_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_t_pick_char }
+				var:qpq_ui_t_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 36 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_stay_out_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_stay_out_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_stay_out_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_out_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_out_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_stay_out_ai_acceptance_value
+					subtract = qpq_stay_out_ask_value
+					subtract = qpq_stay_out_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_stay_out_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = {
+					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_t_kin
+			}
+			if = {
+				limit = {
+					AND = {
+							scope:recipient = { is_allied_to = scope:secondary_recipient }
+							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+						}
+				}
+				set_variable = qpq_ui_ref_t_liked_ally
+			}
+			if = {
+				limit = {
+					OR = {
+							scope:recipient = { has_relation_friend = scope:secondary_recipient }
+							scope:recipient = { has_relation_lover = scope:secondary_recipient }
+							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+						}
+				}
+				set_variable = qpq_ui_ref_t_friend
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					NOT = { scope:secondary_recipient = scope:recipient }
+					scope:actor = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+							NOT = { is_participant = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
 			limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
 			qpq_deal_orient_normal_effect = yes
 			qpq_ui_load_goods_t_effect = yes
@@ -15413,6 +16186,672 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 		}
 		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:make_peace }
+			qpq_deal_orient_swapped_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						OR = {
+							primary_attacker = scope:recipient
+							primary_defender = scope:recipient
+						}
+					}
+					if = {
+						limit = { primary_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_i }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_i }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_i
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+						}
+					}
+					add_to_list = qpq_ui_pool_char_i
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_i
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				if = {
+					limit = { var:qpq_ui_i_pick_char = { is_in_list = qpq_ui_pool_char_i } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_i_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				var:qpq_ui_i_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_make_peace_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_make_peace_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_make_peace_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_make_peace_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_make_peace_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+					}
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:yield_war }
+			qpq_deal_orient_swapped_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						OR = {
+							primary_attacker = scope:recipient
+							primary_defender = scope:recipient
+						}
+					}
+					if = {
+						limit = { primary_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_i }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_i }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_i
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+						}
+					}
+					add_to_list = qpq_ui_pool_char_i
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_i
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				if = {
+					limit = { var:qpq_ui_i_pick_char = { is_in_list = qpq_ui_pool_char_i } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_i_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				var:qpq_ui_i_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_yield_war_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_yield_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_yield_war_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_yield_war_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_yield_war_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+					}
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:join_war }
+			qpq_deal_orient_swapped_effect = yes
+			scope:actor = {
+				every_character_war = {
+					if = {
+						limit = { is_attacker = scope:actor }
+						primary_defender = { add_to_list = qpq_ui_chars_i }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_i }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_i
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						NOT = { scope:secondary_recipient = scope:recipient }
+						scope:recipient = {
+							is_landed = yes
+							NOT = { is_at_war_with = scope:actor }
+							NOT = { top_liege = scope:secondary_recipient.top_liege }
+						}
+						scope:actor = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+								NOT = { is_participant = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_i
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_i
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				if = {
+					limit = { var:qpq_ui_i_pick_char = { is_in_list = qpq_ui_pool_char_i } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_i_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				var:qpq_ui_i_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 60 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_join_war_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_join_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_join_war_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_join_war_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_join_war_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = qpq_join_war_goal_sw_value }
+			if = {
+				limit = { qpq_join_war_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
+			if = {
+				limit = {
+					scope:actor = { is_allied_to = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_i_ally
+			}
+			if = {
+				limit = {
+					scope:actor = { is_close_family_of = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_i_kin
+			}
+			if = {
+				limit = {
+					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength add = scope:recipient.max_military_strength multiply = 2 } }
+				}
+				set_variable = qpq_ui_ref_i_stronger
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					NOT = { scope:secondary_recipient = scope:recipient }
+					scope:recipient = {
+						is_landed = yes
+						NOT = { is_at_war_with = scope:actor }
+						NOT = { top_liege = scope:secondary_recipient.top_liege }
+					}
+					scope:actor = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+							NOT = { is_participant = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:leave_war }
+			qpq_deal_orient_swapped_effect = yes
+			scope:recipient = {
+				every_character_war = {
+					limit = {
+						NOT = { primary_attacker = scope:recipient }
+						NOT = { primary_defender = scope:recipient }
+					}
+					if = {
+						limit = { is_attacker = scope:recipient }
+						primary_defender = { add_to_list = qpq_ui_chars_i }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_i }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_i
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						scope:recipient = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+								NOT = { primary_attacker = scope:recipient }
+								NOT = { primary_defender = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_i
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_i
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				if = {
+					limit = { var:qpq_ui_i_pick_char = { is_in_list = qpq_ui_pool_char_i } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_i_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				var:qpq_ui_i_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_leave_war_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_leave_war_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_leave_war_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_leave_war_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_leave_war_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					scope:recipient = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+							NOT = { primary_attacker = scope:recipient }
+							NOT = { primary_defender = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:stay_out }
+			qpq_deal_orient_swapped_effect = yes
+			scope:actor = {
+				every_character_war = {
+					if = {
+						limit = { is_attacker = scope:actor }
+						primary_defender = { add_to_list = qpq_ui_chars_i }
+					}
+					else = {
+						primary_attacker = { add_to_list = qpq_ui_chars_i }
+					}
+				}
+			}
+			every_in_list = {
+				list = qpq_ui_chars_i
+				save_temporary_scope_as = secondary_recipient
+				if = {
+					limit = {
+						NOT = { scope:secondary_recipient = scope:recipient }
+						scope:actor = {
+							any_character_war = {
+								qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+								NOT = { is_participant = scope:recipient }
+							}
+						}
+					}
+					add_to_list = qpq_ui_pool_char_i
+				}
+			}
+			ordered_in_list = {
+				list = qpq_ui_pool_char_i
+				order_by = qpq_ui_candidate_order_value
+				max = 120
+				check_range_bounds = no
+				scope:qpq_deal_me = { add_to_variable_list = { name = qpq_ui_i_candidates target = prev } }
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				clear_saved_scope = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:target }
+				clear_saved_scope = target
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				if = {
+					limit = { var:qpq_ui_i_pick_char = { is_in_list = qpq_ui_pool_char_i } }
+					if = {
+						limit = {
+							NOT = { is_target_in_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char } }
+						}
+						add_to_variable_list = { name = qpq_ui_i_candidates target = var:qpq_ui_i_pick_char }
+					}
+				}
+				else = {
+					remove_variable = qpq_ui_i_pick_char
+				}
+			}
+			if = {
+				limit = { exists = var:qpq_ui_i_pick_char }
+				var:qpq_ui_i_pick_char = { save_scope_as = secondary_recipient }
+			}
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 36 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_stay_out_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_stay_out_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_stay_out_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_stay_out_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_stay_out_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = qpq_stay_out_goal_sw_value }
+			if = {
+				limit = { qpq_stay_out_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
+			if = {
+				limit = {
+					scope:actor = { is_close_family_of = scope:secondary_recipient }
+				}
+				set_variable = qpq_ui_ref_i_kin
+			}
+			if = {
+				limit = {
+					AND = {
+							scope:actor = { is_allied_to = scope:secondary_recipient }
+							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+						}
+				}
+				set_variable = qpq_ui_ref_i_liked_ally
+			}
+			if = {
+				limit = {
+					OR = {
+							scope:actor = { has_relation_friend = scope:secondary_recipient }
+							scope:actor = { has_relation_lover = scope:secondary_recipient }
+							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+						}
+				}
+				set_variable = qpq_ui_ref_i_friend
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+
+					NOT = { scope:secondary_recipient = scope:recipient }
+					scope:actor = {
+						any_character_war = {
+							qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+							NOT = { is_participant = scope:recipient }
+						}
+					}
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
 			limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
 			qpq_deal_orient_swapped_effect = yes
 			qpq_ui_load_goods_i_effect = yes
@@ -16616,6 +18055,26 @@ qpq_ui_save_deal_effect = {
 			save_scope_value_as = { name = qpq_deal_t_kind value = flag:temple_patronage }
 		}
 		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:make_peace }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:make_peace }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:yield_war }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:yield_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:join_war }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:join_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:leave_war }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:leave_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:stay_out }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:stay_out }
+		}
+		else_if = {
 			limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
 			save_scope_value_as = { name = qpq_deal_t_kind value = flag:heavier_tribute }
 		}
@@ -17071,6 +18530,26 @@ qpq_ui_save_deal_effect = {
 			save_scope_value_as = { name = qpq_deal_i_kind value = flag:temple_patronage }
 		}
 		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:make_peace }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:make_peace }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:yield_war }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:yield_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:join_war }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:join_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:leave_war }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:leave_war }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:stay_out }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:stay_out }
+		}
+		else_if = {
 			limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
 			save_scope_value_as = { name = qpq_deal_i_kind value = flag:heavier_tribute }
 		}
@@ -17477,6 +18956,10 @@ qpq_deal_clear_seal_scopes_effect = {
 	if = {
 		limit = { exists = scope:qpq_target_title }
 		clear_saved_scope = qpq_target_title
+	}
+	if = {
+		limit = { exists = scope:qpq_target_war }
+		clear_saved_scope = qpq_target_war
 	}
 	if = {
 		limit = { exists = scope:qpq_term_months }
@@ -18271,6 +19754,61 @@ qpq_deal_seal_leg_t_effect = {
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
 	}
 	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:make_peace }
+		qpq_deal_orient_normal_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_t_char }
+			scope:qpq_deal_t_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_make_peace_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:yield_war }
+		qpq_deal_orient_normal_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_t_char }
+			scope:qpq_deal_t_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_yield_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:join_war }
+		qpq_deal_orient_normal_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_t_char }
+			scope:qpq_deal_t_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_join_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:leave_war }
+		qpq_deal_orient_normal_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_t_char }
+			scope:qpq_deal_t_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_leave_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:stay_out }
+		qpq_deal_orient_normal_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_t_char }
+			scope:qpq_deal_t_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_stay_out_seal_from_scopes_effect = yes
+	}
+	else_if = {
 		limit = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
 		qpq_deal_orient_normal_effect = yes
 		qpq_deal_load_goods_t_effect = yes
@@ -18992,6 +20530,61 @@ qpq_deal_seal_leg_i_effect = {
 		qpq_deal_load_goods_i_effect = yes
 		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:make_peace }
+		qpq_deal_orient_swapped_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_i_char }
+			scope:qpq_deal_i_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_make_peace_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:yield_war }
+		qpq_deal_orient_swapped_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_i_char }
+			scope:qpq_deal_i_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_yield_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:join_war }
+		qpq_deal_orient_swapped_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_i_char }
+			scope:qpq_deal_i_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_join_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:leave_war }
+		qpq_deal_orient_swapped_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_i_char }
+			scope:qpq_deal_i_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_leave_war_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:stay_out }
+		qpq_deal_orient_swapped_effect = yes
+		if = {
+			limit = { exists = scope:qpq_deal_i_char }
+			scope:qpq_deal_i_char = { save_scope_as = secondary_recipient }
+		}
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_stay_out_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }

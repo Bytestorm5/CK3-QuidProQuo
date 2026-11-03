@@ -82,6 +82,12 @@ FLAVOR = {
     "bought_freedom": "Every year I send you gold, and every year my people curse your name. Name a price for our freedom, and be rid of the cursing.",
     "accept_the_yoke": "My armies are close, and my friendship is worth more than your pride. Send tribute, and you will have both.",
     "cast_off_the_yoke": "You pay tribute to a master who does nothing for you. Stop paying, and let my gold cover what you lose.",
+    # ---------------- Catalogue G: in time of war
+    "make_peace": "This war bleeds us both, and neither of us will see the end of it in the field. Sign a white peace, and let us both go home.",
+    "yield_war": "You cannot win this war, and every month you fight it costs you more. Concede it now, while you still have something to keep.",
+    "join_war": "My war is just and my enemies are many. March beside me until it is won, and you will share in what we take.",
+    "leave_war": "Their war is not yours. Take your men home before the next battle, and let others bleed for it.",
+    "stay_out": "When my enemies send for you, find a reason to stay at home. This war need not be yours.",
     # ---------------- the carrier: goods for goods, no deed
     "barter": "No deed, no blood, nothing that needs hiding. Only what each of us has, and what each of us wants.",
 }
@@ -96,4 +102,5 @@ GROUP_FLAVOR = {
     "church_favours": "Grace, they say, is freely given. Everything else the Church dispenses has a price.",
     "church_weapons": "A curse from the altar cuts deeper than any blade, and can be aimed with the same care.",
     "tribute": "Tribute is a bargain renewed every year: what is paid, what is owed, and what neither side says aloud.",
+    "wartime": "A war is a bargain too: who fights, who stays home, and what it will take for the killing to stop.",
 }

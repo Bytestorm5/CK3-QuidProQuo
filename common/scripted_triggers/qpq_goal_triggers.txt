@@ -970,6 +970,52 @@ qpq_temple_patronage_goal_sw_refuses_trigger = {
 	}
 }
 
+qpq_join_war_goal_refuses_trigger = {
+	OR = {
+		scope:recipient = { is_allied_to = scope:secondary_recipient }
+		scope:recipient = { is_close_family_of = scope:secondary_recipient }
+		scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+	}
+}
+
+qpq_join_war_goal_sw_refuses_trigger = {
+	OR = {
+		scope:actor = { is_allied_to = scope:secondary_recipient }
+		scope:actor = { is_close_family_of = scope:secondary_recipient }
+		scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength add = scope:recipient.max_military_strength multiply = 2 } }
+	}
+}
+
+qpq_stay_out_goal_refuses_trigger = {
+	OR = {
+		scope:recipient = { is_close_family_of = scope:secondary_recipient }
+		AND = {
+			scope:recipient = { is_allied_to = scope:secondary_recipient }
+			scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+		}
+		OR = {
+			scope:recipient = { has_relation_friend = scope:secondary_recipient }
+			scope:recipient = { has_relation_lover = scope:secondary_recipient }
+			scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+		}
+	}
+}
+
+qpq_stay_out_goal_sw_refuses_trigger = {
+	OR = {
+		scope:actor = { is_close_family_of = scope:secondary_recipient }
+		AND = {
+			scope:actor = { is_allied_to = scope:secondary_recipient }
+			scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+		}
+		OR = {
+			scope:actor = { has_relation_friend = scope:secondary_recipient }
+			scope:actor = { has_relation_lover = scope:secondary_recipient }
+			scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+		}
+	}
+}
+
 qpq_accept_the_yoke_goal_refuses_trigger = {
 	OR = {
 		scope:recipient = { has_relation_rival = scope:actor }

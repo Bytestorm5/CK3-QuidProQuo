@@ -251,6 +251,26 @@ qpq_deal.1 = {
 				desc = qpq_temple_patronage_name
 			}
 			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:make_peace }
+				desc = qpq_make_peace_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:yield_war }
+				desc = qpq_yield_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:join_war }
+				desc = qpq_join_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:leave_war }
+				desc = qpq_leave_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:stay_out }
+				desc = qpq_stay_out_name
+			}
+			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
 				desc = qpq_heavier_tribute_name
 			}
@@ -515,6 +535,26 @@ qpq_deal.1 = {
 				desc = qpq_temple_patronage_name
 			}
 			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:make_peace }
+				desc = qpq_make_peace_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:yield_war }
+				desc = qpq_yield_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:join_war }
+				desc = qpq_join_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:leave_war }
+				desc = qpq_leave_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:stay_out }
+				desc = qpq_stay_out_name
+			}
+			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }
 				desc = qpq_heavier_tribute_name
 			}
@@ -775,6 +815,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:make_peace }
+				desc = qpq_make_peace_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:yield_war }
+				desc = qpq_yield_war_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:join_war }
+				desc = qpq_join_war_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:leave_war }
+				desc = qpq_leave_war_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:stay_out }
+				desc = qpq_stay_out_pitch_ev
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
@@ -1069,6 +1129,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:make_peace }
+				desc = qpq_make_peace_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:yield_war }
+				desc = qpq_yield_war_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:join_war }
+				desc = qpq_join_war_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:leave_war }
+				desc = qpq_leave_war_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:stay_out }
+				desc = qpq_stay_out_ask_ev_i
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }
@@ -1438,6 +1518,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:make_peace }
+				desc = qpq_make_peace_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:yield_war }
+				desc = qpq_yield_war_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:join_war }
+				desc = qpq_join_war_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:leave_war }
+				desc = qpq_leave_war_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:stay_out }
+				desc = qpq_stay_out_ask_ev_t
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
