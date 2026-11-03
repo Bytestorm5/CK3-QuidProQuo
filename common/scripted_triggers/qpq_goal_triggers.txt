@@ -1148,10 +1148,12 @@ qpq_buy_a_bull_goal_refuses_trigger = {
 	OR = {
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:recipient = { is_close_family_of = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		AND = {
 				scope:recipient = { is_allied_to = scope:secondary_recipient }
 				scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
@@ -1159,6 +1161,7 @@ qpq_buy_a_bull_goal_refuses_trigger = {
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		OR = {
 				scope:recipient = { has_relation_friend = scope:secondary_recipient }
 				scope:recipient = { has_relation_lover = scope:secondary_recipient }
@@ -1172,14 +1175,17 @@ qpq_buy_a_bull_goal_sw_refuses_trigger = {
 	OR = {
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:actor = { is_allied_to = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:actor = { is_close_family_of = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		OR = {
 				scope:actor = { has_relation_friend = scope:secondary_recipient }
 				scope:actor = { has_relation_lover = scope:secondary_recipient }
@@ -1352,10 +1358,12 @@ qpq_favourable_omens_goal_refuses_trigger = {
 	OR = {
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:recipient = { is_close_family_of = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		AND = {
 				scope:recipient = { is_allied_to = scope:secondary_recipient }
 				scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
@@ -1363,6 +1371,7 @@ qpq_favourable_omens_goal_refuses_trigger = {
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		OR = {
 				scope:recipient = { has_relation_friend = scope:secondary_recipient }
 				scope:recipient = { has_relation_lover = scope:secondary_recipient }
@@ -1376,14 +1385,17 @@ qpq_favourable_omens_goal_sw_refuses_trigger = {
 	OR = {
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:actor = { is_allied_to = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		scope:actor = { is_close_family_of = scope:secondary_recipient }
 	}
 		AND = {
 		exists = scope:secondary_recipient
+		NOT = { scope:secondary_recipient = scope:actor }
 		OR = {
 				scope:actor = { has_relation_friend = scope:secondary_recipient }
 				scope:actor = { has_relation_lover = scope:secondary_recipient }
@@ -1452,30 +1464,6 @@ qpq_join_war_goal_refuses_trigger = {
 	}
 }
 
-qpq_stay_out_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		AND = {
-				scope:recipient = { is_allied_to = scope:secondary_recipient }
-				scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-			}
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:recipient = { has_relation_friend = scope:secondary_recipient }
-				scope:recipient = { has_relation_lover = scope:secondary_recipient }
-				scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-			}
-	}
-	}
-}
-
 qpq_stay_out_goal_sw_refuses_trigger = {
 	OR = {
 		AND = {
@@ -1485,14 +1473,6 @@ qpq_stay_out_goal_sw_refuses_trigger = {
 		AND = {
 		exists = scope:secondary_recipient
 		scope:actor = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:actor = { has_relation_friend = scope:secondary_recipient }
-				scope:actor = { has_relation_lover = scope:secondary_recipient }
-				scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-			}
 	}
 	}
 }

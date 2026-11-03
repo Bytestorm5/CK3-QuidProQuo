@@ -445,7 +445,9 @@ def compute_kind(k, L, block):
     gv = goals.goal_value(k, swapped_goal)
     goal = ("qpq_%s_goal%s_value" % (key, "_sw" if swapped_goal else "")) if gv else "0"
     if L == "t":
-        # They do it. What it costs them, and what your goods are worth to them (you give: oriented normal)
+        # They do it. What it costs them, and what your goods are worth to them (you give: oriented normal).
+        # Their own risk as the doer is in what the deed asks of them.
+        s += setv("risk", "0")
         if payer_init:
             s += setv("ask", "qpq_%s_ask_value" % key)
             s += setv("char", "qpq_%s_character_value" % key)
@@ -454,8 +456,11 @@ def compute_kind(k, L, block):
         else:
             s += setv("ask", "qpq_%s_demand_value" % key)
             s += setv("char", "0") + setv("circ", "0") + setv("refuse", "0")
-            s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value } }\n"
-                  "\t%s\t\t\t}\n") % (key, setv("refuse", "-1000"))
+            refuse = ["qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_%s_agent_tier_value }" % key]
+            if gv and goals.goal_refusal(k, True):
+                refuse.append("qpq_%s_goal_sw_refuses_trigger = yes" % key)
+            s += ("\t\t\tif = {\n\t\t\t\tlimit = {\n\t\t\t\t\tOR = {\n%s\t\t\t\t\t}\n\t\t\t\t}\n\t%s\t\t\t}\n") % (
+                "".join("\t\t\t\t\t\t%s\n" % r for r in refuse), setv("refuse", "-1000"))
         s += oriented_as(True, setv("offers", "qpq_%s_%s_value" % (key, "offer_points" if payer_init else "goods_points"))
                          + setv("dread", "qpq_%s_dread_value" % key))
     else:
@@ -465,20 +470,22 @@ def compute_kind(k, L, block):
         if payer_init:
             s += scaled("offers", "qpq_goods_cost_value", loss)
             s += setv("char", "qpq_%s_payer_character_value" % key)
+            s += setv("risk", "qpq_%s_payer_risk_value" % key)
             s += setv("circ", "0") + setv("refuse", "0")
             if gv and goals.goal_refusal(k, True):
                 s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_%s_goal_sw_refuses_trigger = yes }\n\t%s\t\t\t}\n") % (
                     key, setv("refuse", "-1000"))
         else:
             s += setv("offers", "qpq_%s_offer_points_value" % key)
-            s += setv("char", "0")
+            s += setv("char", "0") + setv("risk", "0")
             s += circ_guarded(k, L, setv("circ", "qpq_%s_circumstance_value" % key))
             s += setv("refuse", "qpq_%s_refusal_value" % key)
         s += setv("dread", "0")
     s += setv("goal", goal)
     s += ("\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%(L)s_a_other\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = var:qpq_ui_%(L)s_a_goal\n"
           "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_char\n\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_dread\n"
-          "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_circ\n\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_refuse\n\t\t\t\t}\n\t\t\t}\n") % {"L": L}
+          "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_circ\n\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_refuse\n"
+          "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_risk\n\t\t\t\t}\n\t\t\t}\n") % {"L": L}
     s += refusal_flags(k, L, block)
     # Every title beyond the first counts again (land is chosen title by title)
     if L == "t":
@@ -516,7 +523,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += "# qpq_deal_orient_*_effect to whichever of them is the proposer of the Ask being worked on.\n\n"
 
     leg_vars = ["ekind", "target", "target_ok", "payer_tier", "agent_tier", "price", "fair", "term", "a_ask", "a_offers",
-                "a_other", "a_goal", "a_char", "a_dread", "a_circ", "a_refuse"] + ["fail_%d" % i for i in range(max_valid())]
+                "a_other", "a_goal", "a_char", "a_dread", "a_circ", "a_refuse", "a_risk"] + ["fail_%d" % i for i in range(max_valid())]
     lists = ["candidates", "title_candidates", "artifact_candidates", "land_candidates", "gift_artifact_candidates",
              "gift_secret_candidates"]
 
@@ -634,24 +641,33 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Put the two legs together
     eff += "qpq_ui_deal_finish_effect = {\n\tqpq_deal_orient_normal_effect = yes\n"
     eff += "\tset_variable = { name = qpq_ui_acc_ask value = 0 }\n\tset_variable = { name = qpq_ui_acc_offers value = 0 }\n"
-    for part in ("other", "goal", "char", "dread", "circ", "refuse", "opinion", "public", "cap", "allow"):
+    for part in ("other", "goal", "char", "dread", "circ", "refuse", "risk", "opinion", "public", "cap", "allow", "allow_down"):
         eff += "\tset_variable = { name = qpq_ui_acc_%s value = 0 }\n" % part
     for L in LEGS:
         eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
         eff += "\t\tset_variable = qpq_ui_deal_active\n"
         eff += "\t\tchange_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_%s_a_ask }\n" % L
         eff += "\t\tchange_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_%s_a_offers }\n" % L
-        for part in ("goal", "char", "dread", "circ", "refuse"):
+        for part in ("goal", "char", "dread", "circ", "refuse", "risk"):
             eff += "\t\tchange_variable = { name = qpq_ui_acc_%s add = var:qpq_ui_%s_a_%s }\n" % (part, L, part)
         eff += "\t}\n"
     # Opinion is counted once for the whole deal
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n\t\tset_variable = { name = qpq_ui_acc_opinion value = qpq_ui_deal_opinion_value }\n\t}\n"
-    # Goodwill makes the deed they do (leg t) cheaper, never more than it costs them: what it costs them is the
-    # most it can be worth. With no deed of theirs (goods only, or only a deed you do), it is worth nothing.
+    # Goodwill makes the deed they do (leg t) cheaper, never by more than it costs them: with no deed of theirs
+    # (goods only, or only a deed you do) liking is worth nothing. Ill will makes them ask more for their deed and
+    # their goods, never more than those are worth: a gift that asks nothing of them is never refused for it.
     eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_t_ekind\n\t\t\tNOT = { var:qpq_ui_t_ekind = flag:barter }\n\t\t}\n"
             "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_allow\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_t_a_ask\n"
             "\t\t\t\tadd = var:qpq_ui_t_a_char\n\t\t\t\tadd = var:qpq_ui_t_a_circ\n\t\t\t\tadd = var:qpq_ui_t_a_goal\n"
             "\t\t\t\tmultiply = -1\n\t\t\t\tmin = 0\n\t\t\t}\n\t\t}\n\t}\n")
+    # Ill will reaches as far as what they do, what they give, and what a deed you would do for them is worth to
+    # them (a deed from someone they loathe is trusted less): only goods freely given are safe from it
+    eff += ("\tset_variable = { name = qpq_ui_acc_allow_down value = var:qpq_ui_acc_allow }\n"
+            "\tif = {\n\t\tlimit = { has_variable = qpq_ui_i_ekind }\n"
+            "\t\tchange_variable = {\n\t\t\tname = qpq_ui_acc_allow_down\n\t\t\tadd = {\n\t\t\t\tvalue = var:qpq_ui_i_a_offers\n"
+            "\t\t\t\tmultiply = -1\n\t\t\t\tmin = 0\n\t\t\t}\n\t\t}\n"
+            "\t\tchange_variable = {\n\t\t\tname = qpq_ui_acc_allow_down\n\t\t\tadd = {\n\t\t\t\tvalue = var:qpq_ui_i_a_ask\n"
+            "\t\t\t\tadd = var:qpq_ui_i_a_goal\n\t\t\t\tmin = 0\n\t\t\t}\n\t\t}\n\t}\n")
     # Each side's scandal: the worse of its two halves
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
     eff += "\t\tset_variable = { name = qpq_ui_my_tier value = 0 }\n\t\tset_variable = { name = qpq_ui_their_tier value = 0 }\n"
@@ -672,14 +688,22 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Everything but the Ask and the goods, as the panel judges refusal (at -500 or less)
     eff += ("\tset_variable = {\n\t\tname = qpq_ui_acc_other\n\t\tvalue = {\n\t\t\tvalue = var:qpq_ui_acc_goal\n"
             "\t\t\tadd = var:qpq_ui_acc_char\n\t\t\tadd = var:qpq_ui_acc_dread\n\t\t\tadd = var:qpq_ui_acc_circ\n"
-            "\t\t\tadd = var:qpq_ui_acc_refuse\n\t\t\tadd = var:qpq_ui_acc_opinion\n\t\t\tadd = var:qpq_ui_acc_public\n\t\t}\n\t}\n")
+            "\t\t\tadd = var:qpq_ui_acc_refuse\n\t\t\tadd = var:qpq_ui_acc_risk\n\t\t\tadd = var:qpq_ui_acc_opinion\n\t\t\tadd = var:qpq_ui_acc_public\n\t\t}\n\t}\n")
     # Your authority over a subordinate (Command): what it adds, and what they would have said without it
     eff += "\tqpq_ui_command_compute_effect = yes\n"
-    # Goodwill beyond what their deed costs them buys nothing: acc_cap takes it back (with and without the command)
+    # Goodwill (opinion, dread, and your authority) past those bounds counts for nothing: acc_cap takes the excess
+    # back (with and without the command)
+    # Liking, dread and authority on one side, held to the cost of their deed; dislike on the other, held to what
+    # they do, give and get. The two are bounded apart: fear does not cancel ill will on a plain trade of goods.
     def cap(name, with_cmd):
-        return ("\t\tset_variable = {\n\t\t\tname = %s\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_opinion\n\t\t\t\tmin = 0\n"
-                "\t\t\t\tadd = var:qpq_ui_acc_dread\n%s\t\t\t\tsubtract = var:qpq_ui_acc_allow\n\t\t\t\tmin = 0\n\t\t\t\tmultiply = -1\n"
-                "\t\t\t}\n\t\t}\n") % (name, "\t\t\t\tadd = var:qpq_ui_acc_cmd\n" if with_cmd else "")
+        cmd = "\t\t\t\t\tadd = var:qpq_ui_acc_cmd\n" if with_cmd else ""
+        return ("\t\tset_variable = {\n\t\t\tname = %s\n\t\t\tvalue = {\n"
+                "\t\t\t\tvalue = {\n\t\t\t\t\tvalue = var:qpq_ui_acc_opinion\n\t\t\t\t\tmin = 0\n\t\t\t\t\tadd = var:qpq_ui_acc_dread\n%s"
+                "\t\t\t\t\tmax = var:qpq_ui_acc_allow\n\t\t\t\t}\n"
+                "\t\t\t\tadd = {\n\t\t\t\t\tvalue = var:qpq_ui_acc_opinion\n\t\t\t\t\tmax = 0\n"
+                "\t\t\t\t\tmin = {\n\t\t\t\t\t\tvalue = var:qpq_ui_acc_allow_down\n\t\t\t\t\t\tmultiply = -1\n\t\t\t\t\t}\n\t\t\t\t}\n"
+                "\t\t\t\tsubtract = {\n\t\t\t\t\tvalue = var:qpq_ui_acc_opinion\n\t\t\t\t\tadd = var:qpq_ui_acc_dread\n%s\t\t\t\t}\n"
+                "\t\t\t}\n\t\t}\n") % (name, cmd, cmd)
     eff += ("\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n" + cap("qpq_ui_acc_cap", False) +
             "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_before_cmd\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_ask\n"
             "\t\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\t\tadd = var:qpq_ui_acc_other\n\t\t\t\tadd = var:qpq_ui_acc_cap\n\t\t\t}\n\t\t}\n"
@@ -691,7 +715,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Clear everything the compute steps derive
     eff += "qpq_ui_clear_derived_effect = {\n"
     gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_acc_ask",
-          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_acc_cap", "qpq_ui_acc_allow",
+          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_acc_cap", "qpq_ui_acc_allow", "qpq_ui_acc_allow_down", "qpq_ui_acc_risk",
           "qpq_ui_acc_before_cmd", "qpq_ui_acc_cmd", "qpq_ui_acc_goal", "qpq_ui_acc_char", "qpq_ui_acc_dread", "qpq_ui_acc_circ", "qpq_ui_acc_refuse",
           "qpq_ui_acc_opinion", "qpq_ui_acc_public", "qpq_ui_cmd_ok", "qpq_ui_cmd_level", "qpq_ui_cmd_expect",
           "qpq_ui_cmd_margin"]
@@ -985,7 +1009,7 @@ def gen_ui_custom_loc(write):
         for w in WHYS[L]:
             out += cl("QpqUiRef_%s_%s" % (L, w), [("has_variable = qpq_ui_ref_%s_%s" % (L, w), "QPQ_UI_REF_%s_%s" % (w.upper(), L.upper()))], "qpq_empty")
     # The breakdown, one line per part; a part that adds nothing is left out
-    for part in ("goal", "char", "dread", "circ", "public", "cap", "refuse"):
+    for part in ("goal", "char", "risk", "dread", "circ", "public", "cap", "refuse"):
         out += cl("QpqUiAccLine_%s" % part, [("exists = var:qpq_ui_acc_%s NOT = { var:qpq_ui_acc_%s = 0 }" % (part, part),
                                                "QPQ_UI_ACC_LINE_%s" % part.upper())], "qpq_empty")
     out += cl("QpqUiRefuseBlock", [("exists = var:qpq_ui_acc_other var:qpq_ui_acc_other <= -500", "QPQ_UI_REFUSE_BLOCK")], "qpq_empty")
@@ -1021,7 +1045,7 @@ def gen_ui_loc(write):
             "rival": "%s will risk nothing for a rival (Tier II or worse)" % them,
             "virtue": "%s is too honest, just, zealous or compassionate to commit a crime (Tier IV or worse)" % them,
             "damnable": "it would damn %s (Tier V), and %s is not cowed by you" % (them, them),
-            "no_leverage": "a deed this dirty (Tier III or worse), for someone %s dislikes, who holds no strong hook on them and does not frighten them" % them,
+            "no_leverage": "a deed this dirty (Tier III or worse), for you, whom %s dislikes, and you hold no strong hook on them and do not frighten them" % them,
             "ally": "%s is allied to %s" % (them, tgt),
             "kin": "%s is %s close family" % (tgt, them_p),
             "stronger": "%s side is more than twice as strong" % tgt_p,

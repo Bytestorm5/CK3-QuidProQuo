@@ -2765,6 +2765,21 @@ qpq_hub.50 = {
 		}
 		first_valid = {
 			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 3 }
+				desc = qpq_deal.1.command_3
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 2 }
+				desc = qpq_deal.1.command_2
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 1 }
+				desc = qpq_deal.1.command_1
+			}
+			desc = qpq_empty
+		}
+		first_valid = {
+			triggered_desc = {
 				trigger = { scope:qpq_o_charter ?= yes }
 				desc = qpq_hub.50.stakes_charter
 			}
@@ -2786,6 +2801,7 @@ qpq_hub.50 = {
 		}
 		remove_character_flag = qpq_considering_proposal
 		qpq_seal_proposed_kind_effect = yes
+		qpq_ai_command_seal_effect = yes
 	}
 	option = {
 		name = qpq_hub.50.c
@@ -2812,6 +2828,7 @@ qpq_hub.50 = {
 	option = {
 		name = qpq_hub.50.b
 		remove_character_flag = qpq_considering_proposal
+		qpq_command_defied_effect = yes
 		scope:actor = {
 			add_opinion = { target = root modifier = qpq_declined_pact_opinion }
 			send_interface_toast = {

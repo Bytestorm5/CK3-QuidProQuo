@@ -96,10 +96,11 @@ qpq_stake_rank_value = {
 			value = 8
 		}
 	}
+	# A Head of Faith commands the Church's wealth: four times their rank, and never less than a lord's
 	if = {
 		limit = { qpq_is_head_of_faith_trigger = yes }
 		multiply = 4
-		min = 12
+		min = 4
 	}
 }
 

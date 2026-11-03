@@ -4401,6 +4401,28 @@ qpq_k_make_peace_exposed_effect = {
 		}
 	}
 }
+qpq_k_make_peace_ai_find_effect = {
+	random_character_war = {
+		limit = {
+			OR = {
+				primary_attacker = root
+				primary_defender = root
+			}
+			NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
+		}
+		save_scope_as = qpq_ai_war
+		if = {
+			limit = { primary_attacker = root }
+			primary_defender = { save_scope_as = qpq_ai_foe }
+		}
+		else = {
+			primary_attacker = { save_scope_as = qpq_ai_foe }
+		}
+	}
+
+	scope:qpq_ai_foe ?= { save_scope_as = recipient }
+	root = { save_scope_as = secondary_recipient }
+}
 
 #### Yield the War
 qpq_k_yield_war_seal_from_scopes_effect = {
@@ -4467,6 +4489,28 @@ qpq_k_yield_war_exposed_effect = {
 			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
 		}
 	}
+}
+qpq_k_yield_war_ai_find_effect = {
+	random_character_war = {
+		limit = {
+			OR = {
+				primary_attacker = root
+				primary_defender = root
+			}
+			qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
+		}
+		save_scope_as = qpq_ai_war
+		if = {
+			limit = { primary_attacker = root }
+			primary_defender = { save_scope_as = qpq_ai_foe }
+		}
+		else = {
+			primary_attacker = { save_scope_as = qpq_ai_foe }
+		}
+	}
+
+	scope:qpq_ai_foe ?= { save_scope_as = recipient }
+	root = { save_scope_as = secondary_recipient }
 }
 
 #### Join the War
@@ -4536,6 +4580,41 @@ qpq_k_join_war_ai_attempt_effect = {
 qpq_k_join_war_exposed_effect = {
 	# nothing
 }
+qpq_k_join_war_ai_find_effect = {
+	random_character_war = {
+		limit = {
+			OR = {
+				primary_attacker = root
+				primary_defender = root
+			}
+			NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = 25 } }
+		}
+		save_scope_as = qpq_ai_war
+		if = {
+			limit = { primary_attacker = root }
+			primary_defender = { save_scope_as = qpq_ai_foe }
+		}
+		else = {
+			primary_attacker = { save_scope_as = qpq_ai_foe }
+		}
+	}
+
+	if = {
+		limit = { exists = scope:qpq_ai_foe }
+		scope:qpq_ai_foe = { save_scope_as = secondary_recipient }
+		random_neighboring_and_across_water_top_liege_realm_owner = {
+			limit = {
+				NOT = { this = scope:secondary_recipient }
+				is_at_war = no
+				NOT = { top_liege = scope:secondary_recipient.top_liege }
+				NOT = { is_allied_to = scope:secondary_recipient }
+				NOT = { is_close_family_of = scope:secondary_recipient }
+				opinion = { target = root value >= -10 }
+			}
+			save_scope_as = recipient
+		}
+	}
+}
 
 #### Leave the War
 qpq_k_leave_war_seal_from_scopes_effect = {
@@ -4593,6 +4672,42 @@ qpq_k_leave_war_ai_attempt_effect = {
 }
 qpq_k_leave_war_exposed_effect = {
 	scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
+}
+qpq_k_leave_war_ai_find_effect = {
+	random_character_war = {
+		limit = {
+			OR = {
+				primary_attacker = root
+				primary_defender = root
+			}
+
+		}
+		save_scope_as = qpq_ai_war
+		if = {
+			limit = { primary_attacker = root }
+			primary_defender = { save_scope_as = qpq_ai_foe }
+		}
+		else = {
+			primary_attacker = { save_scope_as = qpq_ai_foe }
+		}
+	}
+
+	scope:qpq_ai_war ?= {
+		if = {
+			limit = { primary_attacker = root }
+			random_war_defender = {
+				limit = { NOT = { this = scope:qpq_ai_war.primary_defender } }
+				save_scope_as = recipient
+			}
+		}
+		else = {
+			random_war_attacker = {
+				limit = { NOT = { this = scope:qpq_ai_war.primary_attacker } }
+				save_scope_as = recipient
+			}
+		}
+	}
+	root = { save_scope_as = secondary_recipient }
 }
 
 #### Stay Out of the War
@@ -4655,6 +4770,40 @@ qpq_k_stay_out_exposed_effect = {
 		limit = { scope:qpq_target = { is_alive = yes } }
 		scope:qpq_target = {
 			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_me_opinion opinion = -20 }
+		}
+	}
+}
+qpq_k_stay_out_ai_find_effect = {
+	random_character_war = {
+		limit = {
+			OR = {
+				primary_attacker = root
+				primary_defender = root
+			}
+
+		}
+		save_scope_as = qpq_ai_war
+		if = {
+			limit = { primary_attacker = root }
+			primary_defender = { save_scope_as = qpq_ai_foe }
+		}
+		else = {
+			primary_attacker = { save_scope_as = qpq_ai_foe }
+		}
+	}
+
+	if = {
+		limit = { exists = scope:qpq_ai_foe }
+		scope:qpq_ai_foe = {
+			save_scope_as = secondary_recipient
+			random_ally = {
+				limit = {
+					NOT = { this = root }
+					NOT = { is_at_war_with = root }
+					NOT = { scope:qpq_ai_war = { is_participant = prev } }
+				}
+				save_scope_as = recipient
+			}
 		}
 	}
 }
@@ -6296,6 +6445,26 @@ qpq_ai_broker_pact_effect = {
 			trigger = { qpq_k_absolution_by_concession_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = absolution_by_concession }
 		}
+		6 = {
+			trigger = { qpq_k_make_peace_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = make_peace }
+		}
+		3 = {
+			trigger = { qpq_k_yield_war_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = yield_war }
+		}
+		5 = {
+			trigger = { qpq_k_join_war_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = join_war }
+		}
+		3 = {
+			trigger = { qpq_k_leave_war_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = leave_war }
+		}
+		3 = {
+			trigger = { qpq_k_stay_out_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = stay_out }
+		}
 		20 = {
 			# think better of it
 		}
@@ -6306,6 +6475,10 @@ qpq_ai_propose_kind_effect = {
 	clear_saved_scope = recipient
 	clear_saved_scope = secondary_recipient
 	clear_saved_scope = target
+	clear_saved_scope = qpq_ai_war
+	clear_saved_scope = qpq_ai_foe
+	clear_saved_scope = qpq_deal_command
+	clear_saved_scope = qpq_cmd_bonus
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
@@ -6322,11 +6495,18 @@ qpq_ai_propose_kind_effect = {
 		save_scope_value_as = { name = qpq_price value = qpq_$KIND$_price_value }
 		# AI proposers pay on delivery: if they cannot pay then, the deal sours into a breach
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
+		# A liege who would be refused may lean on their authority (Command), if their standing allows it: the
+		# lightest touch that will do. A person is told, and decides for themselves.
+		if = {
+			limit = { NOT = { qpq_$KIND$_ai_acceptance_value > 0 } }
+			qpq_ai_try_command_effect = { KIND = $KIND$ }
+		}
 		if = {
 			limit = { scope:recipient = { is_ai = yes } }
 			if = {
 				limit = { qpq_$KIND$_ai_acceptance_value > 0 }
 				qpq_k_$KIND$_seal_from_scopes_effect = yes
+				qpq_ai_command_seal_effect = yes
 			}
 		}
 		else = {

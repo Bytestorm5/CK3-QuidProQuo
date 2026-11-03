@@ -617,6 +617,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_chartered_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_chartered_conquest_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -636,6 +637,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -789,6 +791,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_sanctioned_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_sanctioned_conquest_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -808,6 +811,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -958,6 +962,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marcher_charge_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_marcher_charge_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -977,6 +982,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1121,6 +1127,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_sponsorship_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_sponsorship_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -1140,6 +1147,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1265,6 +1273,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_development_charter_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_development_charter_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -1284,6 +1293,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1403,6 +1413,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_electoral_purchase_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_electoral_purchase_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -1422,6 +1433,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1495,6 +1507,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_loyal_mole_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_loyal_mole_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_loyal_mole_circumstance_value }
@@ -1510,6 +1523,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1570,6 +1584,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_agent_provocateur_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_agent_provocateur_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_agent_provocateur_circumstance_value }
@@ -1585,6 +1600,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1702,6 +1718,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_licensed_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_licensed_feud_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -1721,6 +1738,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -1866,6 +1884,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dossier_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dossier_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -1885,6 +1904,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2054,6 +2074,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_quiet_removal_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_quiet_removal_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2073,6 +2094,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2231,6 +2253,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_heir_question_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_heir_question_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2250,6 +2273,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2415,6 +2439,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_snatch_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_snatch_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2434,6 +2459,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2583,6 +2609,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispossession_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dispossession_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2602,6 +2629,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2755,6 +2783,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_the_cloister_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_the_cloister_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2774,6 +2803,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -2927,6 +2957,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marriage_by_command_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_marriage_by_command_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -2946,6 +2977,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3080,6 +3112,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -3099,6 +3132,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3239,6 +3273,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_artifact_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_artifact_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -3258,6 +3293,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3372,6 +3408,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_renunciation_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_renunciation_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -3391,6 +3428,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3452,6 +3490,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hush_money_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hush_money_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_hush_money_circumstance_value }
@@ -3467,6 +3506,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3527,12 +3567,18 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_price_of_loyalty_demand_value }
 			set_variable = { name = qpq_ui_t_a_char value = 0 }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
 			set_variable = { name = qpq_ui_t_a_refuse value = 0 }
 			if = {
-				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value } }
+				limit = {
+					OR = {
+						qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value }
+						qpq_price_of_loyalty_goal_sw_refuses_trigger = yes
+					}
+				}
 				set_variable = { name = qpq_ui_t_a_refuse value = -1000 }
 			}
 			qpq_deal_orient_normal_effect = yes
@@ -3548,6 +3594,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3674,6 +3721,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_blessing_for_a_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_blessing_for_a_feud_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -3693,6 +3741,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3788,6 +3837,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_clemency_bargain_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_clemency_bargain_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_clemency_bargain_circumstance_value }
@@ -3803,6 +3853,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -3918,12 +3969,18 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_electoral_capitulation_demand_value }
 			set_variable = { name = qpq_ui_t_a_char value = 0 }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
 			set_variable = { name = qpq_ui_t_a_refuse value = 0 }
 			if = {
-				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value } }
+				limit = {
+					OR = {
+						qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value }
+						qpq_electoral_capitulation_goal_sw_refuses_trigger = yes
+					}
+				}
 				set_variable = { name = qpq_ui_t_a_refuse value = -1000 }
 			}
 			qpq_deal_orient_normal_effect = yes
@@ -3939,6 +3996,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4019,6 +4077,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_mutual_defense_league_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_mutual_defense_league_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4038,6 +4097,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4109,6 +4169,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faction_pledge_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_faction_pledge_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4128,6 +4189,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4250,6 +4312,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_title_swap_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_title_swap_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4269,6 +4332,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4335,6 +4399,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_coup_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_coup_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4354,6 +4419,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4506,6 +4572,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_proxy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_proxy_war_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4525,6 +4592,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4670,6 +4738,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_partition_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_partition_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -4689,6 +4758,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4777,6 +4847,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_alliance_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_secret_alliance_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_secret_alliance_circumstance_value }
@@ -4792,6 +4863,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -4858,6 +4930,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_truce_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_truce_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_truce_circumstance_value }
@@ -4873,6 +4946,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5004,6 +5078,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faithless_ally_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_faithless_ally_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5023,6 +5098,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5123,6 +5199,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_turncoat_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_turncoat_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5142,6 +5219,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5241,6 +5319,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_seed_the_separatists_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_seed_the_separatists_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5260,6 +5339,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5379,6 +5459,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_shelter_the_pretender_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_shelter_the_pretender_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5398,6 +5479,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5516,6 +5598,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_extradition_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_extradition_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5535,6 +5618,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5634,6 +5718,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_councillor_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_councillor_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5653,6 +5738,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5752,6 +5838,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_home_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_home_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5771,6 +5858,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5842,6 +5930,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_defection_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_defection_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5861,6 +5950,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -5980,6 +6070,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_clause_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_secret_clause_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -5999,6 +6090,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6130,6 +6222,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hire_the_hashashin_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hire_the_hashashin_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6149,6 +6242,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6316,6 +6410,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_excommunication_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_excommunication_for_hire_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6335,6 +6430,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6485,6 +6581,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispensation_for_gold_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dispensation_for_gold_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6504,6 +6601,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6643,6 +6741,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_steer_the_holy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_steer_the_holy_war_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6662,6 +6761,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6799,6 +6899,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_purchase_a_mitre_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_purchase_a_mitre_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6818,6 +6919,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -6957,6 +7059,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_claim_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_claim_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -6976,6 +7079,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7071,6 +7175,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_absolution_by_concession_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_absolution_by_concession_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_absolution_by_concession_circumstance_value }
@@ -7086,6 +7191,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7215,6 +7321,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_warrant_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_warrant_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -7234,6 +7341,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7385,6 +7493,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_bull_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_bull_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -7404,6 +7513,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7434,6 +7544,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:recipient = { is_close_family_of = scope:secondary_recipient }
 					}
 				}
@@ -7443,6 +7554,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						AND = {
 								scope:recipient = { is_allied_to = scope:secondary_recipient }
 								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
@@ -7455,6 +7567,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						OR = {
 								scope:recipient = { has_relation_friend = scope:secondary_recipient }
 								scope:recipient = { has_relation_lover = scope:secondary_recipient }
@@ -7561,6 +7674,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_conclave_votes_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_conclave_votes_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -7580,6 +7694,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7653,6 +7768,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_council_lobbying_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_council_lobbying_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_council_lobbying_circumstance_value }
@@ -7668,6 +7784,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7728,6 +7845,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_caliphal_investiture_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_caliphal_investiture_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_caliphal_investiture_circumstance_value }
@@ -7743,6 +7861,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7808,6 +7927,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_name_in_the_khutba_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_name_in_the_khutba_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -7827,6 +7947,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -7953,6 +8074,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fatwa_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_fatwa_for_hire_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -7972,6 +8094,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8133,6 +8256,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fund_the_dawa_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_fund_the_dawa_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -8152,6 +8276,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8252,6 +8377,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_crowning_the_usurper_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_crowning_the_usurper_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -8271,6 +8397,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8365,6 +8492,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_pliant_patriarch_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_pliant_patriarch_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_pliant_patriarch_circumstance_value }
@@ -8380,6 +8508,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8508,6 +8637,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_favourable_omens_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_favourable_omens_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -8527,6 +8657,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8557,6 +8688,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:recipient = { is_close_family_of = scope:secondary_recipient }
 					}
 				}
@@ -8566,6 +8698,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						AND = {
 								scope:recipient = { is_allied_to = scope:secondary_recipient }
 								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
@@ -8578,6 +8711,7 @@ qpq_ui_leg_t_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						OR = {
 								scope:recipient = { has_relation_friend = scope:secondary_recipient }
 								scope:recipient = { has_relation_lover = scope:secondary_recipient }
@@ -8622,6 +8756,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_consecration_rites_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_consecration_rites_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_consecration_rites_circumstance_value }
@@ -8637,6 +8772,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8763,6 +8899,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_temple_patronage_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_temple_patronage_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -8782,6 +8919,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -8944,6 +9082,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_make_peace_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_make_peace_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -8963,6 +9102,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9094,6 +9234,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_yield_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_yield_war_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -9113,6 +9254,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9247,6 +9389,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_join_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_join_war_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -9266,6 +9409,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9432,6 +9576,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_leave_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_leave_war_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -9451,6 +9596,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9584,6 +9730,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_out_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_out_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -9603,6 +9750,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9628,40 +9776,6 @@ qpq_ui_leg_t_refresh_effect = {
 					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
 				}
 				set_variable = qpq_ui_ref_t_no_leverage
-			}
-			if = {
-				limit = {
-					AND = {
-						exists = scope:secondary_recipient
-						scope:recipient = { is_close_family_of = scope:secondary_recipient }
-					}
-				}
-				set_variable = qpq_ui_ref_t_kin
-			}
-			if = {
-				limit = {
-					AND = {
-						exists = scope:secondary_recipient
-						AND = {
-								scope:recipient = { is_allied_to = scope:secondary_recipient }
-								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-							}
-					}
-				}
-				set_variable = qpq_ui_ref_t_liked_ally
-			}
-			if = {
-				limit = {
-					AND = {
-						exists = scope:secondary_recipient
-						OR = {
-								scope:recipient = { has_relation_friend = scope:secondary_recipient }
-								scope:recipient = { has_relation_lover = scope:secondary_recipient }
-								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-							}
-					}
-				}
-				set_variable = qpq_ui_ref_t_friend
 			}
 			if = {
 				limit = { has_variable = qpq_ui_t_o_land }
@@ -9705,6 +9819,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_heavier_tribute_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_heavier_tribute_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_heavier_tribute_circumstance_value }
@@ -9720,6 +9835,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9791,6 +9907,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_lighter_tribute_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_lighter_tribute_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_lighter_tribute_circumstance_value }
@@ -9806,6 +9923,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9877,6 +9995,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_freedom_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_freedom_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_freedom_circumstance_value }
@@ -9892,6 +10011,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -9952,6 +10072,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_accept_the_yoke_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_accept_the_yoke_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_accept_the_yoke_circumstance_value }
@@ -9967,6 +10088,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -10049,6 +10171,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_cast_off_the_yoke_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_cast_off_the_yoke_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = 0 }
@@ -10068,6 +10191,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -10162,6 +10286,7 @@ qpq_ui_leg_t_refresh_effect = {
 				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
 			}
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_risk value = 0 }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_barter_ask_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_barter_character_value }
 			set_variable = { name = qpq_ui_t_a_circ value = qpq_barter_circumstance_value }
@@ -10177,6 +10302,7 @@ qpq_ui_leg_t_refresh_effect = {
 					add = var:qpq_ui_t_a_dread
 					add = var:qpq_ui_t_a_circ
 					add = var:qpq_ui_t_a_refuse
+					add = var:qpq_ui_t_a_risk
 				}
 			}
 			if = {
@@ -10738,6 +10864,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_chartered_conquest_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_chartered_conquest_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -10754,6 +10881,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -10883,6 +11011,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_sanctioned_conquest_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_sanctioned_conquest_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -10899,6 +11028,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11025,6 +11155,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_marcher_charge_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_marcher_charge_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -11041,6 +11172,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11161,6 +11293,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_holy_sponsorship_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_holy_sponsorship_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -11173,6 +11306,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11283,6 +11417,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_development_charter_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_development_charter_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -11295,6 +11430,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11399,6 +11535,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_electoral_purchase_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_electoral_purchase_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -11415,6 +11552,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11473,6 +11611,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_loyal_mole_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_loyal_mole_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -11485,6 +11624,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11530,6 +11670,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_agent_provocateur_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_agent_provocateur_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -11542,6 +11683,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11644,6 +11786,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_licensed_feud_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_licensed_feud_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -11660,6 +11803,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11781,6 +11925,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_dossier_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_dossier_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -11797,6 +11942,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -11948,6 +12094,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_quiet_removal_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_quiet_removal_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -11964,6 +12111,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12104,6 +12252,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_heir_question_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_heir_question_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -12120,6 +12269,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12267,6 +12417,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_snatch_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_snatch_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -12283,6 +12434,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12414,6 +12566,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_dispossession_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_dispossession_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -12430,6 +12583,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12565,6 +12719,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_the_cloister_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_the_cloister_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -12581,6 +12736,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12716,6 +12872,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_marriage_by_command_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_marriage_by_command_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -12728,6 +12885,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12847,6 +13005,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_hand_over_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_hand_over_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -12863,6 +13022,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -12985,6 +13145,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_hand_over_artifact_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_hand_over_artifact_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -12997,6 +13158,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13096,6 +13258,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_renunciation_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_renunciation_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -13108,6 +13271,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13154,6 +13318,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_hush_money_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_hush_money_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -13166,6 +13331,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13205,6 +13371,7 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_price_of_loyalty_worth_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_price_of_loyalty_offer_points_value }
 			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_risk value = 0 }
 			set_variable = { name = qpq_ui_i_a_circ value = qpq_price_of_loyalty_circumstance_value }
 			set_variable = { name = qpq_ui_i_a_refuse value = qpq_price_of_loyalty_refusal_value }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -13217,6 +13384,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13326,6 +13494,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_blessing_for_a_feud_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_blessing_for_a_feud_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -13342,6 +13511,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13419,6 +13589,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_clemency_bargain_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_clemency_bargain_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -13431,6 +13602,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13525,6 +13697,7 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_electoral_capitulation_worth_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_electoral_capitulation_offer_points_value }
 			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_risk value = 0 }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			if = {
 				limit = { exists = scope:secondary_recipient }
@@ -13541,6 +13714,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13604,6 +13778,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_mutual_defense_league_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_mutual_defense_league_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -13620,6 +13795,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13676,6 +13852,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_faction_pledge_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_faction_pledge_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -13692,6 +13869,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13799,6 +13977,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_title_swap_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_title_swap_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -13811,6 +13990,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -13862,6 +14042,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_coup_pact_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_coup_pact_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -13878,6 +14059,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14012,6 +14194,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_proxy_war_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_proxy_war_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14028,6 +14211,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14149,6 +14333,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_partition_pact_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_partition_pact_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14165,6 +14350,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14229,6 +14415,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_secret_alliance_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_secret_alliance_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14245,6 +14432,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14296,6 +14484,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_bought_truce_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_bought_truce_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14312,6 +14501,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14428,6 +14618,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_faithless_ally_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_faithless_ally_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14444,6 +14635,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14526,6 +14718,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_turncoat_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_turncoat_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14542,6 +14735,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14623,6 +14817,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_seed_the_separatists_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_seed_the_separatists_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14639,6 +14834,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14743,6 +14939,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_shelter_the_pretender_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_shelter_the_pretender_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -14755,6 +14952,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14858,6 +15056,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_extradition_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_extradition_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14874,6 +15073,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -14955,6 +15155,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_buy_a_councillor_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_buy_a_councillor_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -14971,6 +15172,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15052,6 +15254,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_stay_home_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_stay_home_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15068,6 +15271,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15124,6 +15328,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_defection_pact_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_defection_pact_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15140,6 +15345,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15244,6 +15450,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_secret_clause_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_secret_clause_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -15256,6 +15463,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15372,6 +15580,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_hire_the_hashashin_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_hire_the_hashashin_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15388,6 +15597,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15537,6 +15747,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_excommunication_for_hire_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_excommunication_for_hire_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15553,6 +15764,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15685,6 +15897,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_dispensation_for_gold_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_dispensation_for_gold_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15701,6 +15914,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15825,6 +16039,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_steer_the_holy_war_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_steer_the_holy_war_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15841,6 +16056,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -15963,6 +16179,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_purchase_a_mitre_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_purchase_a_mitre_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -15979,6 +16196,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16103,6 +16321,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_bought_claim_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_bought_claim_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -16119,6 +16338,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16196,6 +16416,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_absolution_by_concession_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_absolution_by_concession_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -16208,6 +16429,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16322,6 +16544,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_holy_warrant_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_holy_warrant_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -16338,6 +16561,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16474,6 +16698,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_buy_a_bull_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_buy_a_bull_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -16490,12 +16715,14 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:actor = { is_allied_to = scope:secondary_recipient }
 					}
 				}
@@ -16505,6 +16732,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:actor = { is_close_family_of = scope:secondary_recipient }
 					}
 				}
@@ -16514,6 +16742,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						OR = {
 								scope:actor = { has_relation_friend = scope:secondary_recipient }
 								scope:actor = { has_relation_lover = scope:secondary_recipient }
@@ -16629,6 +16858,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_conclave_votes_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_conclave_votes_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -16645,6 +16875,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16703,6 +16934,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_council_lobbying_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_council_lobbying_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -16715,6 +16947,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16760,6 +16993,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_caliphal_investiture_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_caliphal_investiture_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -16772,6 +17006,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16822,6 +17057,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_name_in_the_khutba_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_name_in_the_khutba_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -16834,6 +17070,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -16945,6 +17182,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_fatwa_for_hire_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_fatwa_for_hire_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -16961,6 +17199,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17104,6 +17343,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_fund_the_dawa_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_fund_the_dawa_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -17120,6 +17360,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17202,6 +17443,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_crowning_the_usurper_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_crowning_the_usurper_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -17218,6 +17460,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17294,6 +17537,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_pliant_patriarch_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_pliant_patriarch_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -17306,6 +17550,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17419,6 +17664,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_favourable_omens_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_favourable_omens_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -17435,12 +17681,14 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:actor = { is_allied_to = scope:secondary_recipient }
 					}
 				}
@@ -17450,6 +17698,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						scope:actor = { is_close_family_of = scope:secondary_recipient }
 					}
 				}
@@ -17459,6 +17708,7 @@ qpq_ui_leg_i_refresh_effect = {
 				limit = {
 					AND = {
 						exists = scope:secondary_recipient
+						NOT = { scope:secondary_recipient = scope:actor }
 						OR = {
 								scope:actor = { has_relation_friend = scope:secondary_recipient }
 								scope:actor = { has_relation_lover = scope:secondary_recipient }
@@ -17512,6 +17762,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_consecration_rites_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_consecration_rites_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -17524,6 +17775,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17635,6 +17887,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_temple_patronage_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_temple_patronage_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -17651,6 +17904,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17795,6 +18049,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_make_peace_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_make_peace_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -17807,6 +18062,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -17923,6 +18179,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_yield_war_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_yield_war_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -17935,6 +18192,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18054,6 +18312,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_join_war_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_join_war_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18066,6 +18325,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18193,6 +18453,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_leave_war_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_leave_war_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18205,6 +18466,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18323,6 +18585,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_stay_out_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_stay_out_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -18339,6 +18602,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18358,19 +18622,6 @@ qpq_ui_leg_i_refresh_effect = {
 					}
 				}
 				set_variable = qpq_ui_ref_i_kin
-			}
-			if = {
-				limit = {
-					AND = {
-						exists = scope:secondary_recipient
-						OR = {
-								scope:actor = { has_relation_friend = scope:secondary_recipient }
-								scope:actor = { has_relation_lover = scope:secondary_recipient }
-								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-							}
-					}
-				}
-				set_variable = qpq_ui_ref_i_friend
 			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
@@ -18423,6 +18674,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_heavier_tribute_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_heavier_tribute_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18435,6 +18687,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18491,6 +18744,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_lighter_tribute_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_lighter_tribute_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18503,6 +18757,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18559,6 +18814,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_bought_freedom_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_bought_freedom_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18571,6 +18827,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18616,6 +18873,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_accept_the_yoke_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_accept_the_yoke_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -18632,6 +18890,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18699,6 +18958,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_cast_off_the_yoke_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_cast_off_the_yoke_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
@@ -18715,6 +18975,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18791,6 +19052,7 @@ qpq_ui_leg_i_refresh_effect = {
 				}
 			}
 			set_variable = { name = qpq_ui_i_a_char value = qpq_barter_payer_character_value }
+			set_variable = { name = qpq_ui_i_a_risk value = qpq_barter_payer_risk_value }
 			set_variable = { name = qpq_ui_i_a_circ value = 0 }
 			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_dread value = 0 }
@@ -18803,6 +19065,7 @@ qpq_ui_leg_i_refresh_effect = {
 					add = var:qpq_ui_i_a_dread
 					add = var:qpq_ui_i_a_circ
 					add = var:qpq_ui_i_a_refuse
+					add = var:qpq_ui_i_a_risk
 				}
 			}
 			if = {
@@ -18837,10 +19100,12 @@ qpq_ui_deal_finish_effect = {
 	set_variable = { name = qpq_ui_acc_dread value = 0 }
 	set_variable = { name = qpq_ui_acc_circ value = 0 }
 	set_variable = { name = qpq_ui_acc_refuse value = 0 }
+	set_variable = { name = qpq_ui_acc_risk value = 0 }
 	set_variable = { name = qpq_ui_acc_opinion value = 0 }
 	set_variable = { name = qpq_ui_acc_public value = 0 }
 	set_variable = { name = qpq_ui_acc_cap value = 0 }
 	set_variable = { name = qpq_ui_acc_allow value = 0 }
+	set_variable = { name = qpq_ui_acc_allow_down value = 0 }
 	if = {
 		limit = { has_variable = qpq_ui_t_ekind }
 		set_variable = qpq_ui_deal_active
@@ -18851,6 +19116,7 @@ qpq_ui_deal_finish_effect = {
 		change_variable = { name = qpq_ui_acc_dread add = var:qpq_ui_t_a_dread }
 		change_variable = { name = qpq_ui_acc_circ add = var:qpq_ui_t_a_circ }
 		change_variable = { name = qpq_ui_acc_refuse add = var:qpq_ui_t_a_refuse }
+		change_variable = { name = qpq_ui_acc_risk add = var:qpq_ui_t_a_risk }
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_ekind }
@@ -18862,6 +19128,7 @@ qpq_ui_deal_finish_effect = {
 		change_variable = { name = qpq_ui_acc_dread add = var:qpq_ui_i_a_dread }
 		change_variable = { name = qpq_ui_acc_circ add = var:qpq_ui_i_a_circ }
 		change_variable = { name = qpq_ui_acc_refuse add = var:qpq_ui_i_a_refuse }
+		change_variable = { name = qpq_ui_acc_risk add = var:qpq_ui_i_a_risk }
 	}
 	if = {
 		limit = { has_variable = qpq_ui_deal_active }
@@ -18880,6 +19147,26 @@ qpq_ui_deal_finish_effect = {
 				add = var:qpq_ui_t_a_circ
 				add = var:qpq_ui_t_a_goal
 				multiply = -1
+				min = 0
+			}
+		}
+	}
+	set_variable = { name = qpq_ui_acc_allow_down value = var:qpq_ui_acc_allow }
+	if = {
+		limit = { has_variable = qpq_ui_i_ekind }
+		change_variable = {
+			name = qpq_ui_acc_allow_down
+			add = {
+				value = var:qpq_ui_i_a_offers
+				multiply = -1
+				min = 0
+			}
+		}
+		change_variable = {
+			name = qpq_ui_acc_allow_down
+			add = {
+				value = var:qpq_ui_i_a_ask
+				add = var:qpq_ui_i_a_goal
 				min = 0
 			}
 		}
@@ -18936,6 +19223,7 @@ qpq_ui_deal_finish_effect = {
 			add = var:qpq_ui_acc_dread
 			add = var:qpq_ui_acc_circ
 			add = var:qpq_ui_acc_refuse
+			add = var:qpq_ui_acc_risk
 			add = var:qpq_ui_acc_opinion
 			add = var:qpq_ui_acc_public
 		}
@@ -18946,12 +19234,24 @@ qpq_ui_deal_finish_effect = {
 		set_variable = {
 			name = qpq_ui_acc_cap
 			value = {
-				value = var:qpq_ui_acc_opinion
-				min = 0
-				add = var:qpq_ui_acc_dread
-				subtract = var:qpq_ui_acc_allow
-				min = 0
-				multiply = -1
+				value = {
+					value = var:qpq_ui_acc_opinion
+					min = 0
+					add = var:qpq_ui_acc_dread
+					max = var:qpq_ui_acc_allow
+				}
+				add = {
+					value = var:qpq_ui_acc_opinion
+					max = 0
+					min = {
+						value = var:qpq_ui_acc_allow_down
+						multiply = -1
+					}
+				}
+				subtract = {
+					value = var:qpq_ui_acc_opinion
+					add = var:qpq_ui_acc_dread
+				}
 			}
 		}
 		set_variable = {
@@ -18966,13 +19266,26 @@ qpq_ui_deal_finish_effect = {
 		set_variable = {
 			name = qpq_ui_acc_cap
 			value = {
-				value = var:qpq_ui_acc_opinion
-				min = 0
-				add = var:qpq_ui_acc_dread
-				add = var:qpq_ui_acc_cmd
-				subtract = var:qpq_ui_acc_allow
-				min = 0
-				multiply = -1
+				value = {
+					value = var:qpq_ui_acc_opinion
+					min = 0
+					add = var:qpq_ui_acc_dread
+					add = var:qpq_ui_acc_cmd
+					max = var:qpq_ui_acc_allow
+				}
+				add = {
+					value = var:qpq_ui_acc_opinion
+					max = 0
+					min = {
+						value = var:qpq_ui_acc_allow_down
+						multiply = -1
+					}
+				}
+				subtract = {
+					value = var:qpq_ui_acc_opinion
+					add = var:qpq_ui_acc_dread
+					add = var:qpq_ui_acc_cmd
+				}
 			}
 		}
 		set_variable = {
@@ -19024,6 +19337,14 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_acc_allow }
 		remove_variable = qpq_ui_acc_allow
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_allow_down }
+		remove_variable = qpq_ui_acc_allow_down
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_risk }
+		remove_variable = qpq_ui_acc_risk
 	}
 	if = {
 		limit = { has_variable = qpq_ui_acc_before_cmd }
@@ -19142,6 +19463,10 @@ qpq_ui_clear_derived_effect = {
 		remove_variable = qpq_ui_t_a_refuse
 	}
 	if = {
+		limit = { has_variable = qpq_ui_t_a_risk }
+		remove_variable = qpq_ui_t_a_risk
+	}
+	if = {
 		limit = { has_variable = qpq_ui_t_fail_0 }
 		remove_variable = qpq_ui_t_fail_0
 	}
@@ -19252,6 +19577,10 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_a_refuse }
 		remove_variable = qpq_ui_i_a_refuse
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_risk }
+		remove_variable = qpq_ui_i_a_risk
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_fail_0 }

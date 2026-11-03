@@ -92,6 +92,12 @@ WAR_BENEFIT = {
     "leave_war":  dict(war=("D", "P"), side="D"),
 }
 
+# Deeds whose target may be the payer themself (a blessing for oneself, or a curse on a rival)
+SELF_TARGET = {"buy_a_bull", "favourable_omens"}
+
+# Deeds that do T harm only by withholding help: weighed against, never refused outright
+HARM_NO_REFUSAL = {"stay_out"}
+
 # Wars where the proposer fights alongside, and wars waged by the faith
 JOINT_WARS = {"partition_pact"}
 HOLY_WARS = {"steer_the_holy_war", "holy_warrant"}
@@ -146,10 +152,11 @@ def goal_body(arch, D, P, T):
         s += "\tif = {\n\t\tlimit = { %s = { is_allied_to = %s } }\n\t\tadd = 10\n\t}\n" % (D, T)
         s += "\tif = {\n\t\tlimit = { %s = { is_close_family_of = %s } }\n\t\tadd = 12\n\t}\n" % (D, T)
     elif arch == "loss_title":
-        # a title is a loss, greater with rank and with the development of its land
+        # a title is a loss, greater with rank: given outright (in a dowry), four times what it is in a swap,
+        # where a county comes back, or in giving up a claim
         s += ("\tadd = {\n\t\tvalue = 0\n\t\tscope:target = {\n\t\t\tif = {\n\t\t\t\tlimit = { tier >= tier_kingdom }\n\t\t\t\tadd = -30\n\t\t\t}\n"
               "\t\t\telse_if = {\n\t\t\t\tlimit = { tier = tier_duchy }\n\t\t\t\tadd = -18\n\t\t\t}\n"
-              "\t\t\telse = {\n\t\t\t\tadd = -8\n\t\t\t}\n\t\t}\n\t}\n")
+              "\t\t\telse = {\n\t\t\t\tadd = -8\n\t\t\t}\n\t\t}\n\t\tmultiply = %s\n\t}\n") % ("@LOSS_SCALE@",)
         s += _traits(D, [("generous", 5)], [("greedy", 8), ("ambitious", 5)])
     elif arch == "loss_artifact":
         s += "\tadd = {\n\t\tvalue = 0\n\t\tscope:target = { add = qpq_gift_artifact_cost_value }\n\t\tmultiply = -1\n\t}\n"
@@ -290,6 +297,8 @@ def _war_benefit_body(k):
         # worth most if they would otherwise come in on the enemy's side
         t += "\tadd = 6\n"
         t += "\tif = {\n\t\tlimit = { %s = { is_allied_to = %s } }\n\t\tadd = 15\n\t}\n" % (P, T)
+        t += ("\tif = {\n\t\tlimit = { %(P)s = { has_relation_rival = %(D)s } }\n\t\tadd = 10\n\t}\n"
+              "\telse_if = {\n\t\tlimit = { %(P)s = { opinion = { target = %(D)s value <= -20 } } }\n\t\tadd = 6\n\t}\n") % {"P": P, "D": D}
         t += _losing_body(ours, theirs, who, foe, side, 0.3)
     else:
         # P ends a war against T. If D is T, D is the one at war with P: peace (or victory) is worth what the war
@@ -316,9 +325,9 @@ def benefit_body(arch, D, P, T):
                      [("compassionate", 8), ("forgiving", 6), ("honest", 4)])
     elif arch == "loss_title":
         # the title (or claim) given up comes to them: a gain, greater with rank
-        s += ("\tadd = {\n\t\tvalue = 0\n\t\tscope:target = {\n\t\t\tif = {\n\t\t\t\tlimit = { tier >= tier_kingdom }\n\t\t\t\tadd = 30\n\t\t\t}\n"
-              "\t\t\telse_if = {\n\t\t\t\tlimit = { tier = tier_duchy }\n\t\t\t\tadd = 18\n\t\t\t}\n"
-              "\t\t\telse = {\n\t\t\t\tadd = 8\n\t\t\t}\n\t\t}\n\t}\n")
+        s += ("\tadd = {\n\t\tvalue = 0\n\t\tscope:target = {\n\t\t\tif = {\n\t\t\t\tlimit = { tier >= tier_kingdom }\n\t\t\t\tadd = 60\n\t\t\t}\n"
+              "\t\t\telse_if = {\n\t\t\t\tlimit = { tier = tier_duchy }\n\t\t\t\tadd = 40\n\t\t\t}\n"
+              "\t\t\telse = {\n\t\t\t\tadd = 25\n\t\t\t}\n\t\t}\n\t}\n")
         s += _traits(D, [("greedy", 8), ("ambitious", 5)], [])
     elif arch == "loss_artifact":
         s += "\tscope:target = { add = qpq_gift_artifact_cost_value }\n"
@@ -335,6 +344,10 @@ import re
 def sw(text):
     return re.sub(r"scope:(actor|recipient)(?![A-Za-z0-9_])",
                   lambda m: "scope:" + ("recipient" if m.group(1) == "actor" else "actor"), text)
+
+
+# How much more a title given away outright costs than one swapped (see goal_body, loss_title)
+LOSS_SCALE = {"secret_clause": 4}
 
 
 def goal_value(k, swapped=False):
@@ -354,6 +367,13 @@ def goal_value(k, swapped=False):
             body += benefit_body(a, D, P, T)
         else:
             body += goal_body(a, D, P, T)
+    body = body.replace("@LOSS_SCALE@", str(LOSS_SCALE.get(k["key"], 1)))
+    if k["key"] in SELF_TARGET and T:
+        # the payer picked themself: no harm to judge. Done for you, it is nothing to them either way; for
+        # themself, it is the favour they wanted
+        body = "\tif = {\n\t\tlimit = { NOT = { %s = scope:actor } }\n%s\t}\n" % (T, _indent(body))
+        if swapped:
+            body += "\telse = {\n\t\tadd = 15\n\t}\n"
     G = T or ("scope:target" if k["target"] == "artifact" else None)
     if G:
         body = "\tif = {\n\t\tlimit = { exists = %s }\n%s\t}\n" % (G, _indent(body))
@@ -395,7 +415,7 @@ def goal_refusal_parts(k, swapped=False):
         if ("war" in archs or "harm" in archs) and T:
             parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
             parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
-        if "harm" in archs and T:
+        if "harm" in archs and T and k["key"] not in HARM_NO_REFUSAL:
             parts.append(("friend", "OR = {\n\t\t%s = { has_relation_friend = %s }\n\t\t%s = { has_relation_lover = %s }\n\t\t%s = { has_relation_best_friend = %s }\n\t}" % (D, T, D, T, D, T)))
         if "favour" in archs and T:
             parts.append(("rival_target", "OR = {\n\t\t%s = { has_relation_rival = %s }\n\t\t%s = { has_relation_nemesis = %s }\n\t}" % (D, T, D, T)))
@@ -415,7 +435,7 @@ def goal_refusal_parts(k, swapped=False):
         parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
         parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
         parts.append(("stronger", "%s > { value = %s multiply = 2 }" % (_war_name(k, swapped, "theirs"), _war_name(k, swapped, "ours"))))
-    if "harm" in archs and T:
+    if "harm" in archs and T and k["key"] not in HARM_NO_REFUSAL:
         parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
         parts.append(("liked_ally", "AND = {\n\t\t%s = { is_allied_to = %s }\n\t\t%s = { opinion = { target = %s value >= 30 } }\n\t}" % (D, T, D, T)))
         parts.append(("friend", "OR = {\n\t\t%s = { has_relation_friend = %s }\n\t\t%s = { has_relation_lover = %s }\n\t\t%s = { has_relation_best_friend = %s }\n\t}" % (D, T, D, T, D, T)))
@@ -428,7 +448,8 @@ def goal_refusal_parts(k, swapped=False):
         if label not in seen:
             seen.add(label)
             if T and T in text:
-                text = "AND = {\n\texists = %s\n\t%s\n}" % (T, text.replace("\n", "\n\t"))
+                self_ok = "\tNOT = { %s = scope:actor }\n" % T if k["key"] in SELF_TARGET else ""
+                text = "AND = {\n\texists = %s\n%s\t%s\n}" % (T, self_ok, text.replace("\n", "\n\t"))
             out.append((label, text))
     return out
 

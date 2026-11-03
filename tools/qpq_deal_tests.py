@@ -104,9 +104,11 @@ def the_reported_case(lib, check):
 def gifts_and_demands(lib, check):
     """Something for nothing: a gift is taken, a bare demand is not, however they feel about you."""
     for them in ("duke", "count2", "foe"):
-        p, W = panel(lib, "king", them)
-        barter(p, mine=50)
-        check(p.ai_accepts(), "%s refused a gift of 50 gold (%s)" % (them, p.failures()))
+        for op in (0, -100):
+            p, W = panel(lib, "king", them, opinion=op)
+            barter(p, mine=50)
+            check(p.ai_accepts(), "%s (opinion %d) refused a gift of 50 gold (total %.1f, %s)" % (
+                them, op, total(p), p.failures()))
         for op in (0, 100):
             p, W = panel(lib, "king", them, opinion=op)
             barter(p, theirs=40)
@@ -164,6 +166,19 @@ def goodwill_discounts_deeds(lib, check):
     p, _ = panel(lib, "king", "duke", opinion=100)
     p.deed("t", "marcher_charge")
     check(not p.ai_accepts(), "a friendly duke keeps his levies raised for nothing (total %.1f)" % total(p))
+
+
+@test
+def dislike_raises_the_price(lib, check):
+    """Ill will makes them ask more for what they do or give, up to what it is worth."""
+    for them in ("duke", "count2"):
+        p0, _ = panel(lib, "king", them, opinion=0)
+        p1, _ = panel(lib, "king", them, opinion=-100)
+        for p in (p0, p1):
+            barter(p, 100, 20)
+        check(total(p1) < total(p0), "%s: dislike does not make a trade harder (%.1f vs %.1f)" % (
+            them, total(p1), total(p0)))
+        check(total(p1) >= total(p0) - p0.var("leg_i_a_offers", 0) * 0 - 30, "dislike costs more than its floor")
 
 
 # --------------------------------------------------------------------------- worth
@@ -229,6 +244,131 @@ def fair_price_is_fair(lib, check):
                     kind, me, them, leg.get("fair"), offers, ask))
 
 
+@test
+def ill_will_and_trust(lib, check):
+    """A deed from someone they loathe is worth less to them: a king who hates a courtier does not hire him for
+    a killing on the cheap, though he would from a man he trusts."""
+    def world(w, W):
+        w.relate(W["king"], "rival", W["count2"])
+        w.opinion(W["king"], W["count2"], -80)
+    for op, want in ((0, True), (-100, False)):
+        p, W = panel(lib, "courtier", "king", opinion=op, setup=world)
+        p.deed("i", "quiet_removal")
+        picked = [c for c in p.candidates("i") if c is W["count2"]]
+        if not picked:
+            check(False, "count2 not offered")
+            continue
+        p.pick("i", picked[0])
+        p.deed("t", None)
+        p.gold("i", 20)
+        check(p.ai_accepts() == want, "opinion %d: the king %s to pay 20 gold to have his rival killed (total %.1f)"
+              % (op, "refuses" if want else "agrees", total(p)))
+
+
+@test
+def betrayal_helps_at_war(lib, check):
+    """A commander turning his coat against your enemy is worth something to you, whoever you are."""
+    p, W = panel(lib, "foe_vassal", "third")
+    p.deed("i", "turncoat")
+    c = p.candidates("i")
+    if c:
+        p.pick("i", c[0])
+    p.deed("t", None)
+    check(p.var("i_a_ask", 0) > 0, "a turncoat against third's enemy is worth nothing to third (%r)" % p.acceptance())
+
+
+@test
+def neutrality_is_no_crime(lib, check):
+    """Staying out of a war against a friend weighs against it, but is never refused at any price."""
+    def world(w, W):
+        w.relate(W["patriarch"], "friend", W["foe"])
+        w.opinion(W["patriarch"], W["foe"], 80)
+    p, W = panel(lib, "third", "patriarch", setup=world)
+    p.deed("t", "stay_out")
+    picked = [c for c in p.candidates("t") if c is W["foe"]]
+    if picked:
+        p.pick("t", picked[0])
+    check(not p.refusals(), "staying out of a war against a friend is refused outright: %s" % p.refusals())
+    check(p.var("t_a_goal", 0) < 0, "staying out against a friend's enemy is not weighed against (%r)" % p.acceptance())
+
+
+@test
+def stated_tiers(lib, check):
+    """The tier a deed's own text states is the tier the script gives it."""
+    def tier(me, them, leg, kind, setup=None, pick=None, extra=None):
+        p, W = panel(lib, me, them, setup=setup)
+        p.deed(leg, kind)
+        cands = p.candidates(leg) + p.me.var_lists.get("qpq_ui_%s_title_candidates" % leg, [])
+        if pick:
+            cands = [c for c in cands if c.name == pick] or cands
+        if cands:
+            p.pick(leg, cands[0])
+        if extra:
+            p.click("qpq_ui_extra_%s_%s" % (leg, extra)) if ("qpq_ui_extra_%s_%s" % (leg, extra)) in lib.guis else None
+        return p.var(leg + "_agent_tier"), p.var(leg + "_payer_tier")
+    a, pt = tier("duke", "duke2", "t", "mutual_defense_league")
+    check((a, pt) == (3, 3), "Mutual Defense League: text says Tier III, script gives agent %s payer %s" % (a, pt))
+    a, pt = tier("duke", "duke2", "t", "title_swap")
+    check(a == 3, "Title Swap (hidden): text says Tier III, script gives %s" % a)
+    a, pt = tier("king", "foe", "t", "secret_alliance")
+    check(a == 1, "Secret Alliance between independent rulers: text says Tier I, script gives %s" % a)
+    def kin(w, W):
+        W["count"].liege = W["duke"]
+        W["count"].father = W["duke"]
+        W["count"].imprisoned_by = W["duke"]
+    a, pt = tier("king", "duke", "t", "hand_over", setup=kin, pick="count")
+    check(a == 3, "Hand-Over of their own kin: text says Tier III, script gives %s" % a)
+
+
+@test
+def fear_does_not_cancel_dislike(lib, check):
+    """On a plain trade of goods, dread of you neither pays for their goods nor makes up for their dislike."""
+    got = []
+    for dread in (0, 2):
+        def world(w, W, dread=dread):
+            if dread:
+                w.dread[(W["duke"], W["king"])] = dread
+        p, W = panel(lib, "king", "duke", opinion=-100, setup=world)
+        barter(p, 60, 30)
+        got.append(total(p))
+    check(abs(got[0] - got[1]) < 1e-6, "dread changes a plain trade with a lord who dislikes you: %r" % got)
+
+
+@test
+def a_blessing_for_oneself(lib, check):
+    """Good omens read for the one who pays are a favour to them, not harm: their priest's friendship with them
+    is no reason to refuse, and they want it."""
+    def world(w, W):
+        w.relate(W["godi"], "friend", W["jarl"])
+        w.opinion(W["godi"], W["jarl"], 80)
+    p, W = panel(lib, "jarl", "godi", setup=world)
+    p.deed("t", "favourable_omens")
+    me = [c for c in p.candidates("t") if c is W["jarl"]]
+    check(me, "the jarl cannot pick himself")
+    if me:
+        p.pick("t", me[0])
+        check(not p.refusals(), "omens for the jarl himself are refused: %s" % p.refusals())
+    p, W = panel(lib, "godi", "jarl")
+    p.deed("i", "favourable_omens")
+    me = [c for c in p.candidates("i") if c is W["jarl"]]
+    if me:
+        p.pick("i", me[0])
+        check(p.var("i_a_goal", 0) > 0, "good omens for himself are worth nothing to the jarl (%r)" % p.acceptance())
+
+
+@test
+def a_county_given_away(lib, check):
+    """A county handed over in a dowry is a loss to the giver, about what land is worth."""
+    p, W = panel(lib, "king", "foe")
+    p.deed("t", "secret_clause")
+    titles = p.me.var_lists.get("qpq_ui_t_title_candidates", [])
+    county = [t for t in titles if t.tier == 2]
+    check(county, "no county offered for the dowry")
+    if county:
+        p.pick("t", county[0])
+        check(p.var("t_a_goal", 0) <= -30, "giving away a county costs foe only %s" % p.var("t_a_goal"))
+
+
 # --------------------------------------------------------------------------- monotony
 @test
 def more_gold_never_hurts(lib, check):
@@ -288,6 +428,9 @@ def refusals_explained(lib, check):
                 if p.var("acc_other", 0) <= -500:
                     check(p.refusals(), "%s %s %s->%s: refused at any price with no reason shown" % (
                         leg, kind, me, them))
+                else:
+                    check(not p.refusals(), "%s %s %s->%s: a reason to refuse at any price is shown (%s), "
+                          "but they do not refuse" % (leg, kind, me, them, p.refusals()))
                 check(not p.errors, "%s %s %s->%s: script errors %s" % (leg, kind, me, them, p.errors[:3]))
 
 

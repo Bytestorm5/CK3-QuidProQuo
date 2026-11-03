@@ -2765,6 +2765,19 @@ QpqUiAccLine_char = {
 	}
 }
 
+QpqUiAccLine_risk = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_risk NOT = { var:qpq_ui_acc_risk = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_RISK
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
 QpqUiAccLine_dread = {
 	type = character
 	log_loc_errors = no

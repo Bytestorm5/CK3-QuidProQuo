@@ -1611,63 +1611,256 @@ qpq_kind_grants_war_licence_trigger = {
 
 qpq_k_chartered_conquest_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		liege ?= scope:actor
+		is_landed = yes
+	}
+	scope:secondary_recipient = {
+		is_landed = yes
+		NOT = { top_liege = scope:actor.top_liege }
+	}
 }
 qpq_k_sanctioned_conquest_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		liege ?= scope:actor
+		is_landed = yes
+	}
+	scope:secondary_recipient = {
+		is_landed = yes
+		NOT = { top_liege = scope:actor.top_liege }
+	}
 }
 qpq_k_marcher_charge_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		liege ?= scope:actor
+		is_landed = yes
+	}
+	scope:secondary_recipient = { is_landed = yes NOT = { top_liege = scope:actor.top_liege } }
 }
 qpq_k_licensed_feud_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		liege ?= scope:actor
+		is_landed = yes
+	}
+	scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }
 }
 qpq_k_dossier_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		OR = {
+			liege ?= scope:actor
+			is_courtier_of = scope:actor
+		}
+		is_adult = yes
+		NOT = { this = scope:actor }
+	}
+	scope:secondary_recipient = { NOT = { this = scope:actor } }
 }
 qpq_k_quiet_removal_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		OR = {
+			liege ?= scope:actor
+			is_courtier_of = scope:actor
+		}
+		is_adult = yes
+		NOT = { this = scope:actor }
+	}
+	scope:secondary_recipient = {
+		NOT = { this = scope:actor }
+		NOT = { this = scope:recipient }
+		NOT = { is_child_of = scope:actor }
+	}
 }
 qpq_k_blessing_for_a_feud_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:actor = {
+		liege ?= scope:recipient
+		is_landed = yes
+	}
+	scope:secondary_recipient = { liege ?= scope:recipient }
 }
 qpq_k_clemency_bargain_ai_target_ok_trigger = {
 	always = yes
+	scope:actor = {
+		OR = {
+			liege ?= scope:recipient
+			is_imprisoned_by = scope:recipient
+		}
+		any_known_secret = {
+			NOT = { secret_owner = scope:actor }
+			NOT = { secret_owner = scope:recipient }
+			NOT = { is_known_by = scope:recipient }
+		}
+	}
 }
 qpq_k_electoral_capitulation_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	exists = scope:recipient.primary_title
+	scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+	NOT = { scope:actor = scope:recipient }
+	scope:secondary_recipient = { NOT = { this = scope:actor } }
 }
 qpq_k_mutual_defense_league_ai_target_ok_trigger = {
 	exists = scope:actor.liege
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		is_landed = yes
+		NOT = { this = scope:actor }
+	}
+	exists = scope:actor.liege
+	scope:actor.liege = scope:recipient.liege
 }
 qpq_k_title_swap_ai_target_ok_trigger = {
 	exists = scope:target
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		is_landed = yes
+		NOT = { this = scope:actor }
+	}
+	exists = scope:actor.liege
+	scope:actor.liege = scope:recipient.liege
+	scope:target = { tier = tier_county holder ?= scope:recipient }
 }
 qpq_k_coup_pact_ai_target_ok_trigger = {
 	exists = scope:actor.liege
+	exists = scope:actor.liege
+	scope:recipient = {
+		is_adult = yes
+		NOT = { this = scope:actor }
+		NOT = { this = scope:actor.liege }
+		OR = {
+			is_courtier_of = scope:actor.liege
+			is_courtier_of = scope:actor
+		}
+	}
 }
 qpq_k_proxy_war_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		is_independent_ruler = yes
+		is_landed = yes
+	}
+	scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }
 }
 qpq_k_secret_alliance_ai_target_ok_trigger = {
 	always = yes
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+	scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
 }
 qpq_k_bought_truce_ai_target_ok_trigger = {
 	always = yes
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+	scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }
 }
 qpq_k_faithless_ally_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		is_independent_ruler = yes
+		is_landed = yes
+	}
+	scope:recipient = { is_allied_to = scope:secondary_recipient }
 }
 qpq_k_turncoat_ai_target_ok_trigger = {
 	exists = scope:recipient.liege
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+	scope:recipient = {
+		exists = liege
+		is_independent_ruler = no
+	}
+	scope:actor = { is_at_war_with = scope:recipient.liege }
 }
 qpq_k_seed_the_separatists_ai_target_ok_trigger = {
 	exists = scope:recipient.liege
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		is_landed = yes
+		is_independent_ruler = no
+		exists = liege
+	}
 }
 qpq_k_bought_claim_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	scope:recipient = {
+		qpq_is_head_of_faith_trigger = yes
+		NOT = { this = scope:actor }
+	}
+	scope:actor.faith = scope:recipient.faith
+	scope:recipient.faith = { has_doctrine = doctrine_spiritual_head }
+	scope:secondary_recipient = { is_landed = yes exists = primary_title NOT = { this = scope:actor } }
 }
 qpq_k_absolution_by_concession_ai_target_ok_trigger = {
 	always = yes
+	scope:recipient = {
+		qpq_is_head_of_faith_trigger = yes
+		NOT = { this = scope:actor }
+	}
+	scope:actor.faith = scope:recipient.faith
+	scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
+}
+qpq_k_make_peace_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+	scope:recipient = { is_at_war = yes }
+	scope:recipient = {
+		any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+	}
+}
+qpq_k_yield_war_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+	scope:recipient = { is_at_war = yes }
+	scope:recipient = {
+		any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
+	}
+}
+qpq_k_join_war_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+	scope:actor = { is_at_war = yes }
+	NOT = { scope:secondary_recipient = scope:recipient }
+	scope:recipient = {
+		is_landed = yes
+		NOT = { is_at_war_with = scope:actor }
+		NOT = { top_liege = scope:secondary_recipient.top_liege }
+	}
+	scope:actor = {
+		any_character_war = {
+			qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+			NOT = { is_participant = scope:recipient }
+		}
+	}
+}
+qpq_k_leave_war_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+	scope:recipient = { is_at_war = yes }
+	scope:recipient = {
+		any_character_war = {
+			qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
+			NOT = { primary_attacker = scope:recipient }
+			NOT = { primary_defender = scope:recipient }
+		}
+	}
+}
+qpq_k_stay_out_ai_target_ok_trigger = {
+	exists = scope:secondary_recipient
+	scope:actor = { is_at_war = yes }
+	NOT = { scope:secondary_recipient = scope:recipient }
+	scope:actor = {
+		any_character_war = {
+			qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
+			NOT = { is_participant = scope:recipient }
+		}
+	}
 }
 
 qpq_kind_is_church_trigger = {
@@ -2360,4 +2553,56 @@ qpq_k_bought_claim_ai_valid_trigger = {
 }
 qpq_k_absolution_by_concession_ai_valid_trigger = {
 	has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes } faith = { qpq_faith_has_church_trigger = yes }
+}
+qpq_k_make_peace_ai_valid_trigger = {
+	is_at_war = yes
+	any_character_war = {
+		OR = {
+			primary_attacker = root
+			primary_defender = root
+		}
+		NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
+	}
+}
+qpq_k_yield_war_ai_valid_trigger = {
+	is_at_war = yes
+	gold >= 100
+	any_character_war = {
+		OR = {
+			primary_attacker = root
+			primary_defender = root
+		}
+		qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
+	}
+}
+qpq_k_join_war_ai_valid_trigger = {
+	is_at_war = yes
+	gold >= 50
+	any_character_war = {
+		OR = {
+			primary_attacker = root
+			primary_defender = root
+		}
+		NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = 25 } }
+	}
+}
+qpq_k_leave_war_ai_valid_trigger = {
+	is_at_war = yes
+	gold >= 50
+	any_character_war = {
+		OR = {
+			primary_attacker = root
+			primary_defender = root
+		}
+	}
+}
+qpq_k_stay_out_ai_valid_trigger = {
+	is_at_war = yes
+	gold >= 50
+	any_character_war = {
+		OR = {
+			primary_attacker = root
+			primary_defender = root
+		}
+	}
 }

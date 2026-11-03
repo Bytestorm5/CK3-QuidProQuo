@@ -201,31 +201,38 @@ def gen_values():
         out += "qpq_%s_worth_value = {\n" % key
         if k["initiator"] != "payer":
             out += "\tvalue = qpq_%s_ask_value\n" % key
-        elif key == "barter" or archs & WISH_ARCHETYPES:
+        elif key == "barter" or (archs & WISH_ARCHETYPES and key not in WAR_HELP):
             out += "\tvalue = 0\n"
         else:
             out += ("\tvalue = qpq_%s_demand_value\n\tmultiply = %s\n\tmin = %d\n\tmax = %d\n") % (
                 key, -WORTH_SHARE, WORTH_MIN, WORTH_MAX)
         out += "}\n"
-        # The payer's own character and risk, when they would pay for it: an honest or just lord shrinks from a
-        # dirty bargain, a schemer warms to it, and anyone fears what it costs them if it comes out
-        out += "qpq_%s_payer_character_value = {\n\tvalue = qpq_%s_payer_tier_value\n\tmultiply = -5\n" % (key, key)
+        # The payer's own risk and character, when they would pay for it: anyone fears what it costs them if it
+        # comes out, an honest or just lord shrinks from a dirty bargain, a schemer warms to it
+        out += "qpq_%s_payer_risk_value = {\n\tvalue = qpq_%s_payer_tier_value\n\tmultiply = -5\n}\n" % (key, key)
+        out += "qpq_%s_payer_character_value = {\n\tvalue = 0\n" % key
         for trig, mult in TRAIT_MODS:
             out += ("\tif = {\n\t\tlimit = { scope:actor = { has_trait = %s } }\n"
                     "\t\tadd = { value = qpq_%s_payer_tier_value multiply = %d }\n\t}\n") % (trig, key, mult)
         out += "}\n"
         # Goodwill (their opinion of the one asking, and dread of them) makes a deed cheaper for the one who does
-        # it, never by more than the deed costs them: it does not pay for goods
-        out += "qpq_%s_goodwill_value = {\n\tvalue = qpq_opinion_points_value\n\tadd = qpq_%s_dread_value\n" % (key, key)
+        # it, never by more than the deed costs them: it does not pay for goods. Ill will makes them ask more,
+        # never more than what they do and give is worth.
+        # Liking, dread and authority are held to the cost of the deed; dislike, separately, to it as well.
+        pos = ("\t\tvalue = qpq_opinion_points_value\n\t\tmin = 0\n\t\tadd = qpq_%s_dread_value\n"
+               "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_cmd_bonus }\n\t\t\tadd = scope:qpq_cmd_bonus\n\t\t}\n") % key
+        neg = "\t\tvalue = qpq_opinion_points_value\n\t\tmax = 0\n"
         if k["initiator"] == "payer":
-            out += ("\tmax = {\n\t\tvalue = qpq_%s_ask_value\n\t\tadd = qpq_%s_character_value\n"
-                    "\t\tadd = qpq_%s_circumstance_value\n") % (key, key, key)
+            cost = ("\t\t\tvalue = qpq_%s_ask_value\n\t\t\tadd = qpq_%s_character_value\n"
+                    "\t\t\tadd = qpq_%s_circumstance_value\n") % (key, key, key)
             if goals.goal_value(k):
-                out += "\t\tadd = qpq_%s_goal_value\n" % key
-            out += "\t\tmultiply = -1\n\t\tmin = 0\n\t}\n"
+                cost += "\t\t\tadd = qpq_%s_goal_value\n" % key
+            pos += "\t\tmax = {\n%s\t\t\tmultiply = -1\n\t\t\tmin = 0\n\t\t}\n" % cost
+            neg += "\t\tmin = {\n%s\t\t\tmax = 0\n\t\t}\n" % cost
         else:
-            out += "\tmax = 0\n"
-        out += "}\n"
+            pos += "\t\tmax = 0\n"
+            neg += "\t\tmin = {\n\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\tmax = 0\n\t\t}\n" % key
+        out += "qpq_%s_goodwill_value = {\n\tvalue = {\n%s\t}\n\tadd = {\n%s\t}\n}\n" % (key, pos, neg)
         # The whole acceptance, mirroring the interaction's ai_accept: used when an AI recipient answers an AI
         # proposal
         out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
@@ -256,6 +263,8 @@ LOSS_AVERSION = goals.LOSS_AVERSION
 WORTH_SHARE, WORTH_MIN, WORTH_MAX = 0.4, 5, 25
 # Archetypes whose goal says all a deed is worth to the one who would pay for it
 WISH_ARCHETYPES = {"war", "harm", "favour", "war_side", "loss_title", "loss_artifact"}
+# ...except deeds that weaken the side the payer is at war with: those help whatever the payer feels about its leader
+WAR_HELP = {"turncoat", "faithless_ally"}
 
 
 def goods_cost_body(G, R, price):
@@ -604,7 +613,9 @@ def gen_triggers():
             need = {"char": "exists = scope:secondary_recipient", "title": "exists = scope:target",
                     "artifact": "exists = scope:target", "derived": "exists = %s" % k.get("derive", ""),
                     "none": "always = yes"}[t]
-            out += "qpq_k_%s_ai_target_ok_trigger = {\n\t%s\n}\n" % (k["key"], need)
+            # the Ask's own rules hold for an AI proposal just as for one made in the panel
+            out += "qpq_k_%s_ai_target_ok_trigger = {\n\t%s\n%s%s}\n" % (
+                k["key"], need, block(k["rel"], 1), block(k.get("target_valid") or "", 1))
     out += "\n"
     out += "qpq_kind_is_church_trigger = {\n\tOR = {\n"
     for k in KINDS:
@@ -715,6 +726,10 @@ if = {
 	clear_saved_scope = recipient
 	clear_saved_scope = secondary_recipient
 	clear_saved_scope = target
+	clear_saved_scope = qpq_ai_war
+	clear_saved_scope = qpq_ai_foe
+	clear_saved_scope = qpq_deal_command
+	clear_saved_scope = qpq_cmd_bonus
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
@@ -731,11 +746,18 @@ if = {
 		save_scope_value_as = { name = qpq_price value = qpq_$KIND$_price_value }
 		# AI proposers pay on delivery: if they cannot pay then, the deal sours into a breach
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
+		# A liege who would be refused may lean on their authority (Command), if their standing allows it: the
+		# lightest touch that will do. A person is told, and decides for themselves.
+		if = {
+			limit = { NOT = { qpq_$KIND$_ai_acceptance_value > 0 } }
+			qpq_ai_try_command_effect = { KIND = $KIND$ }
+		}
 		if = {
 			limit = { scope:recipient = { is_ai = yes } }
 			if = {
 				limit = { qpq_$KIND$_ai_acceptance_value > 0 }
 				qpq_k_$KIND$_seal_from_scopes_effect = yes
+				qpq_ai_command_seal_effect = yes
 			}
 		}
 		else = {
@@ -847,6 +869,21 @@ qpq_hub.1 = {
 		}
 """ % (x, x) for x in HUB50_EXTRAS) + """		first_valid = {
 			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 3 }
+				desc = qpq_deal.1.command_3
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 2 }
+				desc = qpq_deal.1.command_2
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 1 }
+				desc = qpq_deal.1.command_1
+			}
+			desc = qpq_empty
+		}
+		first_valid = {
+			triggered_desc = {
 				trigger = { scope:qpq_o_charter ?= yes }
 				desc = qpq_hub.50.stakes_charter
 			}
@@ -868,6 +905,7 @@ qpq_hub.1 = {
 		}
 		remove_character_flag = qpq_considering_proposal
 		qpq_seal_proposed_kind_effect = yes
+		qpq_ai_command_seal_effect = yes
 	}
 	option = {
 		name = qpq_hub.50.c
@@ -894,6 +932,7 @@ qpq_hub.1 = {
 	option = {
 		name = qpq_hub.50.b
 		remove_character_flag = qpq_considering_proposal
+		qpq_command_defied_effect = yes
 		scope:actor = {
 			add_opinion = { target = root modifier = qpq_declined_pact_opinion }
 			send_interface_toast = {

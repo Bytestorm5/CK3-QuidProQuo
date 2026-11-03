@@ -236,3 +236,103 @@ qpq_command_defied_effect = {
 		}
 	}
 }
+
+# An AI proposing a deal (root and scope:actor: the AI; scope:recipient: who it is put to) that would be refused leans
+# on its authority, if the one it asks is under it and its standing allows: the lightest tier that would make an AI
+# in the recipient's place agree. Saves scope:qpq_deal_command (the tier) and scope:qpq_cmd_bonus (what it adds to
+# their goodwill, held like any goodwill to what the deed costs them). A timid ruler does not try.
+qpq_ai_try_command_effect = {
+	if = {
+		limit = {
+			qpq_command_possible_trigger = yes
+			scope:actor = { ai_boldness > -50 }
+		}
+		save_scope_value_as = {
+			name = qpq_ai_cmd_margin
+			value = {
+				value = qpq_command_level_value
+				subtract = qpq_command_expectation_value
+			}
+		}
+		if = {
+			limit = { scope:qpq_ai_cmd_margin >= -1 }
+			save_scope_value_as = { name = qpq_cmd_bonus value = 15 }
+			if = {
+				limit = { qpq_$KIND$_ai_acceptance_value > 0 }
+				save_scope_value_as = { name = qpq_deal_command value = 1 }
+			}
+			else = {
+				clear_saved_scope = qpq_cmd_bonus
+			}
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:qpq_deal_command }
+				scope:qpq_ai_cmd_margin >= 0
+			}
+			save_scope_value_as = { name = qpq_cmd_bonus value = 30 }
+			if = {
+				limit = { qpq_$KIND$_ai_acceptance_value > 0 }
+				save_scope_value_as = { name = qpq_deal_command value = 2 }
+			}
+			else = {
+				clear_saved_scope = qpq_cmd_bonus
+			}
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:qpq_deal_command }
+				scope:qpq_ai_cmd_margin >= 2
+			}
+			save_scope_value_as = { name = qpq_cmd_bonus value = 45 }
+			if = {
+				limit = { qpq_$KIND$_ai_acceptance_value > 0 }
+				save_scope_value_as = { name = qpq_deal_command value = 3 }
+			}
+			else = {
+				clear_saved_scope = qpq_cmd_bonus
+			}
+		}
+		clear_saved_scope = qpq_ai_cmd_margin
+	}
+}
+
+# A single pact sealed under command, from an AI proposal (scope:qpq_story just sealed; scope:actor the commander,
+# scope:recipient the one commanded). As qpq_command_seal_effect does for a deal made in the panel: the command is
+# written on the pact and its secrets, so exposing it makes the commander pay; an AI commanded into it resents it.
+qpq_ai_command_seal_effect = {
+	if = {
+		limit = {
+			exists = scope:qpq_deal_command
+			exists = scope:qpq_story
+		}
+		save_scope_value_as = { name = qpq_cmd_tier value = scope:qpq_deal_command }
+		scope:qpq_story = {
+			set_variable = { name = qpq_command value = scope:qpq_deal_command }
+			var:qpq_payer_secret ?= {
+				set_variable = { name = qpq_command value = scope:qpq_deal_command }
+				set_variable = { name = qpq_commander value = scope:actor }
+			}
+			var:qpq_agent_secret ?= {
+				set_variable = { name = qpq_command value = scope:qpq_deal_command }
+				set_variable = { name = qpq_commander value = scope:actor }
+			}
+		}
+		scope:recipient = {
+			if = {
+				limit = { is_ai = yes }
+				if = {
+					limit = { scope:qpq_cmd_tier >= 3 }
+					add_opinion = { target = scope:actor modifier = qpq_commanded_opinion opinion = -45 }
+				}
+				else_if = {
+					limit = { scope:qpq_cmd_tier >= 2 }
+					add_opinion = { target = scope:actor modifier = qpq_commanded_opinion opinion = -30 }
+				}
+				else = {
+					add_opinion = { target = scope:actor modifier = qpq_commanded_opinion opinion = -15 }
+				}
+			}
+		}
+	}
+}

@@ -208,8 +208,8 @@ class Character(Obj):
     designated_heir = None
     primary_heir = None
     relations = None           # {relation: set(characters)}
-    max_strength = 1000
-    current_strength = 1000
+    max_strength = 0           # an unlanded character commands no army
+    current_strength = 0
     boldness = 0
     energy = 0
     compassion = 0
@@ -425,6 +425,7 @@ class Library:
             if isinstance(body, list):
                 self.trait_flags[name] = {x.value for x in body if x.key == "flag" and isinstance(x.value, str)}
         self._expanded = {}
+        self.stubs = set()          # scripted effects run as a recorded no-op (Run.events), for testing around them
 
     @staticmethod
     def _load(path, table):
@@ -787,6 +788,9 @@ class Run:
         k, v = n.key, n.value
         if k is None:
             raise SimError("bare %r in an effect (%s:%d)" % (v, n.file, n.line))
+        if k in self.lib.stubs:
+            self.events.append(("stub", k, fr[0], dict(self.scopes)))
+            return
         if k in self.lib.effects:
             if isinstance(v, list):
                 params = {x.key: x.value for x in v}
@@ -1154,7 +1158,7 @@ def _t_has_dread_level_towards(run, fr, n):
     b = _block(n)
     tgt = run.resolve(b["target"].value, fr, n)
     lv = b["level"]
-    return _cmp(float(run.w.dread.get((fr[0], tgt), 0)), lv.op if lv.op != "=" else ">=", run.val(lv.value, fr, lv))
+    return _cmp(float(run.w.dread.get((fr[0], tgt), 0)), lv.op, run.val(lv.value, fr, lv))
 
 
 def _t_faith_hostility_level(run, fr, n):
@@ -1389,6 +1393,8 @@ TRIGGERS = {
     "faith_hostility_level": _t_faith_hostility_level,
     "has_hook": _t_has_hook,
     "has_strong_hook": _t_has_strong_hook,
+    "has_usable_hook": _t_has_hook,
+    "has_weak_hook": lambda r, fr, n: r.w.hooks.get((fr[0], _target(r, fr, n))) == "weak",
     "has_truce": _t_has_truce,
     "is_allied_to": _t_is_allied_to,
     "has_relation_friend": _rel("friend"),
@@ -1720,6 +1726,35 @@ class Panel:
         self.errors += r.errors
         return ok
 
+    def explain(self, trigger="qpq_ui_can_propose_trigger"):
+        """The tooltip keys of the innermost conditions that fail: what the player would read on the button."""
+        r = self._run()
+        out = []
+
+        def walk(nodes, fr):
+            groups = []
+            for n in nodes:
+                if n.key in ("trigger_else_if", "trigger_else") and groups:
+                    groups[-1].append(n)
+                else:
+                    groups.append([n])
+            for g in groups:
+                if r.trig(g, fr):
+                    continue
+                n = g[0]
+                if n.key in ("custom_description", "custom_tooltip") and isinstance(n.value, list):
+                    before = len(out)
+                    walk(_strip(n.value, ("text", "subject", "object", "value")), fr)
+                    if len(out) == before:
+                        out.append({x.key: x.value for x in n.value}.get("text"))
+                elif n.key in self.lib.triggers and n.value == "yes":
+                    walk(self.lib.triggers[n.key], fr)
+                elif n.key in ("AND",) or n.key == "trigger_if":
+                    walk(n.value if n.key == "AND" else _strip(n.value, ("limit",)), fr)
+                # anything else fails silently here: the enclosing description (if any) says what it is
+        walk(self.lib.triggers[trigger], (self.me, None))
+        return out
+
     def failures(self):
         """Which of the Propose button's conditions fail (by their tooltip key)."""
         r = self._run()
@@ -1775,6 +1810,10 @@ class Panel:
         return self.lib.guis[gui]
 
     # ---- reading
+    def value(self, name, this):
+        """A script value, evaluated in THIS (with the panel's actor and recipient)."""
+        return self._run().value(name, (this, None))
+
     def var(self, name, default=None):
         return self.me.vars.get("qpq_ui_" + name, default)
 
@@ -1789,8 +1828,8 @@ class Panel:
         return sorted(out)
 
     def acceptance(self):
-        keys = ["ask", "offers", "goal", "char", "dread", "circ", "refuse", "opinion", "public", "other", "cmd",
-                "before_cmd", "total"]
+        keys = ["ask", "offers", "goal", "char", "risk", "dread", "circ", "refuse", "opinion", "public", "cap", "other",
+                "cmd", "before_cmd", "total"]
         out = {}
         for k in keys:
             v = self.var("acc_" + k)
@@ -1800,7 +1839,7 @@ class Panel:
             ek = self.var(L + "_ekind")
             if ek is not None:
                 leg = {"kind": ek.name}
-                for k in ("a_ask", "a_offers", "a_goal", "a_char", "a_dread", "a_circ", "a_refuse", "price",
+                for k in ("a_ask", "a_offers", "a_goal", "a_char", "a_risk", "a_dread", "a_circ", "a_refuse", "price",
                           "fair", "payer_tier", "agent_tier"):
                     v = self.var(L + "_" + k)
                     if v is not None:
@@ -1842,6 +1881,16 @@ class Panel:
             self.click("qpq_ui_refresh")
 
     def offer(self, leg, good):
+        """Tick a good. Land, artifacts and secrets are chosen item by item: the first candidate is taken."""
+        picked = {"land": ("land", "land_toggle"), "artifact": ("gift_artifact", "artifact_toggle"),
+                  "secret": ("gift_secret", "secret_toggle")}
+        if good in picked:
+            lst, gui = picked[good]
+            cands = self.me.var_lists.get("qpq_ui_%s_%s_candidates" % (leg, lst), [])
+            if not cands:
+                raise Refused("no %s to give" % good)
+            self.click("qpq_ui_%s_%s" % (gui, leg), qpq_pick=cands[0])
+            return
         self.click("qpq_ui_offer_%s_%s" % (leg, good))
 
     def timing(self, leg, when):
@@ -1855,6 +1904,42 @@ class Panel:
 
     def refresh(self):
         self.click("qpq_ui_refresh")
+
+
+# ====================================================================== the game's text
+class Loc:
+    """The mod's English localization, read as plain text: $KEY$ filled in, markup dropped, the panel's few
+    data functions given the names they would show."""
+
+    LINE = re.compile(r'^\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"\s*$')
+
+    def __init__(self, mod=ROOT):
+        self.text = {}
+        d = os.path.join(mod, "localization", "english")
+        for fn in sorted(os.listdir(d)):
+            if fn.endswith(".yml"):
+                for line in read(os.path.join(d, fn)).split("\n"):
+                    m = self.LINE.match(line)
+                    if m:
+                        self.text[m.group(1)] = m.group(2)
+
+    def plain(self, key, names=None, depth=0):
+        t = self.text.get(key, key)
+        names = names or {}
+        if depth < 6:
+            t = re.sub(r"\$([A-Za-z0-9_]+)\$", lambda m: self.plain(m.group(1), names, depth + 1), t)
+
+        def data(m):
+            x = m.group(1)
+            if "|E" in x:
+                return x.split("|")[0].replace("_", " ")
+            for var, name in names.items():
+                if "'%s'" % var in x:
+                    return name
+            return "..."
+        t = re.sub(r"\[([^\]]*)\]", data, t)
+        t = re.sub(r"#[A-Za-z_]+ ?|#!", "", t)
+        return t.replace("\\n", " ").replace("•", "").strip()
 
 
 # ====================================================================== a standard world
@@ -1898,6 +1983,7 @@ def standard_world(player="king"):
              current_strength=6000, diplomacy=12)
     t("k_realm", 4, king)
     t("c_crown", 2, king)
+    t("c_royal_demesne", 2, king)
     queen = c("queen", liege=king, female=True, dynasty=Dynasty("queen_dyn"), gold=30, income=1)
     king.spouses.append(queen)
     queen.spouses.append(king)

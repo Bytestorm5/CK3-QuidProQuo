@@ -1114,6 +1114,8 @@ K(key="hand_over", cat="A", group="favours", secret="abduction", icon="prison",
   ask="surrender [qpq_target.GetTitledFirstName] to [qpq_payer.GetShortUIName]",
   desc="Surrender a [prisoner|E], [hostage|E] or [claimant|E] they shelter. Tier III if the person is their kin or [guest|E].",
   payer_base=1, agent_base=1, mode="perform", term=12, effort=5,
+  # kin and guests are counted below (Tier III, as the text says), not again by the general context
+  agent_ctx=False,
   rel=REL_VASSAL,
   pick="""
 scope:recipient = {
@@ -1457,6 +1459,8 @@ K(key="mutual_defense_league", cat="B", group="shadows", secret="faction", icon=
   ask="stand with [qpq_payer.GetShortUIName] if [qpq_target.GetTitledFirstName] revokes from either of you",
   desc="Two [vassals|E] swear to stand against their [liege|E] together if either has titles revoked. Tier III towards the liege, IV if armed. If it comes out, the liege may [imprison|E] both as conspirators.",
   payer_base=3, agent_base=3, target="derived", derive="scope:actor.liege", mode="restraint", term=120, effort=10,
+  # the tier already counts that the league is aimed at the liege: no context shifts on top
+  agent_ctx=False, payer_ctx=False,
   rel=REL_PEER_VASSAL,
   extra_options=[dict(flag="qpq_x_armed", loc="qpq_x_armed", desc="qpq_x_armed_desc", is_shown="always = yes")],
   payer_adj="if = { limit = { scope:qpq_x_armed ?= yes } add = 1 }",
@@ -1521,6 +1525,8 @@ K(key="faction_pledge", cat="B", group="shadows", secret="faction", icon="factio
   ask="stand in the faction against [qpq_target.GetTitledFirstName] until it wins, and share the spoils",
   desc="[vassals|E] agree to split the spoils of a successful [faction|E] war. If it comes out, the [liege|E] gains grounds to [imprison|E] them, and their allies fall away.",
   payer_base=3, agent_base=3, target="derived", derive="scope:actor.liege", term=96, effort=10,
+  # the tier already counts that the faction stands against the liege: no context shifts on top
+  agent_ctx=False, payer_ctx=False,
   rel=REL_PEER_VASSAL + "scope:actor = { exists = joined_faction joined_faction = { faction_target = scope:actor.liege } }",
   on_seal="""
 scope:qpq_agent = {
@@ -1575,6 +1581,8 @@ K(key="title_swap", cat="B", group="family", secret="dynastic", icon="grant_titl
   ask="cede [qpq_target_title.GetName] to [qpq_payer.GetShortUIName]",
   desc="Two [vassals|E] exchange [counties|E]. Tier I with your [liege|E]'s consent, III if hidden; a hidden swap can be voided by the liege.",
   payer_base=3, agent_base=3, mode="perform", target="title", term=12, effort=10,
+  # Tier I with consent, III hidden, as the text says: the swap's own terms set it, not who holds what
+  agent_ctx=False, payer_ctx=False,
   rel=REL_PEER_VASSAL,
   pick=dict(source="recipient", filter="domain_titles", can_pick="""
 scope:target = {
@@ -3268,6 +3276,140 @@ if = {
         add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_me_opinion opinion = -20 }
     }
 }
+""")
+
+# An AI at war deals too. Root: the AI proposing (the payer, scope:actor once it proposes). Each finder names the
+# one it puts the deal to (scope:recipient) and the war's other leader (scope:secondary_recipient).
+_AI_OWN_WAR = """
+random_character_war = {
+    limit = {
+        OR = {
+            primary_attacker = root
+            primary_defender = root
+        }
+        %s
+    }
+    save_scope_as = qpq_ai_war
+    if = {
+        limit = { primary_attacker = root }
+        primary_defender = { save_scope_as = qpq_ai_foe }
+    }
+    else = {
+        primary_attacker = { save_scope_as = qpq_ai_foe }
+    }
+}
+"""
+# Losing: sue the enemy leader for a white peace
+_KIND_BY_KEY = {k["key"]: k for k in KINDS}
+_KIND_BY_KEY["make_peace"]["ai"] = dict(weight=6, valid="""
+is_at_war = yes
+any_character_war = {
+    OR = {
+        primary_attacker = root
+        primary_defender = root
+    }
+    NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
+}
+""", find=_AI_OWN_WAR % "NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }" + """
+scope:qpq_ai_foe ?= { save_scope_as = recipient }
+root = { save_scope_as = secondary_recipient }
+""")
+# Winning well, with gold to spare: buy the enemy's surrender
+_KIND_BY_KEY["yield_war"]["ai"] = dict(weight=3, valid="""
+is_at_war = yes
+gold >= 100
+any_character_war = {
+    OR = {
+        primary_attacker = root
+        primary_defender = root
+    }
+    qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
+}
+""", find=_AI_OWN_WAR % "qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }" + """
+scope:qpq_ai_foe ?= { save_scope_as = recipient }
+root = { save_scope_as = secondary_recipient }
+""")
+# Not winning: hire a neighbour who has no love for the enemy and no quarrel with you
+_KIND_BY_KEY["join_war"]["ai"] = dict(weight=5, valid="""
+is_at_war = yes
+gold >= 50
+any_character_war = {
+    OR = {
+        primary_attacker = root
+        primary_defender = root
+    }
+    NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = 25 } }
+}
+""", find=_AI_OWN_WAR % "NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = 25 } }" + """
+if = {
+    limit = { exists = scope:qpq_ai_foe }
+    scope:qpq_ai_foe = { save_scope_as = secondary_recipient }
+    random_neighboring_and_across_water_top_liege_realm_owner = {
+        limit = {
+            NOT = { this = scope:secondary_recipient }
+            is_at_war = no
+            NOT = { top_liege = scope:secondary_recipient.top_liege }
+            NOT = { is_allied_to = scope:secondary_recipient }
+            NOT = { is_close_family_of = scope:secondary_recipient }
+            opinion = { target = root value >= -10 }
+        }
+        save_scope_as = recipient
+    }
+}
+""")
+# Keep the enemy's friends at home: an ally of the enemy leader who has not come in yet
+_KIND_BY_KEY["stay_out"]["ai"] = dict(weight=3, valid="""
+is_at_war = yes
+gold >= 50
+any_character_war = {
+    OR = {
+        primary_attacker = root
+        primary_defender = root
+    }
+}
+""", find=_AI_OWN_WAR % "" + """
+if = {
+    limit = { exists = scope:qpq_ai_foe }
+    scope:qpq_ai_foe = {
+        save_scope_as = secondary_recipient
+        random_ally = {
+            limit = {
+                NOT = { this = root }
+                NOT = { is_at_war_with = root }
+                NOT = { scope:qpq_ai_war = { is_participant = prev } }
+            }
+            save_scope_as = recipient
+        }
+    }
+}
+""")
+# Peel a follower off the enemy's side
+_KIND_BY_KEY["leave_war"]["ai"] = dict(weight=3, valid="""
+is_at_war = yes
+gold >= 50
+any_character_war = {
+    OR = {
+        primary_attacker = root
+        primary_defender = root
+    }
+}
+""", find=_AI_OWN_WAR % "" + """
+scope:qpq_ai_war ?= {
+    if = {
+        limit = { primary_attacker = root }
+        random_war_defender = {
+            limit = { NOT = { this = scope:qpq_ai_war.primary_defender } }
+            save_scope_as = recipient
+        }
+    }
+    else = {
+        random_war_attacker = {
+            limit = { NOT = { this = scope:qpq_ai_war.primary_attacker } }
+            save_scope_as = recipient
+        }
+    }
+}
+root = { save_scope_as = secondary_recipient }
 """)
 
 ###############################################################################
