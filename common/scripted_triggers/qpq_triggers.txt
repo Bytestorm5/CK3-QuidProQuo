@@ -469,3 +469,33 @@ qpq_war_side_winning_trigger = {
 		}
 	}
 }
+
+############################################################
+# AI finders (root: the AI proposing; this: a candidate)
+############################################################
+
+# Root would go to war with this character: a rival, or the holder of land root has a claim on
+qpq_ai_wants_war_on_trigger = {
+	save_temporary_scope_as = qpq_ai_cand
+	OR = {
+		has_relation_rival = root
+		has_relation_nemesis = root
+		root = { any_claim = { holder ?= scope:qpq_ai_cand } }
+	}
+}
+
+# This character is a danger to root: a rival, the holder of a claim on root's land, or of a hostile faith
+qpq_ai_threatens_trigger = {
+	save_temporary_scope_as = qpq_ai_cand
+	OR = {
+		has_relation_rival = root
+		has_relation_nemesis = root
+		any_claim = { holder ?= root }
+		faith = {
+			faith_hostility_level = {
+				target = root.faith
+				value >= faith_hostile_level
+			}
+		}
+	}
+}

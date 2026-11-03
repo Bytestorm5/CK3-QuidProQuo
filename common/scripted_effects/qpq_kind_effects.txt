@@ -103,17 +103,27 @@ qpq_k_chartered_conquest_exposed_effect = {
 	# nothing
 }
 qpq_k_chartered_conquest_ai_find_effect = {
-	random_vassal = {
+	# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+	ordered_vassal = {
 		limit = {
 			is_landed = yes
+			is_ai = yes
 			is_at_war = no
 			any_neighboring_and_across_water_top_liege_realm_owner = {
 				NOT = { top_liege = root.top_liege }
 			}
 		}
+		order_by = max_military_strength
 		save_scope_as = recipient
-		random_neighboring_and_across_water_top_liege_realm_owner = {
-			limit = { NOT = { top_liege = root.top_liege } }
+	}
+	scope:recipient ?= {
+		save_scope_as = qpq_ai_fighter
+		ordered_neighboring_and_across_water_top_liege_realm_owner = {
+			limit = {
+				NOT = { top_liege = root.top_liege }
+				NOT = { this = root }
+			}
+			order_by = qpq_ai_war_target_value
 			save_scope_as = secondary_recipient
 		}
 	}
@@ -191,17 +201,27 @@ qpq_k_sanctioned_conquest_exposed_effect = {
 	}
 }
 qpq_k_sanctioned_conquest_ai_find_effect = {
-	random_vassal = {
+	# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+	ordered_vassal = {
 		limit = {
 			is_landed = yes
+			is_ai = yes
 			is_at_war = no
 			any_neighboring_and_across_water_top_liege_realm_owner = {
 				NOT = { top_liege = root.top_liege }
 			}
 		}
+		order_by = max_military_strength
 		save_scope_as = recipient
-		random_neighboring_and_across_water_top_liege_realm_owner = {
-			limit = { NOT = { top_liege = root.top_liege } }
+	}
+	scope:recipient ?= {
+		save_scope_as = qpq_ai_fighter
+		ordered_neighboring_and_across_water_top_liege_realm_owner = {
+			limit = {
+				NOT = { top_liege = root.top_liege }
+				NOT = { this = root }
+			}
+			order_by = qpq_ai_war_target_value
 			save_scope_as = secondary_recipient
 		}
 	}
@@ -264,7 +284,8 @@ qpq_k_marcher_charge_exposed_effect = {
 	# nothing
 }
 qpq_k_marcher_charge_ai_find_effect = {
-	random_neighboring_and_across_water_top_liege_realm_owner = {
+	# the neighbour root most fears and dislikes, held off by the strongest vassal on that border
+	ordered_neighboring_and_across_water_top_liege_realm_owner = {
 		limit = {
 			NOT = { top_liege = root.top_liege }
 			OR = {
@@ -272,15 +293,17 @@ qpq_k_marcher_charge_ai_find_effect = {
 				faith = { faith_hostility_level = { target = root.faith value >= faith_hostile_level } }
 			}
 		}
+		order_by = qpq_ai_enmity_value
 		save_scope_as = secondary_recipient
 	}
 	if = {
 		limit = { exists = scope:secondary_recipient }
-		random_vassal = {
+		ordered_vassal = {
 			limit = {
 				is_landed = yes
 				any_neighboring_and_across_water_top_liege_realm_owner = { this = scope:secondary_recipient }
 			}
+			order_by = max_military_strength
 			save_scope_as = recipient
 		}
 	}
@@ -705,16 +728,20 @@ qpq_k_licensed_feud_exposed_effect = {
 	}
 }
 qpq_k_licensed_feud_ai_find_effect = {
-	random_vassal = {
+	# the strongest vassal with a rival among root's vassals, against the weakest such rival
+	ordered_vassal = {
 		limit = {
 			is_landed = yes
 			is_ai = yes
 			any_relation = { type = rival liege ?= root is_landed = yes }
 		}
+		order_by = max_military_strength
 		save_scope_as = recipient
-		random_relation = {
+		save_scope_as = qpq_ai_fighter
+		ordered_relation = {
 			type = rival
 			limit = { liege ?= root is_landed = yes }
+			order_by = qpq_ai_weakness_value
 			save_scope_as = secondary_recipient
 		}
 	}
@@ -794,9 +821,10 @@ qpq_k_dossier_exposed_effect = {
 	scope:qpq_agent = { add_character_modifier = { modifier = qpq_informer_modifier years = 10 } }
 }
 qpq_k_dossier_ai_find_effect = {
-	random_relation = {
+	ordered_relation = {
 		type = rival
 		limit = { liege ?= root }
+		order_by = qpq_ai_enmity_value
 		save_scope_as = secondary_recipient
 	}
 	if = {
@@ -878,20 +906,23 @@ qpq_k_quiet_removal_exposed_effect = {
 	}
 }
 qpq_k_quiet_removal_ai_find_effect = {
-	random_relation = {
+	# the rival root hates most, by the subtlest of root's vassals
+	ordered_relation = {
 		type = rival
 		limit = { is_alive = yes }
+		order_by = qpq_ai_enmity_value
 		save_scope_as = secondary_recipient
 	}
 	if = {
 		limit = { exists = scope:secondary_recipient }
-		random_vassal = {
+		ordered_vassal = {
 			limit = {
 				is_ai = yes
 				intrigue >= 10
 				NOT = { this = scope:secondary_recipient }
 				NOT = { is_close_family_of = scope:secondary_recipient }
 			}
+			order_by = intrigue
 			save_scope_as = recipient
 		}
 	}
@@ -1616,10 +1647,13 @@ qpq_k_blessing_for_a_feud_exposed_effect = {
 	scope:qpq_payer = { add_character_modifier = { modifier = qpq_known_schemer_modifier years = 8 } }
 }
 qpq_k_blessing_for_a_feud_ai_find_effect = {
+	# leave from the liege to fall on the rival fellow vassal root most wants beaten, and can beat
 	liege = { save_scope_as = recipient }
-	random_relation = {
+	save_scope_as = qpq_ai_fighter
+	ordered_relation = {
 		type = rival
 		limit = { liege ?= root.liege is_landed = yes }
+		order_by = qpq_ai_war_target_value
 		save_scope_as = secondary_recipient
 	}
 }
@@ -1843,12 +1877,13 @@ qpq_k_mutual_defense_league_exposed_effect = {
 qpq_k_mutual_defense_league_ai_find_effect = {
 	liege = { save_scope_as = qpq_ai_liege }
 	scope:qpq_ai_liege = {
-		random_vassal = {
+		ordered_vassal = {
 			limit = {
 				NOT = { this = root }
 				is_landed = yes
 				opinion = { target = scope:qpq_ai_liege value <= 0 }
 			}
+			order_by = max_military_strength
 			save_scope_as = recipient
 		}
 	}
@@ -2105,13 +2140,14 @@ qpq_k_coup_pact_exposed_effect = {
 }
 qpq_k_coup_pact_ai_find_effect = {
 	liege = {
-		random_courtier = {
+		ordered_courtier = {
 			limit = {
 				is_adult = yes
 				is_ai = yes
 				NOT = { this = root }
 				intrigue >= 10
 			}
+			order_by = intrigue
 			save_scope_as = recipient
 		}
 	}
@@ -2193,21 +2229,24 @@ qpq_k_proxy_war_exposed_effect = {
 	}
 }
 qpq_k_proxy_war_ai_find_effect = {
-	random_relation = {
+	# the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
+	ordered_relation = {
 		type = rival
 		limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
+		order_by = qpq_ai_enmity_value
 		save_scope_as = secondary_recipient
 	}
 	if = {
 		limit = { exists = scope:secondary_recipient }
 		scope:secondary_recipient.top_liege = {
-			random_neighboring_and_across_water_top_liege_realm_owner = {
+			ordered_neighboring_and_across_water_top_liege_realm_owner = {
 				limit = {
 					NOT = { this = root }
 					is_ai = yes
 					is_at_war = no
 					NOT = { is_allied_to = scope:secondary_recipient }
 				}
+				order_by = qpq_ai_hired_sword_value
 				save_scope_as = recipient
 			}
 		}
@@ -2342,12 +2381,13 @@ qpq_k_secret_alliance_exposed_effect = {
 	# nothing
 }
 qpq_k_secret_alliance_ai_find_effect = {
-	random_neighboring_and_across_water_top_liege_realm_owner = {
+	ordered_neighboring_and_across_water_top_liege_realm_owner = {
 		limit = {
 			is_ai = yes
 			NOT = { top_liege = root.top_liege }
 			opinion = { target = root value >= 20 }
 		}
+		order_by = max_military_strength
 		save_scope_as = recipient
 	}
 }
@@ -2377,15 +2417,6 @@ qpq_k_bought_truce_seal_from_scopes_effect = {
 }
 qpq_k_bought_truce_on_seal_effect = {
 	scope:qpq_payer = {
-		every_character_war = {
-			limit = {
-				OR = {
-					AND = { is_attacker = scope:qpq_payer is_defender = scope:qpq_agent }
-					AND = { is_defender = scope:qpq_payer is_attacker = scope:qpq_agent }
-				}
-			}
-			end_war = white_peace
-		}
 		add_truce_both_ways = {
 			character = scope:qpq_agent
 			name = qpq_truce_name
@@ -2412,12 +2443,17 @@ qpq_k_bought_truce_exposed_effect = {
 	scope:qpq_payer = { add_character_modifier = { modifier = qpq_easy_mark_modifier years = 10 } }
 }
 qpq_k_bought_truce_ai_find_effect = {
-	random_character_war = {
+	# the strongest neighbour that means root harm, while there is still peace to keep
+	ordered_neighboring_and_across_water_top_liege_realm_owner = {
 		limit = {
-			is_defender = root
-			primary_attacker = { is_ai = yes }
+			NOT = { this = root }
+			NOT = { is_at_war_with = root }
+			NOT = { has_truce = root }
+			max_military_strength > root.max_military_strength
+			qpq_ai_threatens_trigger = yes
 		}
-		primary_attacker = { save_scope_as = recipient }
+		order_by = max_military_strength
+		save_scope_as = recipient
 	}
 }
 
@@ -2446,21 +2482,7 @@ qpq_k_faithless_ally_seal_from_scopes_effect = {
 	}
 }
 qpq_k_faithless_ally_on_seal_effect = {
-	scope:qpq_agent = {
-		every_character_war = {
-			limit = {
-				OR = {
-					AND = { is_attacker = scope:qpq_agent is_defender = scope:qpq_payer }
-					AND = { is_defender = scope:qpq_agent is_attacker = scope:qpq_payer }
-				}
-				NOR = {
-					primary_attacker = scope:qpq_agent
-					primary_defender = scope:qpq_agent
-				}
-			}
-			remove_participant = scope:qpq_agent
-		}
-	}
+	# nothing
 }
 qpq_k_faithless_ally_on_deliver_effect = {
 	# nothing
@@ -2481,23 +2503,33 @@ qpq_k_faithless_ally_exposed_effect = {
 	scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
 }
 qpq_k_faithless_ally_ai_find_effect = {
-	random_character_war = {
+	# War preparation. Root means to fall on a neighbour it wants to fight (a rival, or the holder of land it has a
+	# claim on) and could beat alone, but one of their allies would tip the war against it: buy that ally's promise
+	# to ignore the call to arms. The likeliest target first, then the ally who matters most.
+	save_scope_as = qpq_ai_fighter
+	ordered_neighboring_and_across_water_top_liege_realm_owner = {
 		limit = {
-			OR = { is_attacker = root is_defender = root }
-		}
-		random_war_participant = {
-			limit = {
-				is_ai = yes
+			NOT = { this = root }
+			qpq_ai_wants_war_on_trigger = yes
+			max_military_strength <= root.max_military_strength
+			any_ally = {
 				NOT = { this = root }
-				NOT = { top_liege = root.top_liege }
-				is_independent_ruler = yes
-				any_ally = { is_at_war_with = root }
+				max_military_strength > { value = root.max_military_strength subtract = prev.max_military_strength }
 			}
+		}
+		order_by = qpq_ai_war_target_value
+		save_scope_as = secondary_recipient
+	}
+	scope:secondary_recipient ?= {
+		ordered_ally = {
+			limit = {
+				NOT = { this = root }
+				NOT = { is_allied_to = root }
+				NOT = { is_at_war_with = root }
+				max_military_strength > { value = root.max_military_strength subtract = scope:secondary_recipient.max_military_strength }
+			}
+			order_by = max_military_strength
 			save_scope_as = recipient
-			random_ally = {
-				limit = { is_at_war_with = root }
-				save_scope_as = secondary_recipient
-			}
 		}
 	}
 }
@@ -2590,11 +2622,12 @@ qpq_k_turncoat_ai_find_effect = {
 	random_character_war = {
 		limit = { is_attacker = root }
 		primary_defender = {
-			random_vassal = {
+			ordered_vassal = {
 				limit = {
 					is_ai = yes
 					opinion = { target = prev value <= 0 }
 				}
+				order_by = max_military_strength
 				save_scope_as = recipient
 			}
 		}
@@ -2662,20 +2695,23 @@ qpq_k_seed_the_separatists_exposed_effect = {
 	# nothing
 }
 qpq_k_seed_the_separatists_ai_find_effect = {
-	random_relation = {
+	# the rival realm root hates most, broken up through its strongest discontented vassal
+	ordered_relation = {
 		type = rival
 		limit = { is_independent_ruler = yes NOT = { this = root } }
+		order_by = qpq_ai_enmity_value
 		save_scope_as = qpq_ai_rival
 	}
 	if = {
 		limit = { exists = scope:qpq_ai_rival }
 		scope:qpq_ai_rival = {
-			random_vassal = {
+			ordered_vassal = {
 				limit = {
 					is_ai = yes
 					highest_held_title_tier >= tier_duchy
 					opinion = { target = scope:qpq_ai_rival value <= 0 }
 				}
+				order_by = max_military_strength
 				save_scope_as = recipient
 			}
 		}
@@ -3481,9 +3517,10 @@ qpq_k_bought_claim_exposed_effect = {
 }
 qpq_k_bought_claim_ai_find_effect = {
 	faith.religious_head = { save_scope_as = recipient }
-	random_relation = {
+	ordered_relation = {
 		type = rival
 		limit = { is_landed = yes }
+		order_by = qpq_ai_enmity_value
 		save_scope_as = secondary_recipient
 	}
 }
@@ -4344,175 +4381,6 @@ qpq_k_temple_patronage_exposed_effect = {
 	scope:qpq_payer = { add_piety = minor_piety_loss }
 }
 
-#### Make Peace
-qpq_k_make_peace_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_make_peace_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_make_peace_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_make_peace_price_value }
-	}
-	if = {
-		limit = {
-			qpq_make_peace_payer_tier_value <= 0
-			qpq_make_peace_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = make_peace SECRET = bribery TERM = 12 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_make_peace_on_seal_effect = {
-	scope:qpq_agent = {
-		random_character_war = {
-			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
-			save_scope_as = qpq_target_war
-		}
-	}
-
-	scope:qpq_target_war ?= { end_war = white_peace }
-}
-qpq_k_make_peace_on_deliver_effect = {
-	# nothing
-}
-qpq_k_make_peace_on_end_effect = {
-	# nothing
-}
-qpq_k_make_peace_tick_effect = {
-	# nothing
-}
-qpq_k_make_peace_perform_effect = {
-	# nothing
-}
-qpq_k_make_peace_ai_attempt_effect = {
-	# nothing
-}
-qpq_k_make_peace_exposed_effect = {
-	scope:qpq_agent = {
-		every_ally = {
-			limit = { NOT = { this = scope:qpq_payer } }
-			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
-		}
-	}
-}
-qpq_k_make_peace_ai_find_effect = {
-	random_character_war = {
-		limit = {
-			OR = {
-				primary_attacker = root
-				primary_defender = root
-			}
-			NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
-		}
-		save_scope_as = qpq_ai_war
-		if = {
-			limit = { primary_attacker = root }
-			primary_defender = { save_scope_as = qpq_ai_foe }
-		}
-		else = {
-			primary_attacker = { save_scope_as = qpq_ai_foe }
-		}
-	}
-
-	scope:qpq_ai_foe ?= { save_scope_as = recipient }
-	root = { save_scope_as = secondary_recipient }
-}
-
-#### Yield the War
-qpq_k_yield_war_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_yield_war_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_yield_war_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_yield_war_price_value }
-	}
-	if = {
-		limit = {
-			qpq_yield_war_payer_tier_value <= 0
-			qpq_yield_war_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = yield_war SECRET = betrayal TERM = 12 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_yield_war_on_seal_effect = {
-	scope:qpq_agent = {
-		random_character_war = {
-			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
-			save_scope_as = qpq_target_war
-		}
-	}
-
-	scope:qpq_target_war ?= {
-		if = {
-			limit = { is_attacker = scope:qpq_agent }
-			end_war = defender
-		}
-		else = {
-			end_war = attacker
-		}
-	}
-}
-qpq_k_yield_war_on_deliver_effect = {
-	# nothing
-}
-qpq_k_yield_war_on_end_effect = {
-	# nothing
-}
-qpq_k_yield_war_tick_effect = {
-	# nothing
-}
-qpq_k_yield_war_perform_effect = {
-	# nothing
-}
-qpq_k_yield_war_ai_attempt_effect = {
-	# nothing
-}
-qpq_k_yield_war_exposed_effect = {
-	scope:qpq_agent = {
-		add_character_modifier = { modifier = qpq_faithless_modifier years = 10 }
-		every_ally = {
-			limit = { NOT = { this = scope:qpq_payer } }
-			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
-		}
-	}
-}
-qpq_k_yield_war_ai_find_effect = {
-	random_character_war = {
-		limit = {
-			OR = {
-				primary_attacker = root
-				primary_defender = root
-			}
-			qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
-		}
-		save_scope_as = qpq_ai_war
-		if = {
-			limit = { primary_attacker = root }
-			primary_defender = { save_scope_as = qpq_ai_foe }
-		}
-		else = {
-			primary_attacker = { save_scope_as = qpq_ai_foe }
-		}
-	}
-
-	scope:qpq_ai_foe ?= { save_scope_as = recipient }
-	root = { save_scope_as = secondary_recipient }
-}
-
 #### Join the War
 qpq_k_join_war_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
@@ -4602,7 +4470,7 @@ qpq_k_join_war_ai_find_effect = {
 	if = {
 		limit = { exists = scope:qpq_ai_foe }
 		scope:qpq_ai_foe = { save_scope_as = secondary_recipient }
-		random_neighboring_and_across_water_top_liege_realm_owner = {
+		ordered_neighboring_and_across_water_top_liege_realm_owner = {
 			limit = {
 				NOT = { this = scope:secondary_recipient }
 				is_at_war = no
@@ -4611,103 +4479,10 @@ qpq_k_join_war_ai_find_effect = {
 				NOT = { is_close_family_of = scope:secondary_recipient }
 				opinion = { target = root value >= -10 }
 			}
+			order_by = qpq_ai_hired_sword_value
 			save_scope_as = recipient
 		}
 	}
-}
-
-#### Leave the War
-qpq_k_leave_war_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_leave_war_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_leave_war_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_leave_war_price_value }
-	}
-	if = {
-		limit = {
-			qpq_leave_war_payer_tier_value <= 0
-			qpq_leave_war_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = leave_war SECRET = betrayal TERM = 12 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_leave_war_on_seal_effect = {
-	scope:qpq_agent = {
-		random_character_war = {
-			limit = { qpq_war_foe_trigger = { WHO = scope:qpq_agent FOE = scope:qpq_target } }
-			save_scope_as = qpq_target_war
-		}
-	}
-
-	scope:qpq_target_war ?= {
-		if = {
-			limit = { is_participant = scope:qpq_agent }
-			remove_participant = scope:qpq_agent
-		}
-	}
-}
-qpq_k_leave_war_on_deliver_effect = {
-	# nothing
-}
-qpq_k_leave_war_on_end_effect = {
-	# nothing
-}
-qpq_k_leave_war_tick_effect = {
-	# nothing
-}
-qpq_k_leave_war_perform_effect = {
-	# nothing
-}
-qpq_k_leave_war_ai_attempt_effect = {
-	# nothing
-}
-qpq_k_leave_war_exposed_effect = {
-	scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
-}
-qpq_k_leave_war_ai_find_effect = {
-	random_character_war = {
-		limit = {
-			OR = {
-				primary_attacker = root
-				primary_defender = root
-			}
-
-		}
-		save_scope_as = qpq_ai_war
-		if = {
-			limit = { primary_attacker = root }
-			primary_defender = { save_scope_as = qpq_ai_foe }
-		}
-		else = {
-			primary_attacker = { save_scope_as = qpq_ai_foe }
-		}
-	}
-
-	scope:qpq_ai_war ?= {
-		if = {
-			limit = { primary_attacker = root }
-			random_war_defender = {
-				limit = { NOT = { this = scope:qpq_ai_war.primary_defender } }
-				save_scope_as = recipient
-			}
-		}
-		else = {
-			random_war_attacker = {
-				limit = { NOT = { this = scope:qpq_ai_war.primary_attacker } }
-				save_scope_as = recipient
-			}
-		}
-	}
-	root = { save_scope_as = secondary_recipient }
 }
 
 #### Stay Out of the War
@@ -4796,12 +4571,13 @@ qpq_k_stay_out_ai_find_effect = {
 		limit = { exists = scope:qpq_ai_foe }
 		scope:qpq_ai_foe = {
 			save_scope_as = secondary_recipient
-			random_ally = {
+			ordered_ally = {
 				limit = {
 					NOT = { this = root }
 					NOT = { is_at_war_with = root }
 					NOT = { scope:qpq_ai_war = { is_participant = prev } }
 				}
+				order_by = max_military_strength
 				save_scope_as = recipient
 			}
 		}
@@ -5386,20 +5162,8 @@ qpq_kind_on_deliver_effect = {
 		qpq_k_temple_patronage_on_deliver_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:make_peace }
-		qpq_k_make_peace_on_deliver_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:yield_war }
-		qpq_k_yield_war_on_deliver_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:join_war }
 		qpq_k_join_war_on_deliver_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:leave_war }
-		qpq_k_leave_war_on_deliver_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:stay_out }
@@ -5677,20 +5441,8 @@ qpq_kind_on_end_effect = {
 		qpq_k_temple_patronage_on_end_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:make_peace }
-		qpq_k_make_peace_on_end_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:yield_war }
-		qpq_k_yield_war_on_end_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:join_war }
 		qpq_k_join_war_on_end_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:leave_war }
-		qpq_k_leave_war_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:stay_out }
@@ -6090,20 +5842,8 @@ qpq_kind_ai_attempt_effect = {
 		qpq_k_temple_patronage_ai_attempt_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:make_peace }
-		qpq_k_make_peace_ai_attempt_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:yield_war }
-		qpq_k_yield_war_ai_attempt_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:join_war }
 		qpq_k_join_war_ai_attempt_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:leave_war }
-		qpq_k_leave_war_ai_attempt_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:stay_out }
@@ -6341,18 +6081,6 @@ qpq_kind_exposed_effect = {
 		qpq_k_temple_patronage_exposed_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:make_peace }
-		qpq_k_make_peace_exposed_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:yield_war }
-		qpq_k_yield_war_exposed_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:leave_war }
-		qpq_k_leave_war_exposed_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:stay_out }
 		qpq_k_stay_out_exposed_effect = yes
 	}
@@ -6425,7 +6153,7 @@ qpq_ai_broker_pact_effect = {
 			trigger = { qpq_k_bought_truce_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = bought_truce }
 		}
-		4 = {
+		6 = {
 			trigger = { qpq_k_faithless_ally_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = faithless_ally }
 		}
@@ -6445,21 +6173,9 @@ qpq_ai_broker_pact_effect = {
 			trigger = { qpq_k_absolution_by_concession_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = absolution_by_concession }
 		}
-		6 = {
-			trigger = { qpq_k_make_peace_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = make_peace }
-		}
-		3 = {
-			trigger = { qpq_k_yield_war_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = yield_war }
-		}
 		5 = {
 			trigger = { qpq_k_join_war_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = join_war }
-		}
-		3 = {
-			trigger = { qpq_k_leave_war_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = leave_war }
 		}
 		3 = {
 			trigger = { qpq_k_stay_out_ai_valid_trigger = yes }
@@ -6806,20 +6522,8 @@ qpq_seal_proposed_kind_effect = {
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
 	}
 	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:make_peace }
-		qpq_k_make_peace_seal_from_scopes_effect = yes
-	}
-	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:yield_war }
-		qpq_k_yield_war_seal_from_scopes_effect = yes
-	}
-	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:join_war }
 		qpq_k_join_war_seal_from_scopes_effect = yes
-	}
-	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:leave_war }
-		qpq_k_leave_war_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:stay_out }

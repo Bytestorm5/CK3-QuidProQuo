@@ -63,10 +63,7 @@ qpq_ui_leg_t_allows_gold_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -140,10 +137,7 @@ qpq_ui_leg_t_allows_land_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -226,10 +220,7 @@ qpq_ui_leg_t_allows_office_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -303,10 +294,7 @@ qpq_ui_leg_t_allows_release_hook_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -380,10 +368,7 @@ qpq_ui_leg_t_allows_my_word_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -455,10 +440,7 @@ qpq_ui_leg_t_allows_secret_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -532,10 +514,7 @@ qpq_ui_leg_t_allows_contract_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -607,10 +586,7 @@ qpq_ui_leg_t_allows_succession_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -684,10 +660,7 @@ qpq_ui_leg_t_allows_clemency_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -759,10 +732,7 @@ qpq_ui_leg_t_allows_arms_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -836,10 +806,7 @@ qpq_ui_leg_t_allows_artifact_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -913,10 +880,7 @@ qpq_ui_leg_t_allows_church_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -988,10 +952,7 @@ qpq_ui_leg_t_allows_restraint_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -1063,10 +1024,7 @@ qpq_ui_leg_t_allows_hook_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -1140,10 +1098,7 @@ qpq_ui_leg_t_allows_on_delivery_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 		var:qpq_ui_t_kind = flag:heavier_tribute
 		var:qpq_ui_t_kind = flag:lighter_tribute
@@ -1226,10 +1181,7 @@ qpq_ui_leg_t_needs_char_trigger = {
 		var:qpq_ui_t_kind = flag:fund_the_dawa
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:temple_patronage
-		var:qpq_ui_t_kind = flag:make_peace
-		var:qpq_ui_t_kind = flag:yield_war
 		var:qpq_ui_t_kind = flag:join_war
-		var:qpq_ui_t_kind = flag:leave_war
 		var:qpq_ui_t_kind = flag:stay_out
 	}
 }
@@ -1270,6 +1222,17 @@ qpq_ui_leg_t_ask_valid_trigger = {
 		limit = { var:qpq_ui_t_ekind = flag:bought_truce }
 		custom_description = {
 			text = qpq_valid_no_holy_war
+			NOT = { has_variable = qpq_ui_t_fail_0 }
+		}
+		custom_description = {
+			text = qpq_valid_at_peace
+			NOT = { has_variable = qpq_ui_t_fail_1 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_t_ekind = flag:faithless_ally }
+		custom_description = {
+			text = qpq_valid_not_fighting_you
 			NOT = { has_variable = qpq_ui_t_fail_0 }
 		}
 	}
@@ -1887,20 +1850,8 @@ qpq_ui_leg_t_still_possible_trigger = {
 		NOT = { exists = scope:actor.faith.religious_head }
 	}
 	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:make_peace }
-		scope:recipient = { is_at_war = yes }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:yield_war }
-		scope:recipient = { is_at_war = yes }
-	}
-	trigger_else_if = {
 		limit = { var:qpq_ui_t_ekind = flag:join_war }
 		scope:actor = { is_at_war = yes }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:leave_war }
-		scope:recipient = { is_at_war = yes }
 	}
 	trigger_else_if = {
 		limit = { var:qpq_ui_t_ekind = flag:stay_out }
@@ -2196,20 +2147,8 @@ qpq_ui_leg_t_no_same_pact_trigger = {
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 	}
 	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:make_peace }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = make_peace } }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:yield_war }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = yield_war } }
-	}
-	trigger_else_if = {
 		limit = { var:qpq_ui_t_ekind = flag:join_war }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = join_war } }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_t_ekind = flag:leave_war }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = leave_war } }
 	}
 	trigger_else_if = {
 		limit = { var:qpq_ui_t_ekind = flag:stay_out }
@@ -2467,10 +2406,7 @@ qpq_ui_leg_i_allows_gold_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2544,10 +2480,7 @@ qpq_ui_leg_i_allows_land_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2630,10 +2563,7 @@ qpq_ui_leg_i_allows_office_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2707,10 +2637,7 @@ qpq_ui_leg_i_allows_release_hook_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2784,10 +2711,7 @@ qpq_ui_leg_i_allows_my_word_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2859,10 +2783,7 @@ qpq_ui_leg_i_allows_secret_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -2936,10 +2857,7 @@ qpq_ui_leg_i_allows_contract_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3011,10 +2929,7 @@ qpq_ui_leg_i_allows_succession_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3088,10 +3003,7 @@ qpq_ui_leg_i_allows_clemency_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3163,10 +3075,7 @@ qpq_ui_leg_i_allows_arms_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3240,10 +3149,7 @@ qpq_ui_leg_i_allows_artifact_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3317,10 +3223,7 @@ qpq_ui_leg_i_allows_church_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3392,10 +3295,7 @@ qpq_ui_leg_i_allows_restraint_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3467,10 +3367,7 @@ qpq_ui_leg_i_allows_hook_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3544,10 +3441,7 @@ qpq_ui_leg_i_allows_on_delivery_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 		var:qpq_ui_i_kind = flag:heavier_tribute
 		var:qpq_ui_i_kind = flag:lighter_tribute
@@ -3630,10 +3524,7 @@ qpq_ui_leg_i_needs_char_trigger = {
 		var:qpq_ui_i_kind = flag:fund_the_dawa
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:temple_patronage
-		var:qpq_ui_i_kind = flag:make_peace
-		var:qpq_ui_i_kind = flag:yield_war
 		var:qpq_ui_i_kind = flag:join_war
-		var:qpq_ui_i_kind = flag:leave_war
 		var:qpq_ui_i_kind = flag:stay_out
 	}
 }
@@ -3674,6 +3565,17 @@ qpq_ui_leg_i_ask_valid_trigger = {
 		limit = { var:qpq_ui_i_ekind = flag:bought_truce }
 		custom_description = {
 			text = qpq_valid_no_holy_war
+			NOT = { has_variable = qpq_ui_i_fail_0 }
+		}
+		custom_description = {
+			text = qpq_valid_at_peace
+			NOT = { has_variable = qpq_ui_i_fail_1 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_i_ekind = flag:faithless_ally }
+		custom_description = {
+			text = qpq_valid_not_fighting_you
 			NOT = { has_variable = qpq_ui_i_fail_0 }
 		}
 	}
@@ -4291,20 +4193,8 @@ qpq_ui_leg_i_still_possible_trigger = {
 		NOT = { exists = scope:recipient.faith.religious_head }
 	}
 	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:make_peace }
-		scope:actor = { is_at_war = yes }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:yield_war }
-		scope:actor = { is_at_war = yes }
-	}
-	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:join_war }
 		scope:recipient = { is_at_war = yes }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:leave_war }
-		scope:actor = { is_at_war = yes }
 	}
 	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:stay_out }
@@ -4600,20 +4490,8 @@ qpq_ui_leg_i_no_same_pact_trigger = {
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 	}
 	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:make_peace }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = make_peace } }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:yield_war }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = yield_war } }
-	}
-	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:join_war }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = join_war } }
-	}
-	trigger_else_if = {
-		limit = { var:qpq_ui_i_ekind = flag:leave_war }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = leave_war } }
 	}
 	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:stay_out }
@@ -5257,6 +5135,10 @@ qpq_deal_leg_t_valid_trigger = {
 				text = qpq_valid_no_holy_war
 				NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }
 			}
+			custom_description = {
+				text = qpq_valid_at_peace
+				NOT = { scope:actor = { is_at_war_with = scope:recipient } }
+			}
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
@@ -5273,6 +5155,10 @@ qpq_deal_leg_t_valid_trigger = {
 			exists = scope:qpq_deal_t_char
 			scope:qpq_deal_t_char = { is_alive = yes }
 			scope:recipient = { is_allied_to = scope:qpq_deal_t_char }
+			custom_description = {
+				text = qpq_valid_not_fighting_you
+				NOT = { scope:actor = { is_at_war_with = scope:recipient } }
+			}
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faithless_ally } }
@@ -5724,30 +5610,6 @@ qpq_deal_leg_t_valid_trigger = {
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 		}
 		trigger_else_if = {
-			limit = { scope:qpq_deal_t_kind = flag:make_peace }
-			scope:recipient = { is_at_war = yes }
-			exists = scope:qpq_deal_t_char
-			scope:qpq_deal_t_char = { is_alive = yes }
-			scope:recipient = {
-				any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:qpq_deal_t_char } }
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = make_peace } }
-		}
-		trigger_else_if = {
-			limit = { scope:qpq_deal_t_kind = flag:yield_war }
-			scope:recipient = { is_at_war = yes }
-			exists = scope:qpq_deal_t_char
-			scope:qpq_deal_t_char = { is_alive = yes }
-			scope:recipient = {
-				any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:qpq_deal_t_char } }
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = yield_war } }
-		}
-		trigger_else_if = {
 			limit = { scope:qpq_deal_t_kind = flag:join_war }
 			scope:actor = { is_at_war = yes }
 			exists = scope:qpq_deal_t_char
@@ -5767,22 +5629,6 @@ qpq_deal_leg_t_valid_trigger = {
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = join_war } }
-		}
-		trigger_else_if = {
-			limit = { scope:qpq_deal_t_kind = flag:leave_war }
-			scope:recipient = { is_at_war = yes }
-			exists = scope:qpq_deal_t_char
-			scope:qpq_deal_t_char = { is_alive = yes }
-			scope:recipient = {
-				any_character_war = {
-					qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:qpq_deal_t_char }
-					NOT = { primary_attacker = scope:recipient }
-					NOT = { primary_defender = scope:recipient }
-				}
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = leave_war } }
 		}
 		trigger_else_if = {
 			limit = { scope:qpq_deal_t_kind = flag:stay_out }
@@ -6327,6 +6173,10 @@ qpq_deal_leg_i_valid_trigger = {
 				text = qpq_valid_no_holy_war
 				NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } }
 			}
+			custom_description = {
+				text = qpq_valid_at_peace
+				NOT = { scope:recipient = { is_at_war_with = scope:actor } }
+			}
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
@@ -6343,6 +6193,10 @@ qpq_deal_leg_i_valid_trigger = {
 			exists = scope:qpq_deal_i_char
 			scope:qpq_deal_i_char = { is_alive = yes }
 			scope:actor = { is_allied_to = scope:qpq_deal_i_char }
+			custom_description = {
+				text = qpq_valid_not_fighting_you
+				NOT = { scope:recipient = { is_at_war_with = scope:actor } }
+			}
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faithless_ally } }
@@ -6794,30 +6648,6 @@ qpq_deal_leg_i_valid_trigger = {
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 		}
 		trigger_else_if = {
-			limit = { scope:qpq_deal_i_kind = flag:make_peace }
-			scope:actor = { is_at_war = yes }
-			exists = scope:qpq_deal_i_char
-			scope:qpq_deal_i_char = { is_alive = yes }
-			scope:actor = {
-				any_character_war = { qpq_war_leaders_trigger = { WHO = scope:actor FOE = scope:qpq_deal_i_char } }
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = make_peace } }
-		}
-		trigger_else_if = {
-			limit = { scope:qpq_deal_i_kind = flag:yield_war }
-			scope:actor = { is_at_war = yes }
-			exists = scope:qpq_deal_i_char
-			scope:qpq_deal_i_char = { is_alive = yes }
-			scope:actor = {
-				any_character_war = { qpq_war_leaders_trigger = { WHO = scope:actor FOE = scope:qpq_deal_i_char } }
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = yield_war } }
-		}
-		trigger_else_if = {
 			limit = { scope:qpq_deal_i_kind = flag:join_war }
 			scope:recipient = { is_at_war = yes }
 			exists = scope:qpq_deal_i_char
@@ -6837,22 +6667,6 @@ qpq_deal_leg_i_valid_trigger = {
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = join_war } }
-		}
-		trigger_else_if = {
-			limit = { scope:qpq_deal_i_kind = flag:leave_war }
-			scope:actor = { is_at_war = yes }
-			exists = scope:qpq_deal_i_char
-			scope:qpq_deal_i_char = { is_alive = yes }
-			scope:actor = {
-				any_character_war = {
-					qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:qpq_deal_i_char }
-					NOT = { primary_attacker = scope:actor }
-					NOT = { primary_defender = scope:actor }
-				}
-			}
-			scope:actor = { is_imprisoned = no }
-			scope:recipient = { is_imprisoned = no }
-			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = leave_war } }
 		}
 		trigger_else_if = {
 			limit = { scope:qpq_deal_i_kind = flag:stay_out }
@@ -7451,6 +7265,10 @@ qpq_proposed_kind_still_valid_trigger = {
 			text = qpq_valid_no_holy_war
 			NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }
 		}
+		custom_description = {
+			text = qpq_valid_at_peace
+			NOT = { scope:actor = { is_at_war_with = scope:recipient } }
+		}
 		scope:actor = { is_imprisoned = no }
 		scope:recipient = { is_imprisoned = no }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_truce } }
@@ -7467,6 +7285,10 @@ qpq_proposed_kind_still_valid_trigger = {
 		exists = scope:secondary_recipient
 		scope:secondary_recipient = { is_alive = yes }
 		scope:recipient = { is_allied_to = scope:secondary_recipient }
+		custom_description = {
+			text = qpq_valid_not_fighting_you
+			NOT = { scope:actor = { is_at_war_with = scope:recipient } }
+		}
 		scope:actor = { is_imprisoned = no }
 		scope:recipient = { is_imprisoned = no }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = faithless_ally } }
@@ -7918,30 +7740,6 @@ qpq_proposed_kind_still_valid_trigger = {
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 	}
 	trigger_else_if = {
-		limit = { scope:qpq_proposed_kind = flag:make_peace }
-		scope:recipient = { is_at_war = yes }
-		exists = scope:secondary_recipient
-		scope:secondary_recipient = { is_alive = yes }
-		scope:recipient = {
-			any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-		}
-		scope:actor = { is_imprisoned = no }
-		scope:recipient = { is_imprisoned = no }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = make_peace } }
-	}
-	trigger_else_if = {
-		limit = { scope:qpq_proposed_kind = flag:yield_war }
-		scope:recipient = { is_at_war = yes }
-		exists = scope:secondary_recipient
-		scope:secondary_recipient = { is_alive = yes }
-		scope:recipient = {
-			any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-		}
-		scope:actor = { is_imprisoned = no }
-		scope:recipient = { is_imprisoned = no }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = yield_war } }
-	}
-	trigger_else_if = {
 		limit = { scope:qpq_proposed_kind = flag:join_war }
 		scope:actor = { is_at_war = yes }
 		exists = scope:secondary_recipient
@@ -7961,22 +7759,6 @@ qpq_proposed_kind_still_valid_trigger = {
 		scope:actor = { is_imprisoned = no }
 		scope:recipient = { is_imprisoned = no }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = join_war } }
-	}
-	trigger_else_if = {
-		limit = { scope:qpq_proposed_kind = flag:leave_war }
-		scope:recipient = { is_at_war = yes }
-		exists = scope:secondary_recipient
-		scope:secondary_recipient = { is_alive = yes }
-		scope:recipient = {
-			any_character_war = {
-				qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-				NOT = { primary_attacker = scope:recipient }
-				NOT = { primary_defender = scope:recipient }
-			}
-		}
-		scope:actor = { is_imprisoned = no }
-		scope:recipient = { is_imprisoned = no }
-		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = leave_war } }
 	}
 	trigger_else_if = {
 		limit = { scope:qpq_proposed_kind = flag:stay_out }

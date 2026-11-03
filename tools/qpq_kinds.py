@@ -357,17 +357,27 @@ scope:qpq_agent = {
 is_landed = yes
 any_vassal = { is_landed = yes is_ai = yes }
 """, find="""
-random_vassal = {
+# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+ordered_vassal = {
     limit = {
         is_landed = yes
+        is_ai = yes
         is_at_war = no
         any_neighboring_and_across_water_top_liege_realm_owner = {
             NOT = { top_liege = root.top_liege }
         }
     }
+    order_by = max_military_strength
     save_scope_as = recipient
-    random_neighboring_and_across_water_top_liege_realm_owner = {
-        limit = { NOT = { top_liege = root.top_liege } }
+}
+scope:recipient ?= {
+    save_scope_as = qpq_ai_fighter
+    ordered_neighboring_and_across_water_top_liege_realm_owner = {
+        limit = {
+            NOT = { top_liege = root.top_liege }
+            NOT = { this = root }
+        }
+        order_by = qpq_ai_war_target_value
         save_scope_as = secondary_recipient
     }
 }
@@ -402,17 +412,27 @@ if = {
 is_landed = yes
 any_vassal = { is_landed = yes is_ai = yes }
 """, find="""
-random_vassal = {
+# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+ordered_vassal = {
     limit = {
         is_landed = yes
+        is_ai = yes
         is_at_war = no
         any_neighboring_and_across_water_top_liege_realm_owner = {
             NOT = { top_liege = root.top_liege }
         }
     }
+    order_by = max_military_strength
     save_scope_as = recipient
-    random_neighboring_and_across_water_top_liege_realm_owner = {
-        limit = { NOT = { top_liege = root.top_liege } }
+}
+scope:recipient ?= {
+    save_scope_as = qpq_ai_fighter
+    ordered_neighboring_and_across_water_top_liege_realm_owner = {
+        limit = {
+            NOT = { top_liege = root.top_liege }
+            NOT = { this = root }
+        }
+        order_by = qpq_ai_war_target_value
         save_scope_as = secondary_recipient
     }
 }
@@ -455,8 +475,9 @@ scope:qpq_agent = {
     }
 }
 """,
-  ai=dict(weight=5, valid="is_landed = yes any_vassal = { is_landed = yes is_ai = yes }", find="""
-random_neighboring_and_across_water_top_liege_realm_owner = {
+  ai=dict(weight=5, valid="""is_landed = yes any_vassal = { is_landed = yes is_ai = yes }""", find="""
+# the neighbour root most fears and dislikes, held off by the strongest vassal on that border
+ordered_neighboring_and_across_water_top_liege_realm_owner = {
     limit = {
         NOT = { top_liege = root.top_liege }
         OR = {
@@ -464,15 +485,17 @@ random_neighboring_and_across_water_top_liege_realm_owner = {
             faith = { faith_hostility_level = { target = root.faith value >= faith_hostile_level } }
         }
     }
+    order_by = qpq_ai_enmity_value
     save_scope_as = secondary_recipient
 }
 if = {
     limit = { exists = scope:secondary_recipient }
-    random_vassal = {
+    ordered_vassal = {
         limit = {
             is_landed = yes
             any_neighboring_and_across_water_top_liege_realm_owner = { this = scope:secondary_recipient }
         }
+        order_by = max_military_strength
         save_scope_as = recipient
     }
 }
@@ -741,17 +764,21 @@ if = {
     }
 }
 """,
-  ai=dict(weight=4, valid="is_landed = yes any_vassal = { count >= 2 is_landed = yes }", find="""
-random_vassal = {
+  ai=dict(weight=4, valid="""is_landed = yes any_vassal = { count >= 2 is_landed = yes }""", find="""
+# the strongest vassal with a rival among root's vassals, against the weakest such rival
+ordered_vassal = {
     limit = {
         is_landed = yes
         is_ai = yes
         any_relation = { type = rival liege ?= root is_landed = yes }
     }
+    order_by = max_military_strength
     save_scope_as = recipient
-    random_relation = {
+    save_scope_as = qpq_ai_fighter
+    ordered_relation = {
         type = rival
         limit = { liege ?= root is_landed = yes }
+        order_by = qpq_ai_weakness_value
         save_scope_as = secondary_recipient
     }
 }
@@ -808,10 +835,11 @@ if = {
 }
 scope:qpq_agent = { add_character_modifier = { modifier = qpq_informer_modifier years = 10 } }
 """,
-  ai=dict(weight=6, valid="is_landed = yes any_vassal = { count >= 2 }", find="""
-random_relation = {
+  ai=dict(weight=6, valid="""is_landed = yes any_vassal = { count >= 2 }""", find="""
+ordered_relation = {
     type = rival
     limit = { liege ?= root }
+    order_by = qpq_ai_enmity_value
     save_scope_as = secondary_recipient
 }
 if = {
@@ -859,25 +887,24 @@ if = {
     scope:qpq_payer = { add_tyranny = 20 }
 }
 """,
-  ai=dict(weight=4, valid="""
-is_landed = yes
-any_relation = { type = rival }
-OR = { has_trait = deceitful has_trait = callous has_trait = sadistic has_trait = vengeful has_trait = schemer }
-""", find="""
-random_relation = {
+  ai=dict(weight=4, valid="""is_landed = yes any_relation = { type = rival } OR = { has_trait = deceitful has_trait = callous has_trait = sadistic has_trait = vengeful has_trait = schemer }""", find="""
+# the rival root hates most, by the subtlest of root's vassals
+ordered_relation = {
     type = rival
     limit = { is_alive = yes }
+    order_by = qpq_ai_enmity_value
     save_scope_as = secondary_recipient
 }
 if = {
     limit = { exists = scope:secondary_recipient }
-    random_vassal = {
+    ordered_vassal = {
         limit = {
             is_ai = yes
             intrigue >= 10
             NOT = { this = scope:secondary_recipient }
             NOT = { is_close_family_of = scope:secondary_recipient }
         }
+        order_by = intrigue
         save_scope_as = recipient
     }
 }
@@ -1318,15 +1345,14 @@ scope:qpq_agent = {
 }
 scope:qpq_payer = { add_character_modifier = { modifier = qpq_known_schemer_modifier years = 8 } }
 """,
-  ai=dict(weight=6, valid="""
-is_landed = yes
-exists = liege
-any_relation = { type = rival liege ?= root.liege is_landed = yes }
-""", find="""
+  ai=dict(weight=6, valid="""is_landed = yes exists = liege any_relation = { type = rival liege ?= root.liege is_landed = yes }""", find="""
+# leave from the liege to fall on the rival fellow vassal root most wants beaten, and can beat
 liege = { save_scope_as = recipient }
-random_relation = {
+save_scope_as = qpq_ai_fighter
+ordered_relation = {
     type = rival
     limit = { liege ?= root.liege is_landed = yes }
+    order_by = qpq_ai_war_target_value
     save_scope_as = secondary_recipient
 }
 """))
@@ -1508,12 +1534,13 @@ liege = { any_vassal = { count >= 2 } }
 """, find="""
 liege = { save_scope_as = qpq_ai_liege }
 scope:qpq_ai_liege = {
-    random_vassal = {
+    ordered_vassal = {
         limit = {
             NOT = { this = root }
             is_landed = yes
             opinion = { target = scope:qpq_ai_liege value <= 0 }
         }
+        order_by = max_military_strength
         save_scope_as = recipient
     }
 }
@@ -1705,13 +1732,14 @@ opinion = { target = root.liege value <= -50 }
 OR = { has_trait = ambitious has_trait = deceitful has_trait = callous }
 """, find="""
 liege = {
-    random_courtier = {
+    ordered_courtier = {
         limit = {
             is_adult = yes
             is_ai = yes
             NOT = { this = root }
             intrigue >= 10
         }
+        order_by = intrigue
         save_scope_as = recipient
     }
 }
@@ -1754,22 +1782,25 @@ OR = {
   invalid=TARGET_GONE_INVALID,
   on_seal=GRANT_LICENCE, attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
   exposed=PROXY_FALLOUT,
-  ai=dict(weight=6, valid="is_independent_ruler = yes any_relation = { type = rival is_landed = yes }", find="""
-random_relation = {
+  ai=dict(weight=6, valid="""is_independent_ruler = yes any_relation = { type = rival is_landed = yes }""", find="""
+# the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
+ordered_relation = {
     type = rival
     limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
+    order_by = qpq_ai_enmity_value
     save_scope_as = secondary_recipient
 }
 if = {
     limit = { exists = scope:secondary_recipient }
     scope:secondary_recipient.top_liege = {
-        random_neighboring_and_across_water_top_liege_realm_owner = {
+        ordered_neighboring_and_across_water_top_liege_realm_owner = {
             limit = {
                 NOT = { this = root }
                 is_ai = yes
                 is_at_war = no
                 NOT = { is_allied_to = scope:secondary_recipient }
             }
+            order_by = qpq_ai_hired_sword_value
             save_scope_as = recipient
         }
     }
@@ -1844,12 +1875,13 @@ K(key="secret_alliance", cat="C", group="abroad", secret="betrayal", icon="allia
   breach="has_variable = qpq_agent_refused_call",
   exposed="",
   ai=dict(weight=4, valid="is_landed = yes is_at_war = no", find="""
-random_neighboring_and_across_water_top_liege_realm_owner = {
+ordered_neighboring_and_across_water_top_liege_realm_owner = {
     limit = {
         is_ai = yes
         NOT = { top_liege = root.top_liege }
         opinion = { target = root value >= 20 }
     }
+    order_by = max_military_strength
     save_scope_as = recipient
 }
 """))
@@ -1857,11 +1889,10 @@ random_neighboring_and_across_water_top_liege_realm_owner = {
 K(key="bought_truce", cat="C", group="war", secret="bribery", icon="negotiate_settlement_interaction",
   name="Bought Truce",
   ask="make peace with [qpq_payer.GetShortUIName] and keep it",
-  desc="Pay to end or avoid a [war|E]. No truce can call off a [great_holy_war|E], and a [head_of_faith|E] will not sell peace. If it comes out, raiders mark the payer as an easy mark.",
+  desc="Pay a ruler you are not at war with to keep the peace: a [truce|E] between you for the term. No truce can call off a [great_holy_war|E], and a [head_of_faith|E] will not sell peace. If it comes out, raiders mark the payer as an easy mark.",
   echo="Danegeld.",
   payer_base=1, agent_base=1, target="none", mode="restraint", term=60, effort=0,
   rel=REL_FOREIGN + "scope:actor = { is_landed = yes } scope:recipient = { is_landed = yes }",
-  payer_adj="if = { limit = { scope:actor = { is_at_war_with = scope:recipient } } add = 1 }",
   # Taking money to stand down is far worse for a priest-king than for a border lord
   agent_adj="""
 if = { limit = { scope:recipient = { qpq_is_head_of_faith_trigger = yes } } add = 3 }
@@ -1870,20 +1901,12 @@ if = { limit = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } add 
 """,
   agent_ctx=False,
   # A truce cannot call off a holy war, so it cannot be bought while one is running
-  valid=[("qpq_valid_no_holy_war", "NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }")],
-  demand=[("-15", "scope:recipient = { is_at_war_with = scope:actor }", "QPQ_REASON_AT_WAR"),
-          ("-60", "scope:recipient = { qpq_is_head_of_faith_trigger = yes }", "QPQ_REASON_HEAD_OF_FAITH")],
+  # a truce is bought before a war, not to end one: deals do not settle wars
+  valid=[("qpq_valid_no_holy_war", "NOT = { scope:recipient = { is_in_ongoing_great_holy_war = yes } } NOT = { scope:actor = { is_in_ongoing_great_holy_war = yes } }"),
+         ("qpq_valid_at_peace", "NOT = { scope:actor = { is_at_war_with = scope:recipient } }")],
+  demand=[("-60", "scope:recipient = { qpq_is_head_of_faith_trigger = yes }", "QPQ_REASON_HEAD_OF_FAITH")],
   on_seal="""
 scope:qpq_payer = {
-    every_character_war = {
-        limit = {
-            OR = {
-                AND = { is_attacker = scope:qpq_payer is_defender = scope:qpq_agent }
-                AND = { is_defender = scope:qpq_payer is_attacker = scope:qpq_agent }
-            }
-        }
-        end_war = white_peace
-    }
     add_truce_both_ways = {
         character = scope:qpq_agent
         name = qpq_truce_name
@@ -1893,20 +1916,35 @@ scope:qpq_payer = {
 """,
   breach="is_target_in_variable_list = { name = qpq_agent_attacked target = scope:qpq_payer }",
   exposed="scope:qpq_payer = { add_character_modifier = { modifier = qpq_easy_mark_modifier years = 10 } }",
-  ai=dict(weight=5, valid="is_at_war = yes gold >= 50", find="""
-random_character_war = {
+  ai=dict(weight=5, valid="""
+is_landed = yes
+is_independent_ruler = yes
+gold >= 50
+any_neighboring_and_across_water_top_liege_realm_owner = {
+    NOT = { is_at_war_with = root }
+    NOT = { has_truce = root }
+    max_military_strength > root.max_military_strength
+    qpq_ai_threatens_trigger = yes
+}
+""", find="""
+# the strongest neighbour that means root harm, while there is still peace to keep
+ordered_neighboring_and_across_water_top_liege_realm_owner = {
     limit = {
-        is_defender = root
-        primary_attacker = { is_ai = yes }
+        NOT = { this = root }
+        NOT = { is_at_war_with = root }
+        NOT = { has_truce = root }
+        max_military_strength > root.max_military_strength
+        qpq_ai_threatens_trigger = yes
     }
-    primary_attacker = { save_scope_as = recipient }
+    order_by = max_military_strength
+    save_scope_as = recipient
 }
 """))
 
 K(key="faithless_ally", cat="C", group="abroad", secret="betrayal", icon="alliance",
   name="Faithless Ally",
   ask="abandon [qpq_target.GetTitledFirstName] in any war against [qpq_payer.GetShortUIName]",
-  desc="Pay an ally of your enemy to ignore their call to arms, or to withdraw mid-war. If it comes out, they are branded Faithless.",
+  desc="Pay an ally of a ruler you mean to fight to ignore their call to arms in any war against you, for the term. Joining one after all is a breach. If it comes out, they are branded Faithless.",
   payer_base=3, agent_base=3, mode="restraint", term=60, effort=10,
   rel=REL_FOREIGN_RULER,
   pick="""
@@ -1918,45 +1956,53 @@ scope:recipient = {
 }
 """,
   target_valid="scope:recipient = { is_allied_to = scope:secondary_recipient }",
+  # a promise for wars to come: someone already fighting you cannot sell it (deals do not take anyone out of a war)
+  valid=[("qpq_valid_not_fighting_you", "NOT = { scope:actor = { is_at_war_with = scope:recipient } }")],
   demand=[("-15", "scope:recipient = { opinion = { target = scope:secondary_recipient value >= 50 } }", "QPQ_REASON_LOVES_TARGET"),
           ("-10", "scope:recipient = { has_trait = honest }", "QPQ_REASON_HONOUR_BOUND")],
-  on_seal="""
-scope:qpq_agent = {
-    every_character_war = {
-        limit = {
-            OR = {
-                AND = { is_attacker = scope:qpq_agent is_defender = scope:qpq_payer }
-                AND = { is_defender = scope:qpq_agent is_attacker = scope:qpq_payer }
-            }
-            NOR = {
-                primary_attacker = scope:qpq_agent
-                primary_defender = scope:qpq_agent
-            }
-        }
-        remove_participant = scope:qpq_agent
-    }
-}
-""",
   breach="has_variable = qpq_agent_fought_payer",
   exposed="scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }",
-  ai=dict(weight=4, valid="is_at_war = yes", find="""
-random_character_war = {
-    limit = {
-        OR = { is_attacker = root is_defender = root }
+  ai=dict(weight=6, valid="""
+is_landed = yes
+is_independent_ruler = yes
+is_at_war = no
+gold >= 50
+any_neighboring_and_across_water_top_liege_realm_owner = {
+    qpq_ai_wants_war_on_trigger = yes
+    max_military_strength <= root.max_military_strength
+    any_ally = {
+        NOT = { this = root }
+        max_military_strength > { value = root.max_military_strength subtract = prev.max_military_strength }
     }
-    random_war_participant = {
-        limit = {
-            is_ai = yes
+}
+""", find="""
+# War preparation. Root means to fall on a neighbour it wants to fight (a rival, or the holder of land it has a
+# claim on) and could beat alone, but one of their allies would tip the war against it: buy that ally's promise
+# to ignore the call to arms. The likeliest target first, then the ally who matters most.
+save_scope_as = qpq_ai_fighter
+ordered_neighboring_and_across_water_top_liege_realm_owner = {
+    limit = {
+        NOT = { this = root }
+        qpq_ai_wants_war_on_trigger = yes
+        max_military_strength <= root.max_military_strength
+        any_ally = {
             NOT = { this = root }
-            NOT = { top_liege = root.top_liege }
-            is_independent_ruler = yes
-            any_ally = { is_at_war_with = root }
+            max_military_strength > { value = root.max_military_strength subtract = prev.max_military_strength }
         }
+    }
+    order_by = qpq_ai_war_target_value
+    save_scope_as = secondary_recipient
+}
+scope:secondary_recipient ?= {
+    ordered_ally = {
+        limit = {
+            NOT = { this = root }
+            NOT = { is_allied_to = root }
+            NOT = { is_at_war_with = root }
+            max_military_strength > { value = root.max_military_strength subtract = scope:secondary_recipient.max_military_strength }
+        }
+        order_by = max_military_strength
         save_scope_as = recipient
-        random_ally = {
-            limit = { is_at_war_with = root }
-            save_scope_as = secondary_recipient
-        }
     }
 }
 """))
@@ -2005,11 +2051,12 @@ else = {
 random_character_war = {
     limit = { is_attacker = root }
     primary_defender = {
-        random_vassal = {
+        ordered_vassal = {
             limit = {
                 is_ai = yes
                 opinion = { target = prev value <= 0 }
             }
+            order_by = max_military_strength
             save_scope_as = recipient
         }
     }
@@ -2056,21 +2103,24 @@ else_if = {
 """,
   on_deliver="qpq_victors_justice_effect = yes",
   exposed="",
-  ai=dict(weight=5, valid="is_independent_ruler = yes any_relation = { type = rival is_independent_ruler = yes }", find="""
-random_relation = {
+  ai=dict(weight=5, valid="""is_independent_ruler = yes any_relation = { type = rival is_independent_ruler = yes }""", find="""
+# the rival realm root hates most, broken up through its strongest discontented vassal
+ordered_relation = {
     type = rival
     limit = { is_independent_ruler = yes NOT = { this = root } }
+    order_by = qpq_ai_enmity_value
     save_scope_as = qpq_ai_rival
 }
 if = {
     limit = { exists = scope:qpq_ai_rival }
     scope:qpq_ai_rival = {
-        random_vassal = {
+        ordered_vassal = {
             limit = {
                 is_ai = yes
                 highest_held_title_tier >= tier_duchy
                 opinion = { target = scope:qpq_ai_rival value <= 0 }
             }
+            order_by = max_military_strength
             save_scope_as = recipient
         }
     }
@@ -2562,17 +2612,12 @@ if = {
     scope:qpq_payer = { remove_claim = scope:qpq_payer_secret.var:qpq_bought_claim_title }
 }
 """,
-  ai=dict(weight=3, valid="""
-exists = faith.religious_head
-NOT = { faith.religious_head = root }
-faith.religious_head = { is_ai = yes }
-faith = { has_doctrine = doctrine_spiritual_head }
-any_relation = { type = rival is_landed = yes }
-""", find="""
+  ai=dict(weight=3, valid="""exists = faith.religious_head NOT = { faith.religious_head = root } faith.religious_head = { is_ai = yes } faith = { has_doctrine = doctrine_spiritual_head } any_relation = { type = rival is_landed = yes }""", find="""
 faith.religious_head = { save_scope_as = recipient }
-random_relation = {
+ordered_relation = {
     type = rival
     limit = { is_landed = yes }
+    order_by = qpq_ai_enmity_value
     save_scope_as = secondary_recipient
 }
 """))
@@ -3031,26 +3076,6 @@ scope:qpq_target = { add_character_modifier = { modifier = qpq_clerical_denuncia
 # At sealing the deed finds that very war, and keeps it on the deal (var:qpq_target_war) where it must watch it.
 ###############################################################################
 
-# The enemy leader of each war the recipient leads (for deeds that end a war)
-PICK_WARS_RECIPIENT_LEADS = """
-scope:recipient = {
-    every_character_war = {
-        limit = {
-            OR = {
-                primary_attacker = scope:recipient
-                primary_defender = scope:recipient
-            }
-        }
-        if = {
-            limit = { primary_attacker = scope:recipient }
-            primary_defender = { add_to_list = characters }
-        }
-        else = {
-            primary_attacker = { add_to_list = characters }
-        }
-    }
-}
-"""
 # The leader of the other side in each war the proposer is fighting (for deeds that join or keep out of it)
 PICK_WARS_ACTOR_FIGHTS = """
 scope:actor = {
@@ -3065,25 +3090,6 @@ scope:actor = {
     }
 }
 """
-# The leader of the other side in each war the recipient fights in without leading it (for leaving a war)
-PICK_WARS_RECIPIENT_FOLLOWS = """
-scope:recipient = {
-    every_character_war = {
-        limit = {
-            NOT = { primary_attacker = scope:recipient }
-            NOT = { primary_defender = scope:recipient }
-        }
-        if = {
-            limit = { is_attacker = scope:recipient }
-            primary_defender = { add_to_list = characters }
-        }
-        else = {
-            primary_attacker = { add_to_list = characters }
-        }
-    }
-}
-"""
-
 def _find_war(who):
     """Story context: save the war that `who` fights against scope:qpq_target as scope:qpq_target_war."""
     return """
@@ -3095,63 +3101,6 @@ def _find_war(who):
 }
 """ % (who, who)
 
-
-K(key="make_peace", cat="G", group="wartime", secret="bribery", icon="negotiate_settlement_interaction",
-  name="Make Peace",
-  ask="make a white peace in the war against [qpq_target.GetTitledFirstName]",
-  desc="A [war|E] leader ends their war against a named enemy with a [white_peace|E]. The keener they are to fight, and the better their side's chances, the more they ask; losing, they are glad of the excuse. If it comes out, their allies learn the peace was bought.",
-  payer_base=0, agent_base=0, payer_ctx=False, agent_ctx=False, term=12, effort=0,
-  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
-  target_valid="""
-scope:recipient = {
-    any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-}
-""",
-  on_seal=_find_war("scope:qpq_agent") + """
-scope:qpq_target_war ?= { end_war = white_peace }
-""",
-  deliver="always = yes",
-  exposed="""
-scope:qpq_agent = {
-    every_ally = {
-        limit = { NOT = { this = scope:qpq_payer } }
-        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
-    }
-}
-""")
-
-K(key="yield_war", cat="G", group="wartime", secret="betrayal", icon="negotiate_settlement_interaction",
-  name="Yield the War",
-  ask="concede the war against [qpq_target.GetTitledFirstName]",
-  desc="A [war|E] leader concedes their war against a named enemy, as if beaten in the field. Only a side with no stomach for the fight, or no hope of winning it, will consider it. If it comes out, they are branded Faithless.",
-  payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=35,
-  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
-  target_valid="""
-scope:recipient = {
-    any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-}
-""",
-  on_seal=_find_war("scope:qpq_agent") + """
-scope:qpq_target_war ?= {
-    if = {
-        limit = { is_attacker = scope:qpq_agent }
-        end_war = defender
-    }
-    else = {
-        end_war = attacker
-    }
-}
-""",
-  deliver="always = yes",
-  exposed="""
-scope:qpq_agent = {
-    add_character_modifier = { modifier = qpq_faithless_modifier years = 10 }
-    every_ally = {
-        limit = { NOT = { this = scope:qpq_payer } }
-        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_my_ally_opinion }
-    }
-}
-""")
 
 K(key="join_war", cat="G", group="wartime", secret="conquest", icon="declare_war_interaction",
   name="Join the War",
@@ -3205,34 +3154,6 @@ var:qpq_target_war = { NOT = { is_participant = scope:qpq_agent } }
   # They could not be brought into it after all: nobody is at fault
   invalid="NOT = { has_variable = qpq_war_joined }",
   exposed="")
-
-K(key="leave_war", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
-  name="Leave the War",
-  ask="leave the war against [qpq_target.GetTitledFirstName]",
-  desc="Someone fighting in a [war|E] they do not lead walks away from it, leaving their side the poorer. Keen to fight, winning, or bound to their side's leader, they ask more. If it comes out, they are branded Faithless.",
-  payer_base=1, agent_base=2, payer_ctx=False, agent_ctx=False, term=12, effort=20,
-  rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_FOLLOWS,
-  target_valid="""
-scope:recipient = {
-    any_character_war = {
-        qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-        NOT = { primary_attacker = scope:recipient }
-        NOT = { primary_defender = scope:recipient }
-    }
-}
-""",
-  on_seal=_find_war("scope:qpq_agent") + """
-scope:qpq_target_war ?= {
-    if = {
-        limit = { is_participant = scope:qpq_agent }
-        remove_participant = scope:qpq_agent
-    }
-}
-""",
-  deliver="always = yes",
-  exposed="""
-scope:qpq_agent = { add_character_modifier = { modifier = qpq_faithless_modifier years = 10 } }
-""")
 
 K(key="stay_out", cat="G", group="wartime", secret="betrayal", icon="icon_combat",
   name="Stay Out of the War",
@@ -3299,36 +3220,7 @@ random_character_war = {
     }
 }
 """
-# Losing: sue the enemy leader for a white peace
 _KIND_BY_KEY = {k["key"]: k for k in KINDS}
-_KIND_BY_KEY["make_peace"]["ai"] = dict(weight=6, valid="""
-is_at_war = yes
-any_character_war = {
-    OR = {
-        primary_attacker = root
-        primary_defender = root
-    }
-    NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
-}
-""", find=_AI_OWN_WAR % "NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }" + """
-scope:qpq_ai_foe ?= { save_scope_as = recipient }
-root = { save_scope_as = secondary_recipient }
-""")
-# Winning well, with gold to spare: buy the enemy's surrender
-_KIND_BY_KEY["yield_war"]["ai"] = dict(weight=3, valid="""
-is_at_war = yes
-gold >= 100
-any_character_war = {
-    OR = {
-        primary_attacker = root
-        primary_defender = root
-    }
-    qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
-}
-""", find=_AI_OWN_WAR % "qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }" + """
-scope:qpq_ai_foe ?= { save_scope_as = recipient }
-root = { save_scope_as = secondary_recipient }
-""")
 # Not winning: hire a neighbour who has no love for the enemy and no quarrel with you
 _KIND_BY_KEY["join_war"]["ai"] = dict(weight=5, valid="""
 is_at_war = yes
@@ -3344,7 +3236,7 @@ any_character_war = {
 if = {
     limit = { exists = scope:qpq_ai_foe }
     scope:qpq_ai_foe = { save_scope_as = secondary_recipient }
-    random_neighboring_and_across_water_top_liege_realm_owner = {
+    ordered_neighboring_and_across_water_top_liege_realm_owner = {
         limit = {
             NOT = { this = scope:secondary_recipient }
             is_at_war = no
@@ -3353,6 +3245,7 @@ if = {
             NOT = { is_close_family_of = scope:secondary_recipient }
             opinion = { target = root value >= -10 }
         }
+        order_by = qpq_ai_hired_sword_value
         save_scope_as = recipient
     }
 }
@@ -3372,46 +3265,18 @@ if = {
     limit = { exists = scope:qpq_ai_foe }
     scope:qpq_ai_foe = {
         save_scope_as = secondary_recipient
-        random_ally = {
+        ordered_ally = {
             limit = {
                 NOT = { this = root }
                 NOT = { is_at_war_with = root }
                 NOT = { scope:qpq_ai_war = { is_participant = prev } }
             }
+            order_by = max_military_strength
             save_scope_as = recipient
         }
     }
 }
 """)
-# Peel a follower off the enemy's side
-_KIND_BY_KEY["leave_war"]["ai"] = dict(weight=3, valid="""
-is_at_war = yes
-gold >= 50
-any_character_war = {
-    OR = {
-        primary_attacker = root
-        primary_defender = root
-    }
-}
-""", find=_AI_OWN_WAR % "" + """
-scope:qpq_ai_war ?= {
-    if = {
-        limit = { primary_attacker = root }
-        random_war_defender = {
-            limit = { NOT = { this = scope:qpq_ai_war.primary_defender } }
-            save_scope_as = recipient
-        }
-    }
-    else = {
-        random_war_attacker = {
-            limit = { NOT = { this = scope:qpq_ai_war.primary_attacker } }
-            save_scope_as = recipient
-        }
-    }
-}
-root = { save_scope_as = secondary_recipient }
-""")
-
 ###############################################################################
 # CATALOGUE F: tribute, between suzerains and tributaries
 ###############################################################################

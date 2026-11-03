@@ -458,30 +458,78 @@ def ai_propose(lib, who, kind, setup=None, player="nobody"):
 
 @test
 def ai_at_war_deals(lib, check):
-    """An AI losing a war sues for peace when it is worth the price to itself, offering what the other side would
-    need: in a long stalemate the deal is made; a side routed cannot pay what a winner would want for it."""
-    def war(score, days, fs, ts):
-        def setup(w, W):
-            W["war"].attacker_war_score, W["war"].war_days = score, days
-            W["foe"].current_strength, W["third"].current_strength = fs, ts
-        return setup
-    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-16, 1500, 3000, 3000))
-    check(r.scopes.get("recipient") is W["third"] and r.scopes.get("secondary_recipient") is W["foe"],
-          "a losing foe does not put peace to third (%r)" % r.scopes.get("recipient"))
-    check(sealed, "a long stalemate does not end in a bought peace")
-    check(not r.errors, "script errors: %s" % r.errors[:3])
-    view = Run(lib, W["world"], W["foe"], dict(r.scopes)).value("qpq_make_peace_proposer_view_value", (W["foe"], None))
-    check(view > 0, "foe made a deal not worth it to itself (%s)" % view)
-    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-60, 400, 2000, 4000))
-    check(not sealed and "qpq_proposed_kind" not in r.scopes,
-          "a routed foe buys a peace the winner would not sell for what it is worth to foe")
-    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-16, 1500, 3000, 3000), player="third")
-    check(any(e[1] == "qpq_hub.50" for e in r.events), "a person in a long stalemate is not sent the peace offer")
-    r, sealed, W = ai_propose(lib, "third", "join_war", war(40, 400, 5000, 3000))
+    """An AI at war hires a neighbour to join it; nobody is paid to end a war or walk out of one."""
+    def third_losing(w, W):
+        W["war"].attacker_war_score = 40
+    r, sealed, W = ai_propose(lib, "third", "join_war", third_losing)
     rec = r.scopes.get("recipient")
     check(rec is not None and rec not in W["war"].attackers + W["war"].defenders,
           "a losing third finds nobody outside the war to hire (%r)" % rec)
     check(r.scopes.get("secondary_recipient") is W["foe"], "the war third hires for is not its war with foe")
+    check(not r.errors, "script errors: %s" % r.errors[:3])
+    for gone in ("make_peace", "yield_war", "leave_war"):
+        check(("qpq_ui_kind_t_%s" % gone) not in lib.guis, "a deal can still %s" % gone)
+    # a truce keeps a peace, it does not end a war; an ally already fighting you cannot sell its absence
+    p, W = panel(lib, "third", "foe")
+    p.deed("t", "bought_truce")
+    check("qpq_valid_at_peace" in p.explain(), "third buys a truce from foe in the middle of their war (%s)" % p.explain())
+    def foe_ally(w, W):
+        w.ally(W["foe"], W["emir"])
+    p, W = panel(lib, "third", "foe", setup=foe_ally)
+    if p.valid("qpq_ui_kind_t_faithless_ally"):
+        p.deed("t", "faithless_ally")
+        c = p.candidates("t")
+        if c:
+            p.pick("t", c[0])
+        check("qpq_valid_not_fighting_you" in p.explain(),
+              "an enemy already at war with third sells its absence from that war (%s)" % p.explain())
+
+
+@test
+def ai_prepares_for_war(lib, check):
+    """Before falling on a neighbour it could beat alone, an AI buys the absence of the ally who would tip the
+    war: from a lukewarm ally it can; a loyal one will not sell; with no such ally it does not try."""
+    def base(w, W):
+        w.wars.clear()
+        W["king"].claims.append(W["c_foe_seat"])
+        w.ally(W["foe"], W["emir"])
+        W["emir"].max_strength = W["emir"].current_strength = 2500
+    def lukewarm(w, W):
+        base(w, W)
+        w.opinion(W["emir"], W["foe"], -40)
+        W["emir"].traits |= {"greedy", "deceitful"}
+    def loyal(w, W):
+        base(w, W)
+        w.opinion(W["emir"], W["foe"], 60)
+    def unallied(w, W):
+        w.wars.clear()
+        W["king"].claims.append(W["c_foe_seat"])
+    r, sealed, W = ai_propose(lib, "king", "faithless_ally", lukewarm)
+    check(r.scopes.get("recipient") is W["emir"] and r.scopes.get("secondary_recipient") is W["foe"],
+          "the king does not go to foe's ally the emir (%r, %r)" % (r.scopes.get("recipient"), r.scopes.get("secondary_recipient")))
+    check(sealed, "a lukewarm, greedy ally does not sell its absence")
+    check(not r.errors, "script errors: %s" % r.errors[:3])
+    r, sealed, W = ai_propose(lib, "king", "faithless_ally", loyal)
+    check(not sealed, "a loyal ally sells out its friend")
+    w, W = standard_world(player="nobody")
+    unallied(w, W)
+    check(not Run(lib, w, W["king"], {}).trig(lib.triggers["qpq_k_faithless_ally_ai_valid_trigger"], (W["king"], None)),
+          "the king looks for an ally to buy off where there is none")
+
+
+@test
+def ai_picks_its_targets(lib, check):
+    """AI finders aim where the AI wants: the rival it hates and can beat, by the vassal best able to do it."""
+    def rivals(w, W):
+        w.relate(W["king"], "rival", W["jarl"])
+        w.opinion(W["king"], W["jarl"], -80)
+        w.relate(W["king"], "rival", W["emperor"])
+        w.opinion(W["king"], W["emperor"], -80)
+    r, sealed, W = ai_propose(lib, "king", "chartered_conquest", rivals)
+    check(r.scopes.get("secondary_recipient") is W["jarl"],
+          "the king's conquest is not aimed at the rival a vassal can beat (%r)" % r.scopes.get("secondary_recipient"))
+    check(r.scopes.get("recipient") is W["duke"], "the conquest is not given to the strongest vassal (%r)" % r.scopes.get("recipient"))
+    check(sealed, "the duke will not take a conquest of a weak rival")
 
 
 @test

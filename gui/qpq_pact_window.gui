@@ -1197,32 +1197,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_make_peace').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_make_peace_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_make_peace').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_make_peace').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_make_peace_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_make_peace').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_make_peace').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'make_peace' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_yield_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_yield_war_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_yield_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_yield_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_yield_war_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_yield_war').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_yield_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'yield_war' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_i_join_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -1233,19 +1207,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_i_join_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'join_war' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_leave_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_leave_war_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_leave_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_leave_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_leave_war_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_leave_war').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_leave_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'leave_war' )]"
 					}
 
 					button_standard_list = {
@@ -3445,32 +3406,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_make_peace').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_make_peace_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_make_peace').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_make_peace').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_make_peace_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_make_peace').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_make_peace').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'make_peace' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_yield_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_yield_war_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_yield_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_yield_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_yield_war_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_yield_war').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_yield_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'yield_war' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_t_join_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -3481,19 +3416,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_t_join_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'join_war' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_leave_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_leave_war_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_leave_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_leave_war').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_leave_war_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_leave_war').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_leave_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'leave_war' )]"
 					}
 
 					button_standard_list = {

@@ -917,34 +917,6 @@ qpq_k_temple_patronage_can_perform_trigger = {
 	always = yes
 }
 
-#### Make Peace
-qpq_k_make_peace_delivered_trigger = {
-	always = yes
-}
-qpq_k_make_peace_breached_trigger = {
-	always = no
-}
-qpq_k_make_peace_invalid_trigger = {
-	always = no
-}
-qpq_k_make_peace_can_perform_trigger = {
-	always = no
-}
-
-#### Yield the War
-qpq_k_yield_war_delivered_trigger = {
-	always = yes
-}
-qpq_k_yield_war_breached_trigger = {
-	always = no
-}
-qpq_k_yield_war_invalid_trigger = {
-	always = no
-}
-qpq_k_yield_war_can_perform_trigger = {
-	always = no
-}
-
 #### Join the War
 qpq_k_join_war_delivered_trigger = {
 	has_variable = qpq_war_joined
@@ -958,20 +930,6 @@ qpq_k_join_war_invalid_trigger = {
 	NOT = { has_variable = qpq_war_joined }
 }
 qpq_k_join_war_can_perform_trigger = {
-	always = no
-}
-
-#### Leave the War
-qpq_k_leave_war_delivered_trigger = {
-	always = yes
-}
-qpq_k_leave_war_breached_trigger = {
-	always = no
-}
-qpq_k_leave_war_invalid_trigger = {
-	always = no
-}
-qpq_k_leave_war_can_perform_trigger = {
 	always = no
 }
 
@@ -1187,20 +1145,8 @@ qpq_kind_delivered_trigger = {
 			qpq_k_fund_the_dawa_delivered_trigger = yes
 		}
 		AND = {
-			var:qpq_kind = flag:make_peace
-			qpq_k_make_peace_delivered_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:yield_war
-			qpq_k_yield_war_delivered_trigger = yes
-		}
-		AND = {
 			var:qpq_kind = flag:join_war
 			qpq_k_join_war_delivered_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:leave_war
-			qpq_k_leave_war_delivered_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:stay_out
@@ -1810,20 +1756,6 @@ qpq_k_absolution_by_concession_ai_target_ok_trigger = {
 	scope:actor.faith = scope:recipient.faith
 	scope:actor = { has_trait = excommunicated } scope:recipient.faith = { qpq_faith_has_church_trigger = yes }
 }
-qpq_k_make_peace_ai_target_ok_trigger = {
-	exists = scope:secondary_recipient
-	scope:recipient = { is_at_war = yes }
-	scope:recipient = {
-		any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-	}
-}
-qpq_k_yield_war_ai_target_ok_trigger = {
-	exists = scope:secondary_recipient
-	scope:recipient = { is_at_war = yes }
-	scope:recipient = {
-		any_character_war = { qpq_war_leaders_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient } }
-	}
-}
 qpq_k_join_war_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
 	scope:actor = { is_at_war = yes }
@@ -1837,17 +1769,6 @@ qpq_k_join_war_ai_target_ok_trigger = {
 		any_character_war = {
 			qpq_war_foe_trigger = { WHO = scope:actor FOE = scope:secondary_recipient }
 			NOT = { is_participant = scope:recipient }
-		}
-	}
-}
-qpq_k_leave_war_ai_target_ok_trigger = {
-	exists = scope:secondary_recipient
-	scope:recipient = { is_at_war = yes }
-	scope:recipient = {
-		any_character_war = {
-			qpq_war_foe_trigger = { WHO = scope:recipient FOE = scope:secondary_recipient }
-			NOT = { primary_attacker = scope:recipient }
-			NOT = { primary_defender = scope:recipient }
 		}
 	}
 }
@@ -2425,16 +2346,7 @@ qpq_any_pact_possible_trigger = {
 			NOT = { exists = scope:actor.faith.religious_head }
 		}
 		AND = {
-			scope:recipient = { is_at_war = yes }
-		}
-		AND = {
-			scope:recipient = { is_at_war = yes }
-		}
-		AND = {
 			scope:actor = { is_at_war = yes }
-		}
-		AND = {
-			scope:recipient = { is_at_war = yes }
 		}
 		AND = {
 			scope:actor = { is_at_war = yes }
@@ -2493,14 +2405,10 @@ qpq_k_dossier_ai_valid_trigger = {
 	is_landed = yes any_vassal = { count >= 2 }
 }
 qpq_k_quiet_removal_ai_valid_trigger = {
-	is_landed = yes
-	any_relation = { type = rival }
-	OR = { has_trait = deceitful has_trait = callous has_trait = sadistic has_trait = vengeful has_trait = schemer }
+	is_landed = yes any_relation = { type = rival } OR = { has_trait = deceitful has_trait = callous has_trait = sadistic has_trait = vengeful has_trait = schemer }
 }
 qpq_k_blessing_for_a_feud_ai_valid_trigger = {
-	is_landed = yes
-	exists = liege
-	any_relation = { type = rival liege ?= root.liege is_landed = yes }
+	is_landed = yes exists = liege any_relation = { type = rival liege ?= root.liege is_landed = yes }
 }
 qpq_k_clemency_bargain_ai_valid_trigger = {
 	exists = liege
@@ -2533,10 +2441,29 @@ qpq_k_secret_alliance_ai_valid_trigger = {
 	is_landed = yes is_at_war = no
 }
 qpq_k_bought_truce_ai_valid_trigger = {
-	is_at_war = yes gold >= 50
+	is_landed = yes
+	is_independent_ruler = yes
+	gold >= 50
+	any_neighboring_and_across_water_top_liege_realm_owner = {
+		NOT = { is_at_war_with = root }
+		NOT = { has_truce = root }
+		max_military_strength > root.max_military_strength
+		qpq_ai_threatens_trigger = yes
+	}
 }
 qpq_k_faithless_ally_ai_valid_trigger = {
-	is_at_war = yes
+	is_landed = yes
+	is_independent_ruler = yes
+	is_at_war = no
+	gold >= 50
+	any_neighboring_and_across_water_top_liege_realm_owner = {
+		qpq_ai_wants_war_on_trigger = yes
+		max_military_strength <= root.max_military_strength
+		any_ally = {
+			NOT = { this = root }
+			max_military_strength > { value = root.max_military_strength subtract = prev.max_military_strength }
+		}
+	}
 }
 qpq_k_turncoat_ai_valid_trigger = {
 	is_at_war = yes
@@ -2545,35 +2472,10 @@ qpq_k_seed_the_separatists_ai_valid_trigger = {
 	is_independent_ruler = yes any_relation = { type = rival is_independent_ruler = yes }
 }
 qpq_k_bought_claim_ai_valid_trigger = {
-	exists = faith.religious_head
-	NOT = { faith.religious_head = root }
-	faith.religious_head = { is_ai = yes }
-	faith = { has_doctrine = doctrine_spiritual_head }
-	any_relation = { type = rival is_landed = yes }
+	exists = faith.religious_head NOT = { faith.religious_head = root } faith.religious_head = { is_ai = yes } faith = { has_doctrine = doctrine_spiritual_head } any_relation = { type = rival is_landed = yes }
 }
 qpq_k_absolution_by_concession_ai_valid_trigger = {
 	has_trait = excommunicated exists = faith.religious_head faith.religious_head = { is_ai = yes } faith = { qpq_faith_has_church_trigger = yes }
-}
-qpq_k_make_peace_ai_valid_trigger = {
-	is_at_war = yes
-	any_character_war = {
-		OR = {
-			primary_attacker = root
-			primary_defender = root
-		}
-		NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = -15 } }
-	}
-}
-qpq_k_yield_war_ai_valid_trigger = {
-	is_at_war = yes
-	gold >= 100
-	any_character_war = {
-		OR = {
-			primary_attacker = root
-			primary_defender = root
-		}
-		qpq_war_side_winning_trigger = { WHO = root SCORE = 30 }
-	}
 }
 qpq_k_join_war_ai_valid_trigger = {
 	is_at_war = yes
@@ -2584,16 +2486,6 @@ qpq_k_join_war_ai_valid_trigger = {
 			primary_defender = root
 		}
 		NOT = { qpq_war_side_winning_trigger = { WHO = root SCORE = 25 } }
-	}
-}
-qpq_k_leave_war_ai_valid_trigger = {
-	is_at_war = yes
-	gold >= 50
-	any_character_war = {
-		OR = {
-			primary_attacker = root
-			primary_defender = root
-		}
 	}
 }
 qpq_k_stay_out_ai_valid_trigger = {

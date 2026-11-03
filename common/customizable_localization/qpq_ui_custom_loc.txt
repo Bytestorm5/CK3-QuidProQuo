@@ -248,20 +248,8 @@ QpqUiKindName_t = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_name
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_name
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
 		localization_key = qpq_join_war_name
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_name
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
@@ -541,20 +529,8 @@ QpqUiKindDesc_t = {
 		localization_key = qpq_temple_patronage_interaction_desc
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_interaction_desc
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_interaction_desc
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
 		localization_key = qpq_join_war_interaction_desc
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_interaction_desc
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
@@ -834,20 +810,8 @@ QpqUiKindAsk_t = {
 		localization_key = qpq_temple_patronage_ask_ui_t
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_ask_ui_t
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_ask_ui_t
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
 		localization_key = qpq_join_war_ask_ui_t
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_ask_ui_t
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
@@ -1127,20 +1091,8 @@ QpqUiKindHint_t = {
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:make_peace }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:yield_war }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:join_war }
 		localization_key = QPQ_UI_HINT_RESTRAINT
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:leave_war }
-		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:stay_out }
@@ -1437,20 +1389,8 @@ QpqUiKindName_i = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_name
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_name
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
 		localization_key = qpq_join_war_name
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_name
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
@@ -1730,20 +1670,8 @@ QpqUiKindDesc_i = {
 		localization_key = qpq_temple_patronage_desc_them
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_desc_them
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_desc_them
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
 		localization_key = qpq_join_war_desc_them
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_desc_them
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
@@ -2023,20 +1951,8 @@ QpqUiKindAsk_i = {
 		localization_key = qpq_temple_patronage_ask_ui_i
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
-		localization_key = qpq_make_peace_ask_ui_i
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
-		localization_key = qpq_yield_war_ask_ui_i
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
 		localization_key = qpq_join_war_ask_ui_i
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
-		localization_key = qpq_leave_war_ask_ui_i
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }
@@ -2316,20 +2232,8 @@ QpqUiKindHint_i = {
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:make_peace }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:yield_war }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:join_war }
 		localization_key = QPQ_UI_HINT_RESTRAINT
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:leave_war }
-		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:stay_out }

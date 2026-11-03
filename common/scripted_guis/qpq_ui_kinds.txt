@@ -1844,44 +1844,6 @@ qpq_ui_kind_t_temple_patronage = {
 	}
 }
 
-qpq_ui_kind_t_make_peace = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:recipient = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:make_peace } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:make_peace }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_t_yield_war = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:recipient = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:yield_war } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:yield_war }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_t_join_war = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -1897,25 +1859,6 @@ qpq_ui_kind_t_join_war = {
 			qpq_ui_clear_leg_t_effect = yes
 		}
 		set_variable = { name = qpq_ui_t_kind value = flag:join_war }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_t_leave_war = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:recipient = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:leave_war } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:leave_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2982,16 +2925,7 @@ qpq_ui_group_t_wartime = {
 	is_shown = {
 		OR = {
 			AND = {
-				scope:recipient = { is_at_war = yes }
-			}
-			AND = {
-				scope:recipient = { is_at_war = yes }
-			}
-			AND = {
 				scope:actor = { is_at_war = yes }
-			}
-			AND = {
-				scope:recipient = { is_at_war = yes }
 			}
 			AND = {
 				scope:actor = { is_at_war = yes }
@@ -5364,44 +5298,6 @@ qpq_ui_kind_i_temple_patronage = {
 	}
 }
 
-qpq_ui_kind_i_make_peace = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:actor = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:make_peace } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:make_peace }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_i_yield_war = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:actor = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:yield_war } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:yield_war }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_i_join_war = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -5417,25 +5313,6 @@ qpq_ui_kind_i_join_war = {
 			qpq_ui_clear_leg_i_effect = yes
 		}
 		set_variable = { name = qpq_ui_i_kind value = flag:join_war }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_i_leave_war = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = { is_at_war = yes }
-	}
-	is_valid = {
-		scope:actor = { is_at_war = yes }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:leave_war } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:leave_war }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -6502,16 +6379,7 @@ qpq_ui_group_i_wartime = {
 	is_shown = {
 		OR = {
 			AND = {
-				scope:actor = { is_at_war = yes }
-			}
-			AND = {
-				scope:actor = { is_at_war = yes }
-			}
-			AND = {
 				scope:recipient = { is_at_war = yes }
-			}
-			AND = {
-				scope:actor = { is_at_war = yes }
 			}
 			AND = {
 				scope:recipient = { is_at_war = yes }

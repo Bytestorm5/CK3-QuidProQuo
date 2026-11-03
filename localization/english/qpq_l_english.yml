@@ -125,6 +125,8 @@
  QPQ_REASON_RESENTS_LIEGE:0 "Resents their liege"
  QPQ_REASON_AT_WAR:0 "At war with you"
  QPQ_REASON_HEAD_OF_FAITH:0 "Head of a faith: peace is not theirs to sell"
+ qpq_valid_at_peace:0 "You are not at war with each other: a truce keeps a peace, it does not end a war"
+ qpq_valid_not_fighting_you:0 "[recipient.GetShortUIName|U] is not already fighting you"
  qpq_valid_no_holy_war:0 "Neither of you is caught up in a holy war, which no truce can call off"
  QPQ_REASON_ALLIED_TO_TARGET:0 "Allied to the target"
  QPQ_REASON_LOVES_TARGET:0 "Loyal to the target"

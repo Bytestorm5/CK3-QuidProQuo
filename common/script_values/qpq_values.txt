@@ -1190,3 +1190,103 @@ qpq_command_expectation_value = {
 		}
 	}
 }
+
+############################################################
+# AI finders: whom an AI proposing a deal (root) would rather have it aimed at, by its own lights.
+# Used as order_by in the finders (tools/qpq_kinds.py, ai=dict(find=...)): the best candidate comes first.
+############################################################
+
+# How much root wants this character brought low: a rival, a claim on their land, root's opinion of them, faith
+qpq_ai_enmity_value = {
+	value = 0
+	save_temporary_scope_as = qpq_ai_cand
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = root
+				has_relation_nemesis = root
+			}
+		}
+		add = 100
+	}
+	if = {
+		limit = { root = { any_claim = { holder ?= scope:qpq_ai_cand } } }
+		add = 40
+	}
+	add = {
+		value = "root.opinion(scope:qpq_ai_cand)"
+		multiply = -0.5
+		min = -30
+		max = 30
+	}
+	if = {
+		limit = {
+			root.faith = {
+				faith_hostility_level = {
+					target = scope:qpq_ai_cand.faith
+					value >= faith_hostile_level
+				}
+			}
+		}
+		add = 15
+	}
+}
+
+# How weak this character is next to the one who would fight them (scope:qpq_ai_fighter): the weaker the better,
+# and far stronger is hopeless
+qpq_ai_weakness_value = {
+	value = 0
+	if = {
+		limit = { max_military_strength < { value = scope:qpq_ai_fighter.max_military_strength multiply = 0.5 } }
+		add = 40
+	}
+	else_if = {
+		limit = { max_military_strength < { value = scope:qpq_ai_fighter.max_military_strength multiply = 0.8 } }
+		add = 25
+	}
+	else_if = {
+		limit = { max_military_strength < scope:qpq_ai_fighter.max_military_strength }
+		add = 10
+	}
+	else_if = {
+		limit = { max_military_strength > { value = scope:qpq_ai_fighter.max_military_strength multiply = 2 } }
+		add = -100
+	}
+	else_if = {
+		limit = { max_military_strength > { value = scope:qpq_ai_fighter.max_military_strength multiply = 1.3 } }
+		add = -40
+	}
+}
+
+# A war target: wanted, and beatable by the one who would fight
+qpq_ai_war_target_value = {
+	value = qpq_ai_enmity_value
+	add = qpq_ai_weakness_value
+}
+
+# Someone to hire against scope:secondary_recipient: their strength against the target's, and their own quarrel
+qpq_ai_hired_sword_value = {
+	value = 0
+	save_temporary_scope_as = qpq_ai_cand
+	add = {
+		value = max_military_strength
+		divide = { value = scope:secondary_recipient.max_military_strength min = 1 }
+		multiply = 30
+		max = 60
+	}
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:secondary_recipient
+				has_relation_nemesis = scope:secondary_recipient
+			}
+		}
+		add = 40
+	}
+	add = {
+		value = "scope:qpq_ai_cand.opinion(scope:secondary_recipient)"
+		multiply = -0.3
+		min = -20
+		max = 20
+	}
+}

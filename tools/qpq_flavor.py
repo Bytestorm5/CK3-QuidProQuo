@@ -45,7 +45,7 @@ FLAVOR = {
     "proxy_war": "You have an army and an appetite. My rival has lands. I have the gold to bring the three together.",
     "partition_pact": "Our neighbour's realm is too large for one master. Strike with me, and let us draw the line now, while we are still friends.",
     "secret_alliance": "Let no herald announce it and no clerk write it down. But if either of us is attacked, the other will march.",
-    "bought_truce": "This war costs us both, and I would rather spend my gold on peace than on sellswords. Name the sum.",
+    "bought_truce": "A war between us would cost us both, and I would rather spend my gold on peace than on sellswords. Name the sum.",
     "faithless_ally": "Your ally will call on you when we fight. When that call comes, I would have your levies find themselves otherwise occupied.",
     "turncoat": "Your lord leads you into a war that will not end well for you. Change your banner before the battle, and you will find a warmer welcome on my side of the field.",
     "seed_the_separatists": "Why bow to a distant crown? I will pay for your freedom. You need only take it.",
@@ -83,10 +83,7 @@ FLAVOR = {
     "accept_the_yoke": "My armies are close, and my friendship is worth more than your pride. Send tribute, and you will have both.",
     "cast_off_the_yoke": "You pay tribute to a master who does nothing for you. Stop paying, and let my gold cover what you lose.",
     # ---------------- Catalogue G: in time of war
-    "make_peace": "This war bleeds us both, and neither of us will see the end of it in the field. Sign a white peace, and let us both go home.",
-    "yield_war": "You cannot win this war, and every month you fight it costs you more. Concede it now, while you still have something to keep.",
     "join_war": "My war is just and my enemies are many. March beside me until it is won, and you will share in what we take.",
-    "leave_war": "Their war is not yours. Take your men home before the next battle, and let others bleed for it.",
     "stay_out": "When my enemies send for you, find a reason to stay at home. This war need not be yours.",
     # ---------------- the carrier: goods for goods, no deed
     "barter": "No deed, no blood, nothing that needs hiding. Only what each of us has, and what each of us wants.",
@@ -102,5 +99,5 @@ GROUP_FLAVOR = {
     "church_favours": "Grace, they say, is freely given. Everything else the Church dispenses has a price.",
     "church_weapons": "A curse from the altar cuts deeper than any blade, and can be aimed with the same care.",
     "tribute": "Tribute is a bargain renewed every year: what is paid, what is owed, and what neither side says aloud.",
-    "wartime": "A war is a bargain too: who fights, who stays home, and what it will take for the killing to stop.",
+    "wartime": "A war is a bargain too: who comes to fight beside you, and who can be kept at home.",
 }
