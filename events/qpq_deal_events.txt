@@ -251,6 +251,26 @@ qpq_deal.1 = {
 				desc = qpq_temple_patronage_name
 			}
 			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
+				desc = qpq_heavier_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:lighter_tribute }
+				desc = qpq_lighter_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:bought_freedom }
+				desc = qpq_bought_freedom_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_name
+			}
+			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:chartered_conquest }
 				desc = qpq_chartered_conquest_name
 			}
@@ -494,6 +514,26 @@ qpq_deal.1 = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_name
 			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }
+				desc = qpq_heavier_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:lighter_tribute }
+				desc = qpq_lighter_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:bought_freedom }
+				desc = qpq_bought_freedom_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_name
+			}
 			desc = qpq_deal.1.t
 		}
 	}
@@ -735,6 +775,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
+				desc = qpq_heavier_tribute_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:lighter_tribute }
+				desc = qpq_lighter_tribute_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:bought_freedom }
+				desc = qpq_bought_freedom_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_pitch_ev
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_pitch_ev
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:price_of_loyalty }
@@ -994,6 +1054,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }
+				desc = qpq_heavier_tribute_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:lighter_tribute }
+				desc = qpq_lighter_tribute_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:bought_freedom }
+				desc = qpq_bought_freedom_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_ask_ev_i
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_i_kind ?= flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_ask_ev_i
 			}
 			desc = qpq_empty
 		}
@@ -1343,6 +1423,26 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:temple_patronage }
 				desc = qpq_temple_patronage_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
+				desc = qpq_heavier_tribute_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:lighter_tribute }
+				desc = qpq_lighter_tribute_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:bought_freedom }
+				desc = qpq_bought_freedom_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_ask_ev_t
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_t_kind ?= flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_ask_ev_t
 			}
 			desc = qpq_empty
 		}

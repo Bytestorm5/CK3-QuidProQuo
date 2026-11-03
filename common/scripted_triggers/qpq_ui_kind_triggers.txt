@@ -63,6 +63,11 @@ qpq_ui_leg_t_allows_gold_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -130,6 +135,11 @@ qpq_ui_leg_t_allows_land_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -206,6 +216,11 @@ qpq_ui_leg_t_allows_office_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -273,6 +288,11 @@ qpq_ui_leg_t_allows_release_hook_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -340,6 +360,11 @@ qpq_ui_leg_t_allows_my_word_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -405,6 +430,11 @@ qpq_ui_leg_t_allows_secret_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -472,6 +502,11 @@ qpq_ui_leg_t_allows_contract_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -537,6 +572,11 @@ qpq_ui_leg_t_allows_succession_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -604,6 +644,11 @@ qpq_ui_leg_t_allows_clemency_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -669,6 +714,11 @@ qpq_ui_leg_t_allows_arms_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -736,6 +786,11 @@ qpq_ui_leg_t_allows_artifact_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -803,6 +858,11 @@ qpq_ui_leg_t_allows_church_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -868,6 +928,11 @@ qpq_ui_leg_t_allows_restraint_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -933,6 +998,11 @@ qpq_ui_leg_t_allows_hook_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -1000,6 +1070,11 @@ qpq_ui_leg_t_allows_on_delivery_trigger = {
 		var:qpq_ui_t_kind = flag:favourable_omens
 		var:qpq_ui_t_kind = flag:consecration_rites
 		var:qpq_ui_t_kind = flag:temple_patronage
+		var:qpq_ui_t_kind = flag:heavier_tribute
+		var:qpq_ui_t_kind = flag:lighter_tribute
+		var:qpq_ui_t_kind = flag:bought_freedom
+		var:qpq_ui_t_kind = flag:accept_the_yoke
+		var:qpq_ui_t_kind = flag:cast_off_the_yoke
 		var:qpq_ui_t_kind = flag:none
 	}
 }
@@ -1115,6 +1190,27 @@ qpq_ui_leg_t_ask_valid_trigger = {
 		limit = { var:qpq_ui_t_ekind = flag:bought_truce }
 		custom_description = {
 			text = qpq_valid_no_holy_war
+			NOT = { has_variable = qpq_ui_t_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+		custom_description = {
+			text = qpq_valid_tribute_can_rise
+			NOT = { has_variable = qpq_ui_t_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+		custom_description = {
+			text = qpq_valid_tribute_can_fall
+			NOT = { has_variable = qpq_ui_t_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+		custom_description = {
+			text = qpq_valid_can_be_tributary
 			NOT = { has_variable = qpq_ui_t_fail_0 }
 		}
 	}
@@ -1711,6 +1807,41 @@ qpq_ui_leg_t_still_possible_trigger = {
 		NOT = { exists = scope:actor.faith.religious_head }
 	}
 	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:bought_freedom }
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:actor }
+		}
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:cast_off_the_yoke }
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:actor }
+			NOT = { suzerain = scope:actor }
+		}
+	}
+	trigger_else_if = {
 		limit = { var:qpq_ui_t_ekind = flag:barter }
 		NOT = { scope:actor = scope:recipient }
 	}
@@ -1964,6 +2095,26 @@ qpq_ui_leg_t_no_same_pact_trigger = {
 		limit = { var:qpq_ui_t_ekind = flag:temple_patronage }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heavier_tribute } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = lighter_tribute } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:bought_freedom }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_freedom } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = accept_the_yoke } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_t_ekind = flag:cast_off_the_yoke }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = cast_off_the_yoke } }
+	}
 	trigger_else = {
 		always = yes
 	}
@@ -2196,6 +2347,11 @@ qpq_ui_leg_i_allows_gold_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2263,6 +2419,11 @@ qpq_ui_leg_i_allows_land_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2339,6 +2500,11 @@ qpq_ui_leg_i_allows_office_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2406,6 +2572,11 @@ qpq_ui_leg_i_allows_release_hook_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2473,6 +2644,11 @@ qpq_ui_leg_i_allows_my_word_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2538,6 +2714,11 @@ qpq_ui_leg_i_allows_secret_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2605,6 +2786,11 @@ qpq_ui_leg_i_allows_contract_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2670,6 +2856,11 @@ qpq_ui_leg_i_allows_succession_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2737,6 +2928,11 @@ qpq_ui_leg_i_allows_clemency_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2802,6 +2998,11 @@ qpq_ui_leg_i_allows_arms_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2869,6 +3070,11 @@ qpq_ui_leg_i_allows_artifact_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -2936,6 +3142,11 @@ qpq_ui_leg_i_allows_church_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -3001,6 +3212,11 @@ qpq_ui_leg_i_allows_restraint_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -3066,6 +3282,11 @@ qpq_ui_leg_i_allows_hook_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -3133,6 +3354,11 @@ qpq_ui_leg_i_allows_on_delivery_trigger = {
 		var:qpq_ui_i_kind = flag:favourable_omens
 		var:qpq_ui_i_kind = flag:consecration_rites
 		var:qpq_ui_i_kind = flag:temple_patronage
+		var:qpq_ui_i_kind = flag:heavier_tribute
+		var:qpq_ui_i_kind = flag:lighter_tribute
+		var:qpq_ui_i_kind = flag:bought_freedom
+		var:qpq_ui_i_kind = flag:accept_the_yoke
+		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
 }
@@ -3248,6 +3474,27 @@ qpq_ui_leg_i_ask_valid_trigger = {
 		limit = { var:qpq_ui_i_ekind = flag:bought_truce }
 		custom_description = {
 			text = qpq_valid_no_holy_war
+			NOT = { has_variable = qpq_ui_i_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+		custom_description = {
+			text = qpq_valid_tribute_can_rise
+			NOT = { has_variable = qpq_ui_i_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+		custom_description = {
+			text = qpq_valid_tribute_can_fall
+			NOT = { has_variable = qpq_ui_i_fail_0 }
+		}
+	}
+	trigger_if = {
+		limit = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+		custom_description = {
+			text = qpq_valid_can_be_tributary
 			NOT = { has_variable = qpq_ui_i_fail_0 }
 		}
 	}
@@ -3844,6 +4091,41 @@ qpq_ui_leg_i_still_possible_trigger = {
 		NOT = { exists = scope:recipient.faith.religious_head }
 	}
 	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:bought_freedom }
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:recipient }
+		}
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:cast_off_the_yoke }
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:recipient }
+			NOT = { suzerain = scope:recipient }
+		}
+	}
+	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:barter }
 		NOT = { scope:recipient = scope:actor }
 	}
@@ -4096,6 +4378,26 @@ qpq_ui_leg_i_no_same_pact_trigger = {
 	trigger_else_if = {
 		limit = { var:qpq_ui_i_ekind = flag:temple_patronage }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heavier_tribute } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = lighter_tribute } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:bought_freedom }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_freedom } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = accept_the_yoke } }
+	}
+	trigger_else_if = {
+		limit = { var:qpq_ui_i_ekind = flag:cast_off_the_yoke }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = cast_off_the_yoke } }
 	}
 	trigger_else = {
 		always = yes
@@ -5182,6 +5484,69 @@ qpq_deal_leg_t_valid_trigger = {
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
 		}
 		trigger_else_if = {
+			limit = { scope:qpq_deal_t_kind = flag:heavier_tribute }
+			scope:recipient = { is_tributary_of = scope:actor }
+			custom_description = {
+				text = qpq_valid_tribute_can_rise
+				scope:recipient = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heavier_tribute } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_t_kind = flag:lighter_tribute }
+			scope:actor = { is_tributary_of = scope:recipient }
+			custom_description = {
+				text = qpq_valid_tribute_can_fall
+				scope:actor = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = lighter_tribute } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_t_kind = flag:bought_freedom }
+			scope:actor = { is_tributary_of = scope:recipient }
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_freedom } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_t_kind = flag:accept_the_yoke }
+			scope:actor = {
+				is_landed = yes
+				is_independent_ruler = yes
+			}
+			scope:recipient = {
+				is_landed = yes
+				is_independent_ruler = yes
+				is_tributary = no
+				NOT = { this = scope:actor }
+			}
+			custom_description = {
+				text = qpq_valid_can_be_tributary
+				scope:recipient = { can_be_tributary_of = scope:actor }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = accept_the_yoke } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_t_kind = flag:cast_off_the_yoke }
+			scope:actor = { is_landed = yes }
+			scope:recipient = {
+				is_tributary = yes
+				exists = suzerain
+				NOT = { this = scope:actor }
+				NOT = { suzerain = scope:actor }
+			}
+			exists = scope:recipient.suzerain
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = cast_off_the_yoke } }
+		}
+		trigger_else_if = {
 			limit = { scope:qpq_deal_t_kind = flag:barter }
 			NOT = { scope:actor = scope:recipient }
 			scope:actor = { is_imprisoned = no }
@@ -6110,6 +6475,69 @@ qpq_deal_leg_i_valid_trigger = {
 			scope:actor = { is_imprisoned = no }
 			scope:recipient = { is_imprisoned = no }
 			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_i_kind = flag:heavier_tribute }
+			scope:actor = { is_tributary_of = scope:recipient }
+			custom_description = {
+				text = qpq_valid_tribute_can_rise
+				scope:actor = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heavier_tribute } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_i_kind = flag:lighter_tribute }
+			scope:recipient = { is_tributary_of = scope:actor }
+			custom_description = {
+				text = qpq_valid_tribute_can_fall
+				scope:recipient = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = lighter_tribute } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_i_kind = flag:bought_freedom }
+			scope:recipient = { is_tributary_of = scope:actor }
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_freedom } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_i_kind = flag:accept_the_yoke }
+			scope:recipient = {
+				is_landed = yes
+				is_independent_ruler = yes
+			}
+			scope:actor = {
+				is_landed = yes
+				is_independent_ruler = yes
+				is_tributary = no
+				NOT = { this = scope:recipient }
+			}
+			custom_description = {
+				text = qpq_valid_can_be_tributary
+				scope:actor = { can_be_tributary_of = scope:recipient }
+			}
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = accept_the_yoke } }
+		}
+		trigger_else_if = {
+			limit = { scope:qpq_deal_i_kind = flag:cast_off_the_yoke }
+			scope:recipient = { is_landed = yes }
+			scope:actor = {
+				is_tributary = yes
+				exists = suzerain
+				NOT = { this = scope:recipient }
+				NOT = { suzerain = scope:recipient }
+			}
+			exists = scope:actor.suzerain
+			scope:actor = { is_imprisoned = no }
+			scope:recipient = { is_imprisoned = no }
+			NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = cast_off_the_yoke } }
 		}
 		trigger_else_if = {
 			limit = { scope:qpq_deal_i_kind = flag:barter }
@@ -7094,6 +7522,69 @@ qpq_proposed_kind_still_valid_trigger = {
 		scope:actor = { is_imprisoned = no }
 		scope:recipient = { is_imprisoned = no }
 		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = temple_patronage } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:heavier_tribute }
+		scope:recipient = { is_tributary_of = scope:actor }
+		custom_description = {
+			text = qpq_valid_tribute_can_rise
+			scope:recipient = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = heavier_tribute } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:lighter_tribute }
+		scope:actor = { is_tributary_of = scope:recipient }
+		custom_description = {
+			text = qpq_valid_tribute_can_fall
+			scope:actor = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = lighter_tribute } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:bought_freedom }
+		scope:actor = { is_tributary_of = scope:recipient }
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = bought_freedom } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:accept_the_yoke }
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:actor }
+		}
+		custom_description = {
+			text = qpq_valid_can_be_tributary
+			scope:recipient = { can_be_tributary_of = scope:actor }
+		}
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = accept_the_yoke } }
+	}
+	trigger_else_if = {
+		limit = { scope:qpq_proposed_kind = flag:cast_off_the_yoke }
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:actor }
+			NOT = { suzerain = scope:actor }
+		}
+		exists = scope:recipient.suzerain
+		scope:actor = { is_imprisoned = no }
+		scope:recipient = { is_imprisoned = no }
+		NOT = { qpq_has_active_pact_of_kind_with_trigger = { A = scope:actor B = scope:recipient KIND = cast_off_the_yoke } }
 	}
 	trigger_else_if = {
 		limit = { scope:qpq_proposed_kind = flag:barter }

@@ -4344,6 +4344,292 @@ qpq_k_temple_patronage_exposed_effect = {
 	scope:qpq_payer = { add_piety = minor_piety_loss }
 }
 
+#### Heavier Tribute
+qpq_k_heavier_tribute_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_heavier_tribute_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_heavier_tribute_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_heavier_tribute_price_value }
+	}
+	if = {
+		limit = {
+			qpq_heavier_tribute_payer_tier_value <= 0
+			qpq_heavier_tribute_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = heavier_tribute SECRET = bribery TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_heavier_tribute_on_seal_effect = {
+	scope:qpq_agent = {
+		if = {
+			limit = { is_tributary_of = scope:qpq_payer }
+			if = {
+				limit = { vassal_contract_obligation_level:default_tributary_taxes = 0 }
+				tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
+			}
+		else_if = {
+			limit = { vassal_contract_obligation_level:default_tributary_taxes = 1 }
+			tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 2 }
+		}
+		}
+	}
+}
+qpq_k_heavier_tribute_on_deliver_effect = {
+	# nothing
+}
+qpq_k_heavier_tribute_on_end_effect = {
+	# nothing
+}
+qpq_k_heavier_tribute_tick_effect = {
+	# nothing
+}
+qpq_k_heavier_tribute_perform_effect = {
+	# nothing
+}
+qpq_k_heavier_tribute_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_heavier_tribute_exposed_effect = {
+	# nothing
+}
+
+#### Lighter Tribute
+qpq_k_lighter_tribute_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_lighter_tribute_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_lighter_tribute_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_lighter_tribute_price_value }
+	}
+	if = {
+		limit = {
+			qpq_lighter_tribute_payer_tier_value <= 0
+			qpq_lighter_tribute_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = lighter_tribute SECRET = bribery TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_lighter_tribute_on_seal_effect = {
+	scope:qpq_payer = {
+		if = {
+			limit = { is_tributary_of = scope:qpq_agent }
+			if = {
+				limit = { vassal_contract_obligation_level:default_tributary_taxes = 2 }
+				tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
+			}
+		else_if = {
+			limit = { vassal_contract_obligation_level:default_tributary_taxes = 1 }
+			tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 0 }
+		}
+		}
+	}
+}
+qpq_k_lighter_tribute_on_deliver_effect = {
+	# nothing
+}
+qpq_k_lighter_tribute_on_end_effect = {
+	# nothing
+}
+qpq_k_lighter_tribute_tick_effect = {
+	# nothing
+}
+qpq_k_lighter_tribute_perform_effect = {
+	# nothing
+}
+qpq_k_lighter_tribute_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_lighter_tribute_exposed_effect = {
+	# nothing
+}
+
+#### Bought Freedom
+qpq_k_bought_freedom_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_bought_freedom_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_bought_freedom_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_bought_freedom_price_value }
+	}
+	if = {
+		limit = {
+			qpq_bought_freedom_payer_tier_value <= 0
+			qpq_bought_freedom_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = bought_freedom SECRET = bribery TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_bought_freedom_on_seal_effect = {
+	scope:qpq_payer = {
+		if = {
+			limit = { is_tributary_of = scope:qpq_agent }
+			end_tributary = yes
+			add_truce_both_ways = {
+				character = scope:qpq_agent
+				years = 5
+				override = yes
+				name = TRUCE_TRIBUTARY_STOPPED
+			}
+			add_opinion = { target = scope:qpq_agent modifier = tributary_released_opinion opinion = 25 }
+		}
+	}
+}
+qpq_k_bought_freedom_on_deliver_effect = {
+	# nothing
+}
+qpq_k_bought_freedom_on_end_effect = {
+	# nothing
+}
+qpq_k_bought_freedom_tick_effect = {
+	# nothing
+}
+qpq_k_bought_freedom_perform_effect = {
+	# nothing
+}
+qpq_k_bought_freedom_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_bought_freedom_exposed_effect = {
+	# nothing
+}
+
+#### Accept the Yoke
+qpq_k_accept_the_yoke_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_accept_the_yoke_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_accept_the_yoke_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_accept_the_yoke_price_value }
+	}
+	if = {
+		limit = {
+			qpq_accept_the_yoke_payer_tier_value <= 0
+			qpq_accept_the_yoke_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = accept_the_yoke SECRET = bribery TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_accept_the_yoke_on_seal_effect = {
+	if = {
+		limit = {
+			scope:qpq_agent = {
+				is_tributary = no
+				can_be_tributary_of = scope:qpq_payer
+			}
+		}
+		start_tributary_interaction_effect = { TRIBUTARY = scope:qpq_agent SUZERAIN = scope:qpq_payer }
+	}
+}
+qpq_k_accept_the_yoke_on_deliver_effect = {
+	# nothing
+}
+qpq_k_accept_the_yoke_on_end_effect = {
+	# nothing
+}
+qpq_k_accept_the_yoke_tick_effect = {
+	# nothing
+}
+qpq_k_accept_the_yoke_perform_effect = {
+	# nothing
+}
+qpq_k_accept_the_yoke_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_accept_the_yoke_exposed_effect = {
+	# nothing
+}
+
+#### Cast Off the Yoke
+qpq_k_cast_off_the_yoke_seal_from_scopes_effect = {
+	scope:actor = { save_scope_as = qpq_payer }
+	scope:recipient = { save_scope_as = qpq_agent }
+	scope:recipient.suzerain = { save_scope_as = qpq_target }
+	save_scope_value_as = { name = qpq_payer_tier value = qpq_cast_off_the_yoke_payer_tier_value }
+	save_scope_value_as = { name = qpq_agent_tier value = qpq_cast_off_the_yoke_agent_tier_value }
+	if = {
+		limit = { NOT = { exists = scope:qpq_price } }
+		save_scope_value_as = { name = qpq_price value = qpq_cast_off_the_yoke_price_value }
+	}
+	if = {
+		limit = {
+			qpq_cast_off_the_yoke_payer_tier_value <= 0
+			qpq_cast_off_the_yoke_agent_tier_value <= 0
+		}
+		save_scope_value_as = { name = qpq_floor_zero value = yes }
+	}
+	qpq_seal_pact_effect = { KIND = cast_off_the_yoke SECRET = betrayal TERM = 12 }
+	if = {
+		limit = { exists = scope:qpq_floor_zero }
+		scope:qpq_story = { set_variable = qpq_floor0 }
+	}
+}
+qpq_k_cast_off_the_yoke_on_seal_effect = {
+	scope:qpq_agent = {
+		if = {
+			limit = { is_tributary = yes }
+			end_tributary = yes
+		}
+	}
+	if = {
+		limit = { exists = scope:qpq_target }
+		scope:qpq_target = {
+			add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion opinion = -60 }
+		}
+	}
+}
+qpq_k_cast_off_the_yoke_on_deliver_effect = {
+	# nothing
+}
+qpq_k_cast_off_the_yoke_on_end_effect = {
+	# nothing
+}
+qpq_k_cast_off_the_yoke_tick_effect = {
+	# nothing
+}
+qpq_k_cast_off_the_yoke_perform_effect = {
+	# nothing
+}
+qpq_k_cast_off_the_yoke_ai_attempt_effect = {
+	# nothing
+}
+qpq_k_cast_off_the_yoke_exposed_effect = {
+	if = {
+		limit = { scope:qpq_target = { is_alive = yes } }
+		scope:qpq_target = {
+			add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -40 }
+		}
+	}
+}
+
 #### Exchange of Goods
 qpq_k_barter_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
@@ -4636,6 +4922,26 @@ qpq_kind_on_deliver_effect = {
 		qpq_k_temple_patronage_on_deliver_effect = yes
 	}
 	else_if = {
+		limit = { var:qpq_kind = flag:heavier_tribute }
+		qpq_k_heavier_tribute_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:lighter_tribute }
+		qpq_k_lighter_tribute_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:bought_freedom }
+		qpq_k_bought_freedom_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:accept_the_yoke }
+		qpq_k_accept_the_yoke_on_deliver_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:cast_off_the_yoke }
+		qpq_k_cast_off_the_yoke_on_deliver_effect = yes
+	}
+	else_if = {
 		limit = { var:qpq_kind = flag:barter }
 		qpq_k_barter_on_deliver_effect = yes
 	}
@@ -4885,6 +5191,26 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:heavier_tribute }
+		qpq_k_heavier_tribute_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:lighter_tribute }
+		qpq_k_lighter_tribute_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:bought_freedom }
+		qpq_k_bought_freedom_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:accept_the_yoke }
+		qpq_k_accept_the_yoke_on_end_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:cast_off_the_yoke }
+		qpq_k_cast_off_the_yoke_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:barter }
@@ -5260,6 +5586,26 @@ qpq_kind_ai_attempt_effect = {
 		qpq_k_temple_patronage_ai_attempt_effect = yes
 	}
 	else_if = {
+		limit = { var:qpq_kind = flag:heavier_tribute }
+		qpq_k_heavier_tribute_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:lighter_tribute }
+		qpq_k_lighter_tribute_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:bought_freedom }
+		qpq_k_bought_freedom_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:accept_the_yoke }
+		qpq_k_accept_the_yoke_ai_attempt_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:cast_off_the_yoke }
+		qpq_k_cast_off_the_yoke_ai_attempt_effect = yes
+	}
+	else_if = {
 		limit = { var:qpq_kind = flag:barter }
 		qpq_k_barter_ai_attempt_effect = yes
 	}
@@ -5469,6 +5815,10 @@ qpq_kind_exposed_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_exposed_effect = yes
+	}
+	else_if = {
+		limit = { var:qpq_kind = flag:cast_off_the_yoke }
+		qpq_k_cast_off_the_yoke_exposed_effect = yes
 	}
 }
 
@@ -5841,6 +6191,26 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:temple_patronage }
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:heavier_tribute }
+		qpq_k_heavier_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:lighter_tribute }
+		qpq_k_lighter_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:bought_freedom }
+		qpq_k_bought_freedom_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:accept_the_yoke }
+		qpq_k_accept_the_yoke_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_proposed_kind = flag:cast_off_the_yoke }
+		qpq_k_cast_off_the_yoke_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:barter }

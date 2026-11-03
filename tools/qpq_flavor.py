@@ -76,6 +76,12 @@ FLAVOR = {
     "favourable_omens": "The gods speak through signs, and signs can be read many ways. Read them the way I need.",
     "consecration_rites": "My blood may not be as old as theirs, but rites rightly performed can raise anyone to kingship. Perform them for me.",
     "temple_patronage": "I would see your temple endowed beyond the dreams of its founders. All I ask is that your priests remember their benefactor when they speak to the people.",
+    # ---------------- Catalogue F: tribute
+    "heavier_tribute": "Your people prosper under my protection, and protection has its price. Let the tribute rise with your fortunes.",
+    "lighter_tribute": "The harvests have failed and my treasury is bare. Ease the tribute a little, and I will not forget the kindness.",
+    "bought_freedom": "Every year I send you gold, and every year my people curse your name. Name a price for our freedom, and be rid of the cursing.",
+    "accept_the_yoke": "My armies are close, and my friendship is worth more than your pride. Send tribute, and you will have both.",
+    "cast_off_the_yoke": "You pay tribute to a master who does nothing for you. Stop paying, and let my gold cover what you lose.",
     # ---------------- the carrier: goods for goods, no deed
     "barter": "No deed, no blood, nothing that needs hiding. Only what each of us has, and what each of us wants.",
 }
@@ -89,4 +95,5 @@ GROUP_FLAVOR = {
     "abroad": "A foreign court is full of loyalties for sale, if one knows whom to ask.",
     "church_favours": "Grace, they say, is freely given. Everything else the Church dispenses has a price.",
     "church_weapons": "A curse from the altar cuts deeper than any blade, and can be aimed with the same care.",
+    "tribute": "Tribute is a bargain renewed every year: what is paid, what is owed, and what neither side says aloud.",
 }

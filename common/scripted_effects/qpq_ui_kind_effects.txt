@@ -8138,6 +8138,430 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 		}
 		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+			qpq_deal_orient_normal_effect = yes
+			qpq_ui_load_goods_t_effect = yes
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_heavier_tribute_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_heavier_tribute_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_heavier_tribute_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_heavier_tribute_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_heavier_tribute_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_heavier_tribute_ai_acceptance_value
+					subtract = qpq_heavier_tribute_ask_value
+					subtract = qpq_heavier_tribute_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_heavier_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }
+						}
+					}
+					set_variable = qpq_ui_t_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+			qpq_deal_orient_normal_effect = yes
+			qpq_ui_load_goods_t_effect = yes
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_lighter_tribute_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_lighter_tribute_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_lighter_tribute_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_lighter_tribute_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_lighter_tribute_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_lighter_tribute_ai_acceptance_value
+					subtract = qpq_lighter_tribute_ask_value
+					subtract = qpq_lighter_tribute_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_lighter_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:actor = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }
+						}
+					}
+					set_variable = qpq_ui_t_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:bought_freedom }
+			qpq_deal_orient_normal_effect = yes
+			qpq_ui_load_goods_t_effect = yes
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_bought_freedom_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_bought_freedom_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_bought_freedom_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_freedom_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_freedom_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_bought_freedom_ai_acceptance_value
+					subtract = qpq_bought_freedom_ask_value
+					subtract = qpq_bought_freedom_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_bought_freedom_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+			qpq_deal_orient_normal_effect = yes
+			qpq_ui_load_goods_t_effect = yes
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_accept_the_yoke_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_accept_the_yoke_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_accept_the_yoke_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_accept_the_yoke_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_accept_the_yoke_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_accept_the_yoke_ai_acceptance_value
+					subtract = qpq_accept_the_yoke_ask_value
+					subtract = qpq_accept_the_yoke_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_accept_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = {
+					scope:recipient = { has_relation_rival = scope:actor }
+				}
+				set_variable = qpq_ui_ref_t_rival_you
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient = { can_be_tributary_of = scope:actor }
+						}
+					}
+					set_variable = qpq_ui_t_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:cast_off_the_yoke }
+			qpq_deal_orient_normal_effect = yes
+			qpq_ui_load_goods_t_effect = yes
+			if = {
+				limit = { exists = scope:recipient.suzerain }
+				scope:recipient.suzerain = { save_scope_as = secondary_recipient }
+				set_variable = { name = qpq_ui_t_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_t_term value = 12 }
+			set_variable = { name = qpq_ui_t_payer_tier value = qpq_cast_off_the_yoke_payer_tier_value }
+			set_variable = { name = qpq_ui_t_agent_tier value = qpq_cast_off_the_yoke_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_cast_off_the_yoke_price_value }
+			set_variable = { name = qpq_ui_t_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_t_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_t_amount }
+			}
+			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
+			set_variable = { name = qpq_ui_t_a_ask value = qpq_cast_off_the_yoke_ask_value }
+			set_variable = { name = qpq_ui_t_a_offers value = qpq_cast_off_the_yoke_offer_points_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = qpq_cast_off_the_yoke_ai_acceptance_value
+					subtract = qpq_cast_off_the_yoke_ask_value
+					subtract = qpq_cast_off_the_yoke_offer_points_value
+					subtract = {
+						value = "scope:recipient.opinion(scope:actor)"
+						multiply = 0.5
+					}
+				}
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_rival
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_virtue_trigger = { AGENT = scope:recipient TIER = qpq_cast_off_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_virtue
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_damnable_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_damnable
+			}
+			if = {
+				limit = {
+					qpq_ai_refuses_no_leverage_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
+				}
+				set_variable = qpq_ui_ref_t_no_leverage
+			}
+			if = {
+				limit = {
+					scope:recipient = { is_close_family_of = scope:recipient.suzerain }
+				}
+				set_variable = qpq_ui_ref_t_kin
+			}
+			if = {
+				limit = {
+					AND = {
+							scope:recipient = { is_allied_to = scope:recipient.suzerain }
+							scope:recipient = { opinion = { target = scope:recipient.suzerain value >= 30 } }
+						}
+				}
+				set_variable = qpq_ui_ref_t_liked_ally
+			}
+			if = {
+				limit = {
+					OR = {
+							scope:recipient = { has_relation_friend = scope:recipient.suzerain }
+							scope:recipient = { has_relation_lover = scope:recipient.suzerain }
+							scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
+						}
+				}
+				set_variable = qpq_ui_ref_t_friend
+			}
+			if = {
+				limit = { has_variable = qpq_ui_t_o_land }
+				change_variable = {
+					name = qpq_ui_t_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_t_value
+						multiply = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+				}
+				set_variable = qpq_ui_t_target_ok
+			}
+		}
+		else_if = {
 			limit = { var:qpq_ui_t_ekind = flag:barter }
 			qpq_deal_orient_normal_effect = yes
 			qpq_ui_load_goods_t_effect = yes
@@ -14989,6 +15413,323 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 		}
 		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+			qpq_deal_orient_swapped_effect = yes
+			qpq_ui_load_goods_i_effect = yes
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_heavier_tribute_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_heavier_tribute_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_heavier_tribute_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_heavier_tribute_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_heavier_tribute_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }
+						}
+					}
+					set_variable = qpq_ui_i_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+			qpq_deal_orient_swapped_effect = yes
+			qpq_ui_load_goods_i_effect = yes
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_lighter_tribute_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_lighter_tribute_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_lighter_tribute_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_lighter_tribute_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_lighter_tribute_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:actor = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }
+						}
+					}
+					set_variable = qpq_ui_i_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:bought_freedom }
+			qpq_deal_orient_swapped_effect = yes
+			qpq_ui_load_goods_i_effect = yes
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_bought_freedom_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_bought_freedom_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_bought_freedom_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_bought_freedom_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_bought_freedom_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+			qpq_deal_orient_swapped_effect = yes
+			qpq_ui_load_goods_i_effect = yes
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_accept_the_yoke_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_accept_the_yoke_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_accept_the_yoke_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_accept_the_yoke_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_accept_the_yoke_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = qpq_accept_the_yoke_goal_sw_value }
+			if = {
+				limit = { qpq_accept_the_yoke_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
+			if = {
+				limit = {
+					scope:actor = { has_relation_rival = scope:recipient }
+				}
+				set_variable = qpq_ui_ref_i_rival_you
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					always = yes
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_target_ok }
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient = { can_be_tributary_of = scope:actor }
+						}
+					}
+					set_variable = qpq_ui_i_fail_0
+				}
+			}
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:cast_off_the_yoke }
+			qpq_deal_orient_swapped_effect = yes
+			qpq_ui_load_goods_i_effect = yes
+			if = {
+				limit = { exists = scope:recipient.suzerain }
+				scope:recipient.suzerain = { save_scope_as = secondary_recipient }
+				set_variable = { name = qpq_ui_i_target value = scope:secondary_recipient }
+			}
+			set_variable = { name = qpq_ui_i_term value = 12 }
+			set_variable = { name = qpq_ui_i_payer_tier value = qpq_cast_off_the_yoke_payer_tier_value }
+			set_variable = { name = qpq_ui_i_agent_tier value = qpq_cast_off_the_yoke_agent_tier_value }
+			save_scope_value_as = { name = qpq_price value = qpq_cast_off_the_yoke_price_value }
+			set_variable = { name = qpq_ui_i_fair value = scope:qpq_price }
+			if = {
+				limit = { has_variable = qpq_ui_i_amount }
+				clear_saved_scope = qpq_price
+				save_scope_value_as = { name = qpq_price value = var:qpq_ui_i_amount }
+			}
+			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
+			set_variable = {
+				name = qpq_ui_i_a_ask
+				value = {
+					value = qpq_cast_off_the_yoke_demand_value
+					multiply = -0.6
+				}
+			}
+			set_variable = {
+				name = qpq_ui_i_a_offers
+				value = {
+					value = qpq_cast_off_the_yoke_offer_points_value
+					multiply = -0.8
+				}
+			}
+			set_variable = { name = qpq_ui_i_a_other value = qpq_cast_off_the_yoke_goal_sw_value }
+			if = {
+				limit = { qpq_cast_off_the_yoke_goal_sw_refuses_trigger = yes }
+				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+			}
+			if = {
+				limit = {
+					scope:actor = { is_close_family_of = scope:actor.suzerain }
+				}
+				set_variable = qpq_ui_ref_i_kin
+			}
+			if = {
+				limit = {
+					AND = {
+							scope:actor = { is_allied_to = scope:actor.suzerain }
+							scope:actor = { opinion = { target = scope:actor.suzerain value >= 30 } }
+						}
+				}
+				set_variable = qpq_ui_ref_i_liked_ally
+			}
+			if = {
+				limit = {
+					OR = {
+							scope:actor = { has_relation_friend = scope:actor.suzerain }
+							scope:actor = { has_relation_lover = scope:actor.suzerain }
+							scope:actor = { has_relation_best_friend = scope:actor.suzerain }
+						}
+				}
+				set_variable = qpq_ui_ref_i_friend
+			}
+			if = {
+				limit = { has_variable = qpq_ui_i_o_land }
+				change_variable = {
+					name = qpq_ui_i_a_offers
+					add = {
+						value = qpq_offer_land_points_value
+						multiply = qpq_ui_land_extra_i_value
+						multiply = -0.8
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:secondary_recipient
+				}
+				set_variable = qpq_ui_i_target_ok
+			}
+		}
+		else_if = {
 			limit = { var:qpq_ui_i_ekind = flag:barter }
 			qpq_deal_orient_swapped_effect = yes
 			qpq_ui_load_goods_i_effect = yes
@@ -15838,6 +16579,26 @@ qpq_ui_save_deal_effect = {
 			save_scope_value_as = { name = qpq_deal_t_kind value = flag:temple_patronage }
 		}
 		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:heavier_tribute }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:lighter_tribute }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:bought_freedom }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:bought_freedom }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:accept_the_yoke }
+		}
+		else_if = {
+			limit = { var:qpq_ui_t_ekind = flag:cast_off_the_yoke }
+			save_scope_value_as = { name = qpq_deal_t_kind value = flag:cast_off_the_yoke }
+		}
+		else_if = {
 			limit = { var:qpq_ui_t_ekind = flag:barter }
 			save_scope_value_as = { name = qpq_deal_t_kind value = flag:barter }
 		}
@@ -16271,6 +17032,26 @@ qpq_ui_save_deal_effect = {
 		else_if = {
 			limit = { var:qpq_ui_i_ekind = flag:temple_patronage }
 			save_scope_value_as = { name = qpq_deal_i_kind value = flag:temple_patronage }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:heavier_tribute }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:lighter_tribute }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:bought_freedom }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:bought_freedom }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:accept_the_yoke }
+		}
+		else_if = {
+			limit = { var:qpq_ui_i_ekind = flag:cast_off_the_yoke }
+			save_scope_value_as = { name = qpq_deal_i_kind value = flag:cast_off_the_yoke }
 		}
 		else_if = {
 			limit = { var:qpq_ui_i_ekind = flag:barter }
@@ -17453,6 +18234,41 @@ qpq_deal_seal_leg_t_effect = {
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
 	}
 	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:heavier_tribute }
+		qpq_deal_orient_normal_effect = yes
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_heavier_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:lighter_tribute }
+		qpq_deal_orient_normal_effect = yes
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_lighter_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:bought_freedom }
+		qpq_deal_orient_normal_effect = yes
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_bought_freedom_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:accept_the_yoke }
+		qpq_deal_orient_normal_effect = yes
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_accept_the_yoke_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_t_kind ?= flag:cast_off_the_yoke }
+		qpq_deal_orient_normal_effect = yes
+		qpq_deal_load_goods_t_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_t_price }
+		qpq_k_cast_off_the_yoke_seal_from_scopes_effect = yes
+	}
+	else_if = {
 		limit = { scope:qpq_deal_t_kind ?= flag:barter }
 		qpq_deal_orient_normal_effect = yes
 		qpq_deal_load_goods_t_effect = yes
@@ -18139,6 +18955,41 @@ qpq_deal_seal_leg_i_effect = {
 		qpq_deal_load_goods_i_effect = yes
 		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
 		qpq_k_temple_patronage_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:heavier_tribute }
+		qpq_deal_orient_swapped_effect = yes
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_heavier_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:lighter_tribute }
+		qpq_deal_orient_swapped_effect = yes
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_lighter_tribute_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:bought_freedom }
+		qpq_deal_orient_swapped_effect = yes
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_bought_freedom_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:accept_the_yoke }
+		qpq_deal_orient_swapped_effect = yes
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_accept_the_yoke_seal_from_scopes_effect = yes
+	}
+	else_if = {
+		limit = { scope:qpq_deal_i_kind ?= flag:cast_off_the_yoke }
+		qpq_deal_orient_swapped_effect = yes
+		qpq_deal_load_goods_i_effect = yes
+		save_scope_value_as = { name = qpq_price value = scope:qpq_deal_i_price }
+		qpq_k_cast_off_the_yoke_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_deal_i_kind ?= flag:barter }

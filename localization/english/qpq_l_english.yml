@@ -633,3 +633,9 @@
  QPQ_REASON_REFUSES_RIVAL_TARGET:0 "The target is their rival"
  QPQ_REASON_REFUSES_RIVAL_YOU:0 "You are their rival"
  QPQ_UI_FAIL_WONT:0 "[recipient.GetShortUIName|U] will not do this, at any price:$QPQ_UI_REFUSE_LINES$"
+ # ---------------- Tribute and overlordship ----------------
+ qpq_valid_tribute_can_rise:0 "[recipient.GetShortUIName|U] could pay more [tribute|E] than now"
+ qpq_valid_tribute_can_fall:0 "Your [tribute|E] could still be lowered"
+ qpq_valid_can_be_tributary:0 "[recipient.GetShortUIName|U] can become your [tributary|E]"
+ QPQ_REASON_STRONGER_THAN_YOU:0 "Stronger than you"
+ QPQ_REASON_OUTMATCHED:0 "Hopelessly outmatched by you"

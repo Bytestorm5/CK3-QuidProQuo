@@ -248,6 +248,26 @@ QpqUiKindName_t = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_name
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_name
+	}
+	text = {
 		fallback = yes
 		localization_key = QPQ_UI_NO_DEED
 	}
@@ -499,6 +519,26 @@ QpqUiKindDesc_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_interaction_desc
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_interaction_desc
 	}
 	text = {
 		fallback = yes
@@ -754,6 +794,26 @@ QpqUiKindAsk_t = {
 		localization_key = qpq_temple_patronage_ask_ui_t
 	}
 	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_ask_ui_t
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_ask_ui_t
+	}
+	text = {
 		fallback = yes
 		localization_key = qpq_empty
 	}
@@ -1005,6 +1065,26 @@ QpqUiKindHint_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:temple_patronage }
 		localization_key = QPQ_UI_HINT_PERFORM
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:heavier_tribute }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:lighter_tribute }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:bought_freedom }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:accept_the_yoke }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_t_kind ?= flag:cast_off_the_yoke }
+		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
 		fallback = yes
@@ -1277,6 +1357,26 @@ QpqUiKindName_i = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_name
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_name
+	}
+	text = {
 		fallback = yes
 		localization_key = QPQ_UI_NO_DEED
 	}
@@ -1528,6 +1628,26 @@ QpqUiKindDesc_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_desc_them
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_desc_them
 	}
 	text = {
 		fallback = yes
@@ -1783,6 +1903,26 @@ QpqUiKindAsk_i = {
 		localization_key = qpq_temple_patronage_ask_ui_i
 	}
 	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_ask_ui_i
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_ask_ui_i
+	}
+	text = {
 		fallback = yes
 		localization_key = qpq_empty
 	}
@@ -2034,6 +2174,26 @@ QpqUiKindHint_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:temple_patronage }
 		localization_key = QPQ_UI_HINT_PERFORM
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:heavier_tribute }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:lighter_tribute }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:bought_freedom }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:accept_the_yoke }
+		localization_key = QPQ_UI_HINT_CONDITION
+	}
+	text = {
+		trigger = { var:qpq_ui_i_kind ?= flag:cast_off_the_yoke }
+		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
 		fallback = yes

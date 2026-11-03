@@ -917,6 +917,76 @@ qpq_k_temple_patronage_can_perform_trigger = {
 	always = yes
 }
 
+#### Heavier Tribute
+qpq_k_heavier_tribute_delivered_trigger = {
+	always = yes
+}
+qpq_k_heavier_tribute_breached_trigger = {
+	always = no
+}
+qpq_k_heavier_tribute_invalid_trigger = {
+	always = no
+}
+qpq_k_heavier_tribute_can_perform_trigger = {
+	always = no
+}
+
+#### Lighter Tribute
+qpq_k_lighter_tribute_delivered_trigger = {
+	always = yes
+}
+qpq_k_lighter_tribute_breached_trigger = {
+	always = no
+}
+qpq_k_lighter_tribute_invalid_trigger = {
+	always = no
+}
+qpq_k_lighter_tribute_can_perform_trigger = {
+	always = no
+}
+
+#### Bought Freedom
+qpq_k_bought_freedom_delivered_trigger = {
+	always = yes
+}
+qpq_k_bought_freedom_breached_trigger = {
+	always = no
+}
+qpq_k_bought_freedom_invalid_trigger = {
+	always = no
+}
+qpq_k_bought_freedom_can_perform_trigger = {
+	always = no
+}
+
+#### Accept the Yoke
+qpq_k_accept_the_yoke_delivered_trigger = {
+	always = yes
+}
+qpq_k_accept_the_yoke_breached_trigger = {
+	always = no
+}
+qpq_k_accept_the_yoke_invalid_trigger = {
+	always = no
+}
+qpq_k_accept_the_yoke_can_perform_trigger = {
+	always = no
+}
+
+#### Cast Off the Yoke
+qpq_k_cast_off_the_yoke_delivered_trigger = {
+	always = yes
+}
+qpq_k_cast_off_the_yoke_breached_trigger = {
+	always = no
+}
+qpq_k_cast_off_the_yoke_invalid_trigger = {
+	NOT = { exists = scope:qpq_target }
+}
+qpq_k_cast_off_the_yoke_can_perform_trigger = {
+	always = no
+}
+
 #### Exchange of Goods
 qpq_k_barter_delivered_trigger = {
 	always = yes
@@ -1041,6 +1111,26 @@ qpq_kind_delivered_trigger = {
 		AND = {
 			var:qpq_kind = flag:fund_the_dawa
 			qpq_k_fund_the_dawa_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:heavier_tribute
+			qpq_k_heavier_tribute_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:lighter_tribute
+			qpq_k_lighter_tribute_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:bought_freedom
+			qpq_k_bought_freedom_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:accept_the_yoke
+			qpq_k_accept_the_yoke_delivered_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:cast_off_the_yoke
+			qpq_k_cast_off_the_yoke_delivered_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:barter
@@ -1239,6 +1329,10 @@ qpq_kind_invalid_trigger = {
 		AND = {
 			var:qpq_kind = flag:fund_the_dawa
 			qpq_k_fund_the_dawa_invalid_trigger = yes
+		}
+		AND = {
+			var:qpq_kind = flag:cast_off_the_yoke
+			qpq_k_cast_off_the_yoke_invalid_trigger = yes
 		}
 	}
 }
@@ -2024,6 +2118,36 @@ qpq_any_pact_possible_trigger = {
 				}
 			}
 			NOT = { exists = scope:actor.faith.religious_head }
+		}
+		AND = {
+			scope:recipient = { is_tributary_of = scope:actor }
+		}
+		AND = {
+			scope:actor = { is_tributary_of = scope:recipient }
+		}
+		AND = {
+			scope:actor = { is_tributary_of = scope:recipient }
+		}
+		AND = {
+			scope:actor = {
+				is_landed = yes
+				is_independent_ruler = yes
+			}
+			scope:recipient = {
+				is_landed = yes
+				is_independent_ruler = yes
+				is_tributary = no
+				NOT = { this = scope:actor }
+			}
+		}
+		AND = {
+			scope:actor = { is_landed = yes }
+			scope:recipient = {
+				is_tributary = yes
+				exists = suzerain
+				NOT = { this = scope:actor }
+				NOT = { suzerain = scope:actor }
+			}
 		}
 		AND = {
 			NOT = { scope:actor = scope:recipient }

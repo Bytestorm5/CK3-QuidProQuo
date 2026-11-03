@@ -838,7 +838,7 @@ def story_ask(ask):
 
 
 DERIVED_EVENT = {"scope:actor.liege": "actor.GetLiege", "scope:recipient.liege": "recipient.GetLiege",
-                 "scope:actor.top_liege": "actor.GetTopLiege"}
+                 "scope:actor.top_liege": "actor.GetTopLiege", "scope:recipient.suzerain": "recipient.GetSuzerain"}
 
 
 def ask_event(k):

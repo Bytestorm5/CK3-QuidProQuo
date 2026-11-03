@@ -373,7 +373,7 @@ def main():
             if depth_ok and isinstance(n.key, str):
                 kk = k
                 if kk.startswith(("scope:", "var:", "local_var:", "global_var:", "flag:", "title:", "faith:",
-                                  "religion:", "culture:", "trait:", "cp:", "$")) or "." in kk or kk.startswith("@"):
+                                  "religion:", "culture:", "trait:", "cp:", "vassal_contract_obligation_level:", "$")) or "." in kk or kk.startswith("@"):
                     pass
                 elif re.match(r"^-?\d+(\.\d+)?$", kk):
                     pass

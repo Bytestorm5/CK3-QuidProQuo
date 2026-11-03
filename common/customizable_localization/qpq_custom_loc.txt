@@ -248,6 +248,26 @@ QpqKindName = {
 		localization_key = qpq_temple_patronage_name
 	}
 	text = {
+		trigger = { var:qpq_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_name
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_name
+	}
+	text = {
 		trigger = { var:qpq_kind ?= flag:barter }
 		localization_key = qpq_barter_name
 	}
@@ -503,6 +523,26 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:temple_patronage }
 		localization_key = qpq_temple_patronage_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:heavier_tribute }
+		localization_key = qpq_heavier_tribute_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:lighter_tribute }
+		localization_key = qpq_lighter_tribute_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:bought_freedom }
+		localization_key = qpq_bought_freedom_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:accept_the_yoke }
+		localization_key = qpq_accept_the_yoke_ask_story
+	}
+	text = {
+		trigger = { var:qpq_kind ?= flag:cast_off_the_yoke }
+		localization_key = qpq_cast_off_the_yoke_ask_story
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:barter }

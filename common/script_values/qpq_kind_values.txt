@@ -19734,6 +19734,1206 @@ qpq_temple_patronage_goal_sw_value = {
 	}
 }
 
+#### Heavier Tribute
+qpq_heavier_tribute_payer_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_heavier_tribute_agent_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_heavier_tribute_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_heavier_tribute_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_heavier_tribute_gold_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { exists = scope:qpq_price }
+			add = scope:qpq_price
+		}
+		else = {
+			add = qpq_heavier_tribute_price_value
+		}
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 30
+		max = 50
+	}
+	add = 10
+	multiply = {
+		value = 1
+		subtract = { value = qpq_heavier_tribute_agent_tier_value multiply = 0.1 }
+		min = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_heavier_tribute_demand_value = {
+	value = qpq_heavier_tribute_agent_tier_value
+	multiply = -18
+	add = -12
+	add = -25
+}
+qpq_heavier_tribute_ask_value = {
+	value = qpq_heavier_tribute_demand_value
+}
+qpq_heavier_tribute_offer_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { scope:qpq_o_gold ?= yes }
+			add = qpq_heavier_tribute_gold_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_on_delivery ?= yes }
+			add = -8
+		}
+		if = {
+			limit = { scope:qpq_o_split ?= yes }
+			add = -3
+		}
+		if = {
+			limit = { scope:qpq_o_stipend ?= yes }
+			add = -5
+		}
+		if = {
+			limit = { scope:qpq_o_land ?= yes }
+			add = qpq_offer_land_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_office ?= yes }
+			add = qpq_offer_office_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			add = qpq_offer_release_hook_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			add = qpq_offer_my_word_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			add = qpq_offer_secret_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_contract ?= yes }
+			add = qpq_offer_contract_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_succession ?= yes }
+			add = qpq_offer_succession_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			add = qpq_offer_clemency_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			add = qpq_offer_arms_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_artifact ?= yes }
+			add = qpq_offer_artifact_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			add = qpq_offer_church_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			add = qpq_offer_restraint_points_value
+		}
+		max = 70
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_heavier_tribute_ai_acceptance_value = {
+	value = qpq_heavier_tribute_ask_value
+	add = qpq_heavier_tribute_offer_points_value
+	add = qpq_opinion_points_value
+	if = {
+		limit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value } }
+		add = -1000
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_heavier_tribute_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+}
+
+#### Lighter Tribute
+qpq_lighter_tribute_payer_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_lighter_tribute_agent_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_lighter_tribute_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_lighter_tribute_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_lighter_tribute_gold_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { exists = scope:qpq_price }
+			add = scope:qpq_price
+		}
+		else = {
+			add = qpq_lighter_tribute_price_value
+		}
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 30
+		max = 50
+	}
+	add = 10
+	multiply = {
+		value = 1
+		subtract = { value = qpq_lighter_tribute_agent_tier_value multiply = 0.1 }
+		min = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_lighter_tribute_demand_value = {
+	value = qpq_lighter_tribute_agent_tier_value
+	multiply = -18
+	add = -12
+	add = -20
+}
+qpq_lighter_tribute_ask_value = {
+	value = qpq_lighter_tribute_demand_value
+}
+qpq_lighter_tribute_offer_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { scope:qpq_o_gold ?= yes }
+			add = qpq_lighter_tribute_gold_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_on_delivery ?= yes }
+			add = -8
+		}
+		if = {
+			limit = { scope:qpq_o_split ?= yes }
+			add = -3
+		}
+		if = {
+			limit = { scope:qpq_o_stipend ?= yes }
+			add = -5
+		}
+		if = {
+			limit = { scope:qpq_o_land ?= yes }
+			add = qpq_offer_land_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_office ?= yes }
+			add = qpq_offer_office_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			add = qpq_offer_release_hook_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			add = qpq_offer_my_word_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			add = qpq_offer_secret_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_contract ?= yes }
+			add = qpq_offer_contract_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_succession ?= yes }
+			add = qpq_offer_succession_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			add = qpq_offer_clemency_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			add = qpq_offer_arms_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_artifact ?= yes }
+			add = qpq_offer_artifact_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			add = qpq_offer_church_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			add = qpq_offer_restraint_points_value
+		}
+		max = 70
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_lighter_tribute_ai_acceptance_value = {
+	value = qpq_lighter_tribute_ask_value
+	add = qpq_lighter_tribute_offer_points_value
+	add = qpq_opinion_points_value
+	if = {
+		limit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value } }
+		add = -1000
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_lighter_tribute_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+}
+
+#### Bought Freedom
+qpq_bought_freedom_payer_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_bought_freedom_agent_tier_value = {
+	value = 1
+	min = 0
+	max = 5
+}
+qpq_bought_freedom_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_bought_freedom_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_bought_freedom_gold_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { exists = scope:qpq_price }
+			add = scope:qpq_price
+		}
+		else = {
+			add = qpq_bought_freedom_price_value
+		}
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 30
+		max = 50
+	}
+	add = 10
+	multiply = {
+		value = 1
+		subtract = { value = qpq_bought_freedom_agent_tier_value multiply = 0.1 }
+		min = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_bought_freedom_demand_value = {
+	value = qpq_bought_freedom_agent_tier_value
+	multiply = -18
+	add = -12
+	add = -40
+}
+qpq_bought_freedom_ask_value = {
+	value = qpq_bought_freedom_demand_value
+}
+qpq_bought_freedom_offer_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { scope:qpq_o_gold ?= yes }
+			add = qpq_bought_freedom_gold_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_on_delivery ?= yes }
+			add = -8
+		}
+		if = {
+			limit = { scope:qpq_o_split ?= yes }
+			add = -3
+		}
+		if = {
+			limit = { scope:qpq_o_stipend ?= yes }
+			add = -5
+		}
+		if = {
+			limit = { scope:qpq_o_land ?= yes }
+			add = qpq_offer_land_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_office ?= yes }
+			add = qpq_offer_office_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			add = qpq_offer_release_hook_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			add = qpq_offer_my_word_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			add = qpq_offer_secret_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_contract ?= yes }
+			add = qpq_offer_contract_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_succession ?= yes }
+			add = qpq_offer_succession_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			add = qpq_offer_clemency_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			add = qpq_offer_arms_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_artifact ?= yes }
+			add = qpq_offer_artifact_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			add = qpq_offer_church_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			add = qpq_offer_restraint_points_value
+		}
+		max = 70
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_bought_freedom_ai_acceptance_value = {
+	value = qpq_bought_freedom_ask_value
+	add = qpq_bought_freedom_offer_points_value
+	add = qpq_opinion_points_value
+	if = {
+		limit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value } }
+		add = -1000
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_bought_freedom_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+}
+
+#### Accept the Yoke
+qpq_accept_the_yoke_payer_tier_value = {
+	value = 0
+	min = 0
+	max = 5
+}
+qpq_accept_the_yoke_agent_tier_value = {
+	value = 1
+	min = 0
+	max = 5
+}
+qpq_accept_the_yoke_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_accept_the_yoke_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_accept_the_yoke_gold_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { exists = scope:qpq_price }
+			add = scope:qpq_price
+		}
+		else = {
+			add = qpq_accept_the_yoke_price_value
+		}
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 30
+		max = 50
+	}
+	add = 10
+	multiply = {
+		value = 1
+		subtract = { value = qpq_accept_the_yoke_agent_tier_value multiply = 0.1 }
+		min = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_accept_the_yoke_demand_value = {
+	value = qpq_accept_the_yoke_agent_tier_value
+	multiply = -18
+	add = -12
+	add = -30
+}
+qpq_accept_the_yoke_ask_value = {
+	value = qpq_accept_the_yoke_demand_value
+}
+qpq_accept_the_yoke_offer_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { scope:qpq_o_gold ?= yes }
+			add = qpq_accept_the_yoke_gold_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_on_delivery ?= yes }
+			add = -8
+		}
+		if = {
+			limit = { scope:qpq_o_split ?= yes }
+			add = -3
+		}
+		if = {
+			limit = { scope:qpq_o_stipend ?= yes }
+			add = -5
+		}
+		if = {
+			limit = { scope:qpq_o_land ?= yes }
+			add = qpq_offer_land_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_office ?= yes }
+			add = qpq_offer_office_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			add = qpq_offer_release_hook_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			add = qpq_offer_my_word_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			add = qpq_offer_secret_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_contract ?= yes }
+			add = qpq_offer_contract_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_succession ?= yes }
+			add = qpq_offer_succession_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			add = qpq_offer_clemency_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			add = qpq_offer_arms_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_artifact ?= yes }
+			add = qpq_offer_artifact_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			add = qpq_offer_church_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			add = qpq_offer_restraint_points_value
+		}
+		max = 70
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_accept_the_yoke_ai_acceptance_value = {
+	value = qpq_accept_the_yoke_ask_value
+	add = qpq_accept_the_yoke_offer_points_value
+	add = qpq_opinion_points_value
+	if = {
+		limit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value } }
+		add = -1000
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_accept_the_yoke_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+	if = {
+		limit = {
+			scope:recipient = { max_military_strength > scope:actor.max_military_strength }
+		}
+		add = -40
+	}
+	if = {
+		limit = {
+			scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 3 } }
+		}
+		add = 15
+	}
+	add = qpq_accept_the_yoke_goal_value
+	if = {
+		limit = { qpq_accept_the_yoke_goal_refuses_trigger = yes }
+		add = -1000
+	}
+}
+
+qpq_accept_the_yoke_goal_value = {
+	value = 0
+	if = {
+		limit = { scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 1.2 } } }
+		add = 10
+	}
+	if = {
+		limit = { scope:actor = { max_military_strength < { value = scope:recipient.max_military_strength multiply = 0.5 } } }
+		add = -10
+	}
+	if = {
+		limit = { scope:recipient = { is_at_war = yes } }
+		add = 8
+	}
+	if = {
+		limit = { scope:recipient.faith = scope:actor.faith }
+		add = 6
+	}
+	if = {
+		limit = { scope:recipient.culture = scope:actor.culture }
+		add = 4
+	}
+	if = {
+		limit = { scope:recipient = { has_relation_rival = scope:actor } }
+		add = -30
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = trusting } }
+		add = 4
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = -8
+	}
+}
+
+qpq_accept_the_yoke_goal_sw_value = {
+	value = 0
+	if = {
+		limit = { scope:recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 1.2 } } }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { max_military_strength < { value = scope:actor.max_military_strength multiply = 0.5 } } }
+		add = -10
+	}
+	if = {
+		limit = { scope:actor = { is_at_war = yes } }
+		add = 8
+	}
+	if = {
+		limit = { scope:actor.faith = scope:recipient.faith }
+		add = 6
+	}
+	if = {
+		limit = { scope:actor.culture = scope:recipient.culture }
+		add = 4
+	}
+	if = {
+		limit = { scope:actor = { has_relation_rival = scope:recipient } }
+		add = -30
+	}
+	if = {
+		limit = { scope:actor = { has_trait = trusting } }
+		add = 4
+	}
+	if = {
+		limit = { scope:actor = { has_trait = paranoid } }
+		add = -8
+	}
+}
+
+#### Cast Off the Yoke
+qpq_cast_off_the_yoke_payer_tier_value = {
+	value = 2
+	if = {
+		limit = { exists = scope:recipient.suzerain }
+		if = {
+			limit = { qpq_ctx_hostile_foreigner_trigger = { PARTY = scope:actor TARGET = scope:recipient.suzerain } }
+			add = -1
+		}
+		if = {
+			limit = { qpq_ctx_coreligionist_ally_trigger = { PARTY = scope:actor TARGET = scope:recipient.suzerain } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_same_realm_trigger = { PARTY = scope:actor TARGET = scope:recipient.suzerain } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_close_kin_trigger = { PARTY = scope:actor TARGET = scope:recipient.suzerain } }
+			add = 1
+		}
+		if = {
+			limit = { qpq_ctx_own_liege_trigger = { PARTY = scope:actor TARGET = scope:recipient.suzerain } }
+			add = 2
+		}
+		if = {
+			limit = { qpq_ctx_clergy_trigger = { TARGET = scope:recipient.suzerain } }
+			add = 1
+		}
+	}
+	min = 0
+	max = 5
+}
+qpq_cast_off_the_yoke_agent_tier_value = {
+	value = 2
+	min = 0
+	max = 5
+}
+qpq_cast_off_the_yoke_price_value = {
+	value = scope:recipient.qpq_stake_value
+	multiply = {
+		value = qpq_cast_off_the_yoke_agent_tier_value
+		multiply = 4
+		add = 3
+	}
+	min = 25
+	round = yes
+}
+qpq_cast_off_the_yoke_gold_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { exists = scope:qpq_price }
+			add = scope:qpq_price
+		}
+		else = {
+			add = qpq_cast_off_the_yoke_price_value
+		}
+		divide = {
+			value = scope:recipient.qpq_stake_value
+			multiply = 6
+			min = 5
+		}
+		multiply = 30
+		max = 50
+	}
+	add = 10
+	multiply = {
+		value = 1
+		subtract = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = 0.1 }
+		min = 0.5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = greedy } }
+		multiply = 1.3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = generous } }
+		multiply = 0.8
+	}
+	round = yes
+}
+qpq_cast_off_the_yoke_demand_value = {
+	value = qpq_cast_off_the_yoke_agent_tier_value
+	multiply = -18
+	add = -12
+	add = -25
+}
+qpq_cast_off_the_yoke_ask_value = {
+	value = qpq_cast_off_the_yoke_demand_value
+}
+qpq_cast_off_the_yoke_offer_points_value = {
+	value = {
+		value = 0
+		if = {
+			limit = { scope:qpq_o_gold ?= yes }
+			add = qpq_cast_off_the_yoke_gold_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_on_delivery ?= yes }
+			add = -8
+		}
+		if = {
+			limit = { scope:qpq_o_split ?= yes }
+			add = -3
+		}
+		if = {
+			limit = { scope:qpq_o_stipend ?= yes }
+			add = -5
+		}
+		if = {
+			limit = { scope:qpq_o_land ?= yes }
+			add = qpq_offer_land_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_office ?= yes }
+			add = qpq_offer_office_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_release_hook ?= yes }
+			add = qpq_offer_release_hook_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_my_word ?= yes }
+			add = qpq_offer_my_word_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_secret ?= yes }
+			add = qpq_offer_secret_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_contract ?= yes }
+			add = qpq_offer_contract_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_succession ?= yes }
+			add = qpq_offer_succession_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_clemency ?= yes }
+			add = qpq_offer_clemency_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_arms ?= yes }
+			add = qpq_offer_arms_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_artifact ?= yes }
+			add = qpq_offer_artifact_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_church ?= yes }
+			add = qpq_offer_church_points_value
+		}
+		if = {
+			limit = { scope:qpq_o_restraint ?= yes }
+			add = qpq_offer_restraint_points_value
+		}
+		max = 70
+	}
+	if = {
+		limit = { scope:qpq_o_hook ?= yes }
+		add = 40
+	}
+	if = {
+		limit = {
+			scope:qpq_o_hook ?= yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+		add = 60
+	}
+}
+qpq_cast_off_the_yoke_ai_acceptance_value = {
+	value = qpq_cast_off_the_yoke_ask_value
+	add = qpq_cast_off_the_yoke_offer_points_value
+	add = qpq_opinion_points_value
+	if = {
+		limit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value } }
+		add = -1000
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = -6 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = just } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = -5 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = 4 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = arbitrary } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = schemer } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = 3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = paranoid } }
+		add = { value = qpq_cast_off_the_yoke_agent_tier_value multiply = -3 }
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+		add = intimidated_halved_reason_value
+	}
+	if = {
+		limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }
+		add = cowed_halved_reason_value
+	}
+	add = qpq_cast_off_the_yoke_goal_value
+	if = {
+		limit = { qpq_cast_off_the_yoke_goal_refuses_trigger = yes }
+		add = -1000
+	}
+}
+
+qpq_cast_off_the_yoke_goal_value = {
+	value = 0
+	if = {
+		limit = { scope:recipient = { has_relation_rival = scope:recipient.suzerain } }
+		add = 18
+	}
+	if = {
+		limit = { scope:recipient = { has_relation_nemesis = scope:recipient.suzerain } }
+		add = 10
+	}
+	add = {
+		value = "scope:recipient.opinion(scope:recipient.suzerain)"
+		multiply = -0.2
+		min = -15
+		max = 15
+	}
+	if = {
+		limit = { scope:recipient = { is_allied_to = scope:recipient.suzerain } }
+		add = -25
+	}
+	if = {
+		limit = { scope:recipient = { is_close_family_of = scope:recipient.suzerain } }
+		add = -25
+	}
+	if = {
+		limit = {
+			OR = {
+				scope:recipient = { has_relation_friend = scope:recipient.suzerain }
+				scope:recipient = { has_relation_lover = scope:recipient.suzerain }
+				scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
+			}
+		}
+		add = -20
+	}
+	if = {
+		limit = { scope:recipient = { has_relation_victim = scope:recipient.suzerain } }
+		add = 6
+	}
+	if = {
+		limit = { scope:recipient.suzerain = { is_liege_or_above_of = scope:recipient } }
+		add = -6
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = sadistic } }
+		add = 8
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = vengeful } }
+		add = 6
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = callous } }
+		add = 5
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = deceitful } }
+		add = 3
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = compassionate } }
+		add = -8
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = forgiving } }
+		add = -6
+	}
+	if = {
+		limit = { scope:recipient = { has_trait = honest } }
+		add = -4
+	}
+}
+
+qpq_cast_off_the_yoke_goal_sw_value = {
+	value = 0
+	if = {
+		limit = { scope:actor = { has_relation_rival = scope:actor.suzerain } }
+		add = 18
+	}
+	if = {
+		limit = { scope:actor = { has_relation_nemesis = scope:actor.suzerain } }
+		add = 10
+	}
+	add = {
+		value = "scope:actor.opinion(scope:actor.suzerain)"
+		multiply = -0.2
+		min = -15
+		max = 15
+	}
+	if = {
+		limit = { scope:actor = { is_allied_to = scope:actor.suzerain } }
+		add = -25
+	}
+	if = {
+		limit = { scope:actor = { is_close_family_of = scope:actor.suzerain } }
+		add = -25
+	}
+	if = {
+		limit = {
+			OR = {
+				scope:actor = { has_relation_friend = scope:actor.suzerain }
+				scope:actor = { has_relation_lover = scope:actor.suzerain }
+				scope:actor = { has_relation_best_friend = scope:actor.suzerain }
+			}
+		}
+		add = -20
+	}
+	if = {
+		limit = { scope:actor = { has_relation_victim = scope:actor.suzerain } }
+		add = 6
+	}
+	if = {
+		limit = { scope:actor.suzerain = { is_liege_or_above_of = scope:actor } }
+		add = -6
+	}
+	if = {
+		limit = { scope:actor = { has_trait = sadistic } }
+		add = 8
+	}
+	if = {
+		limit = { scope:actor = { has_trait = vengeful } }
+		add = 6
+	}
+	if = {
+		limit = { scope:actor = { has_trait = callous } }
+		add = 5
+	}
+	if = {
+		limit = { scope:actor = { has_trait = deceitful } }
+		add = 3
+	}
+	if = {
+		limit = { scope:actor = { has_trait = compassionate } }
+		add = -8
+	}
+	if = {
+		limit = { scope:actor = { has_trait = forgiving } }
+		add = -6
+	}
+	if = {
+		limit = { scope:actor = { has_trait = honest } }
+		add = -4
+	}
+}
+
 #### Exchange of Goods
 qpq_barter_payer_tier_value = {
 	value = 0

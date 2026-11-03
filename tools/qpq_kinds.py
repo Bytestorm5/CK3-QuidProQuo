@@ -3019,6 +3019,154 @@ scope:qpq_target = { add_character_modifier = { modifier = qpq_clerical_denuncia
   exposed="scope:qpq_payer = { add_piety = minor_piety_loss }")
 
 ###############################################################################
+# CATALOGUE F: tribute, between suzerains and tributaries
+###############################################################################
+
+def _tribute_step(who, frm, to):
+    return """
+    else_if = {
+        limit = { vassal_contract_obligation_level:default_tributary_taxes = %d }
+        tributary_contract_set_obligation_level = { type = default_tributary_taxes level = %d }
+    }""" % (frm, to)
+
+
+TRIBUTE_UP = """
+scope:qpq_agent = {
+    if = {
+        limit = { is_tributary_of = scope:qpq_payer }
+        if = {
+            limit = { vassal_contract_obligation_level:default_tributary_taxes = 0 }
+            tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
+        }""" + _tribute_step("agent", 1, 2) + """
+    }
+}
+"""
+
+TRIBUTE_DOWN = """
+scope:qpq_payer = {
+    if = {
+        limit = { is_tributary_of = scope:qpq_agent }
+        if = {
+            limit = { vassal_contract_obligation_level:default_tributary_taxes = 2 }
+            tributary_contract_set_obligation_level = { type = default_tributary_taxes level = 1 }
+        }""" + _tribute_step("payer", 1, 0) + """
+    }
+}
+"""
+
+K(key="heavier_tribute", cat="F", group="tribute", secret="bribery", icon="demand_tributary_interaction",
+  name="Heavier Tribute",
+  ask="raise the tribute paid to [qpq_payer.GetShortUIName]",
+  desc="Your [tributary|E] raises the [tribute|E] it pays you by one step, and keeps paying it.",
+  payer_base=0, agent_base=0, target="none", term=12, effort=25,
+  rel="scope:recipient = { is_tributary_of = scope:actor }",
+  valid=[("qpq_valid_tribute_can_rise", "scope:recipient = { tributary_contract_obligation_level_can_be_increased = default_tributary_taxes }")],
+  on_seal=TRIBUTE_UP, deliver="always = yes", exposed="")
+
+K(key="lighter_tribute", cat="F", group="tribute", secret="bribery", icon="cease_paying_tributary_interaction",
+  name="Lighter Tribute",
+  ask="lower the tribute [qpq_payer.GetShortUIName] pays",
+  desc="Your [suzerain|E] lowers the [tribute|E] you pay by one step.",
+  payer_base=0, agent_base=0, target="none", term=12, effort=20,
+  rel="scope:actor = { is_tributary_of = scope:recipient }",
+  valid=[("qpq_valid_tribute_can_fall", "scope:actor = { tributary_contract_obligation_level_can_be_decreased = default_tributary_taxes }")],
+  on_seal=TRIBUTE_DOWN, deliver="always = yes", exposed="")
+
+K(key="bought_freedom", cat="F", group="tribute", secret="bribery", icon="release_tributary_interaction",
+  name="Bought Freedom",
+  ask="release [qpq_payer.GetShortUIName] from tribute",
+  desc="Your [suzerain|E] releases you from [tribute|E], and a five-year [truce|E] follows. A suzerain who sells a tributary its freedom is thought the poorer for it.",
+  payer_base=0, agent_base=1, target="none", term=12, effort=40,
+  rel="scope:actor = { is_tributary_of = scope:recipient }",
+  on_seal="""
+scope:qpq_payer = {
+    if = {
+        limit = { is_tributary_of = scope:qpq_agent }
+        end_tributary = yes
+        add_truce_both_ways = {
+            character = scope:qpq_agent
+            years = 5
+            override = yes
+            name = TRUCE_TRIBUTARY_STOPPED
+        }
+        add_opinion = { target = scope:qpq_agent modifier = tributary_released_opinion opinion = 25 }
+    }
+}
+""",
+  deliver="always = yes", exposed="")
+
+K(key="accept_the_yoke", cat="F", group="tribute", secret="bribery", icon="become_tributary_interaction",
+  name="Accept the Yoke",
+  ask="become [qpq_payer.GetShortUINamePossessive] tributary",
+  desc="An [independent_ruler|E] becomes your [tributary|E], paying [tribute|E] in return for what you give. A ruler stronger than you will hardly bend the knee.",
+  payer_base=0, agent_base=1, target="none", term=12, effort=30,
+  rel="""
+scope:actor = {
+    is_landed = yes
+    is_independent_ruler = yes
+}
+scope:recipient = {
+    is_landed = yes
+    is_independent_ruler = yes
+    is_tributary = no
+    NOT = { this = scope:actor }
+}
+""",
+  valid=[("qpq_valid_can_be_tributary", "scope:recipient = { can_be_tributary_of = scope:actor }")],
+  demand=[("-40", "scope:recipient = { max_military_strength > scope:actor.max_military_strength }", "QPQ_REASON_STRONGER_THAN_YOU"),
+          ("15", "scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 3 } }", "QPQ_REASON_OUTMATCHED")],
+  on_seal="""
+if = {
+    limit = {
+        scope:qpq_agent = {
+            is_tributary = no
+            can_be_tributary_of = scope:qpq_payer
+        }
+    }
+    start_tributary_interaction_effect = { TRIBUTARY = scope:qpq_agent SUZERAIN = scope:qpq_payer }
+}
+""",
+  deliver="always = yes", exposed="")
+
+K(key="cast_off_the_yoke", cat="F", group="tribute", secret="betrayal", icon="cease_paying_tributary_interaction",
+  name="Cast Off the Yoke",
+  ask="stop paying tribute to [qpq_target.GetTitledFirstName]",
+  desc="Pay another ruler's [tributary|E] to stop paying their [suzerain|E]. If it comes out, the suzerain knows whose gold it was.",
+  payer_base=2, agent_base=2, target="derived", derive="scope:recipient.suzerain", term=12, effort=25,
+  rel="""
+scope:actor = { is_landed = yes }
+scope:recipient = {
+    is_tributary = yes
+    exists = suzerain
+    NOT = { this = scope:actor }
+    NOT = { suzerain = scope:actor }
+}
+""",
+  on_seal="""
+scope:qpq_agent = {
+    if = {
+        limit = { is_tributary = yes }
+        end_tributary = yes
+    }
+}
+if = {
+    limit = { exists = scope:qpq_target }
+    scope:qpq_target = {
+        add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion opinion = -60 }
+    }
+}
+""",
+  deliver="always = yes", invalid=TARGET_GONE_INVALID,
+  exposed="""
+if = {
+    limit = { scope:qpq_target = { is_alive = yes } }
+    scope:qpq_target = {
+        add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -40 }
+    }
+}
+""")
+
+###############################################################################
 # The carrier: a deal whose side asks for no deed, only goods. Not offered as an Ask in the panel
 # (carrier=True); it exists so that "I give gold, you give land" has a deal to live in.
 ###############################################################################
@@ -3042,6 +3190,7 @@ GROUPS = [
     ("abroad", "Betrayal abroad"),
     ("church_favours", "Church favours"),
     ("church_weapons", "The Church as a weapon"),
+    ("tribute", "Tribute and overlordship"),
 ]
 
 SECRET_CATEGORIES = {

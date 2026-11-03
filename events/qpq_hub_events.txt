@@ -608,6 +608,44 @@ qpq_hub.1 = {
 		trigger_event = qpq_hub.17
 	}
 	option = {
+		name = qpq_hub.group.tribute
+		trigger = {
+			OR = {
+				AND = {
+					scope:recipient = { is_tributary_of = scope:actor }
+				}
+				AND = {
+					scope:actor = { is_tributary_of = scope:recipient }
+				}
+				AND = {
+					scope:actor = { is_tributary_of = scope:recipient }
+				}
+				AND = {
+					scope:actor = {
+						is_landed = yes
+						is_independent_ruler = yes
+					}
+					scope:recipient = {
+						is_landed = yes
+						is_independent_ruler = yes
+						is_tributary = no
+						NOT = { this = scope:actor }
+					}
+				}
+				AND = {
+					scope:actor = { is_landed = yes }
+					scope:recipient = {
+						is_tributary = yes
+						exists = suzerain
+						NOT = { this = scope:actor }
+						NOT = { suzerain = scope:actor }
+					}
+				}
+			}
+		}
+		trigger_event = qpq_hub.18
+	}
+	option = {
 		name = qpq_hub.cancel
 	}
 }
@@ -1824,6 +1862,98 @@ qpq_hub.17 = {
 	}
 }
 
+qpq_hub.18 = {
+	type = character_event
+	title = qpq_hub.group.tribute
+	desc = qpq_hub.18.desc
+	theme = intrigue
+	left_portrait = root
+	right_portrait = scope:recipient
+
+	option = {
+		name = qpq_heavier_tribute_name
+		trigger = {
+			scope:recipient = { is_tributary_of = scope:actor }
+		}
+		custom_tooltip = qpq_heavier_tribute_hub_tt
+		open_interaction_window = {
+			interaction = qpq_heavier_tribute_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_lighter_tribute_name
+		trigger = {
+			scope:actor = { is_tributary_of = scope:recipient }
+		}
+		custom_tooltip = qpq_lighter_tribute_hub_tt
+		open_interaction_window = {
+			interaction = qpq_lighter_tribute_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_bought_freedom_name
+		trigger = {
+			scope:actor = { is_tributary_of = scope:recipient }
+		}
+		custom_tooltip = qpq_bought_freedom_hub_tt
+		open_interaction_window = {
+			interaction = qpq_bought_freedom_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_accept_the_yoke_name
+		trigger = {
+			scope:actor = {
+				is_landed = yes
+				is_independent_ruler = yes
+			}
+			scope:recipient = {
+				is_landed = yes
+				is_independent_ruler = yes
+				is_tributary = no
+				NOT = { this = scope:actor }
+			}
+		}
+		custom_tooltip = qpq_accept_the_yoke_hub_tt
+		open_interaction_window = {
+			interaction = qpq_accept_the_yoke_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_cast_off_the_yoke_name
+		trigger = {
+			scope:actor = { is_landed = yes }
+			scope:recipient = {
+				is_tributary = yes
+				exists = suzerain
+				NOT = { this = scope:actor }
+				NOT = { suzerain = scope:actor }
+			}
+		}
+		custom_tooltip = qpq_cast_off_the_yoke_hub_tt
+		open_interaction_window = {
+			interaction = qpq_cast_off_the_yoke_interaction
+			actor = root
+			recipient = scope:recipient
+		}
+	}
+	option = {
+		name = qpq_hub.back
+		trigger_event = qpq_hub.1
+	}
+	option = {
+		name = qpq_hub.cancel
+	}
+}
+
 qpq_hub.50 = {
 	type = character_event
 	title = {
@@ -2071,6 +2201,26 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
 				desc = qpq_temple_patronage_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:heavier_tribute }
+				desc = qpq_heavier_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:lighter_tribute }
+				desc = qpq_lighter_tribute_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:bought_freedom }
+				desc = qpq_bought_freedom_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:barter }
@@ -2325,6 +2475,26 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
 				desc = qpq_temple_patronage_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:heavier_tribute }
+				desc = qpq_heavier_tribute_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:lighter_tribute }
+				desc = qpq_lighter_tribute_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:bought_freedom }
+				desc = qpq_bought_freedom_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:accept_the_yoke }
+				desc = qpq_accept_the_yoke_proposal_desc
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:cast_off_the_yoke }
+				desc = qpq_cast_off_the_yoke_proposal_desc
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:barter }

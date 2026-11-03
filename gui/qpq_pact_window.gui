@@ -1113,6 +1113,80 @@ window = {
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'fund_the_dawa' )]"
 					}
 
+					text_single = {
+						visible = "[GetScriptedGui('qpq_ui_group_i_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						margin = { 6 4 }
+						text = "qpq_hub.group.tribute"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_i_heavier_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_heavier_tribute_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_i_heavier_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_heavier_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_heavier_tribute_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_heavier_tribute').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_i_heavier_tribute').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'heavier_tribute' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_i_lighter_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_lighter_tribute_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_i_lighter_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_lighter_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_lighter_tribute_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_lighter_tribute').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_i_lighter_tribute').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'lighter_tribute' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_i_bought_freedom').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_bought_freedom_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_i_bought_freedom').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_bought_freedom').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_bought_freedom_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_bought_freedom').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_i_bought_freedom').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'bought_freedom' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_i_accept_the_yoke').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_accept_the_yoke_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_i_accept_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_accept_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_accept_the_yoke_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_accept_the_yoke').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_i_accept_the_yoke').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'accept_the_yoke' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_i_cast_off_the_yoke').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_cast_off_the_yoke_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_i_cast_off_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_cast_off_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_cast_off_the_yoke_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_cast_off_the_yoke').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_i_cast_off_the_yoke').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'cast_off_the_yoke' )]"
+					}
+
 					}
 				}
 			}
@@ -3137,6 +3211,80 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_t_fund_the_dawa').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'fund_the_dawa' )]"
+					}
+
+					text_single = {
+						visible = "[GetScriptedGui('qpq_ui_group_t_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						margin = { 6 4 }
+						text = "qpq_hub.group.tribute"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_t_heavier_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_heavier_tribute_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_t_heavier_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_heavier_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_heavier_tribute_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_heavier_tribute').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_t_heavier_tribute').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'heavier_tribute' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_t_lighter_tribute').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_lighter_tribute_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_t_lighter_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_lighter_tribute').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_lighter_tribute_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_lighter_tribute').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_t_lighter_tribute').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'lighter_tribute' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_t_bought_freedom').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_bought_freedom_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_t_bought_freedom').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_bought_freedom').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_bought_freedom_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_bought_freedom').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_t_bought_freedom').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'bought_freedom' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_t_accept_the_yoke').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_accept_the_yoke_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_t_accept_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_accept_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_accept_the_yoke_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_accept_the_yoke').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_t_accept_the_yoke').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'accept_the_yoke' )]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_kind_t_cast_off_the_yoke').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_cast_off_the_yoke_name"
+						enabled = "[GetScriptedGui('qpq_ui_kind_t_cast_off_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_cast_off_the_yoke').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_cast_off_the_yoke_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_cast_off_the_yoke').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_kind_t_cast_off_the_yoke').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'cast_off_the_yoke' )]"
 					}
 
 					}

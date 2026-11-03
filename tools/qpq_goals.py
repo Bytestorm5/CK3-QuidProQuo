@@ -45,6 +45,8 @@ KIND_GOALS = {
     "holy_sponsorship": ["faith"], "caliphal_investiture": ["faith"], "pliant_patriarch": ["faith"],
     "consecration_rites": ["faith"], "council_lobbying": ["faith"], "name_in_the_khutba": ["faith"],
     "absolution_by_concession": ["faith"],
+    # tribute
+    "accept_the_yoke": ["pact"], "cast_off_the_yoke": ["harm"],
 }
 
 # Wars where the proposer fights alongside, and wars waged by the faith

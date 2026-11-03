@@ -1844,6 +1844,131 @@ qpq_ui_kind_t_temple_patronage = {
 	}
 }
 
+qpq_ui_kind_t_heavier_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	is_valid = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_t_kind = flag:heavier_tribute } }
+			qpq_ui_clear_leg_t_effect = yes
+		}
+		set_variable = { name = qpq_ui_t_kind value = flag:heavier_tribute }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_t_lighter_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	is_valid = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_t_kind = flag:lighter_tribute } }
+			qpq_ui_clear_leg_t_effect = yes
+		}
+		set_variable = { name = qpq_ui_t_kind value = flag:lighter_tribute }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_t_bought_freedom = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	is_valid = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_t_kind = flag:bought_freedom } }
+			qpq_ui_clear_leg_t_effect = yes
+		}
+		set_variable = { name = qpq_ui_t_kind value = flag:bought_freedom }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_t_accept_the_yoke = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:actor }
+		}
+	}
+	is_valid = {
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:actor }
+		}
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_t_kind = flag:accept_the_yoke } }
+			qpq_ui_clear_leg_t_effect = yes
+		}
+		set_variable = { name = qpq_ui_t_kind value = flag:accept_the_yoke }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_t_cast_off_the_yoke = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:actor }
+			NOT = { suzerain = scope:actor }
+		}
+	}
+	is_valid = {
+		scope:actor = { is_landed = yes }
+		scope:recipient = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:actor }
+			NOT = { suzerain = scope:actor }
+		}
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_t_kind = flag:cast_off_the_yoke } }
+			qpq_ui_clear_leg_t_effect = yes
+		}
+		set_variable = { name = qpq_ui_t_kind value = flag:cast_off_the_yoke }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_nodeed_t = {
 	scope = character
 	effect = {
@@ -2712,6 +2837,45 @@ qpq_ui_group_t_church_weapons = {
 					}
 				}
 				scope:actor.faith = { has_doctrine = muhammad_succession_shia_doctrine }
+			}
+		}
+	}
+}
+
+qpq_ui_group_t_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		OR = {
+			AND = {
+				scope:recipient = { is_tributary_of = scope:actor }
+			}
+			AND = {
+				scope:actor = { is_tributary_of = scope:recipient }
+			}
+			AND = {
+				scope:actor = { is_tributary_of = scope:recipient }
+			}
+			AND = {
+				scope:actor = {
+					is_landed = yes
+					is_independent_ruler = yes
+				}
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = yes
+					is_tributary = no
+					NOT = { this = scope:actor }
+				}
+			}
+			AND = {
+				scope:actor = { is_landed = yes }
+				scope:recipient = {
+					is_tributary = yes
+					exists = suzerain
+					NOT = { this = scope:actor }
+					NOT = { suzerain = scope:actor }
+				}
 			}
 		}
 	}
@@ -5081,6 +5245,131 @@ qpq_ui_kind_i_temple_patronage = {
 	}
 }
 
+qpq_ui_kind_i_heavier_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	is_valid = {
+		scope:actor = { is_tributary_of = scope:recipient }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_i_kind = flag:heavier_tribute } }
+			qpq_ui_clear_leg_i_effect = yes
+		}
+		set_variable = { name = qpq_ui_i_kind value = flag:heavier_tribute }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_i_lighter_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	is_valid = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_i_kind = flag:lighter_tribute } }
+			qpq_ui_clear_leg_i_effect = yes
+		}
+		set_variable = { name = qpq_ui_i_kind value = flag:lighter_tribute }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_i_bought_freedom = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	is_valid = {
+		scope:recipient = { is_tributary_of = scope:actor }
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_i_kind = flag:bought_freedom } }
+			qpq_ui_clear_leg_i_effect = yes
+		}
+		set_variable = { name = qpq_ui_i_kind value = flag:bought_freedom }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_i_accept_the_yoke = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:recipient }
+		}
+	}
+	is_valid = {
+		scope:recipient = {
+			is_landed = yes
+			is_independent_ruler = yes
+		}
+		scope:actor = {
+			is_landed = yes
+			is_independent_ruler = yes
+			is_tributary = no
+			NOT = { this = scope:recipient }
+		}
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_i_kind = flag:accept_the_yoke } }
+			qpq_ui_clear_leg_i_effect = yes
+		}
+		set_variable = { name = qpq_ui_i_kind value = flag:accept_the_yoke }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_kind_i_cast_off_the_yoke = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:recipient }
+			NOT = { suzerain = scope:recipient }
+		}
+	}
+	is_valid = {
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			is_tributary = yes
+			exists = suzerain
+			NOT = { this = scope:recipient }
+			NOT = { suzerain = scope:recipient }
+		}
+	}
+	effect = {
+		if = {
+			limit = { NOT = { var:qpq_ui_i_kind = flag:cast_off_the_yoke } }
+			qpq_ui_clear_leg_i_effect = yes
+		}
+		set_variable = { name = qpq_ui_i_kind value = flag:cast_off_the_yoke }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_nodeed_i = {
 	scope = character
 	effect = {
@@ -5949,6 +6238,45 @@ qpq_ui_group_i_church_weapons = {
 					}
 				}
 				scope:recipient.faith = { has_doctrine = muhammad_succession_shia_doctrine }
+			}
+		}
+	}
+}
+
+qpq_ui_group_i_tribute = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		OR = {
+			AND = {
+				scope:actor = { is_tributary_of = scope:recipient }
+			}
+			AND = {
+				scope:recipient = { is_tributary_of = scope:actor }
+			}
+			AND = {
+				scope:recipient = { is_tributary_of = scope:actor }
+			}
+			AND = {
+				scope:recipient = {
+					is_landed = yes
+					is_independent_ruler = yes
+				}
+				scope:actor = {
+					is_landed = yes
+					is_independent_ruler = yes
+					is_tributary = no
+					NOT = { this = scope:recipient }
+				}
+			}
+			AND = {
+				scope:recipient = { is_landed = yes }
+				scope:actor = {
+					is_tributary = yes
+					exists = suzerain
+					NOT = { this = scope:recipient }
+					NOT = { suzerain = scope:recipient }
+				}
 			}
 		}
 	}
