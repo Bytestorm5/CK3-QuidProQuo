@@ -2531,19 +2531,6 @@ QpqUiSecrecyNote = {
 	}
 }
 
-QpqUiRef_hatred = {
-	type = character
-	log_loc_errors = no
-	text = {
-		trigger = { has_variable = qpq_ui_ref_hatred }
-		localization_key = QPQ_UI_REF_HATRED
-	}
-	text = {
-		fallback = yes
-		localization_key = qpq_empty
-	}
-}
-
 QpqUiRef_t_rival = {
 	type = character
 	log_loc_errors = no
@@ -2713,32 +2700,6 @@ QpqUiRef_i_kin = {
 	}
 }
 
-QpqUiRef_i_stronger = {
-	type = character
-	log_loc_errors = no
-	text = {
-		trigger = { has_variable = qpq_ui_ref_i_stronger }
-		localization_key = QPQ_UI_REF_STRONGER_I
-	}
-	text = {
-		fallback = yes
-		localization_key = qpq_empty
-	}
-}
-
-QpqUiRef_i_liked_ally = {
-	type = character
-	log_loc_errors = no
-	text = {
-		trigger = { has_variable = qpq_ui_ref_i_liked_ally }
-		localization_key = QPQ_UI_REF_LIKED_ALLY_I
-	}
-	text = {
-		fallback = yes
-		localization_key = qpq_empty
-	}
-}
-
 QpqUiRef_i_friend = {
 	type = character
 	log_loc_errors = no
@@ -2836,6 +2797,19 @@ QpqUiAccLine_public = {
 	text = {
 		trigger = { exists = var:qpq_ui_acc_public NOT = { var:qpq_ui_acc_public = 0 } }
 		localization_key = QPQ_UI_ACC_LINE_PUBLIC
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_cap = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_cap NOT = { var:qpq_ui_acc_cap = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_CAP
 	}
 	text = {
 		fallback = yes

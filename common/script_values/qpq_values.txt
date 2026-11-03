@@ -15,8 +15,8 @@ qpq_pact_cap_minus_one_value = {
 }
 
 # How the other character (scope:recipient) feels about the one proposing (scope:actor), in acceptance points
-# Goodwill is worth only so much: past a point, being liked buys nothing more, and being hated costs only so much
-# (hatred itself is a flat refusal, see qpq_ai_refuses_trigger)
+# Goodwill is worth only so much: past a point, being liked buys nothing more, and being hated costs only so much.
+# It is never a refusal on its own, and it never pays for goods: see qpq_<kind>_goodwill_value.
 qpq_opinion_points_value = {
 	value = "scope:recipient.opinion(scope:actor)"
 	multiply = 0.5

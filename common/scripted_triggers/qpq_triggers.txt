@@ -353,10 +353,10 @@ qpq_proposal_gold_ok_trigger = {
 }
 
 # What an AI will not do at any price. AGENT does the deed for PAYER and TIER is how risky the deed is for AGENT.
-# Used by the acceptance values, the interaction acceptance and the Backroom Deal panel.
+# Used by the acceptance values, the interaction acceptance and the Backroom Deal panel. Dislike alone is never
+# one of these: their opinion of the one asking counts for or against (qpq_opinion_points_value), no more.
 qpq_ai_refuses_trigger = {
 	OR = {
-		qpq_ai_refuses_hatred_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ }
 		qpq_ai_refuses_rival_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ TIER = $TIER$ }
 		qpq_ai_refuses_virtue_trigger = { AGENT = $AGENT$ TIER = $TIER$ }
 		qpq_ai_refuses_damnable_trigger = { AGENT = $AGENT$ PAYER = $PAYER$ TIER = $TIER$ }
@@ -365,14 +365,6 @@ qpq_ai_refuses_trigger = {
 }
 
 # Each reason on its own, so the panel and the acceptance breakdown can say which one holds
-# They hate the one asking
-qpq_ai_refuses_hatred_trigger = {
-	$AGENT$ = {
-		is_ai = yes
-		opinion = { target = $PAYER$ value <= -60 }
-	}
-}
-
 # A rival or nemesis gets nothing that risks anything
 qpq_ai_refuses_rival_trigger = {
 	$TIER$ >= 2

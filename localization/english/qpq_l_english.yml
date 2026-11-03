@@ -144,6 +144,8 @@
  QPQ_REASON_OFFER_ARTIFACT:0 "Artifacts"
  QPQ_REASON_OFFER_CHURCH:0 "Church favour"
  QPQ_REASON_OFFER_RESTRAINT:0 "Restraint"
+ QPQ_REASON_DEMAND_GOODS:0 "What you ask of them"
+ QPQ_REASON_GOODWILL:0 "Goodwill (their opinion of you, and dread, never more than the deed costs them)"
  QPQ_REASON_DEMAND_GOLD:0 "Demand gold"
  QPQ_REASON_DEMAND_ON_DELIVERY:0 "Accept payment on delivery"
  QPQ_REASON_DEMAND_SPLIT:0 "Half now, half on delivery"
@@ -588,7 +590,7 @@
  QPQ_UI_GOLD_AMOUNT_I:0 "#V [GetPlayer.MakeScope.Var('qpq_ui_i_price').GetValue|0]#! gold"
  QPQ_UI_GOLD_FAIR:0 "Back to the fair price"
  QPQ_UI_GOLD_FAIR_TT:0 "Set the amount to what the deal is worth to the one who gets it."
- QPQ_UI_ACC_REFUSE:0 "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.GetShortUIName] #N will not do this#!, for any price"
+ QPQ_UI_ACC_REFUSE:0 "[GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.GetShortUIName] #N will not do this#!, for any price:$QPQ_UI_REFUSE_LINES$"
  QPQ_REASON_REFUSES:0 "Will not do this at any price"
  QPQ_UI_ARTIFACT_CHOSEN:0 "Artifacts to hand over"
  QPQ_UI_ARTIFACT_AVAILABLE:0 "Artifacts that could be chosen"
@@ -620,7 +622,6 @@
  game_concept_qpq_deal_desc:0 "A $game_concept_qpq_deal$ is a bargain struck in private: each side may do a deed for the other, give goods, or both, within a deadline of three to ten years. Each side has its own [qpq_scandal_tier|E], the worse of what it does and what it gives.\n\nA secret deal leaves each party holding a [secret|E] about the other, and is never below Tier I; exposing it exposes the whole deal. A deal may instead be proclaimed as a [qpq_charter|E].\n\nBreak your side and the other is released. A character can keep 2 deals at once, plus 1 for every 5 [diplomacy_skill|E]; running deals are tracked in the Situations window."
 
  # ---------------- Will not, at any price: one reason per line ----------------
- QPQ_REASON_REFUSES_HATRED:0 "Despises you: will not, at any price"
  QPQ_REASON_REFUSES_RIVAL:0 "Your rival: will risk nothing for you"
  QPQ_REASON_REFUSES_VIRTUE:0 "Too upright to commit a crime for you"
  QPQ_REASON_REFUSES_DAMNABLE:0 "Would be damned for it, and is not cowed by you"
@@ -673,5 +674,6 @@
  QPQ_UI_ACC_LINE_CHAR:0 "\nTheir character: [GetPlayer.MakeScope.Var('qpq_ui_acc_char').GetValue|=+0]"
  QPQ_UI_ACC_LINE_DREAD:0 "\n[dread|E]: [GetPlayer.MakeScope.Var('qpq_ui_acc_dread').GetValue|=+0]"
  QPQ_UI_ACC_LINE_CIRC:0 "\nTheir circumstances: [GetPlayer.MakeScope.Var('qpq_ui_acc_circ').GetValue|=+0]"
+ QPQ_UI_ACC_LINE_CAP:0 "\nGoodwill goes no further than the deed: [GetPlayer.MakeScope.Var('qpq_ui_acc_cap').GetValue|=+0]"
  QPQ_UI_ACC_LINE_PUBLIC:0 "\nSeen doing it in public: [GetPlayer.MakeScope.Var('qpq_ui_acc_public').GetValue|=+0]"
  QPQ_UI_ACC_LINE_REFUSE:0 "\nWill not, at any price: [GetPlayer.MakeScope.Var('qpq_ui_acc_refuse').GetValue|=+0]"

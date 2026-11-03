@@ -111,25 +111,34 @@ def gen_values():
         out += tier_value(k, "agent")
         p = payer_scope(k)
         a = agent_scope(k)
-        # Fair price: what the deed is worth to the other side of the table (their stake, which grows with
-        # their rank and income and is huge for a head of faith), scaled by how risky the deed is for them
-        out += ("qpq_%s_price_value = {\n\tvalue = scope:recipient.qpq_stake_value\n"
-                "\tmultiply = {\n\t\tvalue = qpq_%s_agent_tier_value\n\t\tmultiply = 4\n\t\tadd = 3\n\t}\n"
-                "\tmin = 25\n\tround = yes\n}\n") % (key, key)
-        # Acceptance points of that gold to the agent
-        # The amount is whatever was agreed (scope:qpq_price in the panel), otherwise the fair price. No sum buys more
-        # than 50 points (60 with the base), and the dirtier the deed the less any sum buys.
+        # Fair price: enough gold to make the deed worth the doer's while. What it asks of them (the demand), a
+        # fifth over, plus what waiting for payment on delivery costs them, in months of their stake (five
+        # points a month, less for a dirtier deed: see the gold points), but never past the twenty months no sum
+        # goes beyond.
+        out += ("qpq_%s_price_value = {\n\tvalue = qpq_%s_demand_value\n\tmultiply = -1.2\n\tadd = 8\n"
+                "\tdivide = {\n\t\tvalue = 5\n\t\tmultiply = qpq_%s_gold_mult_value\n\t}\n"
+                "\tmax = 20\n\tmultiply = %s.qpq_stake_value\n"
+                "\tmin = 25\n\tround = yes\n}\n") % (key, key, key, a)
+        # How much gold weighs against the deed: the dirtier, the less
+        out += ("qpq_%s_gold_mult_value = {\n\tvalue = 1\n\tsubtract = { value = qpq_%s_agent_tier_value multiply = 0.1 }\n"
+                "\tmin = 0.5\n}\n") % (key, key)
+        # Acceptance points of that gold to the one paid: five a month of their own stake (so the same sum is worth
+        # more to a poorer lord), up to twenty months, and the dirtier the deed the less any sum weighs.
+        # The amount is whatever was agreed (scope:qpq_price in the panel), otherwise the fair price.
         out += ("qpq_%s_gold_points_value = {\n\tvalue = {\n\t\tvalue = 0\n\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_price }\n"
                 "\t\t\tadd = scope:qpq_price\n\t\t}\n\t\telse = {\n\t\t\tadd = qpq_%s_price_value\n\t\t}\n"
                 "\t\tdivide = {\n\t\t\tvalue = scope:recipient.qpq_stake_value\n\t\t\tmultiply = 6\n\t\t\tmin = 5\n\t\t}\n"
-                "\t\tmultiply = 30\n\t\tmax = 50\n\t}\n\tadd = 10\n"
-                "\tmultiply = {\n\t\tvalue = 1\n\t\tsubtract = { value = qpq_%s_agent_tier_value multiply = 0.1 }\n\t\tmin = 0.5\n\t}\n"
-                "\tif = {\n\t\tlimit = { %s = { has_trait = greedy } }\n\t\tmultiply = 1.3\n\t}\n"
-                "\tif = {\n\t\tlimit = { %s = { has_trait = generous } }\n\t\tmultiply = 0.8\n\t}\n"
-                "\tround = yes\n}\n") % (key, key, key, a, a)
-        # What the Ask costs the agent
-        out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
-                "\tadd = %d\n}\n") % (key, key, -k["effort"])
+                "\t\tmultiply = 30\n\t\tmax = 100\n\t}\n"
+                "\tmultiply = qpq_%s_gold_mult_value\n"
+                "\tif = {\n\t\tlimit = { scope:recipient = { has_trait = greedy } }\n\t\tmultiply = 1.3\n\t}\n"
+                "\tif = {\n\t\tlimit = { scope:recipient = { has_trait = generous } }\n\t\tmultiply = 0.8\n\t}\n"
+                "\tround = yes\n}\n") % (key, key, key)
+        # What the Ask costs the agent. A plain exchange of goods asks no deed of anyone.
+        if key == "barter":
+            out += "qpq_%s_demand_value = {\n\tvalue = 0\n}\n" % key
+        else:
+            out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
+                    "\tadd = %d\n}\n") % (key, key, -k["effort"])
         # What the Ask is worth to the recipient before anything is offered
         out += "qpq_%s_ask_value = {\n" % key
         if k["initiator"] == "payer":
@@ -139,7 +148,14 @@ def gen_values():
         out += "}\n"
         # What is offered (or, when the proposer does the deed, what is demanded), in acceptance points
         out += "qpq_%s_offer_points_value = {\n" % key
-        if k["initiator"] == "payer":
+        if k["initiator"] != "payer":
+            # the payer decides: what the goods asked of them cost them, at their own purse, a quarter again
+            # since what one gives up weighs more than what one gets
+            out += "\tvalue = qpq_%s_goods_cost_value\n\tmultiply = %s\n}\n" % (key, -LOSS_AVERSION)
+            out += "qpq_%s_goods_cost_value = {\n%s}\n" % (key, goods_cost_body(
+                "scope:recipient", "scope:actor", "qpq_%s_price_value" % key))
+            out += "qpq_%s_goods_points_value = {\n" % key
+        if True:
             out += "\tvalue = {\n\t\tvalue = 0\n"
             out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\t\tadd = qpq_%s_gold_points_value\n\t\t}\n" % key
             for o, pts in (("on_delivery", -8), ("split", -3), ("stipend", -5)):
@@ -147,21 +163,11 @@ def gen_values():
             for o in k["offers"]:
                 if o in OFFER_POINTS:
                     out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\t\tadd = %s\n\t\t}\n" % (o, OFFER_POINTS[o])
-            out += "\t\tmax = 70\n\t}\n"
+            out += "\t\tmax = 100\n\t}\n"
             if "hook" in k["offers"]:
                 out += "\tif = {\n\t\tlimit = { scope:qpq_o_hook ?= yes }\n\t\tadd = 40\n\t}\n"
                 out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_hook ?= yes\n"
                         "\t\t\tscope:actor = { has_strong_hook = scope:recipient }\n\t\t}\n\t\tadd = 60\n\t}\n")
-        else:
-            out += "\tvalue = 0\n"
-            for o in k["offers"]:
-                if o == "artifact":
-                    out += ("\tif = {\n\t\tlimit = { scope:qpq_o_artifact ?= yes }\n\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_artifact_cost }\n"
-                            "\t\t\tadd = { value = scope:qpq_gift_artifact_cost multiply = -1 }\n\t\t}\n\t\telse = {\n\t\t\tadd = %d\n\t\t}\n\t}\n" % DEMAND_COST[o])
-                elif o in DEMAND_COST:
-                    out += "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\tadd = %d\n\t}\n" % (o, DEMAND_COST[o])
-            out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_gold ?= yes\n\t\t\tscope:recipient = { has_trait = greedy }\n"
-                    "\t\t}\n\t\tadd = -10\n\t}\n")
         out += "}\n"
         # The acceptance in parts, each its own line in the panel's breakdown
         # Their character: traits that weigh on a deed this dirty (only when they are asked to do it)
@@ -189,11 +195,42 @@ def gen_values():
         if goals.goal_value(k) and goals.goal_refusal(k):
             out += "\t\t\t\tqpq_%s_goal_refuses_trigger = yes\n" % key
         out += "\t\t\t\talways = no\n\t\t\t}\n\t\t}\n\t\tadd = -1000\n\t}\n}\n"
-        # The whole acceptance, mirroring the interaction's ai_accept: used by the deal panel and when an AI
-        # recipient answers an AI proposal
+        # What the deed is worth to the one who would pay for it, when someone else offers to do it (the deal
+        # panel's other leg). Their wishes about the target are the swapped goal; this is the rest.
+        archs = set(goals.KIND_GOALS.get(key, []))
+        out += "qpq_%s_worth_value = {\n" % key
+        if k["initiator"] != "payer":
+            out += "\tvalue = qpq_%s_ask_value\n" % key
+        elif key == "barter" or archs & WISH_ARCHETYPES:
+            out += "\tvalue = 0\n"
+        else:
+            out += ("\tvalue = qpq_%s_demand_value\n\tmultiply = %s\n\tmin = %d\n\tmax = %d\n") % (
+                key, -WORTH_SHARE, WORTH_MIN, WORTH_MAX)
+        out += "}\n"
+        # The payer's own character and risk, when they would pay for it: an honest or just lord shrinks from a
+        # dirty bargain, a schemer warms to it, and anyone fears what it costs them if it comes out
+        out += "qpq_%s_payer_character_value = {\n\tvalue = qpq_%s_payer_tier_value\n\tmultiply = -5\n" % (key, key)
+        for trig, mult in TRAIT_MODS:
+            out += ("\tif = {\n\t\tlimit = { scope:actor = { has_trait = %s } }\n"
+                    "\t\tadd = { value = qpq_%s_payer_tier_value multiply = %d }\n\t}\n") % (trig, key, mult)
+        out += "}\n"
+        # Goodwill (their opinion of the one asking, and dread of them) makes a deed cheaper for the one who does
+        # it, never by more than the deed costs them: it does not pay for goods
+        out += "qpq_%s_goodwill_value = {\n\tvalue = qpq_opinion_points_value\n\tadd = qpq_%s_dread_value\n" % (key, key)
+        if k["initiator"] == "payer":
+            out += ("\tmax = {\n\t\tvalue = qpq_%s_ask_value\n\t\tadd = qpq_%s_character_value\n"
+                    "\t\tadd = qpq_%s_circumstance_value\n") % (key, key, key)
+            if goals.goal_value(k):
+                out += "\t\tadd = qpq_%s_goal_value\n" % key
+            out += "\t\tmultiply = -1\n\t\tmin = 0\n\t}\n"
+        else:
+            out += "\tmax = 0\n"
+        out += "}\n"
+        # The whole acceptance, mirroring the interaction's ai_accept: used when an AI recipient answers an AI
+        # proposal
         out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
-        out += "\tadd = qpq_opinion_points_value\n"
-        out += "\tadd = qpq_%s_character_value\n\tadd = qpq_%s_dread_value\n\tadd = qpq_%s_circumstance_value\n" % (key, key, key)
+        out += "\tadd = qpq_%s_goodwill_value\n" % key
+        out += "\tadd = qpq_%s_character_value\n\tadd = qpq_%s_circumstance_value\n" % (key, key)
         if goals.goal_value(k):
             out += "\tadd = qpq_%s_goal_value\n" % key
         out += "\tadd = qpq_%s_refusal_value\n" % key
@@ -213,6 +250,73 @@ def gen_values():
 
 TRAIT_MODS = [("honest", -6), ("just", -5), ("deceitful", 4), ("arbitrary", 3), ("schemer", 3), ("paranoid", -3)]
 AGENT_INIT_BASE = 35
+LOSS_AVERSION = goals.LOSS_AVERSION
+# A deed done for them that they have no particular wish for (no goal archetype speaks to it) is still worth a
+# share of what it costs the doer, within bounds
+WORTH_SHARE, WORTH_MIN, WORTH_MAX = 0.4, 5, 25
+# Archetypes whose goal says all a deed is worth to the one who would pay for it
+WISH_ARCHETYPES = {"war", "harm", "favour", "war_side", "loss_title", "loss_artifact"}
+
+
+def goods_cost_body(G, R, price):
+    """Script value body: what handing over the goods ticked (scope:qpq_o_*) costs G, who gives them to R, in
+    acceptance points before loss aversion. Gold is five points a month of G's own stake, however much: no flat
+    part, no cap, so an exchange of goods is always weighed sum for sum."""
+    s = "\tvalue = 0\n"
+    s += ("\tif = {\n\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\tadd = {\n\t\t\tvalue = 0\n"
+          "\t\t\tif = {\n\t\t\t\tlimit = { exists = scope:qpq_price }\n\t\t\t\tadd = scope:qpq_price\n\t\t\t}\n"
+          "\t\t\telse = {\n\t\t\t\tadd = %(price)s\n\t\t\t}\n"
+          "\t\t\tdivide = {\n\t\t\t\tvalue = %(G)s.qpq_stake_value\n\t\t\t\tmultiply = 6\n\t\t\t\tmin = 5\n\t\t\t}\n"
+          "\t\t\tmultiply = 30\n"
+          "\t\t\tif = {\n\t\t\t\tlimit = { %(G)s = { has_trait = greedy } }\n\t\t\t\tmultiply = 1.3\n\t\t\t}\n"
+          "\t\t\tif = {\n\t\t\t\tlimit = { %(G)s = { has_trait = generous } }\n\t\t\t\tmultiply = 0.8\n\t\t\t}\n\t\t}\n"
+          # paying later, if at all, is easier on the one who pays
+          "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_on_delivery ?= yes }\n\t\t\tadd = -6\n\t\t}\n"
+          "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_split ?= yes }\n\t\t\tadd = -2\n\t\t}\n"
+          "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_stipend ?= yes }\n\t\t\tadd = -4\n\t\t}\n\t}\n") % {"G": G, "price": price}
+    def good(o, body):
+        return "\tif = {\n\t\tlimit = { scope:qpq_o_%s ?= yes }\n%s\t}\n" % (o, body)
+    # a county, dearer when it is one of their last
+    s += good("land", "\t\tadd = %s\n" % ("qpq_goods_land_cost_value" if G == "scope:actor" else "qpq_goods_land_cost_rec_value"))
+    s += good("claim", "\t\tadd = 6\n")
+    s += good("office", "\t\tadd = 12\n")
+    s += good("release_hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
+    # calling in a hook spends it
+    s += good("hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
+    s += good("my_word", "\t\tadd = 6\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = honest } }\n\t\t\tadd = 4\n\t\t}\n" % G)
+    s += good("secret", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_secret_points }\n\t\t\tadd = scope:qpq_gift_secret_points\n\t\t}\n"
+                        "\t\telse = {\n\t\t\tadd = 12\n\t\t}\n")
+    s += good("contract", "\t\tadd = 22\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = greedy } }\n\t\t\tadd = 5\n\t\t}\n" % G)
+    s += good("succession", "\t\tadd = 18\n" + "".join(
+        "\t\t%sif = {\n\t\t\tlimit = { %s = { highest_held_title_tier = %s } }\n\t\t\tadd = %d\n\t\t}\n" % (
+            "" if i == 0 else "else_", G, t, v) for i, (t, v) in enumerate(
+            (("tier_county", 6), ("tier_duchy", 16), ("tier_kingdom", 28), ("tier_empire", 40)))).replace("\t\telse_if", "\t\telse_if"))
+    s += good("clemency", "\t\tadd = 25\n")
+    s += good("arms", "\t\tadd = 10\n\t\tif = {\n\t\t\tlimit = { %s = { is_at_war = yes } }\n\t\t\tadd = 15\n\t\t}\n" % G)
+    s += good("artifact", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_artifact_cost }\n\t\t\tadd = scope:qpq_gift_artifact_cost\n\t\t}\n"
+                          "\t\telse = {\n\t\t\tadd = 20\n\t\t}\n")
+    s += good("church", "\t\tadd = 10\n")
+    s += good("restraint", "\t\tadd = 8\n\t\tif = {\n\t\t\tlimit = { %s = { max_military_strength > { value = %s.max_military_strength multiply = 1.5 } } }\n"
+                           "\t\t\tadd = 10\n\t\t}\n" % (G, R))
+    s += "\tmin = 0\n"
+    return s
+
+
+def land_cost_body(G):
+    return ("\tvalue = 35\n\tif = {\n\t\tlimit = {\n\t\t%s = {\n\t\t\tNOT = { any_held_title = { tier = tier_county count >= 3 } }\n\t\t}\n\t\t}\n\t\tadd = 20\n\t}\n"
+            "\tif = {\n\t\tlimit = { %s = { has_trait = greedy } }\n\t\tadd = 10\n\t}\n") % (G, G)
+
+
+def gen_goods_values():
+    out = HEADER
+    out += ("# What goods cost the one who hands them over (the other side of qpq_offer_*_points_value, which is\n"
+            "# what they are worth to the one who gets them). Root and scopes: scope:actor gives, scope:recipient\n"
+            "# gets; scope:qpq_o_* are the goods, scope:qpq_price the gold. The deal panel weighs what an AI gives\n"
+            "# up by this, a quarter again (LOSS_AVERSION in tools/qpq_gen.py).\n\n")
+    out += "qpq_goods_cost_value = {\n%s}\n\n" % goods_cost_body("scope:actor", "scope:recipient", "0")
+    out += "qpq_goods_land_cost_value = {\n%s}\n\n" % land_cost_body("scope:actor")
+    out += "qpq_goods_land_cost_rec_value = {\n%s}\n" % land_cost_body("scope:recipient")
+    write("common/script_values/qpq_goods_values.txt", out)
 
 # =============================================================== offers (send options)
 OFFER_DEFS = {
@@ -415,19 +519,9 @@ def interaction(k):
         s += "\t\tmodifier = {\n\t\t\tadd = %d\n\t\t\tdesc = QPQ_REASON_SERVICE_VALUE\n\t\t}\n" % AGENT_INIT_BASE
         s += ("\t\tmodifier = {\n\t\t\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n"
               "\t\t\tdesc = QPQ_REASON_SCANDAL_RISK\n\t\t}\n") % key
-        for o in k["offers"]:
-            if o in DEMAND_COST:
-                s += "\t\tmodifier = {\n\t\t\tadd = %d\n\t\t\tscope:qpq_o_%s ?= yes\n\t\t\tdesc = QPQ_REASON_DEMAND_%s\n\t\t}\n" % (
-                    DEMAND_COST[o], o, o.upper())
-        s += ("\t\tmodifier = {\n\t\t\tadd = -10\n\t\t\tscope:qpq_o_gold ?= yes\n"
-              "\t\t\tscope:recipient = { has_trait = greedy }\n\t\t\tdesc = QPQ_REASON_TRAIT_GREEDY\n\t\t}\n")
-    s += "\t\topinion_modifier = {\n\t\t\twho = scope:recipient\n\t\t\topinion_target = scope:actor\n\t\t\tmultiplier = 0.5\n\t\t\tdesc = AI_OPINION_REASON\n\t\t}\n"
-    s += ("\t\tmodifier = {\n\t\t\tadd = intimidated_halved_reason_value\n"
-          "\t\t\tscope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }\n"
-          "\t\t\tdesc = QPQ_REASON_INTIMIDATED\n\t\t}\n")
-    s += ("\t\tmodifier = {\n\t\t\tadd = cowed_halved_reason_value\n"
-          "\t\t\tscope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }\n"
-          "\t\t\tdesc = QPQ_REASON_COWED\n\t\t}\n")
+        s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_offer_points_value\n\t\t\tdesc = QPQ_REASON_DEMAND_GOODS\n\t\t}\n" % key
+    # Opinion and dread: they make a deed cheaper for its doer, never by more than it costs them
+    s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_goodwill_value\n\t\t\tdesc = QPQ_REASON_GOODWILL\n\t\t}\n" % key
     for add, trig, desc in k.get("demand", []):
         s += "\t\tmodifier = {\n\t\t\tadd = %s\n%s\t\t\tdesc = %s\n\t\t}\n" % (add, block(trig, 3), desc)
     if goals.goal_value(k):
@@ -943,6 +1037,7 @@ def main():
         if k["mode"] == "perform":
             assert k.get("perform"), k["key"]
     gen_values()
+    gen_goods_values()
     gen_interactions()
     gen_secrets()
     gen_triggers()

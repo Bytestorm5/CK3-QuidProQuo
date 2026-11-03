@@ -343,11 +343,6 @@ qpq_chartered_conquest_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_chartered_conquest_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -396,21 +391,9 @@ qpq_chartered_conquest_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_chartered_conquest_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 10
@@ -822,11 +805,6 @@ qpq_sanctioned_conquest_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_sanctioned_conquest_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -875,21 +853,9 @@ qpq_sanctioned_conquest_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_sanctioned_conquest_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 10
@@ -1280,11 +1246,6 @@ qpq_marcher_charge_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marcher_charge_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -1333,21 +1294,9 @@ qpq_marcher_charge_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_marcher_charge_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_marcher_charge_goal_value
@@ -1729,11 +1678,6 @@ qpq_holy_sponsorship_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_sponsorship_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -1782,21 +1726,9 @@ qpq_holy_sponsorship_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_holy_sponsorship_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_holy_sponsorship_goal_value
@@ -2147,11 +2079,6 @@ qpq_development_charter_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_development_charter_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -2200,21 +2127,9 @@ qpq_development_charter_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_development_charter_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -2570,11 +2485,6 @@ qpq_electoral_purchase_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_electoral_purchase_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -2623,21 +2533,9 @@ qpq_electoral_purchase_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_electoral_purchase_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_electoral_purchase_goal_value
@@ -2986,11 +2884,6 @@ qpq_loyal_mole_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_loyal_mole_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -3039,21 +2932,9 @@ qpq_loyal_mole_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_loyal_mole_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -3387,11 +3268,6 @@ qpq_agent_provocateur_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_agent_provocateur_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -3440,21 +3316,9 @@ qpq_agent_provocateur_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_agent_provocateur_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -3806,11 +3670,6 @@ qpq_licensed_feud_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_licensed_feud_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -3859,21 +3718,9 @@ qpq_licensed_feud_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_licensed_feud_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 15
@@ -4262,11 +4109,6 @@ qpq_dossier_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dossier_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -4315,21 +4157,9 @@ qpq_dossier_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_dossier_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = { value = scope:recipient.intrigue multiply = 1 max = 20 }
@@ -4742,11 +4572,6 @@ qpq_quiet_removal_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_quiet_removal_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -4795,21 +4620,9 @@ qpq_quiet_removal_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_quiet_removal_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 20
@@ -5216,11 +5029,6 @@ qpq_heir_question_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heir_question_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -5269,21 +5077,9 @@ qpq_heir_question_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_heir_question_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -30
@@ -5692,11 +5488,6 @@ qpq_snatch_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_snatch_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -5745,21 +5536,9 @@ qpq_snatch_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_snatch_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_snatch_goal_value
@@ -6144,11 +5923,6 @@ qpq_dispossession_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispossession_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -6197,21 +5971,9 @@ qpq_dispossession_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_dispossession_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_dispossession_goal_value
@@ -6599,11 +6361,6 @@ qpq_the_cloister_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_the_cloister_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -6652,21 +6409,9 @@ qpq_the_cloister_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_the_cloister_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -25
@@ -7068,11 +6813,6 @@ qpq_marriage_by_command_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marriage_by_command_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -7121,21 +6861,9 @@ qpq_marriage_by_command_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_marriage_by_command_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -7491,11 +7219,6 @@ qpq_hand_over_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -7544,21 +7267,9 @@ qpq_hand_over_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_hand_over_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_hand_over_goal_value
@@ -7941,11 +7652,6 @@ qpq_hand_over_artifact_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_artifact_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -7994,21 +7700,9 @@ qpq_hand_over_artifact_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_hand_over_artifact_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_hand_over_artifact_goal_value
@@ -8360,11 +8054,6 @@ qpq_renunciation_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_renunciation_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -8413,21 +8102,9 @@ qpq_renunciation_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_renunciation_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_renunciation_goal_value
@@ -8765,11 +8442,6 @@ qpq_hush_money_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hush_money_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -8818,21 +8490,9 @@ qpq_hush_money_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_hush_money_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -9019,86 +8679,12 @@ qpq_price_of_loyalty_interaction = {
 			desc = QPQ_REASON_SCANDAL_RISK
 		}
 		modifier = {
-			add = -30
-			scope:qpq_o_gold ?= yes
-			desc = QPQ_REASON_DEMAND_GOLD
+			add = qpq_price_of_loyalty_offer_points_value
+			desc = QPQ_REASON_DEMAND_GOODS
 		}
 		modifier = {
-			add = 10
-			scope:qpq_o_on_delivery ?= yes
-			desc = QPQ_REASON_DEMAND_ON_DELIVERY
-		}
-		modifier = {
-			add = 5
-			scope:qpq_o_split ?= yes
-			desc = QPQ_REASON_DEMAND_SPLIT
-		}
-		modifier = {
-			add = 5
-			scope:qpq_o_stipend ?= yes
-			desc = QPQ_REASON_DEMAND_STIPEND
-		}
-		modifier = {
-			add = -40
-			scope:qpq_o_land ?= yes
-			desc = QPQ_REASON_DEMAND_LAND
-		}
-		modifier = {
-			add = -15
-			scope:qpq_o_office ?= yes
-			desc = QPQ_REASON_DEMAND_OFFICE
-		}
-		modifier = {
-			add = -30
-			scope:qpq_o_contract ?= yes
-			desc = QPQ_REASON_DEMAND_CONTRACT
-		}
-		modifier = {
-			add = -25
-			scope:qpq_o_release_hook ?= yes
-			desc = QPQ_REASON_DEMAND_RELEASE_HOOK
-		}
-		modifier = {
-			add = -12
-			scope:qpq_o_my_word ?= yes
-			desc = QPQ_REASON_DEMAND_MY_WORD
-		}
-		modifier = {
-			add = -20
-			scope:qpq_o_clemency ?= yes
-			desc = QPQ_REASON_DEMAND_CLEMENCY
-		}
-		modifier = {
-			add = -20
-			scope:qpq_o_artifact ?= yes
-			desc = QPQ_REASON_DEMAND_ARTIFACT
-		}
-		modifier = {
-			add = -15
-			scope:qpq_o_church ?= yes
-			desc = QPQ_REASON_DEMAND_CHURCH
-		}
-		modifier = {
-			add = -10
-			scope:qpq_o_gold ?= yes
-			scope:recipient = { has_trait = greedy }
-			desc = QPQ_REASON_TRAIT_GREEDY
-		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
-		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_price_of_loyalty_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_price_of_loyalty_goal_value
@@ -9460,11 +9046,6 @@ qpq_blessing_for_a_feud_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_blessing_for_a_feud_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -9513,21 +9094,9 @@ qpq_blessing_for_a_feud_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_blessing_for_a_feud_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_blessing_for_a_feud_goal_value
@@ -9901,11 +9470,6 @@ qpq_clemency_bargain_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_clemency_bargain_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -9954,21 +9518,9 @@ qpq_clemency_bargain_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_clemency_bargain_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 30
@@ -10174,86 +9726,12 @@ qpq_electoral_capitulation_interaction = {
 			desc = QPQ_REASON_SCANDAL_RISK
 		}
 		modifier = {
-			add = -30
-			scope:qpq_o_gold ?= yes
-			desc = QPQ_REASON_DEMAND_GOLD
+			add = qpq_electoral_capitulation_offer_points_value
+			desc = QPQ_REASON_DEMAND_GOODS
 		}
 		modifier = {
-			add = 10
-			scope:qpq_o_on_delivery ?= yes
-			desc = QPQ_REASON_DEMAND_ON_DELIVERY
-		}
-		modifier = {
-			add = 5
-			scope:qpq_o_split ?= yes
-			desc = QPQ_REASON_DEMAND_SPLIT
-		}
-		modifier = {
-			add = 5
-			scope:qpq_o_stipend ?= yes
-			desc = QPQ_REASON_DEMAND_STIPEND
-		}
-		modifier = {
-			add = -40
-			scope:qpq_o_land ?= yes
-			desc = QPQ_REASON_DEMAND_LAND
-		}
-		modifier = {
-			add = -15
-			scope:qpq_o_office ?= yes
-			desc = QPQ_REASON_DEMAND_OFFICE
-		}
-		modifier = {
-			add = -30
-			scope:qpq_o_contract ?= yes
-			desc = QPQ_REASON_DEMAND_CONTRACT
-		}
-		modifier = {
-			add = -25
-			scope:qpq_o_release_hook ?= yes
-			desc = QPQ_REASON_DEMAND_RELEASE_HOOK
-		}
-		modifier = {
-			add = -12
-			scope:qpq_o_my_word ?= yes
-			desc = QPQ_REASON_DEMAND_MY_WORD
-		}
-		modifier = {
-			add = -20
-			scope:qpq_o_clemency ?= yes
-			desc = QPQ_REASON_DEMAND_CLEMENCY
-		}
-		modifier = {
-			add = -20
-			scope:qpq_o_artifact ?= yes
-			desc = QPQ_REASON_DEMAND_ARTIFACT
-		}
-		modifier = {
-			add = -15
-			scope:qpq_o_church ?= yes
-			desc = QPQ_REASON_DEMAND_CHURCH
-		}
-		modifier = {
-			add = -10
-			scope:qpq_o_gold ?= yes
-			scope:recipient = { has_trait = greedy }
-			desc = QPQ_REASON_TRAIT_GREEDY
-		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
-		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_electoral_capitulation_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_electoral_capitulation_goal_value
@@ -10613,11 +10091,6 @@ qpq_mutual_defense_league_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_mutual_defense_league_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -10666,21 +10139,9 @@ qpq_mutual_defense_league_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_mutual_defense_league_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 15
@@ -11032,11 +10493,6 @@ qpq_faction_pledge_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faction_pledge_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -11085,21 +10541,9 @@ qpq_faction_pledge_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_faction_pledge_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_faction_pledge_goal_value
@@ -11469,11 +10913,6 @@ qpq_title_swap_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_title_swap_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -11522,21 +10961,9 @@ qpq_title_swap_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_title_swap_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_title_swap_goal_value
@@ -11880,11 +11307,6 @@ qpq_coup_pact_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_coup_pact_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -11933,21 +11355,9 @@ qpq_coup_pact_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_coup_pact_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 20
@@ -12356,11 +11766,6 @@ qpq_proxy_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_proxy_war_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -12409,21 +11814,9 @@ qpq_proxy_war_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_proxy_war_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 10
@@ -12829,11 +12222,6 @@ qpq_partition_pact_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_partition_pact_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -12882,21 +12270,9 @@ qpq_partition_pact_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_partition_pact_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_partition_pact_goal_value
@@ -13256,11 +12632,6 @@ qpq_secret_alliance_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_alliance_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -13309,21 +12680,9 @@ qpq_secret_alliance_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_secret_alliance_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_secret_alliance_goal_value
@@ -13668,11 +13027,6 @@ qpq_bought_truce_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_truce_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -13721,21 +13075,9 @@ qpq_bought_truce_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_bought_truce_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -15
@@ -14106,11 +13448,6 @@ qpq_faithless_ally_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faithless_ally_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -14159,21 +13496,9 @@ qpq_faithless_ally_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_faithless_ally_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -15
@@ -14555,11 +13880,6 @@ qpq_turncoat_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_turncoat_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -14608,21 +13928,9 @@ qpq_turncoat_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_turncoat_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_turncoat_goal_value
@@ -14995,11 +14303,6 @@ qpq_seed_the_separatists_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_seed_the_separatists_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -15048,21 +14351,9 @@ qpq_seed_the_separatists_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_seed_the_separatists_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 15
@@ -15438,11 +14729,6 @@ qpq_shelter_the_pretender_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_shelter_the_pretender_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -15491,21 +14777,9 @@ qpq_shelter_the_pretender_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_shelter_the_pretender_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 20
@@ -15869,11 +15143,6 @@ qpq_extradition_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_extradition_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -15922,21 +15191,9 @@ qpq_extradition_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_extradition_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_extradition_goal_value
@@ -16308,11 +15565,6 @@ qpq_buy_a_councillor_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_councillor_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -16361,21 +15613,9 @@ qpq_buy_a_councillor_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_buy_a_councillor_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -15
@@ -16753,11 +15993,6 @@ qpq_stay_home_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_home_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -16806,21 +16041,9 @@ qpq_stay_home_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_stay_home_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_stay_home_goal_value
@@ -17167,11 +16390,6 @@ qpq_defection_pact_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_defection_pact_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -17220,21 +16438,9 @@ qpq_defection_pact_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_defection_pact_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_defection_pact_goal_value
@@ -17601,11 +16807,6 @@ qpq_secret_clause_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_clause_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -17654,21 +16855,9 @@ qpq_secret_clause_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_secret_clause_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_secret_clause_goal_value
@@ -18037,11 +17226,6 @@ qpq_hire_the_hashashin_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hire_the_hashashin_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -18090,21 +17274,9 @@ qpq_hire_the_hashashin_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_hire_the_hashashin_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_hire_the_hashashin_goal_value
@@ -18508,11 +17680,6 @@ qpq_excommunication_for_hire_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_excommunication_for_hire_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -18561,21 +17728,9 @@ qpq_excommunication_for_hire_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_excommunication_for_hire_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_excommunication_for_hire_goal_value
@@ -18968,11 +18123,6 @@ qpq_dispensation_for_gold_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispensation_for_gold_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -19021,21 +18171,9 @@ qpq_dispensation_for_gold_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_dispensation_for_gold_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_dispensation_for_gold_goal_value
@@ -19413,11 +18551,6 @@ qpq_steer_the_holy_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_steer_the_holy_war_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -19466,21 +18599,9 @@ qpq_steer_the_holy_war_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_steer_the_holy_war_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_steer_the_holy_war_goal_value
@@ -19855,11 +18976,6 @@ qpq_purchase_a_mitre_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_purchase_a_mitre_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -19908,21 +19024,9 @@ qpq_purchase_a_mitre_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_purchase_a_mitre_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_purchase_a_mitre_goal_value
@@ -20300,11 +19404,6 @@ qpq_bought_claim_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_claim_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -20353,21 +19452,9 @@ qpq_bought_claim_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_bought_claim_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_bought_claim_goal_value
@@ -20738,11 +19825,6 @@ qpq_absolution_by_concession_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_absolution_by_concession_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -20791,21 +19873,9 @@ qpq_absolution_by_concession_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_absolution_by_concession_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_absolution_by_concession_goal_value
@@ -21175,11 +20245,6 @@ qpq_holy_warrant_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_warrant_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -21228,21 +20293,9 @@ qpq_holy_warrant_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_holy_warrant_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_holy_warrant_goal_value
@@ -21629,11 +20682,6 @@ qpq_buy_a_bull_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_bull_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -21682,21 +20730,9 @@ qpq_buy_a_bull_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_buy_a_bull_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_buy_a_bull_goal_value
@@ -22090,11 +21126,6 @@ qpq_conclave_votes_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_conclave_votes_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -22143,21 +21174,9 @@ qpq_conclave_votes_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_conclave_votes_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_conclave_votes_goal_value
@@ -22509,11 +21528,6 @@ qpq_council_lobbying_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_council_lobbying_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -22562,21 +21576,9 @@ qpq_council_lobbying_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_council_lobbying_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_council_lobbying_goal_value
@@ -22916,11 +21918,6 @@ qpq_caliphal_investiture_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_caliphal_investiture_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -22969,21 +21966,9 @@ qpq_caliphal_investiture_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_caliphal_investiture_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_caliphal_investiture_goal_value
@@ -23328,11 +22313,6 @@ qpq_name_in_the_khutba_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_name_in_the_khutba_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -23381,21 +22361,9 @@ qpq_name_in_the_khutba_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_name_in_the_khutba_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_name_in_the_khutba_goal_value
@@ -23768,11 +22736,6 @@ qpq_fatwa_for_hire_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fatwa_for_hire_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -23821,21 +22784,9 @@ qpq_fatwa_for_hire_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_fatwa_for_hire_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_fatwa_for_hire_goal_value
@@ -24236,11 +23187,6 @@ qpq_fund_the_dawa_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fund_the_dawa_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -24289,21 +23235,9 @@ qpq_fund_the_dawa_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_fund_the_dawa_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_fund_the_dawa_goal_value
@@ -24679,11 +23613,6 @@ qpq_crowning_the_usurper_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_crowning_the_usurper_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -24732,21 +23661,9 @@ qpq_crowning_the_usurper_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_crowning_the_usurper_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_crowning_the_usurper_goal_value
@@ -25119,11 +24036,6 @@ qpq_pliant_patriarch_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_pliant_patriarch_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -25172,21 +24084,9 @@ qpq_pliant_patriarch_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_pliant_patriarch_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_pliant_patriarch_goal_value
@@ -25558,11 +24458,6 @@ qpq_favourable_omens_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_favourable_omens_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -25611,21 +24506,9 @@ qpq_favourable_omens_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_favourable_omens_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_favourable_omens_goal_value
@@ -25999,11 +24882,6 @@ qpq_consecration_rites_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_consecration_rites_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -26052,21 +24930,9 @@ qpq_consecration_rites_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_consecration_rites_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_consecration_rites_goal_value
@@ -26436,11 +25302,6 @@ qpq_temple_patronage_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_temple_patronage_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -26489,21 +25350,9 @@ qpq_temple_patronage_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_temple_patronage_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_temple_patronage_goal_value
@@ -26897,11 +25746,6 @@ qpq_make_peace_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -26950,21 +25794,9 @@ qpq_make_peace_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_make_peace_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_make_peace_goal_value
@@ -27327,11 +26159,6 @@ qpq_yield_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -27380,21 +26207,9 @@ qpq_yield_war_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_yield_war_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_yield_war_goal_value
@@ -27760,11 +26575,6 @@ qpq_join_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -27813,21 +26623,9 @@ qpq_join_war_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_join_war_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = 10
@@ -28223,11 +27021,6 @@ qpq_leave_war_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -28276,21 +27069,9 @@ qpq_leave_war_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_leave_war_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_leave_war_goal_value
@@ -28651,11 +27432,6 @@ qpq_stay_out_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -28704,21 +27480,9 @@ qpq_stay_out_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_stay_out_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -30
@@ -29093,11 +27857,6 @@ qpq_heavier_tribute_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -29146,21 +27905,9 @@ qpq_heavier_tribute_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_heavier_tribute_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -29495,11 +28242,6 @@ qpq_lighter_tribute_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -29548,21 +28290,9 @@ qpq_lighter_tribute_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_lighter_tribute_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -29893,11 +28623,6 @@ qpq_bought_freedom_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -29946,21 +28671,9 @@ qpq_bought_freedom_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_bought_freedom_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 
@@ -30304,11 +29017,6 @@ qpq_accept_the_yoke_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -30357,21 +29065,9 @@ qpq_accept_the_yoke_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_accept_the_yoke_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = -40
@@ -30727,11 +29423,6 @@ qpq_cast_off_the_yoke_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -30780,21 +29471,9 @@ qpq_cast_off_the_yoke_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_cast_off_the_yoke_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
 			add = qpq_cast_off_the_yoke_goal_value
@@ -31160,11 +29839,6 @@ qpq_barter_interaction = {
 		}
 		modifier = {
 			add = -1000
-			qpq_ai_refuses_hatred_trigger = { AGENT = scope:recipient PAYER = scope:actor }
-			desc = QPQ_REASON_REFUSES_HATRED
-		}
-		modifier = {
-			add = -1000
 			qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_barter_agent_tier_value }
 			desc = QPQ_REASON_REFUSES_RIVAL
 		}
@@ -31213,21 +29887,9 @@ qpq_barter_interaction = {
 			scope:recipient = { has_trait = paranoid }
 			desc = QPQ_REASON_TRAIT_PARANOID
 		}
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 0.5
-			desc = AI_OPINION_REASON
-		}
 		modifier = {
-			add = intimidated_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } }
-			desc = QPQ_REASON_INTIMIDATED
-		}
-		modifier = {
-			add = cowed_halved_reason_value
-			scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }
-			desc = QPQ_REASON_COWED
+			add = qpq_barter_goodwill_value
+			desc = QPQ_REASON_GOODWILL
 		}
 	}
 

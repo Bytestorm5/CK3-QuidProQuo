@@ -9,6 +9,11 @@ the right characters in scope:actor and scope:recipient, so T, which the Ask its
 the payer's suzerain), keeps the very text the Ask gives it.
 
 Everything about T is judged only once T exists: before a target is picked in the panel, there is none.
+
+Two views. The doer's (an AI asked to do the deed: goal_body, WAR_SIDE): what doing it costs them, what they
+would like about it. The beneficiary's (an AI that would get the deed done, by you, in the panel's other leg:
+benefit_body, WAR_BENEFIT): what they want from it. A deed against someone they have no quarrel with is worth
+nothing to them; a title or a treasure handed to them is a gain, not a loss.
 """
 
 # Who is the third party, per target type
@@ -56,6 +61,9 @@ KIND_GOALS = {
     "yield_war": ["war_side"], "leave_war": ["war_side"],
 }
 
+# What one gives up weighs this much more than what one gets: an even swap is refused
+LOSS_AVERSION = 1.25
+
 # The wartime deeds are judged on the war in question, found from the deed's parties: D (deciding), P (proposer)
 # and T (the war leader of the other side, the deed's target).
 #   war:      (whose war, against whom) that names it
@@ -70,6 +78,18 @@ WAR_SIDE = {
     "make_peace": dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
     "yield_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=1.0),
     "leave_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
+}
+
+# The same deeds seen by the one who would pay for them (D, scope:actor in the swapped view; P does the deed):
+#   war: the war D's side is measured in. D asks for help in its own war (join, stay out), or for an end to the
+#        war P fights against it (make peace, yield, leave). In the last three, if D is not T, D is a friend of T
+#        paying for T's sake.
+WAR_BENEFIT = {
+    "join_war":   dict(war=("D", "T"), side="D"),
+    "stay_out":   dict(war=("D", "T"), side="D"),
+    "make_peace": dict(war=("D", "P"), side="D"),
+    "yield_war":  dict(war=("D", "P"), side="D"),
+    "leave_war":  dict(war=("D", "P"), side="D"),
 }
 
 # Wars where the proposer fights alongside, and wars waged by the faith
@@ -177,7 +197,7 @@ def _side_strength(of, mine):
 
 def goal_helpers(k, swapped=False):
     """[(part, script value body)]: the strength of D's side and of the other side, in the war of a wartime deed."""
-    cfg = WAR_SIDE.get(k["key"])
+    cfg = (WAR_BENEFIT if swapped else WAR_SIDE).get(k["key"])
     if not cfg:
         return []
     D, P, T = _roles(k, swapped)
@@ -186,7 +206,7 @@ def goal_helpers(k, swapped=False):
     def guarded(inner):
         return "\tif = {\n\t\tlimit = { exists = %s }\n%s\t}\n" % (T, _indent(inner)) if T else inner
     ours = "\tvalue = 0\n" + guarded(_in_war(who, foe, _side_strength(side, True)))
-    if cfg["add_self"]:
+    if cfg.get("add_self"):
         ours += "\tadd = %s.current_military_strength\n" % D
     ours += "\tmin = 1\n"
     theirs = "\tvalue = 0\n" + guarded(_in_war(who, foe, _side_strength(side, False)))
@@ -238,6 +258,77 @@ def _war_side_body(k, swapped):
     return "\tadd = {\n\t\tvalue = 0\n%s\t\tmultiply = %s\n\t}\n" % (inner, cfg["sign"] * cfg["weight"])
 
 
+def _losing_body(ours, theirs, who, foe, side, scale):
+    """Points for how badly D's side is doing (positive: losing), times scale: strength, then war score."""
+    t = ("\tif = {\n\t\tlimit = { %(o)s < { value = %(t)s multiply = 0.5 } }\n\t\tadd = 20\n\t}\n"
+         "\telse_if = {\n\t\tlimit = { %(o)s < { value = %(t)s multiply = 0.8 } }\n\t\tadd = 10\n\t}\n"
+         "\telse_if = {\n\t\tlimit = { %(o)s >= { value = %(t)s multiply = 2 } }\n\t\tadd = -20\n\t}\n"
+         "\telse_if = {\n\t\tlimit = { %(o)s >= { value = %(t)s multiply = 1.25 } }\n\t\tadd = -10\n\t}\n") % {"o": ours, "t": theirs}
+    t += _in_war(who, foe, (
+        "\t\t\tif = {\n\t\t\t\tlimit = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = 40 } }\n\t\t\t\tadd = -12\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = 15 } }\n\t\t\t\tadd = -6\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -40 } } }\n\t\t\t\tadd = 12\n\t\t\t}\n"
+        "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -15 } } }\n\t\t\t\tadd = 6\n\t\t\t}\n") % {"s": side})
+    return "\tadd = {\n\t\tvalue = 0\n%s\t\tmultiply = %s\n\t}\n" % (_indent(t), scale)
+
+
+def _war_benefit_body(k):
+    """What D (the payer) gets from P doing a wartime deed: help in its own war, or an end to one."""
+    key = k["key"]
+    cfg = WAR_BENEFIT[key]
+    D, P, T = _roles(k, True)
+    m = {"D": D, "P": P, "T": T}
+    who, foe, side = m[cfg["war"][0]], m[cfg["war"][1]], m[cfg["side"]]
+    ours, theirs = _war_name(k, True, "ours"), _war_name(k, True, "theirs")
+    t = ""
+    if key == "join_war":
+        # help is worth most to a side that is losing, and in proportion to the help
+        t += "\tadd = 8\n"
+        t += _losing_body(ours, theirs, who, foe, side, 1)
+        t += ("\tif = {\n\t\tlimit = { %s.current_military_strength >= { value = %s multiply = 0.25 } }\n\t\tadd = 8\n\t}\n") % (P, theirs)
+    elif key == "stay_out":
+        # worth most if they would otherwise come in on the enemy's side
+        t += "\tadd = 6\n"
+        t += "\tif = {\n\t\tlimit = { %s = { is_allied_to = %s } }\n\t\tadd = 15\n\t}\n" % (P, T)
+        t += _losing_body(ours, theirs, who, foe, side, 0.3)
+    else:
+        # P ends a war against T. If D is T, D is the one at war with P: peace (or victory) is worth what the war
+        # was costing D. Otherwise D pays for T's sake, as a friend of T.
+        base = {"make_peace": 0, "yield_war": 25, "leave_war": 6}[key]
+        scale = {"make_peace": 1, "yield_war": 0.5, "leave_war": 0.5}[key]
+        inner = ("\tadd = %d\n" % base) + _losing_body(ours, theirs, who, foe, side, scale)
+        inner += _in_war(who, foe, "\t\t\tif = {\n\t\t\t\tlimit = { war_days >= 1095 }\n\t\t\t\tadd = 8\n\t\t\t}\n")
+        t += "\tif = {\n\t\tlimit = { %s = %s }\n%s\t}\n" % (D, T, _indent(inner))
+        t += "\telse = {\n%s\t}\n" % _indent(goal_body("favour", D, P, T))
+    return t
+
+
+def benefit_body(arch, D, P, T):
+    """The inside of a script value: what D, who would pay for the deed, gets from it (the beneficiary's view)."""
+    s = ""
+    if arch == "war":
+        s += _enmity(D, P, T)
+        s += "\tif = {\n\t\tlimit = { %s = { any_claim = { holder ?= %s } } }\n\t\tadd = 12\n\t}\n" % (D, T)
+        s += _traits(D, [("ambitious", 6), ("wrathful", 4)], [("compassionate", 3), ("content", 4)])
+    elif arch == "harm":
+        s += _enmity(D, P, T)
+        s += _traits(D, [("sadistic", 8), ("vengeful", 6), ("callous", 5)],
+                     [("compassionate", 8), ("forgiving", 6), ("honest", 4)])
+    elif arch == "loss_title":
+        # the title (or claim) given up comes to them: a gain, greater with rank
+        s += ("\tadd = {\n\t\tvalue = 0\n\t\tscope:target = {\n\t\t\tif = {\n\t\t\t\tlimit = { tier >= tier_kingdom }\n\t\t\t\tadd = 30\n\t\t\t}\n"
+              "\t\t\telse_if = {\n\t\t\t\tlimit = { tier = tier_duchy }\n\t\t\t\tadd = 18\n\t\t\t}\n"
+              "\t\t\telse = {\n\t\t\t\tadd = 8\n\t\t\t}\n\t\t}\n\t}\n")
+        s += _traits(D, [("greedy", 8), ("ambitious", 5)], [])
+    elif arch == "loss_artifact":
+        s += "\tscope:target = { add = qpq_gift_artifact_cost_value }\n"
+        s += _traits(D, [("greedy", 8)], [("generous", 3)])
+    else:
+        # favour, pact, faith: the same whichever side of the deed one is on
+        s += goal_body(arch, D, P, T)
+    return s
+
+
 import re
 
 
@@ -258,7 +349,9 @@ def goal_value(k, swapped=False):
     body = ""
     for a in archs:
         if a == "war_side":
-            body += _war_side_body(k, swapped)
+            body += _war_benefit_body(k) if swapped else _war_side_body(k, swapped)
+        elif swapped:
+            body += benefit_body(a, D, P, T)
         else:
             body += goal_body(a, D, P, T)
     G = T or ("scope:target" if k["target"] == "artifact" else None)
@@ -272,8 +365,8 @@ def _indent(text):
 
 
 # The reasons an AI will not do a deed at any price, whatever the deed (qpq_ai_refuses_<why>_trigger) and the
-# arguments each takes. The hatred one is judged once for the whole deal in the panel.
-REFUSE_GENERIC = [("hatred", "AP"), ("rival", "APT"), ("virtue", "AT"), ("damnable", "APT"), ("no_leverage", "APT")]
+# arguments each takes. Dislike is never one of them: opinion counts for or against, but never refuses outright.
+REFUSE_GENERIC = [("rival", "APT"), ("virtue", "AT"), ("damnable", "APT"), ("no_leverage", "APT")]
 
 
 def refuse_args(args, agent, payer, tier):
@@ -297,6 +390,18 @@ def goal_refusal_parts(k, swapped=False):
     T = third_party(k)
     D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
     parts = []
+    if swapped:
+        # Who would pay for it will not pay to see their own ally, kin or friend hurt, nor deal with a rival
+        if ("war" in archs or "harm" in archs) and T:
+            parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
+            parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
+        if "harm" in archs and T:
+            parts.append(("friend", "OR = {\n\t\t%s = { has_relation_friend = %s }\n\t\t%s = { has_relation_lover = %s }\n\t\t%s = { has_relation_best_friend = %s }\n\t}" % (D, T, D, T, D, T)))
+        if "favour" in archs and T:
+            parts.append(("rival_target", "OR = {\n\t\t%s = { has_relation_rival = %s }\n\t\t%s = { has_relation_nemesis = %s }\n\t}" % (D, T, D, T)))
+        if "pact" in archs:
+            parts.append(("rival_you", "%s = { has_relation_rival = %s }" % (D, P)))
+        archs = []
     if "war" in archs and T:
         parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
         parts.append(("kin", "%s = { is_close_family_of = %s }" % (D, T)))
