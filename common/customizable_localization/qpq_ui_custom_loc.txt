@@ -2778,6 +2778,84 @@ QpqUiRef_i_rival_you = {
 	}
 }
 
+QpqUiAccLine_goal = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_goal NOT = { var:qpq_ui_acc_goal = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_GOAL
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_char = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_char NOT = { var:qpq_ui_acc_char = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_CHAR
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_dread = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_dread NOT = { var:qpq_ui_acc_dread = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_DREAD
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_circ = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_circ NOT = { var:qpq_ui_acc_circ = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_CIRC
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_public = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_public NOT = { var:qpq_ui_acc_public = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_PUBLIC
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
+QpqUiAccLine_refuse = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { exists = var:qpq_ui_acc_refuse NOT = { var:qpq_ui_acc_refuse = 0 } }
+		localization_key = QPQ_UI_ACC_LINE_REFUSE
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}
+
 QpqUiRefuseBlock = {
 	type = character
 	log_loc_errors = no

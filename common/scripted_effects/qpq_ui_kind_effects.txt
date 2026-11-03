@@ -619,19 +619,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_chartered_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_chartered_conquest_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_chartered_conquest_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_chartered_conquest_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_chartered_conquest_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_chartered_conquest_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_chartered_conquest_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_chartered_conquest_ai_acceptance_value
-					subtract = qpq_chartered_conquest_ask_value
-					subtract = qpq_chartered_conquest_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_chartered_conquest_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_chartered_conquest_agent_tier_value }
@@ -775,19 +777,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_sanctioned_conquest_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_sanctioned_conquest_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_sanctioned_conquest_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_sanctioned_conquest_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_sanctioned_conquest_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_sanctioned_conquest_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_sanctioned_conquest_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_sanctioned_conquest_ai_acceptance_value
-					subtract = qpq_sanctioned_conquest_ask_value
-					subtract = qpq_sanctioned_conquest_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_sanctioned_conquest_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_sanctioned_conquest_agent_tier_value }
@@ -928,19 +932,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marcher_charge_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marcher_charge_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_marcher_charge_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_marcher_charge_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_marcher_charge_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_marcher_charge_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_marcher_charge_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_marcher_charge_ai_acceptance_value
-					subtract = qpq_marcher_charge_ask_value
-					subtract = qpq_marcher_charge_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_marcher_charge_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marcher_charge_agent_tier_value }
@@ -1075,19 +1081,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_sponsorship_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_sponsorship_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_sponsorship_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_holy_sponsorship_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_sponsorship_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_holy_sponsorship_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_sponsorship_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_holy_sponsorship_ai_acceptance_value
-					subtract = qpq_holy_sponsorship_ask_value
-					subtract = qpq_holy_sponsorship_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_sponsorship_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_sponsorship_agent_tier_value }
@@ -1212,19 +1220,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_development_charter_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_development_charter_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_development_charter_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_development_charter_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_development_charter_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_development_charter_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_development_charter_ai_acceptance_value
-					subtract = qpq_development_charter_ask_value
-					subtract = qpq_development_charter_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_development_charter_agent_tier_value }
@@ -1343,19 +1353,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_electoral_purchase_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_electoral_purchase_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_electoral_purchase_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_electoral_purchase_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_electoral_purchase_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_electoral_purchase_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_purchase_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_electoral_purchase_ai_acceptance_value
-					subtract = qpq_electoral_purchase_ask_value
-					subtract = qpq_electoral_purchase_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_purchase_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_electoral_purchase_agent_tier_value }
@@ -1425,19 +1437,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_loyal_mole_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_loyal_mole_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_loyal_mole_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_loyal_mole_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_loyal_mole_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_loyal_mole_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_loyal_mole_ai_acceptance_value
-					subtract = qpq_loyal_mole_ask_value
-					subtract = qpq_loyal_mole_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_loyal_mole_agent_tier_value }
@@ -1497,19 +1511,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_agent_provocateur_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_agent_provocateur_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_agent_provocateur_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_agent_provocateur_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_agent_provocateur_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_agent_provocateur_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_agent_provocateur_ai_acceptance_value
-					subtract = qpq_agent_provocateur_ask_value
-					subtract = qpq_agent_provocateur_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_agent_provocateur_agent_tier_value }
@@ -1626,19 +1642,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_licensed_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_licensed_feud_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_licensed_feud_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_licensed_feud_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_licensed_feud_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_licensed_feud_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_licensed_feud_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_licensed_feud_ai_acceptance_value
-					subtract = qpq_licensed_feud_ask_value
-					subtract = qpq_licensed_feud_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_licensed_feud_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_licensed_feud_agent_tier_value }
@@ -1774,19 +1792,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dossier_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dossier_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_dossier_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_dossier_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_dossier_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dossier_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dossier_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_dossier_ai_acceptance_value
-					subtract = qpq_dossier_ask_value
-					subtract = qpq_dossier_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_dossier_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dossier_agent_tier_value }
@@ -1946,19 +1966,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_quiet_removal_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_quiet_removal_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_quiet_removal_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_quiet_removal_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_quiet_removal_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_quiet_removal_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_quiet_removal_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_quiet_removal_ai_acceptance_value
-					subtract = qpq_quiet_removal_ask_value
-					subtract = qpq_quiet_removal_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_quiet_removal_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_quiet_removal_agent_tier_value }
@@ -2107,19 +2129,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_heir_question_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_heir_question_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_heir_question_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_heir_question_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_heir_question_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_heir_question_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_heir_question_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_heir_question_ai_acceptance_value
-					subtract = qpq_heir_question_ask_value
-					subtract = qpq_heir_question_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_heir_question_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heir_question_agent_tier_value }
@@ -2275,19 +2299,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_snatch_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_snatch_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_snatch_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_snatch_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_snatch_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_snatch_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_snatch_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_snatch_ai_acceptance_value
-					subtract = qpq_snatch_ask_value
-					subtract = qpq_snatch_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_snatch_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_snatch_agent_tier_value }
@@ -2427,19 +2453,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispossession_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispossession_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_dispossession_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_dispossession_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_dispossession_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dispossession_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispossession_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_dispossession_ai_acceptance_value
-					subtract = qpq_dispossession_ask_value
-					subtract = qpq_dispossession_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispossession_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispossession_agent_tier_value }
@@ -2583,19 +2611,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_the_cloister_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_the_cloister_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_the_cloister_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_the_cloister_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_the_cloister_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_the_cloister_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_the_cloister_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_the_cloister_ai_acceptance_value
-					subtract = qpq_the_cloister_ask_value
-					subtract = qpq_the_cloister_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_the_cloister_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_the_cloister_agent_tier_value }
@@ -2739,19 +2769,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_marriage_by_command_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marriage_by_command_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_marriage_by_command_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_marriage_by_command_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_marriage_by_command_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_marriage_by_command_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_marriage_by_command_ai_acceptance_value
-					subtract = qpq_marriage_by_command_ask_value
-					subtract = qpq_marriage_by_command_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_marriage_by_command_agent_tier_value }
@@ -2885,19 +2917,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_hand_over_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hand_over_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_hand_over_ai_acceptance_value
-					subtract = qpq_hand_over_ask_value
-					subtract = qpq_hand_over_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_agent_tier_value }
@@ -3028,19 +3062,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hand_over_artifact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_artifact_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_artifact_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_hand_over_artifact_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_artifact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hand_over_artifact_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_artifact_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_hand_over_artifact_ai_acceptance_value
-					subtract = qpq_hand_over_artifact_ask_value
-					subtract = qpq_hand_over_artifact_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_artifact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hand_over_artifact_agent_tier_value }
@@ -3154,19 +3190,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_renunciation_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_renunciation_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_renunciation_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_renunciation_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_renunciation_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_renunciation_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_renunciation_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_renunciation_ai_acceptance_value
-					subtract = qpq_renunciation_ask_value
-					subtract = qpq_renunciation_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_renunciation_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_renunciation_agent_tier_value }
@@ -3227,19 +3265,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hush_money_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hush_money_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_hush_money_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_hush_money_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_hush_money_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hush_money_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_hush_money_ai_acceptance_value
-					subtract = qpq_hush_money_ask_value
-					subtract = qpq_hush_money_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hush_money_agent_tier_value }
@@ -3305,16 +3345,30 @@ qpq_ui_leg_t_refresh_effect = {
 					multiply = -1
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_other value = qpq_price_of_loyalty_goal_sw_value }
+			set_variable = { name = qpq_ui_t_a_char value = 0 }
+			set_variable = { name = qpq_ui_t_a_dread value = 0 }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			set_variable = { name = qpq_ui_t_a_refuse value = 0 }
 			if = {
-				limit = { qpq_price_of_loyalty_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_t_a_other value = -1000 }
-			}
-			if = {
-				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value } }
-				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_price_of_loyalty_goal_sw_refuses_trigger = yes
+						qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_price_of_loyalty_agent_tier_value }
+					}
+				}
+				set_variable = { name = qpq_ui_t_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_price_of_loyalty_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -3438,19 +3492,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_blessing_for_a_feud_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_blessing_for_a_feud_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_blessing_for_a_feud_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_blessing_for_a_feud_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_blessing_for_a_feud_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_blessing_for_a_feud_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_blessing_for_a_feud_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_blessing_for_a_feud_ai_acceptance_value
-					subtract = qpq_blessing_for_a_feud_ask_value
-					subtract = qpq_blessing_for_a_feud_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_blessing_for_a_feud_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_blessing_for_a_feud_agent_tier_value }
@@ -3536,19 +3592,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_clemency_bargain_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_clemency_bargain_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_clemency_bargain_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_clemency_bargain_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_clemency_bargain_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_clemency_bargain_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_clemency_bargain_ai_acceptance_value
-					subtract = qpq_clemency_bargain_ask_value
-					subtract = qpq_clemency_bargain_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_clemency_bargain_agent_tier_value }
@@ -3669,16 +3727,30 @@ qpq_ui_leg_t_refresh_effect = {
 					multiply = -1
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_other value = qpq_electoral_capitulation_goal_sw_value }
+			set_variable = { name = qpq_ui_t_a_char value = 0 }
+			set_variable = { name = qpq_ui_t_a_dread value = 0 }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			set_variable = { name = qpq_ui_t_a_refuse value = 0 }
 			if = {
-				limit = { qpq_electoral_capitulation_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_t_a_other value = -1000 }
-			}
-			if = {
-				limit = { qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value } }
-				set_variable = { name = qpq_ui_t_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_electoral_capitulation_goal_sw_refuses_trigger = yes
+						qpq_ai_refuses_trigger = { AGENT = scope:actor PAYER = scope:recipient TIER = qpq_electoral_capitulation_agent_tier_value }
+					}
+				}
+				set_variable = { name = qpq_ui_t_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_capitulation_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_t_a_other
+				value = {
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					OR = {
@@ -3753,19 +3825,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_mutual_defense_league_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_mutual_defense_league_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_mutual_defense_league_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_mutual_defense_league_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_mutual_defense_league_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_mutual_defense_league_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_mutual_defense_league_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_mutual_defense_league_ai_acceptance_value
-					subtract = qpq_mutual_defense_league_ask_value
-					subtract = qpq_mutual_defense_league_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_mutual_defense_league_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_mutual_defense_league_agent_tier_value }
@@ -3836,19 +3910,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faction_pledge_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faction_pledge_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_faction_pledge_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_faction_pledge_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_faction_pledge_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_faction_pledge_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_faction_pledge_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_faction_pledge_ai_acceptance_value
-					subtract = qpq_faction_pledge_ask_value
-					subtract = qpq_faction_pledge_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_faction_pledge_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faction_pledge_agent_tier_value }
@@ -3970,19 +4046,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_title_swap_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_title_swap_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_title_swap_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_title_swap_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_title_swap_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_title_swap_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_title_swap_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_title_swap_ai_acceptance_value
-					subtract = qpq_title_swap_ask_value
-					subtract = qpq_title_swap_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_title_swap_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_title_swap_agent_tier_value }
@@ -4048,19 +4126,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_coup_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_coup_pact_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_coup_pact_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_coup_pact_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_coup_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_coup_pact_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_coup_pact_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_coup_pact_ai_acceptance_value
-					subtract = qpq_coup_pact_ask_value
-					subtract = qpq_coup_pact_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_coup_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_coup_pact_agent_tier_value }
@@ -4203,19 +4283,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_proxy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_proxy_war_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_proxy_war_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_proxy_war_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_proxy_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_proxy_war_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_proxy_war_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_proxy_war_ai_acceptance_value
-					subtract = qpq_proxy_war_ask_value
-					subtract = qpq_proxy_war_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_proxy_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_proxy_war_agent_tier_value }
@@ -4351,19 +4433,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_partition_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_partition_pact_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_partition_pact_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_partition_pact_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_partition_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_partition_pact_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_partition_pact_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_partition_pact_ai_acceptance_value
-					subtract = qpq_partition_pact_ask_value
-					subtract = qpq_partition_pact_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_partition_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_partition_pact_agent_tier_value }
@@ -4442,19 +4526,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_alliance_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_secret_alliance_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_secret_alliance_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_secret_alliance_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_secret_alliance_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_secret_alliance_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_alliance_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_secret_alliance_ai_acceptance_value
-					subtract = qpq_secret_alliance_ask_value
-					subtract = qpq_secret_alliance_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_alliance_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_alliance_agent_tier_value }
@@ -4520,19 +4606,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_truce_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_truce_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_truce_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_bought_truce_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_truce_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_bought_truce_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_truce_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_bought_truce_ai_acceptance_value
-					subtract = qpq_bought_truce_ask_value
-					subtract = qpq_bought_truce_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_truce_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_truce_agent_tier_value }
@@ -4663,19 +4751,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_faithless_ally_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faithless_ally_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_faithless_ally_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_faithless_ally_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_faithless_ally_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_faithless_ally_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_faithless_ally_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_faithless_ally_ai_acceptance_value
-					subtract = qpq_faithless_ally_ask_value
-					subtract = qpq_faithless_ally_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_faithless_ally_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_faithless_ally_agent_tier_value }
@@ -4766,19 +4856,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_turncoat_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_turncoat_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_turncoat_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_turncoat_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_turncoat_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_turncoat_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_turncoat_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_turncoat_ai_acceptance_value
-					subtract = qpq_turncoat_ask_value
-					subtract = qpq_turncoat_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_turncoat_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_turncoat_agent_tier_value }
@@ -4868,19 +4960,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_seed_the_separatists_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_seed_the_separatists_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_seed_the_separatists_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_seed_the_separatists_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_seed_the_separatists_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_seed_the_separatists_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_seed_the_separatists_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_seed_the_separatists_ai_acceptance_value
-					subtract = qpq_seed_the_separatists_ask_value
-					subtract = qpq_seed_the_separatists_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_seed_the_separatists_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_seed_the_separatists_agent_tier_value }
@@ -4999,19 +5093,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_shelter_the_pretender_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_shelter_the_pretender_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_shelter_the_pretender_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_shelter_the_pretender_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_shelter_the_pretender_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_shelter_the_pretender_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_shelter_the_pretender_ai_acceptance_value
-					subtract = qpq_shelter_the_pretender_ask_value
-					subtract = qpq_shelter_the_pretender_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_shelter_the_pretender_agent_tier_value }
@@ -5129,19 +5225,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_extradition_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_extradition_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_extradition_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_extradition_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_extradition_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_extradition_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_extradition_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_extradition_ai_acceptance_value
-					subtract = qpq_extradition_ask_value
-					subtract = qpq_extradition_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_extradition_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_extradition_agent_tier_value }
@@ -5231,19 +5329,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_councillor_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_councillor_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_councillor_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_buy_a_councillor_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_councillor_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_buy_a_councillor_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_councillor_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_buy_a_councillor_ai_acceptance_value
-					subtract = qpq_buy_a_councillor_ask_value
-					subtract = qpq_buy_a_councillor_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_councillor_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_councillor_agent_tier_value }
@@ -5333,19 +5433,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_home_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_home_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_home_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_stay_home_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_home_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_stay_home_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_home_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_stay_home_ai_acceptance_value
-					subtract = qpq_stay_home_ask_value
-					subtract = qpq_stay_home_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_home_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_home_agent_tier_value }
@@ -5416,19 +5518,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_defection_pact_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_defection_pact_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_defection_pact_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_defection_pact_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_defection_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_defection_pact_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_defection_pact_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_defection_pact_ai_acceptance_value
-					subtract = qpq_defection_pact_ask_value
-					subtract = qpq_defection_pact_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_defection_pact_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_defection_pact_agent_tier_value }
@@ -5547,19 +5651,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_secret_clause_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_secret_clause_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_secret_clause_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_secret_clause_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_secret_clause_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_secret_clause_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_clause_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_secret_clause_ai_acceptance_value
-					subtract = qpq_secret_clause_ask_value
-					subtract = qpq_secret_clause_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_clause_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_secret_clause_agent_tier_value }
@@ -5690,19 +5796,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_hire_the_hashashin_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hire_the_hashashin_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_hire_the_hashashin_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_hire_the_hashashin_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_hire_the_hashashin_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hire_the_hashashin_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_hire_the_hashashin_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_hire_the_hashashin_ai_acceptance_value
-					subtract = qpq_hire_the_hashashin_ask_value
-					subtract = qpq_hire_the_hashashin_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_hire_the_hashashin_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_hire_the_hashashin_agent_tier_value }
@@ -5860,19 +5968,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_excommunication_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_excommunication_for_hire_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_excommunication_for_hire_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_excommunication_for_hire_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_excommunication_for_hire_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_excommunication_for_hire_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_excommunication_for_hire_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_excommunication_for_hire_ai_acceptance_value
-					subtract = qpq_excommunication_for_hire_ask_value
-					subtract = qpq_excommunication_for_hire_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_excommunication_for_hire_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_excommunication_for_hire_agent_tier_value }
@@ -6013,19 +6123,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_dispensation_for_gold_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispensation_for_gold_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_dispensation_for_gold_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_dispensation_for_gold_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_dispensation_for_gold_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dispensation_for_gold_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispensation_for_gold_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_dispensation_for_gold_ai_acceptance_value
-					subtract = qpq_dispensation_for_gold_ask_value
-					subtract = qpq_dispensation_for_gold_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispensation_for_gold_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_dispensation_for_gold_agent_tier_value }
@@ -6161,19 +6273,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_steer_the_holy_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_steer_the_holy_war_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_steer_the_holy_war_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_steer_the_holy_war_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_steer_the_holy_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_steer_the_holy_war_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_steer_the_holy_war_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_steer_the_holy_war_ai_acceptance_value
-					subtract = qpq_steer_the_holy_war_ask_value
-					subtract = qpq_steer_the_holy_war_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_steer_the_holy_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_steer_the_holy_war_agent_tier_value }
@@ -6304,19 +6418,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_purchase_a_mitre_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_purchase_a_mitre_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_purchase_a_mitre_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_purchase_a_mitre_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_purchase_a_mitre_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_purchase_a_mitre_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_purchase_a_mitre_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_purchase_a_mitre_ai_acceptance_value
-					subtract = qpq_purchase_a_mitre_ask_value
-					subtract = qpq_purchase_a_mitre_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_purchase_a_mitre_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_purchase_a_mitre_agent_tier_value }
@@ -6452,19 +6568,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_claim_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_claim_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_claim_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_bought_claim_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_claim_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_bought_claim_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_claim_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_bought_claim_ai_acceptance_value
-					subtract = qpq_bought_claim_ask_value
-					subtract = qpq_bought_claim_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_claim_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_claim_agent_tier_value }
@@ -6550,19 +6668,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_absolution_by_concession_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_absolution_by_concession_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_absolution_by_concession_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_absolution_by_concession_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_absolution_by_concession_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_absolution_by_concession_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_absolution_by_concession_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_absolution_by_concession_ai_acceptance_value
-					subtract = qpq_absolution_by_concession_ask_value
-					subtract = qpq_absolution_by_concession_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_absolution_by_concession_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_absolution_by_concession_agent_tier_value }
@@ -6691,19 +6811,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_holy_warrant_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_warrant_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_warrant_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_holy_warrant_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_warrant_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_holy_warrant_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_warrant_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_holy_warrant_ai_acceptance_value
-					subtract = qpq_holy_warrant_ask_value
-					subtract = qpq_holy_warrant_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_warrant_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_holy_warrant_agent_tier_value }
@@ -6848,19 +6970,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_buy_a_bull_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_bull_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_bull_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_buy_a_bull_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_bull_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_buy_a_bull_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_bull_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_buy_a_bull_ai_acceptance_value
-					subtract = qpq_buy_a_bull_ask_value
-					subtract = qpq_buy_a_bull_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_bull_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_buy_a_bull_agent_tier_value }
@@ -7008,19 +7132,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_conclave_votes_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_conclave_votes_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_conclave_votes_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_conclave_votes_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_conclave_votes_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_conclave_votes_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_conclave_votes_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_conclave_votes_ai_acceptance_value
-					subtract = qpq_conclave_votes_ask_value
-					subtract = qpq_conclave_votes_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_conclave_votes_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_conclave_votes_agent_tier_value }
@@ -7090,19 +7216,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_council_lobbying_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_council_lobbying_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_council_lobbying_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_council_lobbying_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_council_lobbying_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_council_lobbying_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_council_lobbying_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_council_lobbying_ai_acceptance_value
-					subtract = qpq_council_lobbying_ask_value
-					subtract = qpq_council_lobbying_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_council_lobbying_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_council_lobbying_agent_tier_value }
@@ -7162,19 +7290,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_caliphal_investiture_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_caliphal_investiture_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_caliphal_investiture_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_caliphal_investiture_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_caliphal_investiture_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_caliphal_investiture_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_caliphal_investiture_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_caliphal_investiture_ai_acceptance_value
-					subtract = qpq_caliphal_investiture_ask_value
-					subtract = qpq_caliphal_investiture_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_caliphal_investiture_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_caliphal_investiture_agent_tier_value }
@@ -7239,19 +7369,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_name_in_the_khutba_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_name_in_the_khutba_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_name_in_the_khutba_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_name_in_the_khutba_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_name_in_the_khutba_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_name_in_the_khutba_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_name_in_the_khutba_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_name_in_the_khutba_ai_acceptance_value
-					subtract = qpq_name_in_the_khutba_ask_value
-					subtract = qpq_name_in_the_khutba_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_name_in_the_khutba_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_name_in_the_khutba_agent_tier_value }
@@ -7377,19 +7509,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fatwa_for_hire_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fatwa_for_hire_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_fatwa_for_hire_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_fatwa_for_hire_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_fatwa_for_hire_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_fatwa_for_hire_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_fatwa_for_hire_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_fatwa_for_hire_ai_acceptance_value
-					subtract = qpq_fatwa_for_hire_ask_value
-					subtract = qpq_fatwa_for_hire_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_fatwa_for_hire_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fatwa_for_hire_agent_tier_value }
@@ -7541,19 +7675,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_fund_the_dawa_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fund_the_dawa_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_fund_the_dawa_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_fund_the_dawa_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_fund_the_dawa_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_fund_the_dawa_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_fund_the_dawa_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_fund_the_dawa_ai_acceptance_value
-					subtract = qpq_fund_the_dawa_ask_value
-					subtract = qpq_fund_the_dawa_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_fund_the_dawa_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_fund_the_dawa_agent_tier_value }
@@ -7644,19 +7780,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_crowning_the_usurper_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_crowning_the_usurper_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_crowning_the_usurper_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_crowning_the_usurper_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_crowning_the_usurper_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_crowning_the_usurper_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_crowning_the_usurper_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_crowning_the_usurper_ai_acceptance_value
-					subtract = qpq_crowning_the_usurper_ask_value
-					subtract = qpq_crowning_the_usurper_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_crowning_the_usurper_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_crowning_the_usurper_agent_tier_value }
@@ -7741,19 +7879,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_pliant_patriarch_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_pliant_patriarch_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_pliant_patriarch_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_pliant_patriarch_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_pliant_patriarch_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_pliant_patriarch_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_pliant_patriarch_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_pliant_patriarch_ai_acceptance_value
-					subtract = qpq_pliant_patriarch_ask_value
-					subtract = qpq_pliant_patriarch_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_pliant_patriarch_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_pliant_patriarch_agent_tier_value }
@@ -7881,19 +8021,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_favourable_omens_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_favourable_omens_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_favourable_omens_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_favourable_omens_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_favourable_omens_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_favourable_omens_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_favourable_omens_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_favourable_omens_ai_acceptance_value
-					subtract = qpq_favourable_omens_ask_value
-					subtract = qpq_favourable_omens_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_favourable_omens_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_favourable_omens_agent_tier_value }
@@ -7979,19 +8121,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_consecration_rites_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_consecration_rites_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_consecration_rites_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_consecration_rites_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_consecration_rites_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_consecration_rites_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_consecration_rites_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_consecration_rites_ai_acceptance_value
-					subtract = qpq_consecration_rites_ask_value
-					subtract = qpq_consecration_rites_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_consecration_rites_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_consecration_rites_agent_tier_value }
@@ -8117,19 +8261,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_temple_patronage_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_temple_patronage_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_temple_patronage_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_temple_patronage_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_temple_patronage_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_temple_patronage_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_temple_patronage_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_temple_patronage_ai_acceptance_value
-					subtract = qpq_temple_patronage_ask_value
-					subtract = qpq_temple_patronage_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_temple_patronage_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_temple_patronage_agent_tier_value }
@@ -8282,19 +8428,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_make_peace_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_make_peace_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_make_peace_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_make_peace_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_make_peace_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_make_peace_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_make_peace_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_make_peace_ai_acceptance_value
-					subtract = qpq_make_peace_ask_value
-					subtract = qpq_make_peace_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_make_peace_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_make_peace_agent_tier_value }
@@ -8425,19 +8573,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_yield_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_yield_war_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_yield_war_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_yield_war_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_yield_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_yield_war_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_yield_war_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_yield_war_ai_acceptance_value
-					subtract = qpq_yield_war_ask_value
-					subtract = qpq_yield_war_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_yield_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_yield_war_agent_tier_value }
@@ -8571,19 +8721,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_join_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_join_war_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_join_war_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_join_war_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_join_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_join_war_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_join_war_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_join_war_ai_acceptance_value
-					subtract = qpq_join_war_ask_value
-					subtract = qpq_join_war_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_join_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_join_war_agent_tier_value }
@@ -8743,19 +8895,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_leave_war_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_leave_war_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_leave_war_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_leave_war_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_leave_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_leave_war_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_leave_war_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_leave_war_ai_acceptance_value
-					subtract = qpq_leave_war_ask_value
-					subtract = qpq_leave_war_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_leave_war_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_leave_war_agent_tier_value }
@@ -8888,19 +9042,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_stay_out_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_out_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_out_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_stay_out_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_out_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_stay_out_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_out_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_stay_out_ai_acceptance_value
-					subtract = qpq_stay_out_ask_value
-					subtract = qpq_stay_out_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_out_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_stay_out_agent_tier_value }
@@ -8993,19 +9149,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_heavier_tribute_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_heavier_tribute_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_heavier_tribute_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_heavier_tribute_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_heavier_tribute_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_heavier_tribute_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_heavier_tribute_ai_acceptance_value
-					subtract = qpq_heavier_tribute_ask_value
-					subtract = qpq_heavier_tribute_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_heavier_tribute_agent_tier_value }
@@ -9076,19 +9234,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_lighter_tribute_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_lighter_tribute_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_lighter_tribute_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_lighter_tribute_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_lighter_tribute_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_lighter_tribute_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_lighter_tribute_ai_acceptance_value
-					subtract = qpq_lighter_tribute_ask_value
-					subtract = qpq_lighter_tribute_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_lighter_tribute_agent_tier_value }
@@ -9159,19 +9319,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_bought_freedom_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_freedom_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_freedom_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_bought_freedom_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_freedom_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_bought_freedom_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_bought_freedom_ai_acceptance_value
-					subtract = qpq_bought_freedom_ask_value
-					subtract = qpq_bought_freedom_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_bought_freedom_agent_tier_value }
@@ -9231,19 +9393,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_accept_the_yoke_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_accept_the_yoke_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_accept_the_yoke_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_accept_the_yoke_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_accept_the_yoke_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_accept_the_yoke_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_accept_the_yoke_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_accept_the_yoke_ai_acceptance_value
-					subtract = qpq_accept_the_yoke_ask_value
-					subtract = qpq_accept_the_yoke_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_accept_the_yoke_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
@@ -9325,19 +9489,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_cast_off_the_yoke_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_cast_off_the_yoke_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_cast_off_the_yoke_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_cast_off_the_yoke_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_cast_off_the_yoke_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_cast_off_the_yoke_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = qpq_cast_off_the_yoke_goal_value }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_cast_off_the_yoke_ai_acceptance_value
-					subtract = qpq_cast_off_the_yoke_ask_value
-					subtract = qpq_cast_off_the_yoke_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = qpq_cast_off_the_yoke_goal_value }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
@@ -9422,19 +9588,21 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_t_a_ask value = qpq_barter_ask_value }
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_barter_offer_points_value }
+			set_variable = { name = qpq_ui_t_a_char value = qpq_barter_character_value }
+			set_variable = { name = qpq_ui_t_a_dread value = qpq_barter_dread_value }
+			set_variable = { name = qpq_ui_t_a_circ value = qpq_barter_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_refuse value = qpq_barter_refusal_value }
+			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
 				name = qpq_ui_t_a_other
 				value = {
-					value = qpq_barter_ai_acceptance_value
-					subtract = qpq_barter_ask_value
-					subtract = qpq_barter_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_t_a_goal
+					add = var:qpq_ui_t_a_char
+					add = var:qpq_ui_t_a_dread
+					add = var:qpq_ui_t_a_circ
+					add = var:qpq_ui_t_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			if = {
 				limit = {
 					qpq_ai_refuses_rival_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_barter_agent_tier_value }
@@ -9998,12 +10166,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_chartered_conquest_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_chartered_conquest_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_chartered_conquest_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_chartered_conquest_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10135,12 +10320,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_sanctioned_conquest_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_sanctioned_conquest_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_sanctioned_conquest_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_sanctioned_conquest_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10269,12 +10471,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_marcher_charge_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_marcher_charge_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_marcher_charge_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_marcher_charge_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10397,8 +10616,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_holy_sponsorship_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_holy_sponsorship_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10511,8 +10743,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10619,12 +10864,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_electoral_purchase_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_electoral_purchase_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_electoral_purchase_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_purchase_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					OR = {
@@ -10682,8 +10944,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10731,8 +11006,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -10837,12 +11125,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_licensed_feud_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_licensed_feud_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_licensed_feud_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_licensed_feud_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -10966,12 +11271,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_dossier_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_dossier_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_dossier_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_dossier_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11119,12 +11441,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_quiet_removal_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_quiet_removal_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_quiet_removal_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_quiet_removal_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11261,12 +11600,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_heir_question_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_heir_question_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_heir_question_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_heir_question_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11410,12 +11766,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_snatch_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_snatch_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_snatch_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_snatch_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11543,12 +11916,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_dispossession_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_dispossession_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_dispossession_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_dispossession_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11680,12 +12070,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_the_cloister_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_the_cloister_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_the_cloister_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_the_cloister_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -11817,8 +12224,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -11940,12 +12360,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_hand_over_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_hand_over_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_hand_over_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_hand_over_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -12064,8 +12501,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_hand_over_artifact_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_hand_over_artifact_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12167,8 +12617,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_renunciation_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_renunciation_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12217,8 +12680,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12254,19 +12730,21 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_price_of_loyalty_ask_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_price_of_loyalty_offer_points_value }
+			set_variable = { name = qpq_ui_i_a_char value = qpq_price_of_loyalty_character_value }
+			set_variable = { name = qpq_ui_i_a_dread value = qpq_price_of_loyalty_dread_value }
+			set_variable = { name = qpq_ui_i_a_circ value = qpq_price_of_loyalty_circumstance_value }
+			set_variable = { name = qpq_ui_i_a_refuse value = qpq_price_of_loyalty_refusal_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_price_of_loyalty_goal_value }
 			set_variable = {
 				name = qpq_ui_i_a_other
 				value = {
-					value = qpq_price_of_loyalty_ai_acceptance_value
-					subtract = qpq_price_of_loyalty_ask_value
-					subtract = qpq_price_of_loyalty_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_goal value = qpq_price_of_loyalty_goal_value }
 			if = {
 				limit = {
 					scope:recipient = { has_relation_rival = scope:actor }
@@ -12378,12 +12856,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_blessing_for_a_feud_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_blessing_for_a_feud_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_blessing_for_a_feud_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_blessing_for_a_feud_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -12457,8 +12952,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12549,19 +13057,21 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_price value = scope:qpq_price }
 			set_variable = { name = qpq_ui_i_a_ask value = qpq_electoral_capitulation_ask_value }
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_electoral_capitulation_offer_points_value }
+			set_variable = { name = qpq_ui_i_a_char value = qpq_electoral_capitulation_character_value }
+			set_variable = { name = qpq_ui_i_a_dread value = qpq_electoral_capitulation_dread_value }
+			set_variable = { name = qpq_ui_i_a_circ value = qpq_electoral_capitulation_circumstance_value }
+			set_variable = { name = qpq_ui_i_a_refuse value = qpq_electoral_capitulation_refusal_value }
+			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_capitulation_goal_value }
 			set_variable = {
 				name = qpq_ui_i_a_other
 				value = {
-					value = qpq_electoral_capitulation_ai_acceptance_value
-					subtract = qpq_electoral_capitulation_ask_value
-					subtract = qpq_electoral_capitulation_offer_points_value
-					subtract = {
-						value = "scope:recipient.opinion(scope:actor)"
-						multiply = 0.5
-					}
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_capitulation_goal_value }
 			if = {
 				limit = {
 					OR = {
@@ -12624,12 +13134,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_mutual_defense_league_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_mutual_defense_league_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_mutual_defense_league_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_mutual_defense_league_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -12688,12 +13215,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_faction_pledge_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_faction_pledge_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_faction_pledge_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_faction_pledge_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -12803,8 +13347,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_title_swap_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_title_swap_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -12858,12 +13415,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_coup_pact_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_coup_pact_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_coup_pact_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_coup_pact_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:recipient.liege }
@@ -12994,12 +13568,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_proxy_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_proxy_war_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_proxy_war_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_proxy_war_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -13123,12 +13714,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_partition_pact_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_partition_pact_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_partition_pact_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_partition_pact_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -13195,12 +13803,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_secret_alliance_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_secret_alliance_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_secret_alliance_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_secret_alliance_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13254,12 +13879,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_bought_truce_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_bought_truce_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_bought_truce_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_bought_truce_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13378,12 +14020,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_faithless_ally_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_faithless_ally_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_faithless_ally_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_faithless_ally_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -13462,12 +14121,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_turncoat_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_turncoat_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_turncoat_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_turncoat_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.liege }
@@ -13545,12 +14221,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_seed_the_separatists_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_seed_the_separatists_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_seed_the_separatists_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_seed_the_separatists_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13657,8 +14350,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -13764,12 +14470,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_extradition_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_extradition_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_extradition_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_extradition_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -13847,12 +14570,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_buy_a_councillor_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_buy_a_councillor_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_buy_a_councillor_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_buy_a_councillor_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.liege }
@@ -13930,12 +14670,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_stay_home_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_stay_home_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_stay_home_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_stay_home_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -13994,12 +14751,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_defection_pact_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_defection_pact_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_defection_pact_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_defection_pact_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -14106,8 +14880,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_secret_clause_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_secret_clause_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -14226,12 +15013,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_hire_the_hashashin_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_hire_the_hashashin_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_hire_the_hashashin_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_hire_the_hashashin_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14377,12 +15181,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_excommunication_for_hire_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_excommunication_for_hire_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_excommunication_for_hire_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_excommunication_for_hire_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14511,12 +15332,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_dispensation_for_gold_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_dispensation_for_gold_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_dispensation_for_gold_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_dispensation_for_gold_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					OR = {
@@ -14640,12 +15478,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_steer_the_holy_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_steer_the_holy_war_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_steer_the_holy_war_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_steer_the_holy_war_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -14764,12 +15619,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_purchase_a_mitre_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_purchase_a_mitre_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_purchase_a_mitre_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_purchase_a_mitre_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					OR = {
@@ -14893,12 +15765,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_bought_claim_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_bought_claim_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_bought_claim_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_bought_claim_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -14972,8 +15861,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_absolution_by_concession_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_absolution_by_concession_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15090,12 +15992,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_holy_warrant_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_holy_warrant_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_holy_warrant_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_holy_warrant_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -15228,12 +16147,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_buy_a_bull_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_buy_a_bull_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_buy_a_bull_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_buy_a_bull_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15369,12 +16305,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_conclave_votes_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_conclave_votes_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_conclave_votes_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_conclave_votes_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					OR = {
@@ -15432,8 +16385,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_council_lobbying_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_council_lobbying_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15481,8 +16447,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_caliphal_investiture_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_caliphal_investiture_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15535,8 +16514,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_name_in_the_khutba_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_name_in_the_khutba_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -15650,12 +16642,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_fatwa_for_hire_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_fatwa_for_hire_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_fatwa_for_hire_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_fatwa_for_hire_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15795,12 +16804,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_fund_the_dawa_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_fund_the_dawa_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_fund_the_dawa_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_fund_the_dawa_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -15879,12 +16905,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_crowning_the_usurper_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_crowning_the_usurper_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_crowning_the_usurper_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_crowning_the_usurper_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:recipient.top_liege }
@@ -15957,8 +17000,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_pliant_patriarch_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_pliant_patriarch_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16074,12 +17130,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_favourable_omens_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_favourable_omens_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_favourable_omens_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_favourable_omens_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -16153,8 +17226,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_consecration_rites_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_consecration_rites_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16268,12 +17354,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_temple_patronage_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_temple_patronage_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_temple_patronage_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_temple_patronage_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -16414,8 +17517,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_make_peace_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_make_peace_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16534,8 +17650,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_yield_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_yield_war_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16657,12 +17786,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_join_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_join_war_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_join_war_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_join_war_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_allied_to = scope:secondary_recipient }
@@ -16810,8 +17956,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_leave_war_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_leave_war_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -16932,12 +18091,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_stay_out_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_stay_out_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_stay_out_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_stay_out_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:secondary_recipient }
@@ -17018,8 +18194,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17078,8 +18267,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17138,8 +18340,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17187,12 +18402,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_accept_the_yoke_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_accept_the_yoke_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_accept_the_yoke_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_accept_the_yoke_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { has_relation_rival = scope:recipient }
@@ -17262,12 +18494,29 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = qpq_cast_off_the_yoke_goal_sw_value }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			if = {
-				limit = { qpq_cast_off_the_yoke_goal_sw_refuses_trigger = yes }
-				set_variable = { name = qpq_ui_i_a_other value = -1000 }
+				limit = {
+					OR = {
+						qpq_cast_off_the_yoke_goal_sw_refuses_trigger = yes
+					}
+				}
+				set_variable = { name = qpq_ui_i_a_refuse value = -1000 }
 			}
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_cast_off_the_yoke_goal_sw_value }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = {
 					scope:actor = { is_close_family_of = scope:actor.suzerain }
@@ -17340,8 +18589,21 @@ qpq_ui_leg_i_refresh_effect = {
 					multiply = -0.8
 				}
 			}
-			set_variable = { name = qpq_ui_i_a_other value = 0 }
+			set_variable = { name = qpq_ui_i_a_char value = 0 }
+			set_variable = { name = qpq_ui_i_a_dread value = 0 }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			set_variable = { name = qpq_ui_i_a_refuse value = 0 }
 			set_variable = { name = qpq_ui_i_a_goal value = 0 }
+			set_variable = {
+				name = qpq_ui_i_a_other
+				value = {
+					value = var:qpq_ui_i_a_goal
+					add = var:qpq_ui_i_a_char
+					add = var:qpq_ui_i_a_dread
+					add = var:qpq_ui_i_a_circ
+					add = var:qpq_ui_i_a_refuse
+				}
+			}
 			if = {
 				limit = { has_variable = qpq_ui_i_o_land }
 				change_variable = {
@@ -17369,35 +18631,44 @@ qpq_ui_deal_finish_effect = {
 	set_variable = { name = qpq_ui_acc_offers value = 0 }
 	set_variable = { name = qpq_ui_acc_other value = 0 }
 	set_variable = { name = qpq_ui_acc_goal value = 0 }
+	set_variable = { name = qpq_ui_acc_char value = 0 }
+	set_variable = { name = qpq_ui_acc_dread value = 0 }
+	set_variable = { name = qpq_ui_acc_circ value = 0 }
+	set_variable = { name = qpq_ui_acc_refuse value = 0 }
+	set_variable = { name = qpq_ui_acc_opinion value = 0 }
+	set_variable = { name = qpq_ui_acc_public value = 0 }
 	if = {
 		limit = { has_variable = qpq_ui_t_ekind }
 		set_variable = qpq_ui_deal_active
 		change_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_t_a_ask }
 		change_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_t_a_offers }
-		change_variable = { name = qpq_ui_acc_other add = var:qpq_ui_t_a_other }
-		if = {
-			limit = { exists = var:qpq_ui_t_a_goal }
-			change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_t_a_goal }
-		}
+		change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_t_a_goal }
+		change_variable = { name = qpq_ui_acc_char add = var:qpq_ui_t_a_char }
+		change_variable = { name = qpq_ui_acc_dread add = var:qpq_ui_t_a_dread }
+		change_variable = { name = qpq_ui_acc_circ add = var:qpq_ui_t_a_circ }
+		change_variable = { name = qpq_ui_acc_refuse add = var:qpq_ui_t_a_refuse }
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_ekind }
 		set_variable = qpq_ui_deal_active
 		change_variable = { name = qpq_ui_acc_ask add = var:qpq_ui_i_a_ask }
 		change_variable = { name = qpq_ui_acc_offers add = var:qpq_ui_i_a_offers }
-		change_variable = { name = qpq_ui_acc_other add = var:qpq_ui_i_a_other }
-		if = {
-			limit = { exists = var:qpq_ui_i_a_goal }
-			change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_i_a_goal }
-		}
+		change_variable = { name = qpq_ui_acc_goal add = var:qpq_ui_i_a_goal }
+		change_variable = { name = qpq_ui_acc_char add = var:qpq_ui_i_a_char }
+		change_variable = { name = qpq_ui_acc_dread add = var:qpq_ui_i_a_dread }
+		change_variable = { name = qpq_ui_acc_circ add = var:qpq_ui_i_a_circ }
+		change_variable = { name = qpq_ui_acc_refuse add = var:qpq_ui_i_a_refuse }
 	}
-	change_variable = { name = qpq_ui_acc_other add = qpq_ui_deal_opinion_value }
+	if = {
+		limit = { has_variable = qpq_ui_deal_active }
+		set_variable = { name = qpq_ui_acc_opinion value = qpq_ui_deal_opinion_value }
+	}
 	if = {
 		limit = {
 			var:qpq_ui_recipient = { is_ai = yes }
 			var:qpq_ui_recipient = { opinion = { target = root value <= -60 } }
 		}
-		change_variable = { name = qpq_ui_acc_other add = -1000 }
+		change_variable = { name = qpq_ui_acc_refuse add = -1000 }
 		set_variable = qpq_ui_ref_hatred
 	}
 	if = {
@@ -17430,7 +18701,7 @@ qpq_ui_deal_finish_effect = {
 			limit = { has_variable = qpq_ui_charter }
 			if = {
 				limit = { var:qpq_ui_their_tier > 0 }
-				change_variable = { name = qpq_ui_acc_other add = { value = var:qpq_ui_their_tier multiply = -8 } }
+				set_variable = { name = qpq_ui_acc_public value = { value = var:qpq_ui_their_tier multiply = -8 } }
 			}
 		}
 		else = {
@@ -17445,10 +18716,15 @@ qpq_ui_deal_finish_effect = {
 		}
 	}
 	set_variable = {
-		name = qpq_ui_acc_rest
+		name = qpq_ui_acc_other
 		value = {
-			value = var:qpq_ui_acc_other
-			subtract = var:qpq_ui_acc_goal
+			value = var:qpq_ui_acc_goal
+			add = var:qpq_ui_acc_char
+			add = var:qpq_ui_acc_dread
+			add = var:qpq_ui_acc_circ
+			add = var:qpq_ui_acc_refuse
+			add = var:qpq_ui_acc_opinion
+			add = var:qpq_ui_acc_public
 		}
 	}
 	qpq_ui_command_compute_effect = yes
@@ -17518,8 +18794,28 @@ qpq_ui_clear_derived_effect = {
 		remove_variable = qpq_ui_acc_goal
 	}
 	if = {
-		limit = { has_variable = qpq_ui_acc_rest }
-		remove_variable = qpq_ui_acc_rest
+		limit = { has_variable = qpq_ui_acc_char }
+		remove_variable = qpq_ui_acc_char
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_dread }
+		remove_variable = qpq_ui_acc_dread
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_circ }
+		remove_variable = qpq_ui_acc_circ
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_refuse }
+		remove_variable = qpq_ui_acc_refuse
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_opinion }
+		remove_variable = qpq_ui_acc_opinion
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_public }
+		remove_variable = qpq_ui_acc_public
 	}
 	if = {
 		limit = { has_variable = qpq_ui_cmd_ok }
@@ -17584,6 +18880,22 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_t_a_goal }
 		remove_variable = qpq_ui_t_a_goal
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_a_char }
+		remove_variable = qpq_ui_t_a_char
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_a_dread }
+		remove_variable = qpq_ui_t_a_dread
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_a_circ }
+		remove_variable = qpq_ui_t_a_circ
+	}
+	if = {
+		limit = { has_variable = qpq_ui_t_a_refuse }
+		remove_variable = qpq_ui_t_a_refuse
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_fail_0 }
@@ -17680,6 +18992,22 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_i_a_goal }
 		remove_variable = qpq_ui_i_a_goal
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_char }
+		remove_variable = qpq_ui_i_a_char
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_dread }
+		remove_variable = qpq_ui_i_a_dread
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_circ }
+		remove_variable = qpq_ui_i_a_circ
+	}
+	if = {
+		limit = { has_variable = qpq_ui_i_a_refuse }
+		remove_variable = qpq_ui_i_a_refuse
 	}
 	if = {
 		limit = { has_variable = qpq_ui_i_fail_0 }

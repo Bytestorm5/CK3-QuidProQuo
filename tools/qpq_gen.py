@@ -163,27 +163,40 @@ def gen_values():
             out += ("\tif = {\n\t\tlimit = {\n\t\t\tscope:qpq_o_gold ?= yes\n\t\t\tscope:recipient = { has_trait = greedy }\n"
                     "\t\t}\n\t\tadd = -10\n\t}\n")
         out += "}\n"
-        # The whole acceptance, mirroring the interaction's ai_accept: used by the Propose-a-Pact panel
-        # and when an AI recipient answers an AI proposal
-        out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
-        out += "\tadd = qpq_opinion_points_value\n"
+        # The acceptance in parts, each its own line in the panel's breakdown
+        # Their character: traits that weigh on a deed this dirty (only when they are asked to do it)
+        out += "qpq_%s_character_value = {\n\tvalue = 0\n" % key
         if k["initiator"] == "payer":
-            out += ("\tif = {\n\t\tlimit = { qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_%s_agent_tier_value } }\n"
-                    "\t\tadd = -1000\n\t}\n") % key
             for trig, mult in TRAIT_MODS:
                 out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_trait = %s } }\n"
                         "\t\tadd = { value = qpq_%s_agent_tier_value multiply = %d }\n\t}\n") % (trig, key, mult)
-        out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }\n"
-                "\t\tadd = intimidated_halved_reason_value\n\t}\n")
-        out += ("\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }\n"
-                "\t\tadd = cowed_halved_reason_value\n\t}\n")
+        out += "}\n"
+        # Dread: intimidated or cowed by the one asking
+        out += ("qpq_%s_dread_value = {\n\tvalue = 0\n"
+                "\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }\n"
+                "\t\tadd = intimidated_halved_reason_value\n\t}\n"
+                "\tif = {\n\t\tlimit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } } }\n"
+                "\t\tadd = cowed_halved_reason_value\n\t}\n}\n") % key
+        # Their circumstances: what about this Ask, for them, makes it easier or harder
+        out += "qpq_%s_circumstance_value = {\n\tvalue = 0\n" % key
         for add, trig, _desc in k.get("demand", []):
             out += "\tif = {\n\t\tlimit = {\n%s\t\t}\n\t\tadd = %s\n\t}\n" % (block(trig, 3), add)
-        # What the one deciding wants, and what they will not do at any price
+        out += "}\n"
+        # Will not, at any price
+        out += "qpq_%s_refusal_value = {\n\tvalue = 0\n\tif = {\n\t\tlimit = {\n\t\t\tOR = {\n" % key
+        if k["initiator"] == "payer":
+            out += "\t\t\t\tqpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_%s_agent_tier_value }\n" % key
+        if goals.goal_value(k) and goals.goal_refusal(k):
+            out += "\t\t\t\tqpq_%s_goal_refuses_trigger = yes\n" % key
+        out += "\t\t\t\talways = no\n\t\t\t}\n\t\t}\n\t\tadd = -1000\n\t}\n}\n"
+        # The whole acceptance, mirroring the interaction's ai_accept: used by the deal panel and when an AI
+        # recipient answers an AI proposal
+        out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
+        out += "\tadd = qpq_opinion_points_value\n"
+        out += "\tadd = qpq_%s_character_value\n\tadd = qpq_%s_dread_value\n\tadd = qpq_%s_circumstance_value\n" % (key, key, key)
         if goals.goal_value(k):
             out += "\tadd = qpq_%s_goal_value\n" % key
-            if goals.goal_refusal(k):
-                out += "\tif = {\n\t\tlimit = { qpq_%s_goal_refuses_trigger = yes }\n\t\tadd = -1000\n\t}\n" % key
+        out += "\tadd = qpq_%s_refusal_value\n" % key
         out += "}\n\n"
         for sw_ in (False, True):
             gv = goals.goal_value(k, sw_)
