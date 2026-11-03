@@ -321,30 +321,10 @@ qpq_offer_release_hook_points_value = {
 	}
 }
 
-# The payer's word is worth their standing and their reputation for keeping it
+# The payer's word is a hook on them (qpq_my_word_hook): worth what a favour owed is worth to the one who holds
+# it, whoever gives it
 qpq_offer_my_word_points_value = {
-	value = 6
-	add = {
-		value = scope:actor.prestige_level
-		multiply = 3
-		max = 15
-	}
-	if = {
-		limit = { scope:actor = { has_trait = honest } }
-		add = 6
-	}
-	if = {
-		limit = {
-			scope:actor = {
-				OR = {
-					has_trait = deceitful
-					has_trait = arbitrary
-				}
-			}
-		}
-		add = -8
-	}
-	min = 0
+	value = 14
 }
 
 # A secret is worth what it can do to the one it is on, to the one who gets it. With a person named, this is the
@@ -1044,6 +1024,7 @@ qpq_ui_gift_secret_t_value = {
 	}
 }
 
+# Secrets they would hand over (leg i): what each costs them, not what it would be worth to you
 qpq_ui_gift_secret_i_value = {
 	value = 0
 	scope:qpq_deal_me = {
@@ -1051,10 +1032,63 @@ qpq_ui_gift_secret_i_value = {
 			limit = { has_variable_list = qpq_ui_i_gift_secret }
 			every_in_list = {
 				variable = qpq_ui_i_gift_secret
-				add = qpq_gift_secret_points_value
+				add = qpq_gift_secret_cost_value
 			}
 		}
 	}
+}
+
+# What handing over dirt on a person costs the one who holds it (scope:qpq_gift_payer): the hold they give up, by
+# how bad it is and how much the person matters, and the betrayal if the person is their own. Root: that person.
+qpq_gift_secret_cost_value = {
+	value = 8
+	if = {
+		limit = {
+			any_secret = {
+				is_known_by = scope:qpq_gift_payer
+				is_criminal_for = secret_owner
+			}
+		}
+		add = 20
+	}
+	else_if = {
+		limit = {
+			any_secret = {
+				is_known_by = scope:qpq_gift_payer
+				is_shunned_for = secret_owner
+			}
+		}
+		add = 10
+	}
+	# A hold over their own rival is not lightly given away; betraying their own kin, friend or lover, less so
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:qpq_gift_payer
+				has_relation_nemesis = scope:qpq_gift_payer
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			OR = {
+				is_close_family_of = scope:qpq_gift_payer
+				has_relation_friend = scope:qpq_gift_payer
+				has_relation_lover = scope:qpq_gift_payer
+			}
+		}
+		add = 15
+	}
+	if = {
+		limit = { is_landed = no }
+		multiply = 0.5
+	}
+	else_if = {
+		limit = { highest_held_title_tier >= tier_kingdom }
+		multiply = 1.4
+	}
+	round = yes
 }
 
 ############################################################

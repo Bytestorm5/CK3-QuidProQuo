@@ -417,11 +417,15 @@ def compute_kind(k, L, block):
     s += "\t\t\tset_variable = { name = qpq_ui_%s_term value = %d }\n" % (L, k["term"])
     s += "\t\t\tset_variable = { name = qpq_ui_%s_payer_tier value = qpq_%s_payer_tier_value }\n" % (L, key)
     s += "\t\t\tset_variable = { name = qpq_ui_%s_agent_tier value = qpq_%s_agent_tier_value }\n" % (L, key)
-    s += "\t\t\tsave_scope_value_as = { name = qpq_price value = qpq_%s_price_value }\n" % key
-    s += "\t\t\tset_variable = { name = qpq_ui_%s_fair value = scope:qpq_price }\n" % L
-    s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_amount }\n\t\t\t\tclear_saved_scope = qpq_price\n"
-          "\t\t\t\tsave_scope_value_as = { name = qpq_price value = var:qpq_ui_%s_amount }\n\t\t\t}\n") % (L, L)
-    s += "\t\t\tset_variable = { name = qpq_ui_%s_price value = scope:qpq_price }\n" % L
+    def price_block(fair):
+        return ("\t\t\tsave_scope_value_as = { name = qpq_price value = %s }\n" % fair +
+                "\t\t\tset_variable = { name = qpq_ui_%s_fair value = scope:qpq_price }\n" % L +
+                ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%s_amount }\n\t\t\t\tclear_saved_scope = qpq_price\n"
+                 "\t\t\t\tsave_scope_value_as = { name = qpq_price value = var:qpq_ui_%s_amount }\n\t\t\t}\n") % (L, L) +
+                "\t\t\tset_variable = { name = qpq_ui_%s_price value = scope:qpq_price }\n" % L)
+    if L == "t":
+        # what they would want to be paid for it, by their own measure
+        s += price_block("qpq_%s_price_value" % key)
     # How the other character (an AI deciding) sees this leg, part by part (each a line of the breakdown). Leg t:
     # they do the deed and get the goods. Leg i: they get the deed and give the goods. The deed itself is judged
     # in its own orientation (actor = its proposer); the goods always from the side of who gets or gives them.
@@ -468,7 +472,6 @@ def compute_kind(k, L, block):
         # handing over, weighed a quarter again), and their own risk and scruples as the one paying
         s += setv("ask", "qpq_%s_worth_value" % key)
         if payer_init:
-            s += scaled("offers", "qpq_goods_cost_value", loss)
             s += setv("char", "qpq_%s_payer_character_value" % key)
             s += setv("risk", "qpq_%s_payer_risk_value" % key)
             s += setv("circ", "0") + setv("refuse", "0")
@@ -476,12 +479,27 @@ def compute_kind(k, L, block):
                 s += ("\t\t\tif = {\n\t\t\t\tlimit = { qpq_%s_goal_sw_refuses_trigger = yes }\n\t%s\t\t\t}\n") % (
                     key, setv("refuse", "-1000"))
         else:
-            s += setv("offers", "qpq_%s_offer_points_value" % key)
             s += setv("char", "0") + setv("risk", "0")
             s += circ_guarded(k, L, setv("circ", "qpq_%s_circumstance_value" % key))
             s += setv("refuse", "qpq_%s_refusal_value" % key)
         s += setv("dread", "0")
     s += setv("goal", goal)
+    if L == "i":
+        # What they would pay for it, by their own measure: what the deed is worth to them, at their own purse,
+        # a little under where they would stop. Then what the gold asked costs them.
+        s += ("\t\t\tsave_scope_value_as = {\n\t\t\t\tname = qpq_ui_worth_gold\n\t\t\t\tvalue = {\n"
+              "\t\t\t\t\tvalue = qpq_%s_worth_value\n\t\t\t\t\tadd = var:qpq_ui_i_a_goal\n\t\t\t\t\tadd = var:qpq_ui_i_a_char\n"
+              "\t\t\t\t\tadd = var:qpq_ui_i_a_risk\n\t\t\t\t\tadd = var:qpq_ui_i_a_circ\n"
+              "\t\t\t\t\tmultiply = 0.9\n\t\t\t\t\tdivide = %s\n\t\t\t\t\tmultiply = scope:qpq_deal_them.qpq_stake_value\n"
+              "\t\t\t\t\tif = {\n\t\t\t\t\t\tlimit = { scope:qpq_deal_them = { has_trait = greedy } }\n\t\t\t\t\t\tdivide = 1.3\n\t\t\t\t\t}\n"
+              "\t\t\t\t\tif = {\n\t\t\t\t\t\tlimit = { scope:qpq_deal_them = { has_trait = generous } }\n\t\t\t\t\t\tdivide = 0.8\n\t\t\t\t\t}\n"
+              "\t\t\t\t\tmin = 1\n\t\t\t\t\tround = yes\n\t\t\t\t}\n\t\t\t}\n") % (key, 5 * goals.LOSS_AVERSION)
+        s += price_block("scope:qpq_ui_worth_gold")
+        s += "\t\t\tclear_saved_scope = qpq_ui_worth_gold\n"
+        if payer_init:
+            s += scaled("offers", "qpq_goods_cost_value", loss)
+        else:
+            s += setv("offers", "qpq_%s_offer_points_value" % key)
     s += ("\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%(L)s_a_other\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = var:qpq_ui_%(L)s_a_goal\n"
           "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_char\n\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_dread\n"
           "\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_circ\n\t\t\t\t\tadd = var:qpq_ui_%(L)s_a_refuse\n"

@@ -26,6 +26,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qpq_sim import Library, Panel, Run, find_vanilla, offered_pairs, kind_names, scenario, standard_world  # noqa: E402
 
 TESTS = []
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from qpq_kinds import KINDS  # noqa: E402
+AGENT_PROPOSED = {k["key"] for k in KINDS if k["initiator"] != "payer"}
 
 
 def test(fn):
@@ -369,6 +372,72 @@ def a_county_given_away(lib, check):
         check(p.var("t_a_goal", 0) <= -30, "giving away a county costs foe only %s" % p.var("t_a_goal"))
 
 
+@test
+def judged_by_their_own_lights(lib, check):
+    """An AI weighs what it gets and gives, never the other party: changing only the player's purse, income or
+    standing, or what a deed would cost the player, changes nothing in the AI's answer, part by part."""
+    def parts(p):
+        a = p.acceptance()
+        return {k: v for k, v in a.items() if not k.startswith("leg_")}, \
+            {L: {k: v for k, v in a.get("leg_" + L, {}).items() if k not in ("payer_tier", "agent_tier")
+                 or (L == "t" and k == "agent_tier") or (L == "i" and k == "payer_tier")} for L in "ti"}
+    players = [dict(gold=5000, income=2, prestige_level=0), dict(gold=5000, income=200, prestige_level=5)]
+
+    def run(me, them, setup_deal, me_fields, world=None):
+        p, W = panel(lib, me, them, setup=world, **{me: me_fields})
+        setup_deal(p, W)
+        return parts(p)
+    # a plain trade of gold
+    def barter_deal(p, W):
+        barter(p, 60, 30)
+    a, b = (run("king", "duke", barter_deal, f) for f in players)
+    check(a == b, "a plain trade changes with the player's wealth: %r vs %r" % (a, b))
+    # a deed they do, paid in gold
+    def deed_t(p, W):
+        p.deed("t", "development_charter")
+        c = p.me.var_lists.get("qpq_ui_t_title_candidates", [])
+        if c:
+            p.pick("t", c[0])
+        p.gold("t", 80)
+    a, b = (run("king", "duke", deed_t, f) for f in players)
+    check(a == b, "a deed they do changes with the player's wealth: %r vs %r" % (a, b))
+    # a deed you do for them, and its suggested price: neither the player's purse nor what it costs the player
+    def rival(w, W):
+        w.relate(W["king"], "rival", W["count2"])
+        w.opinion(W["king"], W["count2"], -80)
+    def kin_rival(w, W):
+        rival(w, W)
+        W["courtier"].father = W["count2"]      # the doer's own kin: the deed is far worse for the doer
+    def deed_i(p, W):
+        p.deed("i", "quiet_removal")
+        for c in p.candidates("i"):
+            if c is W["count2"]:
+                p.pick("i", c)
+        p.deed("t", None)
+        p.gold("i")
+    a = run("courtier", "king", deed_i, players[0], rival)
+    b = run("courtier", "king", deed_i, players[1], rival)
+    c = run("courtier", "king", deed_i, players[0], kin_rival)
+    check(a == b, "a deed done for them changes with the player's wealth: %r vs %r" % (a, b))
+    check(a[0] == c[0] and a[1]["i"] == c[1]["i"], "a deed done for them changes with what it costs the doer: %r vs %r" % (a, c))
+    # every deed: what it is worth to the AI paying for it is the same whoever offers to do it (a betrayal in war
+    # excepted: that is worth the strength the doer takes off the enemy)
+    w, W = standard_world(player="nobody")
+    doers = [W[n] for n in ("duke", "count", "courtier", "foe", "pope")]
+    for name in sorted(v for v in lib.values if v.startswith("qpq_") and v.endswith("_worth_value")):
+        if name[4:-12] in ("turncoat", "faithless_ally"):
+            continue
+        # the deed's own orientation: its proposer is scope:actor (the payer, or for an agent-proposed deed the doer)
+        agent_init = name[4:-12] in AGENT_PROPOSED
+        seen = set()
+        for d in doers:
+            actor, recipient = (d, W["king"]) if agent_init else (W["king"], d)
+            r = Run(lib, w, W["king"], {"actor": actor, "recipient": recipient, "secondary_recipient": W["count2"],
+                                       "target": W["c_county2"]})
+            seen.add(round(r.value(name, (W["king"], None)), 3))
+        check(len(seen) == 1, "%s depends on who would do the deed: %s" % (name, sorted(seen)))
+
+
 # --------------------------------------------------------------------------- AI proposals
 def ai_propose(lib, who, kind, setup=None, player="nobody"):
     """An AI proposes KIND (qpq_ai_propose_kind_effect, as the AI broker runs it). Sealing is the pact engine's
@@ -389,24 +458,30 @@ def ai_propose(lib, who, kind, setup=None, player="nobody"):
 
 @test
 def ai_at_war_deals(lib, check):
-    """A losing war leader sues the other for peace; a side that is not winning hires a neighbour to join."""
-    def foe_losing(w, W):
-        W["war"].attacker_war_score = -40
-    r, sealed, W = ai_propose(lib, "foe", "make_peace", foe_losing)
+    """An AI losing a war sues for peace when it is worth the price to itself, offering what the other side would
+    need: in a long stalemate the deal is made; a side routed cannot pay what a winner would want for it."""
+    def war(score, days, fs, ts):
+        def setup(w, W):
+            W["war"].attacker_war_score, W["war"].war_days = score, days
+            W["foe"].current_strength, W["third"].current_strength = fs, ts
+        return setup
+    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-16, 1500, 3000, 3000))
     check(r.scopes.get("recipient") is W["third"] and r.scopes.get("secondary_recipient") is W["foe"],
-          "a losing foe does not sue third for peace (%r)" % r.scopes.get("recipient"))
-    check(sealed, "third, winning, will not take a paid white peace from foe")
+          "a losing foe does not put peace to third (%r)" % r.scopes.get("recipient"))
+    check(sealed, "a long stalemate does not end in a bought peace")
     check(not r.errors, "script errors: %s" % r.errors[:3])
-    def third_losing(w, W):
-        W["war"].attacker_war_score = 40
-    r, sealed, W = ai_propose(lib, "third", "join_war", third_losing)
+    view = Run(lib, W["world"], W["foe"], dict(r.scopes)).value("qpq_make_peace_proposer_view_value", (W["foe"], None))
+    check(view > 0, "foe made a deal not worth it to itself (%s)" % view)
+    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-60, 400, 2000, 4000))
+    check(not sealed and "qpq_proposed_kind" not in r.scopes,
+          "a routed foe buys a peace the winner would not sell for what it is worth to foe")
+    r, sealed, W = ai_propose(lib, "foe", "make_peace", war(-16, 1500, 3000, 3000), player="third")
+    check(any(e[1] == "qpq_hub.50" for e in r.events), "a person in a long stalemate is not sent the peace offer")
+    r, sealed, W = ai_propose(lib, "third", "join_war", war(40, 400, 5000, 3000))
     rec = r.scopes.get("recipient")
     check(rec is not None and rec not in W["war"].attackers + W["war"].defenders,
           "a losing third finds nobody outside the war to hire (%r)" % rec)
     check(r.scopes.get("secondary_recipient") is W["foe"], "the war third hires for is not its war with foe")
-    r, sealed, W = ai_propose(lib, "third", "make_peace", third_losing, player="foe")
-    check(("event", "qpq_hub.50") in [(e[0], e[1]) for e in r.events] or any(e[1] == "qpq_hub.50" for e in r.events),
-          "a person at war with a losing AI is not sent its peace offer")
 
 
 @test

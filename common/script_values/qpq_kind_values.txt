@@ -342,6 +342,16 @@ qpq_chartered_conquest_goodwill_value = {
 		}
 	}
 }
+qpq_chartered_conquest_proposer_view_value = {
+	value = qpq_chartered_conquest_worth_value
+	add = qpq_chartered_conquest_goal_sw_value
+	add = qpq_chartered_conquest_payer_character_value
+	add = qpq_chartered_conquest_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_chartered_conquest_ai_acceptance_value = {
 	value = qpq_chartered_conquest_ask_value
 	add = qpq_chartered_conquest_offer_points_value
@@ -844,6 +854,16 @@ qpq_sanctioned_conquest_goodwill_value = {
 		}
 	}
 }
+qpq_sanctioned_conquest_proposer_view_value = {
+	value = qpq_sanctioned_conquest_worth_value
+	add = qpq_sanctioned_conquest_goal_sw_value
+	add = qpq_sanctioned_conquest_payer_character_value
+	add = qpq_sanctioned_conquest_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_sanctioned_conquest_ai_acceptance_value = {
 	value = qpq_sanctioned_conquest_ask_value
 	add = qpq_sanctioned_conquest_offer_points_value
@@ -1330,6 +1350,16 @@ qpq_marcher_charge_goodwill_value = {
 		}
 	}
 }
+qpq_marcher_charge_proposer_view_value = {
+	value = qpq_marcher_charge_worth_value
+	add = qpq_marcher_charge_goal_sw_value
+	add = qpq_marcher_charge_payer_character_value
+	add = qpq_marcher_charge_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_marcher_charge_ai_acceptance_value = {
 	value = qpq_marcher_charge_ask_value
 	add = qpq_marcher_charge_offer_points_value
@@ -1752,10 +1782,7 @@ qpq_holy_sponsorship_refusal_value = {
 	}
 }
 qpq_holy_sponsorship_worth_value = {
-	value = qpq_holy_sponsorship_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 7
 }
 qpq_holy_sponsorship_payer_risk_value = {
 	value = qpq_holy_sponsorship_payer_tier_value
@@ -1816,6 +1843,16 @@ qpq_holy_sponsorship_goodwill_value = {
 			add = qpq_holy_sponsorship_goal_value
 			max = 0
 		}
+	}
+}
+qpq_holy_sponsorship_proposer_view_value = {
+	value = qpq_holy_sponsorship_worth_value
+	add = qpq_holy_sponsorship_goal_sw_value
+	add = qpq_holy_sponsorship_payer_character_value
+	add = qpq_holy_sponsorship_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_holy_sponsorship_ai_acceptance_value = {
@@ -2138,10 +2175,7 @@ qpq_development_charter_refusal_value = {
 	}
 }
 qpq_development_charter_worth_value = {
-	value = qpq_development_charter_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 5
 }
 qpq_development_charter_payer_risk_value = {
 	value = qpq_development_charter_payer_tier_value
@@ -2200,6 +2234,15 @@ qpq_development_charter_goodwill_value = {
 			add = qpq_development_charter_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_development_charter_proposer_view_value = {
+	value = qpq_development_charter_worth_value
+	add = qpq_development_charter_payer_character_value
+	add = qpq_development_charter_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_development_charter_ai_acceptance_value = {
@@ -2531,6 +2574,16 @@ qpq_electoral_purchase_goodwill_value = {
 		}
 	}
 }
+qpq_electoral_purchase_proposer_view_value = {
+	value = qpq_electoral_purchase_worth_value
+	add = qpq_electoral_purchase_goal_sw_value
+	add = qpq_electoral_purchase_payer_character_value
+	add = qpq_electoral_purchase_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_electoral_purchase_ai_acceptance_value = {
 	value = qpq_electoral_purchase_ask_value
 	add = qpq_electoral_purchase_offer_points_value
@@ -2803,10 +2856,7 @@ qpq_loyal_mole_refusal_value = {
 	}
 }
 qpq_loyal_mole_worth_value = {
-	value = qpq_loyal_mole_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_loyal_mole_payer_risk_value = {
 	value = qpq_loyal_mole_payer_tier_value
@@ -2865,6 +2915,15 @@ qpq_loyal_mole_goodwill_value = {
 			add = qpq_loyal_mole_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_loyal_mole_proposer_view_value = {
+	value = qpq_loyal_mole_worth_value
+	add = qpq_loyal_mole_payer_character_value
+	add = qpq_loyal_mole_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_loyal_mole_ai_acceptance_value = {
@@ -3078,10 +3137,7 @@ qpq_agent_provocateur_refusal_value = {
 	}
 }
 qpq_agent_provocateur_worth_value = {
-	value = qpq_agent_provocateur_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_agent_provocateur_payer_risk_value = {
 	value = qpq_agent_provocateur_payer_tier_value
@@ -3140,6 +3196,15 @@ qpq_agent_provocateur_goodwill_value = {
 			add = qpq_agent_provocateur_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_agent_provocateur_proposer_view_value = {
+	value = qpq_agent_provocateur_worth_value
+	add = qpq_agent_provocateur_payer_character_value
+	add = qpq_agent_provocateur_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_agent_provocateur_ai_acceptance_value = {
@@ -3475,6 +3540,16 @@ qpq_licensed_feud_goodwill_value = {
 			add = qpq_licensed_feud_goal_value
 			max = 0
 		}
+	}
+}
+qpq_licensed_feud_proposer_view_value = {
+	value = qpq_licensed_feud_worth_value
+	add = qpq_licensed_feud_goal_sw_value
+	add = qpq_licensed_feud_payer_character_value
+	add = qpq_licensed_feud_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_licensed_feud_ai_acceptance_value = {
@@ -3969,6 +4044,16 @@ qpq_dossier_goodwill_value = {
 		}
 	}
 }
+qpq_dossier_proposer_view_value = {
+	value = qpq_dossier_worth_value
+	add = qpq_dossier_goal_sw_value
+	add = qpq_dossier_payer_character_value
+	add = qpq_dossier_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_dossier_ai_acceptance_value = {
 	value = qpq_dossier_ask_value
 	add = qpq_dossier_offer_points_value
@@ -4459,6 +4544,16 @@ qpq_quiet_removal_goodwill_value = {
 		}
 	}
 }
+qpq_quiet_removal_proposer_view_value = {
+	value = qpq_quiet_removal_worth_value
+	add = qpq_quiet_removal_goal_sw_value
+	add = qpq_quiet_removal_payer_character_value
+	add = qpq_quiet_removal_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_quiet_removal_ai_acceptance_value = {
 	value = qpq_quiet_removal_ask_value
 	add = qpq_quiet_removal_offer_points_value
@@ -4937,6 +5032,16 @@ qpq_heir_question_goodwill_value = {
 		}
 	}
 }
+qpq_heir_question_proposer_view_value = {
+	value = qpq_heir_question_worth_value
+	add = qpq_heir_question_goal_sw_value
+	add = qpq_heir_question_payer_character_value
+	add = qpq_heir_question_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_heir_question_ai_acceptance_value = {
 	value = qpq_heir_question_ask_value
 	add = qpq_heir_question_offer_points_value
@@ -5409,6 +5514,16 @@ qpq_snatch_goodwill_value = {
 		}
 	}
 }
+qpq_snatch_proposer_view_value = {
+	value = qpq_snatch_worth_value
+	add = qpq_snatch_goal_sw_value
+	add = qpq_snatch_payer_character_value
+	add = qpq_snatch_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_snatch_ai_acceptance_value = {
 	value = qpq_snatch_ask_value
 	add = qpq_snatch_offer_points_value
@@ -5879,6 +5994,16 @@ qpq_dispossession_goodwill_value = {
 			add = qpq_dispossession_goal_value
 			max = 0
 		}
+	}
+}
+qpq_dispossession_proposer_view_value = {
+	value = qpq_dispossession_worth_value
+	add = qpq_dispossession_goal_sw_value
+	add = qpq_dispossession_payer_character_value
+	add = qpq_dispossession_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_dispossession_ai_acceptance_value = {
@@ -6365,6 +6490,16 @@ qpq_the_cloister_goodwill_value = {
 		}
 	}
 }
+qpq_the_cloister_proposer_view_value = {
+	value = qpq_the_cloister_worth_value
+	add = qpq_the_cloister_goal_sw_value
+	add = qpq_the_cloister_payer_character_value
+	add = qpq_the_cloister_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_the_cloister_ai_acceptance_value = {
 	value = qpq_the_cloister_ask_value
 	add = qpq_the_cloister_offer_points_value
@@ -6773,10 +6908,7 @@ qpq_marriage_by_command_refusal_value = {
 	}
 }
 qpq_marriage_by_command_worth_value = {
-	value = qpq_marriage_by_command_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 23
 }
 qpq_marriage_by_command_payer_risk_value = {
 	value = qpq_marriage_by_command_payer_tier_value
@@ -6835,6 +6967,15 @@ qpq_marriage_by_command_goodwill_value = {
 			add = qpq_marriage_by_command_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_marriage_by_command_proposer_view_value = {
+	value = qpq_marriage_by_command_worth_value
+	add = qpq_marriage_by_command_payer_character_value
+	add = qpq_marriage_by_command_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_marriage_by_command_ai_acceptance_value = {
@@ -7162,6 +7303,16 @@ qpq_hand_over_goodwill_value = {
 			add = qpq_hand_over_goal_value
 			max = 0
 		}
+	}
+}
+qpq_hand_over_proposer_view_value = {
+	value = qpq_hand_over_worth_value
+	add = qpq_hand_over_goal_sw_value
+	add = qpq_hand_over_payer_character_value
+	add = qpq_hand_over_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_hand_over_ai_acceptance_value = {
@@ -7581,6 +7732,16 @@ qpq_hand_over_artifact_goodwill_value = {
 		}
 	}
 }
+qpq_hand_over_artifact_proposer_view_value = {
+	value = qpq_hand_over_artifact_worth_value
+	add = qpq_hand_over_artifact_goal_sw_value
+	add = qpq_hand_over_artifact_payer_character_value
+	add = qpq_hand_over_artifact_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_hand_over_artifact_ai_acceptance_value = {
 	value = qpq_hand_over_artifact_ask_value
 	add = qpq_hand_over_artifact_offer_points_value
@@ -7946,6 +8107,16 @@ qpq_renunciation_goodwill_value = {
 		}
 	}
 }
+qpq_renunciation_proposer_view_value = {
+	value = qpq_renunciation_worth_value
+	add = qpq_renunciation_goal_sw_value
+	add = qpq_renunciation_payer_character_value
+	add = qpq_renunciation_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_renunciation_ai_acceptance_value = {
 	value = qpq_renunciation_ask_value
 	add = qpq_renunciation_offer_points_value
@@ -8225,10 +8396,7 @@ qpq_hush_money_refusal_value = {
 	}
 }
 qpq_hush_money_worth_value = {
-	value = qpq_hush_money_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 19
 }
 qpq_hush_money_payer_risk_value = {
 	value = qpq_hush_money_payer_tier_value
@@ -8287,6 +8455,15 @@ qpq_hush_money_goodwill_value = {
 			add = qpq_hush_money_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_hush_money_proposer_view_value = {
+	value = qpq_hush_money_worth_value
+	add = qpq_hush_money_payer_character_value
+	add = qpq_hush_money_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_hush_money_ai_acceptance_value = {
@@ -8441,7 +8618,7 @@ qpq_price_of_loyalty_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_my_word ?= yes }
-		add = 6
+		add = 12
 		if = {
 			limit = { scope:recipient = { has_trait = honest } }
 			add = 4
@@ -8657,6 +8834,10 @@ qpq_price_of_loyalty_goodwill_value = {
 			max = 0
 		}
 	}
+}
+qpq_price_of_loyalty_proposer_view_value = {
+	value = qpq_price_of_loyalty_demand_value
+	add = qpq_price_of_loyalty_goods_points_value
 }
 qpq_price_of_loyalty_ai_acceptance_value = {
 	value = qpq_price_of_loyalty_ask_value
@@ -9060,6 +9241,16 @@ qpq_blessing_for_a_feud_goodwill_value = {
 		}
 	}
 }
+qpq_blessing_for_a_feud_proposer_view_value = {
+	value = qpq_blessing_for_a_feud_worth_value
+	add = qpq_blessing_for_a_feud_goal_sw_value
+	add = qpq_blessing_for_a_feud_payer_character_value
+	add = qpq_blessing_for_a_feud_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_blessing_for_a_feud_ai_acceptance_value = {
 	value = qpq_blessing_for_a_feud_ask_value
 	add = qpq_blessing_for_a_feud_offer_points_value
@@ -9420,10 +9611,7 @@ qpq_clemency_bargain_refusal_value = {
 	}
 }
 qpq_clemency_bargain_worth_value = {
-	value = qpq_clemency_bargain_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 19
 }
 qpq_clemency_bargain_payer_risk_value = {
 	value = qpq_clemency_bargain_payer_tier_value
@@ -9482,6 +9670,15 @@ qpq_clemency_bargain_goodwill_value = {
 			add = qpq_clemency_bargain_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_clemency_bargain_proposer_view_value = {
+	value = qpq_clemency_bargain_worth_value
+	add = qpq_clemency_bargain_payer_character_value
+	add = qpq_clemency_bargain_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_clemency_bargain_ai_acceptance_value = {
@@ -9690,7 +9887,7 @@ qpq_electoral_capitulation_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_my_word ?= yes }
-		add = 6
+		add = 12
 		if = {
 			limit = { scope:recipient = { has_trait = honest } }
 			add = 4
@@ -9906,6 +10103,10 @@ qpq_electoral_capitulation_goodwill_value = {
 			max = 0
 		}
 	}
+}
+qpq_electoral_capitulation_proposer_view_value = {
+	value = qpq_electoral_capitulation_demand_value
+	add = qpq_electoral_capitulation_goods_points_value
 }
 qpq_electoral_capitulation_ai_acceptance_value = {
 	value = qpq_electoral_capitulation_ask_value
@@ -10188,10 +10389,7 @@ qpq_mutual_defense_league_refusal_value = {
 	}
 }
 qpq_mutual_defense_league_worth_value = {
-	value = qpq_mutual_defense_league_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_mutual_defense_league_payer_risk_value = {
 	value = qpq_mutual_defense_league_payer_tier_value
@@ -10252,6 +10450,16 @@ qpq_mutual_defense_league_goodwill_value = {
 			add = qpq_mutual_defense_league_goal_value
 			max = 0
 		}
+	}
+}
+qpq_mutual_defense_league_proposer_view_value = {
+	value = qpq_mutual_defense_league_worth_value
+	add = qpq_mutual_defense_league_goal_sw_value
+	add = qpq_mutual_defense_league_payer_character_value
+	add = qpq_mutual_defense_league_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_mutual_defense_league_ai_acceptance_value = {
@@ -10545,10 +10753,7 @@ qpq_faction_pledge_refusal_value = {
 	}
 }
 qpq_faction_pledge_worth_value = {
-	value = qpq_faction_pledge_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_faction_pledge_payer_risk_value = {
 	value = qpq_faction_pledge_payer_tier_value
@@ -10609,6 +10814,16 @@ qpq_faction_pledge_goodwill_value = {
 			add = qpq_faction_pledge_goal_value
 			max = 0
 		}
+	}
+}
+qpq_faction_pledge_proposer_view_value = {
+	value = qpq_faction_pledge_worth_value
+	add = qpq_faction_pledge_goal_sw_value
+	add = qpq_faction_pledge_payer_character_value
+	add = qpq_faction_pledge_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_faction_pledge_ai_acceptance_value = {
@@ -10966,6 +11181,16 @@ qpq_title_swap_goodwill_value = {
 		}
 	}
 }
+qpq_title_swap_proposer_view_value = {
+	value = qpq_title_swap_worth_value
+	add = qpq_title_swap_goal_sw_value
+	add = qpq_title_swap_payer_character_value
+	add = qpq_title_swap_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_title_swap_ai_acceptance_value = {
 	value = qpq_title_swap_ask_value
 	add = qpq_title_swap_offer_points_value
@@ -10995,7 +11220,7 @@ qpq_title_swap_goal_value = {
 					add = -8
 				}
 			}
-			multiply = 1
+			multiply = 4
 		}
 		if = {
 			limit = { scope:recipient = { has_trait = generous } }
@@ -11306,7 +11531,7 @@ qpq_coup_pact_refusal_value = {
 	}
 }
 qpq_coup_pact_worth_value = {
-	value = 0
+	value = 25
 }
 qpq_coup_pact_payer_risk_value = {
 	value = qpq_coup_pact_payer_tier_value
@@ -11367,6 +11592,16 @@ qpq_coup_pact_goodwill_value = {
 			add = qpq_coup_pact_goal_value
 			max = 0
 		}
+	}
+}
+qpq_coup_pact_proposer_view_value = {
+	value = qpq_coup_pact_worth_value
+	add = qpq_coup_pact_goal_sw_value
+	add = qpq_coup_pact_payer_character_value
+	add = qpq_coup_pact_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_coup_pact_ai_acceptance_value = {
@@ -11828,6 +12063,16 @@ qpq_proxy_war_goodwill_value = {
 			add = qpq_proxy_war_goal_value
 			max = 0
 		}
+	}
+}
+qpq_proxy_war_proposer_view_value = {
+	value = qpq_proxy_war_worth_value
+	add = qpq_proxy_war_goal_sw_value
+	add = qpq_proxy_war_payer_character_value
+	add = qpq_proxy_war_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_proxy_war_ai_acceptance_value = {
@@ -12293,6 +12538,16 @@ qpq_partition_pact_goodwill_value = {
 		}
 	}
 }
+qpq_partition_pact_proposer_view_value = {
+	value = qpq_partition_pact_worth_value
+	add = qpq_partition_pact_goal_sw_value
+	add = qpq_partition_pact_payer_character_value
+	add = qpq_partition_pact_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_partition_pact_ai_acceptance_value = {
 	value = qpq_partition_pact_ask_value
 	add = qpq_partition_pact_offer_points_value
@@ -12664,10 +12919,7 @@ qpq_secret_alliance_refusal_value = {
 	}
 }
 qpq_secret_alliance_worth_value = {
-	value = qpq_secret_alliance_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 16
 }
 qpq_secret_alliance_payer_risk_value = {
 	value = qpq_secret_alliance_payer_tier_value
@@ -12728,6 +12980,16 @@ qpq_secret_alliance_goodwill_value = {
 			add = qpq_secret_alliance_goal_value
 			max = 0
 		}
+	}
+}
+qpq_secret_alliance_proposer_view_value = {
+	value = qpq_secret_alliance_worth_value
+	add = qpq_secret_alliance_goal_sw_value
+	add = qpq_secret_alliance_payer_character_value
+	add = qpq_secret_alliance_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_secret_alliance_ai_acceptance_value = {
@@ -13031,10 +13293,7 @@ qpq_bought_truce_refusal_value = {
 	}
 }
 qpq_bought_truce_worth_value = {
-	value = qpq_bought_truce_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 12
 }
 qpq_bought_truce_payer_risk_value = {
 	value = qpq_bought_truce_payer_tier_value
@@ -13095,6 +13354,16 @@ qpq_bought_truce_goodwill_value = {
 			add = qpq_bought_truce_goal_value
 			max = 0
 		}
+	}
+}
+qpq_bought_truce_proposer_view_value = {
+	value = qpq_bought_truce_worth_value
+	add = qpq_bought_truce_goal_sw_value
+	add = qpq_bought_truce_payer_character_value
+	add = qpq_bought_truce_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_bought_truce_ai_acceptance_value = {
@@ -13421,10 +13690,13 @@ qpq_faithless_ally_refusal_value = {
 	}
 }
 qpq_faithless_ally_worth_value = {
-	value = qpq_faithless_ally_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 5
+	add = {
+		value = scope:recipient.max_military_strength
+		divide = { value = scope:actor.max_military_strength min = 1 }
+		multiply = 30
+		max = 25
+	}
 }
 qpq_faithless_ally_payer_risk_value = {
 	value = qpq_faithless_ally_payer_tier_value
@@ -13485,6 +13757,16 @@ qpq_faithless_ally_goodwill_value = {
 			add = qpq_faithless_ally_goal_value
 			max = 0
 		}
+	}
+}
+qpq_faithless_ally_proposer_view_value = {
+	value = qpq_faithless_ally_worth_value
+	add = qpq_faithless_ally_goal_sw_value
+	add = qpq_faithless_ally_payer_character_value
+	add = qpq_faithless_ally_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_faithless_ally_ai_acceptance_value = {
@@ -13869,10 +14151,13 @@ qpq_turncoat_refusal_value = {
 	}
 }
 qpq_turncoat_worth_value = {
-	value = qpq_turncoat_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 5
+	add = {
+		value = scope:recipient.max_military_strength
+		divide = { value = scope:actor.max_military_strength min = 1 }
+		multiply = 30
+		max = 25
+	}
 }
 qpq_turncoat_payer_risk_value = {
 	value = qpq_turncoat_payer_tier_value
@@ -13933,6 +14218,16 @@ qpq_turncoat_goodwill_value = {
 			add = qpq_turncoat_goal_value
 			max = 0
 		}
+	}
+}
+qpq_turncoat_proposer_view_value = {
+	value = qpq_turncoat_worth_value
+	add = qpq_turncoat_goal_sw_value
+	add = qpq_turncoat_payer_character_value
+	add = qpq_turncoat_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_turncoat_ai_acceptance_value = {
@@ -14336,10 +14631,7 @@ qpq_seed_the_separatists_refusal_value = {
 	}
 }
 qpq_seed_the_separatists_worth_value = {
-	value = qpq_seed_the_separatists_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_seed_the_separatists_payer_risk_value = {
 	value = qpq_seed_the_separatists_payer_tier_value
@@ -14400,6 +14692,16 @@ qpq_seed_the_separatists_goodwill_value = {
 			add = qpq_seed_the_separatists_goal_value
 			max = 0
 		}
+	}
+}
+qpq_seed_the_separatists_proposer_view_value = {
+	value = qpq_seed_the_separatists_worth_value
+	add = qpq_seed_the_separatists_goal_sw_value
+	add = qpq_seed_the_separatists_payer_character_value
+	add = qpq_seed_the_separatists_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_seed_the_separatists_ai_acceptance_value = {
@@ -14732,10 +15034,7 @@ qpq_shelter_the_pretender_refusal_value = {
 	}
 }
 qpq_shelter_the_pretender_worth_value = {
-	value = qpq_shelter_the_pretender_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 16
 }
 qpq_shelter_the_pretender_payer_risk_value = {
 	value = qpq_shelter_the_pretender_payer_tier_value
@@ -14794,6 +15093,15 @@ qpq_shelter_the_pretender_goodwill_value = {
 			add = qpq_shelter_the_pretender_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_shelter_the_pretender_proposer_view_value = {
+	value = qpq_shelter_the_pretender_worth_value
+	add = qpq_shelter_the_pretender_payer_character_value
+	add = qpq_shelter_the_pretender_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_shelter_the_pretender_ai_acceptance_value = {
@@ -15103,6 +15411,16 @@ qpq_extradition_goodwill_value = {
 			add = qpq_extradition_goal_value
 			max = 0
 		}
+	}
+}
+qpq_extradition_proposer_view_value = {
+	value = qpq_extradition_worth_value
+	add = qpq_extradition_goal_sw_value
+	add = qpq_extradition_payer_character_value
+	add = qpq_extradition_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_extradition_ai_acceptance_value = {
@@ -15556,6 +15874,16 @@ qpq_buy_a_councillor_goodwill_value = {
 		}
 	}
 }
+qpq_buy_a_councillor_proposer_view_value = {
+	value = qpq_buy_a_councillor_worth_value
+	add = qpq_buy_a_councillor_goal_sw_value
+	add = qpq_buy_a_councillor_payer_character_value
+	add = qpq_buy_a_councillor_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_buy_a_councillor_ai_acceptance_value = {
 	value = qpq_buy_a_councillor_ask_value
 	add = qpq_buy_a_councillor_offer_points_value
@@ -15938,10 +16266,7 @@ qpq_stay_home_refusal_value = {
 	}
 }
 qpq_stay_home_worth_value = {
-	value = qpq_stay_home_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_stay_home_payer_risk_value = {
 	value = qpq_stay_home_payer_tier_value
@@ -16002,6 +16327,16 @@ qpq_stay_home_goodwill_value = {
 			add = qpq_stay_home_goal_value
 			max = 0
 		}
+	}
+}
+qpq_stay_home_proposer_view_value = {
+	value = qpq_stay_home_worth_value
+	add = qpq_stay_home_goal_sw_value
+	add = qpq_stay_home_payer_character_value
+	add = qpq_stay_home_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_stay_home_ai_acceptance_value = {
@@ -16322,10 +16657,7 @@ qpq_defection_pact_refusal_value = {
 	}
 }
 qpq_defection_pact_worth_value = {
-	value = qpq_defection_pact_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_defection_pact_payer_risk_value = {
 	value = qpq_defection_pact_payer_tier_value
@@ -16386,6 +16718,16 @@ qpq_defection_pact_goodwill_value = {
 			add = qpq_defection_pact_goal_value
 			max = 0
 		}
+	}
+}
+qpq_defection_pact_proposer_view_value = {
+	value = qpq_defection_pact_worth_value
+	add = qpq_defection_pact_goal_sw_value
+	add = qpq_defection_pact_payer_character_value
+	add = qpq_defection_pact_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_defection_pact_ai_acceptance_value = {
@@ -16768,6 +17110,16 @@ qpq_secret_clause_goodwill_value = {
 		}
 	}
 }
+qpq_secret_clause_proposer_view_value = {
+	value = qpq_secret_clause_worth_value
+	add = qpq_secret_clause_goal_sw_value
+	add = qpq_secret_clause_payer_character_value
+	add = qpq_secret_clause_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_secret_clause_ai_acceptance_value = {
 	value = qpq_secret_clause_ask_value
 	add = qpq_secret_clause_offer_points_value
@@ -17136,6 +17488,16 @@ qpq_hire_the_hashashin_goodwill_value = {
 			add = qpq_hire_the_hashashin_goal_value
 			max = 0
 		}
+	}
+}
+qpq_hire_the_hashashin_proposer_view_value = {
+	value = qpq_hire_the_hashashin_worth_value
+	add = qpq_hire_the_hashashin_goal_sw_value
+	add = qpq_hire_the_hashashin_payer_character_value
+	add = qpq_hire_the_hashashin_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_hire_the_hashashin_ai_acceptance_value = {
@@ -17583,6 +17945,16 @@ qpq_excommunication_for_hire_goodwill_value = {
 		}
 	}
 }
+qpq_excommunication_for_hire_proposer_view_value = {
+	value = qpq_excommunication_for_hire_worth_value
+	add = qpq_excommunication_for_hire_goal_sw_value
+	add = qpq_excommunication_for_hire_payer_character_value
+	add = qpq_excommunication_for_hire_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_excommunication_for_hire_ai_acceptance_value = {
 	value = qpq_excommunication_for_hire_ask_value
 	add = qpq_excommunication_for_hire_offer_points_value
@@ -18028,6 +18400,16 @@ qpq_dispensation_for_gold_goodwill_value = {
 		}
 	}
 }
+qpq_dispensation_for_gold_proposer_view_value = {
+	value = qpq_dispensation_for_gold_worth_value
+	add = qpq_dispensation_for_gold_goal_sw_value
+	add = qpq_dispensation_for_gold_payer_character_value
+	add = qpq_dispensation_for_gold_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_dispensation_for_gold_ai_acceptance_value = {
 	value = qpq_dispensation_for_gold_ask_value
 	add = qpq_dispensation_for_gold_offer_points_value
@@ -18389,6 +18771,16 @@ qpq_steer_the_holy_war_goodwill_value = {
 			add = qpq_steer_the_holy_war_goal_value
 			max = 0
 		}
+	}
+}
+qpq_steer_the_holy_war_proposer_view_value = {
+	value = qpq_steer_the_holy_war_worth_value
+	add = qpq_steer_the_holy_war_goal_sw_value
+	add = qpq_steer_the_holy_war_payer_character_value
+	add = qpq_steer_the_holy_war_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_steer_the_holy_war_ai_acceptance_value = {
@@ -18852,6 +19244,16 @@ qpq_purchase_a_mitre_goodwill_value = {
 		}
 	}
 }
+qpq_purchase_a_mitre_proposer_view_value = {
+	value = qpq_purchase_a_mitre_worth_value
+	add = qpq_purchase_a_mitre_goal_sw_value
+	add = qpq_purchase_a_mitre_payer_character_value
+	add = qpq_purchase_a_mitre_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_purchase_a_mitre_ai_acceptance_value = {
 	value = qpq_purchase_a_mitre_ask_value
 	add = qpq_purchase_a_mitre_offer_points_value
@@ -19215,6 +19617,16 @@ qpq_bought_claim_goodwill_value = {
 		}
 	}
 }
+qpq_bought_claim_proposer_view_value = {
+	value = qpq_bought_claim_worth_value
+	add = qpq_bought_claim_goal_sw_value
+	add = qpq_bought_claim_payer_character_value
+	add = qpq_bought_claim_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_bought_claim_ai_acceptance_value = {
 	value = qpq_bought_claim_ask_value
 	add = qpq_bought_claim_offer_points_value
@@ -19569,10 +19981,7 @@ qpq_absolution_by_concession_refusal_value = {
 	}
 }
 qpq_absolution_by_concession_worth_value = {
-	value = qpq_absolution_by_concession_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 12
 }
 qpq_absolution_by_concession_payer_risk_value = {
 	value = qpq_absolution_by_concession_payer_tier_value
@@ -19633,6 +20042,16 @@ qpq_absolution_by_concession_goodwill_value = {
 			add = qpq_absolution_by_concession_goal_value
 			max = 0
 		}
+	}
+}
+qpq_absolution_by_concession_proposer_view_value = {
+	value = qpq_absolution_by_concession_worth_value
+	add = qpq_absolution_by_concession_goal_sw_value
+	add = qpq_absolution_by_concession_payer_character_value
+	add = qpq_absolution_by_concession_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_absolution_by_concession_ai_acceptance_value = {
@@ -19984,6 +20403,16 @@ qpq_holy_warrant_goodwill_value = {
 			add = qpq_holy_warrant_goal_value
 			max = 0
 		}
+	}
+}
+qpq_holy_warrant_proposer_view_value = {
+	value = qpq_holy_warrant_worth_value
+	add = qpq_holy_warrant_goal_sw_value
+	add = qpq_holy_warrant_payer_character_value
+	add = qpq_holy_warrant_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_holy_warrant_ai_acceptance_value = {
@@ -20445,6 +20874,16 @@ qpq_buy_a_bull_goodwill_value = {
 		}
 	}
 }
+qpq_buy_a_bull_proposer_view_value = {
+	value = qpq_buy_a_bull_worth_value
+	add = qpq_buy_a_bull_goal_sw_value
+	add = qpq_buy_a_bull_payer_character_value
+	add = qpq_buy_a_bull_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_buy_a_bull_ai_acceptance_value = {
 	value = qpq_buy_a_bull_ask_value
 	add = qpq_buy_a_bull_offer_points_value
@@ -20899,6 +21338,16 @@ qpq_conclave_votes_goodwill_value = {
 		}
 	}
 }
+qpq_conclave_votes_proposer_view_value = {
+	value = qpq_conclave_votes_worth_value
+	add = qpq_conclave_votes_goal_sw_value
+	add = qpq_conclave_votes_payer_character_value
+	add = qpq_conclave_votes_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_conclave_votes_ai_acceptance_value = {
 	value = qpq_conclave_votes_ask_value
 	add = qpq_conclave_votes_offer_points_value
@@ -21171,10 +21620,7 @@ qpq_council_lobbying_refusal_value = {
 	}
 }
 qpq_council_lobbying_worth_value = {
-	value = qpq_council_lobbying_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 19
 }
 qpq_council_lobbying_payer_risk_value = {
 	value = qpq_council_lobbying_payer_tier_value
@@ -21235,6 +21681,16 @@ qpq_council_lobbying_goodwill_value = {
 			add = qpq_council_lobbying_goal_value
 			max = 0
 		}
+	}
+}
+qpq_council_lobbying_proposer_view_value = {
+	value = qpq_council_lobbying_worth_value
+	add = qpq_council_lobbying_goal_sw_value
+	add = qpq_council_lobbying_payer_character_value
+	add = qpq_council_lobbying_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_council_lobbying_ai_acceptance_value = {
@@ -21497,10 +21953,7 @@ qpq_caliphal_investiture_refusal_value = {
 	}
 }
 qpq_caliphal_investiture_worth_value = {
-	value = qpq_caliphal_investiture_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 12
 }
 qpq_caliphal_investiture_payer_risk_value = {
 	value = qpq_caliphal_investiture_payer_tier_value
@@ -21561,6 +22014,16 @@ qpq_caliphal_investiture_goodwill_value = {
 			add = qpq_caliphal_investiture_goal_value
 			max = 0
 		}
+	}
+}
+qpq_caliphal_investiture_proposer_view_value = {
+	value = qpq_caliphal_investiture_worth_value
+	add = qpq_caliphal_investiture_goal_sw_value
+	add = qpq_caliphal_investiture_payer_character_value
+	add = qpq_caliphal_investiture_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_caliphal_investiture_ai_acceptance_value = {
@@ -21850,10 +22313,7 @@ qpq_name_in_the_khutba_refusal_value = {
 	}
 }
 qpq_name_in_the_khutba_worth_value = {
-	value = qpq_name_in_the_khutba_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_name_in_the_khutba_payer_risk_value = {
 	value = qpq_name_in_the_khutba_payer_tier_value
@@ -21914,6 +22374,16 @@ qpq_name_in_the_khutba_goodwill_value = {
 			add = qpq_name_in_the_khutba_goal_value
 			max = 0
 		}
+	}
+}
+qpq_name_in_the_khutba_proposer_view_value = {
+	value = qpq_name_in_the_khutba_worth_value
+	add = qpq_name_in_the_khutba_goal_sw_value
+	add = qpq_name_in_the_khutba_payer_character_value
+	add = qpq_name_in_the_khutba_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_name_in_the_khutba_ai_acceptance_value = {
@@ -22272,6 +22742,16 @@ qpq_fatwa_for_hire_goodwill_value = {
 			add = qpq_fatwa_for_hire_goal_value
 			max = 0
 		}
+	}
+}
+qpq_fatwa_for_hire_proposer_view_value = {
+	value = qpq_fatwa_for_hire_worth_value
+	add = qpq_fatwa_for_hire_goal_sw_value
+	add = qpq_fatwa_for_hire_payer_character_value
+	add = qpq_fatwa_for_hire_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_fatwa_for_hire_ai_acceptance_value = {
@@ -22717,6 +23197,16 @@ qpq_fund_the_dawa_goodwill_value = {
 			add = qpq_fund_the_dawa_goal_value
 			max = 0
 		}
+	}
+}
+qpq_fund_the_dawa_proposer_view_value = {
+	value = qpq_fund_the_dawa_worth_value
+	add = qpq_fund_the_dawa_goal_sw_value
+	add = qpq_fund_the_dawa_payer_character_value
+	add = qpq_fund_the_dawa_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_fund_the_dawa_ai_acceptance_value = {
@@ -23204,6 +23694,16 @@ qpq_crowning_the_usurper_goodwill_value = {
 		}
 	}
 }
+qpq_crowning_the_usurper_proposer_view_value = {
+	value = qpq_crowning_the_usurper_worth_value
+	add = qpq_crowning_the_usurper_goal_sw_value
+	add = qpq_crowning_the_usurper_payer_character_value
+	add = qpq_crowning_the_usurper_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_crowning_the_usurper_ai_acceptance_value = {
 	value = qpq_crowning_the_usurper_ask_value
 	add = qpq_crowning_the_usurper_offer_points_value
@@ -23558,10 +24058,7 @@ qpq_pliant_patriarch_refusal_value = {
 	}
 }
 qpq_pliant_patriarch_worth_value = {
-	value = qpq_pliant_patriarch_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 19
 }
 qpq_pliant_patriarch_payer_risk_value = {
 	value = qpq_pliant_patriarch_payer_tier_value
@@ -23622,6 +24119,16 @@ qpq_pliant_patriarch_goodwill_value = {
 			add = qpq_pliant_patriarch_goal_value
 			max = 0
 		}
+	}
+}
+qpq_pliant_patriarch_proposer_view_value = {
+	value = qpq_pliant_patriarch_worth_value
+	add = qpq_pliant_patriarch_goal_sw_value
+	add = qpq_pliant_patriarch_payer_character_value
+	add = qpq_pliant_patriarch_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_pliant_patriarch_ai_acceptance_value = {
@@ -23973,6 +24480,16 @@ qpq_favourable_omens_goodwill_value = {
 			add = qpq_favourable_omens_goal_value
 			max = 0
 		}
+	}
+}
+qpq_favourable_omens_proposer_view_value = {
+	value = qpq_favourable_omens_worth_value
+	add = qpq_favourable_omens_goal_sw_value
+	add = qpq_favourable_omens_payer_character_value
+	add = qpq_favourable_omens_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_favourable_omens_ai_acceptance_value = {
@@ -24350,10 +24867,7 @@ qpq_consecration_rites_refusal_value = {
 	}
 }
 qpq_consecration_rites_worth_value = {
-	value = qpq_consecration_rites_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 12
 }
 qpq_consecration_rites_payer_risk_value = {
 	value = qpq_consecration_rites_payer_tier_value
@@ -24414,6 +24928,16 @@ qpq_consecration_rites_goodwill_value = {
 			add = qpq_consecration_rites_goal_value
 			max = 0
 		}
+	}
+}
+qpq_consecration_rites_proposer_view_value = {
+	value = qpq_consecration_rites_worth_value
+	add = qpq_consecration_rites_goal_sw_value
+	add = qpq_consecration_rites_payer_character_value
+	add = qpq_consecration_rites_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_consecration_rites_ai_acceptance_value = {
@@ -24767,6 +25291,16 @@ qpq_temple_patronage_goodwill_value = {
 		}
 	}
 }
+qpq_temple_patronage_proposer_view_value = {
+	value = qpq_temple_patronage_worth_value
+	add = qpq_temple_patronage_goal_sw_value
+	add = qpq_temple_patronage_payer_character_value
+	add = qpq_temple_patronage_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_temple_patronage_ai_acceptance_value = {
 	value = qpq_temple_patronage_ask_value
 	add = qpq_temple_patronage_offer_points_value
@@ -24926,7 +25460,7 @@ qpq_make_peace_payer_tier_value = {
 	max = 5
 }
 qpq_make_peace_agent_tier_value = {
-	value = 1
+	value = 0
 	min = 0
 	max = 5
 }
@@ -24981,7 +25515,7 @@ qpq_make_peace_demand_value = {
 	value = qpq_make_peace_agent_tier_value
 	multiply = -18
 	add = -12
-	add = -10
+	add = 0
 }
 qpq_make_peace_ask_value = {
 	value = qpq_make_peace_demand_value
@@ -25184,6 +25718,16 @@ qpq_make_peace_goodwill_value = {
 		}
 	}
 }
+qpq_make_peace_proposer_view_value = {
+	value = qpq_make_peace_worth_value
+	add = qpq_make_peace_goal_sw_value
+	add = qpq_make_peace_payer_character_value
+	add = qpq_make_peace_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_make_peace_ai_acceptance_value = {
 	value = qpq_make_peace_ask_value
 	add = qpq_make_peace_offer_points_value
@@ -25378,8 +25922,9 @@ qpq_make_peace_goal_value = {
 					}
 				}
 			}
-			multiply = -0.6
+			multiply = -1.0
 		}
+		add = 10
 	}
 }
 
@@ -25428,7 +25973,7 @@ qpq_make_peace_goal_sw_value = {
 		limit = { exists = scope:secondary_recipient }
 		if = {
 			limit = { scope:actor = scope:secondary_recipient }
-			add = 0
+			add = 12
 			add = {
 				value = 0
 				if = {
@@ -25771,6 +26316,16 @@ qpq_yield_war_goodwill_value = {
 			add = qpq_yield_war_goal_value
 			max = 0
 		}
+	}
+}
+qpq_yield_war_proposer_view_value = {
+	value = qpq_yield_war_worth_value
+	add = qpq_yield_war_goal_sw_value
+	add = qpq_yield_war_payer_character_value
+	add = qpq_yield_war_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_yield_war_ai_acceptance_value = {
@@ -26429,6 +26984,16 @@ qpq_join_war_goodwill_value = {
 		}
 	}
 }
+qpq_join_war_proposer_view_value = {
+	value = qpq_join_war_worth_value
+	add = qpq_join_war_goal_sw_value
+	add = qpq_join_war_payer_character_value
+	add = qpq_join_war_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
+	}
+}
 qpq_join_war_ai_acceptance_value = {
 	value = qpq_join_war_ask_value
 	add = qpq_join_war_offer_points_value
@@ -26979,6 +27544,16 @@ qpq_leave_war_goodwill_value = {
 			add = qpq_leave_war_goal_value
 			max = 0
 		}
+	}
+}
+qpq_leave_war_proposer_view_value = {
+	value = qpq_leave_war_worth_value
+	add = qpq_leave_war_goal_sw_value
+	add = qpq_leave_war_payer_character_value
+	add = qpq_leave_war_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_leave_war_ai_acceptance_value = {
@@ -27593,6 +28168,16 @@ qpq_stay_out_goodwill_value = {
 			add = qpq_stay_out_goal_value
 			max = 0
 		}
+	}
+}
+qpq_stay_out_proposer_view_value = {
+	value = qpq_stay_out_worth_value
+	add = qpq_stay_out_goal_sw_value
+	add = qpq_stay_out_payer_character_value
+	add = qpq_stay_out_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_stay_out_ai_acceptance_value = {
@@ -28220,10 +28805,7 @@ qpq_heavier_tribute_refusal_value = {
 	}
 }
 qpq_heavier_tribute_worth_value = {
-	value = qpq_heavier_tribute_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 15
 }
 qpq_heavier_tribute_payer_risk_value = {
 	value = qpq_heavier_tribute_payer_tier_value
@@ -28282,6 +28864,15 @@ qpq_heavier_tribute_goodwill_value = {
 			add = qpq_heavier_tribute_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_heavier_tribute_proposer_view_value = {
+	value = qpq_heavier_tribute_worth_value
+	add = qpq_heavier_tribute_payer_character_value
+	add = qpq_heavier_tribute_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_heavier_tribute_ai_acceptance_value = {
@@ -28495,10 +29086,7 @@ qpq_lighter_tribute_refusal_value = {
 	}
 }
 qpq_lighter_tribute_worth_value = {
-	value = qpq_lighter_tribute_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 13
 }
 qpq_lighter_tribute_payer_risk_value = {
 	value = qpq_lighter_tribute_payer_tier_value
@@ -28557,6 +29145,15 @@ qpq_lighter_tribute_goodwill_value = {
 			add = qpq_lighter_tribute_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_lighter_tribute_proposer_view_value = {
+	value = qpq_lighter_tribute_worth_value
+	add = qpq_lighter_tribute_payer_character_value
+	add = qpq_lighter_tribute_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_lighter_tribute_ai_acceptance_value = {
@@ -28770,10 +29367,7 @@ qpq_bought_freedom_refusal_value = {
 	}
 }
 qpq_bought_freedom_worth_value = {
-	value = qpq_bought_freedom_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 25
 }
 qpq_bought_freedom_payer_risk_value = {
 	value = qpq_bought_freedom_payer_tier_value
@@ -28832,6 +29426,15 @@ qpq_bought_freedom_goodwill_value = {
 			add = qpq_bought_freedom_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_bought_freedom_proposer_view_value = {
+	value = qpq_bought_freedom_worth_value
+	add = qpq_bought_freedom_payer_character_value
+	add = qpq_bought_freedom_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_bought_freedom_ai_acceptance_value = {
@@ -29058,10 +29661,7 @@ qpq_accept_the_yoke_refusal_value = {
 	}
 }
 qpq_accept_the_yoke_worth_value = {
-	value = qpq_accept_the_yoke_demand_value
-	multiply = -0.4
-	min = 5
-	max = 25
+	value = 24
 }
 qpq_accept_the_yoke_payer_risk_value = {
 	value = qpq_accept_the_yoke_payer_tier_value
@@ -29122,6 +29722,16 @@ qpq_accept_the_yoke_goodwill_value = {
 			add = qpq_accept_the_yoke_goal_value
 			max = 0
 		}
+	}
+}
+qpq_accept_the_yoke_proposer_view_value = {
+	value = qpq_accept_the_yoke_worth_value
+	add = qpq_accept_the_yoke_goal_sw_value
+	add = qpq_accept_the_yoke_payer_character_value
+	add = qpq_accept_the_yoke_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_accept_the_yoke_ai_acceptance_value = {
@@ -29497,6 +30107,16 @@ qpq_cast_off_the_yoke_goodwill_value = {
 			add = qpq_cast_off_the_yoke_goal_value
 			max = 0
 		}
+	}
+}
+qpq_cast_off_the_yoke_proposer_view_value = {
+	value = qpq_cast_off_the_yoke_worth_value
+	add = qpq_cast_off_the_yoke_goal_sw_value
+	add = qpq_cast_off_the_yoke_payer_character_value
+	add = qpq_cast_off_the_yoke_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_cast_off_the_yoke_ai_acceptance_value = {
@@ -29909,6 +30529,15 @@ qpq_barter_goodwill_value = {
 			add = qpq_barter_circumstance_value
 			max = 0
 		}
+	}
+}
+qpq_barter_proposer_view_value = {
+	value = qpq_barter_worth_value
+	add = qpq_barter_payer_character_value
+	add = qpq_barter_payer_risk_value
+	add = {
+		value = qpq_goods_cost_value
+		multiply = -1.25
 	}
 }
 qpq_barter_ai_acceptance_value = {

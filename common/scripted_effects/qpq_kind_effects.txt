@@ -6479,6 +6479,7 @@ qpq_ai_propose_kind_effect = {
 	clear_saved_scope = qpq_ai_foe
 	clear_saved_scope = qpq_deal_command
 	clear_saved_scope = qpq_cmd_bonus
+	clear_saved_scope = qpq_proposed_kind
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
@@ -6492,9 +6493,50 @@ qpq_ai_propose_kind_effect = {
 		}
 		save_scope_value_as = { name = qpq_proposed_kind value = flag:$KIND$ }
 		save_scope_value_as = { name = qpq_o_gold value = yes }
-		save_scope_value_as = { name = qpq_price value = qpq_$KIND$_price_value }
 		# AI proposers pay on delivery: if they cannot pay then, the deal sours into a breach
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
+		# What to offer: what the other side would need to agree (the fair price at least), worked out from
+		# what they would say to no gold at all. Whether that is worth paying is the proposer's own question,
+		# answered below by its own lights.
+		save_scope_value_as = { name = qpq_price value = 0 }
+		save_scope_value_as = {
+			name = qpq_ai_need
+			value = {
+				value = qpq_$KIND$_ai_acceptance_value
+				multiply = -1
+				add = 2
+				min = 0
+				divide = {
+					value = 5
+					multiply = qpq_$KIND$_gold_mult_value
+				}
+				multiply = scope:recipient.qpq_stake_value
+				if = {
+					limit = { scope:recipient = { has_trait = greedy } }
+					divide = 1.3
+				}
+				if = {
+					limit = { scope:recipient = { has_trait = generous } }
+					divide = 0.8
+				}
+				min = qpq_$KIND$_price_value
+				round = yes
+			}
+		}
+		clear_saved_scope = qpq_price
+		save_scope_value_as = { name = qpq_price value = scope:qpq_ai_need }
+		clear_saved_scope = qpq_ai_need
+	}
+	# Only what is worth its price to the one proposing, by its own lights: what it gets against what it pays
+	if = {
+		limit = {
+			exists = scope:qpq_proposed_kind
+			NOT = { qpq_$KIND$_proposer_view_value > 0 }
+		}
+		clear_saved_scope = qpq_proposed_kind
+	}
+	if = {
+		limit = { exists = scope:qpq_proposed_kind }
 		# A liege who would be refused may lean on their authority (Command), if their standing allows it: the
 		# lightest touch that will do. A person is told, and decides for themselves.
 		if = {

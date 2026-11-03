@@ -3100,7 +3100,7 @@ K(key="make_peace", cat="G", group="wartime", secret="bribery", icon="negotiate_
   name="Make Peace",
   ask="make a white peace in the war against [qpq_target.GetTitledFirstName]",
   desc="A [war|E] leader ends their war against a named enemy with a [white_peace|E]. The keener they are to fight, and the better their side's chances, the more they ask; losing, they are glad of the excuse. If it comes out, their allies learn the peace was bought.",
-  payer_base=0, agent_base=1, payer_ctx=False, agent_ctx=False, term=12, effort=10,
+  payer_base=0, agent_base=0, payer_ctx=False, agent_ctx=False, term=12, effort=0,
   rel="scope:recipient = { is_at_war = yes }", pick=PICK_WARS_RECIPIENT_LEADS,
   target_valid="""
 scope:recipient = {

@@ -237,6 +237,7 @@ class Character(Obj):
     joined_faction = None
     realm_priest = None
     clerical_elector_title = None
+    imprisonment_reasons = ()  # characters with a reason to imprison them
 
     def __init__(self, name=None, **kw):
         super().__init__(name, **kw)
@@ -245,14 +246,15 @@ class Character(Obj):
         self.claims = list(self.claims)
         self.spouses = list(self.spouses)
         self.character_flags = set(self.character_flags)
-        self.relations = {k: set(v) for k, v in (self.relations or {}).items()}
+        # lists, not sets: iteration order must not depend on memory addresses (the tests are deterministic)
+        self.relations = {k: list(v) for k, v in (self.relations or {}).items()}
 
     @property
     def is_landed(self):
         return bool(self.titles)
 
     def rel(self, kind):
-        return self.relations.get(kind, set())
+        return self.relations.get(kind, [])
 
 
 class World:
@@ -267,7 +269,7 @@ class World:
         self.secrets = []
         self.alliances = set()
         self.truces = set()
-        self.neighbors = set()      # pairs of top lieges whose realms touch (or face each other across water)
+        self.neighbors = []         # pairs of top lieges whose realms touch (or face each other across water), in order
         self.opinions = {}          # (who, of_whom) -> value
         self.dread = {}             # (who, of_whom) -> level
         self.hooks = {}             # (holder, target) -> "weak" | "strong"
@@ -327,7 +329,8 @@ class World:
         self.truces.add(frozenset((a, b)))
 
     def border(self, a, b):
-        self.neighbors.add(frozenset((a, b)))
+        if frozenset((a, b)) not in self.neighbors:
+            self.neighbors.append(frozenset((a, b)))
 
     def opinion(self, who, of_whom, value):
         self.opinions[(who, of_whom)] = value
@@ -337,8 +340,10 @@ class World:
         self.tributaries[tributary] = suzerain
 
     def relate(self, a, kind, b):
-        a.relations.setdefault(kind, set()).add(b)
-        b.relations.setdefault(kind, set()).add(a)
+        for x, y in ((a, b), (b, a)):
+            lst = x.relations.setdefault(kind, [])
+            if y not in lst:
+                lst.append(y)
 
     # ---- queries
     def top_liege(self, c):
@@ -1457,6 +1462,7 @@ TRIGGERS = {
     "sex_same_as": lambda r, fr, n: fr[0].female == _target(r, fr, n).female,
     "can_have_children_with": lambda r, fr, n: fr[0].female != _target(r, fr, n).female,
     "was_preferred_heir": lambda r, fr, n: _target(r, fr, n) in fr[0].preferred_heir_of,
+    "has_imprisonment_reason": lambda r, fr, n: _target(r, fr, n) in fr[0].imprisonment_reasons,
     "save_temporary_scope_as": lambda r, fr, n: r.scopes.__setitem__(n.value, fr[0]) or True,
     "has_dlc_feature": lambda r, fr, n: r.w.dlc_features is None or n.value in r.w.dlc_features,
     "rite_has_doctrine": _t_has_doctrine,
@@ -1472,7 +1478,7 @@ def _i_neighbor_realms(run, c, body, fr):
     out = []
     for pair in run.w.neighbors:
         if me in pair:
-            other = [x for x in pair if x is not me]
+            other = [x for x in sorted(pair, key=lambda c: c.id) if x is not me]
             if other and other[0] not in out:
                 out.append(other[0])
     return out

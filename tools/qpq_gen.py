@@ -201,11 +201,17 @@ def gen_values():
         out += "qpq_%s_worth_value = {\n" % key
         if k["initiator"] != "payer":
             out += "\tvalue = qpq_%s_ask_value\n" % key
-        elif key == "barter" or (archs & WISH_ARCHETYPES and key not in WAR_HELP):
+        elif key in WAR_HELP:
+            # the strength it takes off the enemy, against their own: little from a man with no army
+            out += ("\tvalue = 5\n\tadd = {\n\t\tvalue = scope:recipient.max_military_strength\n"
+                    "\t\tdivide = { value = scope:actor.max_military_strength min = 1 }\n\t\tmultiply = 30\n\t\tmax = 25\n\t}\n")
+        elif key == "barter" or (archs & WISH_ARCHETYPES and key not in INTRINSIC):
             out += "\tvalue = 0\n"
         else:
-            out += ("\tvalue = qpq_%s_demand_value\n\tmultiply = %s\n\tmin = %d\n\tmax = %d\n") % (
-                key, -WORTH_SHARE, WORTH_MIN, WORTH_MAX)
+            # a share of the deed's own size (its base tier and effort), the same whoever does it: never what it
+            # happens to cost the one offering to do it
+            size = 18 * k["agent_base"] + 12 + k["effort"]
+            out += "\tvalue = %d\n" % max(WORTH_MIN, min(WORTH_MAX, round(WORTH_SHARE * size)))
         out += "}\n"
         # The payer's own risk and character, when they would pay for it: anyone fears what it costs them if it
         # comes out, an honest or just lord shrinks from a dirty bargain, a schemer warms to it
@@ -233,6 +239,18 @@ def gen_values():
             pos += "\t\tmax = 0\n"
             neg += "\t\tmin = {\n\t\t\tvalue = qpq_%s_offer_points_value\n\t\t\tmax = 0\n\t\t}\n" % key
         out += "qpq_%s_goodwill_value = {\n\tvalue = {\n%s\t}\n\tadd = {\n%s\t}\n}\n" % (key, pos, neg)
+        # The proposer's own view of an AI proposal (it pays the fair price, on delivery): payer-proposed, what the
+        # deed is worth to it, its wishes, risk and scruples, against the gold at its own purse; agent-proposed,
+        # the gold at its own purse against what doing the deed costs it
+        if k["initiator"] == "payer":
+            out += ("qpq_%s_proposer_view_value = {\n\tvalue = qpq_%s_worth_value\n%s"
+                    "\tadd = qpq_%s_payer_character_value\n\tadd = qpq_%s_payer_risk_value\n"
+                    "\tadd = {\n\t\tvalue = qpq_goods_cost_value\n\t\tmultiply = %s\n\t}\n}\n") % (
+                key, key, ("\tadd = qpq_%s_goal_sw_value\n" % key) if goals.goal_value(k, True) else "",
+                key, key, -LOSS_AVERSION)
+        else:
+            out += ("qpq_%s_proposer_view_value = {\n\tvalue = qpq_%s_demand_value\n"
+                    "\tadd = qpq_%s_goods_points_value\n}\n") % (key, key, key)
         # The whole acceptance, mirroring the interaction's ai_accept: used when an AI recipient answers an AI
         # proposal
         out += "qpq_%s_ai_acceptance_value = {\n\tvalue = qpq_%s_ask_value\n\tadd = qpq_%s_offer_points_value\n" % (key, key, key)
@@ -259,12 +277,15 @@ TRAIT_MODS = [("honest", -6), ("just", -5), ("deceitful", 4), ("arbitrary", 3), 
 AGENT_INIT_BASE = 35
 LOSS_AVERSION = goals.LOSS_AVERSION
 # A deed done for them that they have no particular wish for (no goal archetype speaks to it) is still worth a
-# share of what it costs the doer, within bounds
+# share of the deed's own size (base tier and effort, as a doer would weigh it), within bounds. An AI judges by
+# what it gets and gives, never by the other party's purse, rank or circumstances.
 WORTH_SHARE, WORTH_MIN, WORTH_MAX = 0.4, 5, 25
 # Archetypes whose goal says all a deed is worth to the one who would pay for it
 WISH_ARCHETYPES = {"war", "harm", "favour", "war_side", "loss_title", "loss_artifact"}
-# ...except deeds that weaken the side the payer is at war with: those help whatever the payer feels about its leader
+# ...except deeds that weaken the side the payer is at war with (worth the strength taken off it, against the
+# payer's own), and deeds whose harm brings the payer a gain of its own (a regency)
 WAR_HELP = {"turncoat", "faithless_ally"}
+INTRINSIC = {"coup_pact"}
 
 
 def goods_cost_body(G, R, price):
@@ -292,7 +313,8 @@ def goods_cost_body(G, R, price):
     s += good("release_hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
     # calling in a hook spends it
     s += good("hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
-    s += good("my_word", "\t\tadd = 6\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = honest } }\n\t\t\tadd = 4\n\t\t}\n" % G)
+    # their word is a hook on themselves: about what holding one is worth, more to the honest who will keep it
+    s += good("my_word", "\t\tadd = 12\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = honest } }\n\t\t\tadd = 4\n\t\t}\n" % G)
     s += good("secret", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_secret_points }\n\t\t\tadd = scope:qpq_gift_secret_points\n\t\t}\n"
                         "\t\telse = {\n\t\t\tadd = 12\n\t\t}\n")
     s += good("contract", "\t\tadd = 22\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = greedy } }\n\t\t\tadd = 5\n\t\t}\n" % G)
@@ -730,6 +752,7 @@ if = {
 	clear_saved_scope = qpq_ai_foe
 	clear_saved_scope = qpq_deal_command
 	clear_saved_scope = qpq_cmd_bonus
+	clear_saved_scope = qpq_proposed_kind
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
@@ -743,9 +766,50 @@ if = {
 		}
 		save_scope_value_as = { name = qpq_proposed_kind value = flag:$KIND$ }
 		save_scope_value_as = { name = qpq_o_gold value = yes }
-		save_scope_value_as = { name = qpq_price value = qpq_$KIND$_price_value }
 		# AI proposers pay on delivery: if they cannot pay then, the deal sours into a breach
 		save_scope_value_as = { name = qpq_o_on_delivery value = yes }
+		# What to offer: what the other side would need to agree (the fair price at least), worked out from
+		# what they would say to no gold at all. Whether that is worth paying is the proposer's own question,
+		# answered below by its own lights.
+		save_scope_value_as = { name = qpq_price value = 0 }
+		save_scope_value_as = {
+			name = qpq_ai_need
+			value = {
+				value = qpq_$KIND$_ai_acceptance_value
+				multiply = -1
+				add = 2
+				min = 0
+				divide = {
+					value = 5
+					multiply = qpq_$KIND$_gold_mult_value
+				}
+				multiply = scope:recipient.qpq_stake_value
+				if = {
+					limit = { scope:recipient = { has_trait = greedy } }
+					divide = 1.3
+				}
+				if = {
+					limit = { scope:recipient = { has_trait = generous } }
+					divide = 0.8
+				}
+				min = qpq_$KIND$_price_value
+				round = yes
+			}
+		}
+		clear_saved_scope = qpq_price
+		save_scope_value_as = { name = qpq_price value = scope:qpq_ai_need }
+		clear_saved_scope = qpq_ai_need
+	}
+	# Only what is worth its price to the one proposing, by its own lights: what it gets against what it pays
+	if = {
+		limit = {
+			exists = scope:qpq_proposed_kind
+			NOT = { qpq_$KIND$_proposer_view_value > 0 }
+		}
+		clear_saved_scope = qpq_proposed_kind
+	}
+	if = {
+		limit = { exists = scope:qpq_proposed_kind }
 		# A liege who would be refused may lean on their authority (Command), if their standing allows it: the
 		# lightest touch that will do. A person is told, and decides for themselves.
 		if = {

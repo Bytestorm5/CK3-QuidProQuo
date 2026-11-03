@@ -76,7 +76,7 @@ qpq_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_my_word ?= yes }
-		add = 6
+		add = 12
 		if = {
 			limit = { scope:actor = { has_trait = honest } }
 			add = 4

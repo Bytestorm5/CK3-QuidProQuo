@@ -669,7 +669,7 @@
  qpq_make_peace_prompt:0 "Pick the target"
  recipient_secondary_qpq_make_peace_interaction:0 "Target"
  qpq_make_peace_ask_story:0 "make a white peace in the war against [Story.MakeScope.Var('qpq_target').Char.GetTitledFirstName]"
- qpq_make_peace_hub_tt:0 "#T Make Peace#!\n#F $qpq_make_peace_flavor$#!\n\n$qpq_make_peace_rules$\n\n#weak Base [qpq_scandal_tier|E]: 0 for the payer, I for the one who does it. Delivered when it happens.#!"
+ qpq_make_peace_hub_tt:0 "#T Make Peace#!\n#F $qpq_make_peace_flavor$#!\n\n$qpq_make_peace_rules$\n\n#weak Base [qpq_scandal_tier|E]: 0. Delivered when it happens.#!"
  qpq_make_peace_ask_event:0 "make a white peace in the war against [secondary_recipient.GetTitledFirstName]"
  qpq_make_peace_proposal_desc:0 "#F $qpq_make_peace_flavor$#!\n\nPlainly put, [actor.GetSheHe] would have me $qpq_make_peace_ask_event$."
  qpq_yield_war_name:0 "Yield the War"

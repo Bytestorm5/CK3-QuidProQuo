@@ -75,7 +75,7 @@ LOSS_AVERSION = 1.25
 WAR_SIDE = {
     "join_war":   dict(war=("P", "T"), side="P", motive="T", add_self=True,  sign=1,  weight=1.0),
     "stay_out":   dict(war=("P", "T"), side="T", motive="P", add_self=True,  sign=-1, weight=0.6),
-    "make_peace": dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
+    "make_peace": dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=1.0),
     "yield_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=1.0),
     "leave_war":  dict(war=("D", "T"), side="D", motive="T", add_self=False, sign=-1, weight=0.6),
 }
@@ -262,7 +262,11 @@ def _war_side_body(k, swapped):
         "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -40 } } }\n\t\t\t\tadd = -12\n\t\t\t}\n"
         "\t\t\telse_if = {\n\t\t\t\tlimit = { NOT = { qpq_war_side_winning_trigger = { WHO = %(s)s SCORE = -15 } } }\n\t\t\t\tadd = -6\n\t\t\t}\n") % {"s": side})
     inner = "".join("\t" + line + "\n" for line in t.rstrip("\n").split("\n"))
-    return "\tadd = {\n\t\tvalue = 0\n%s\t\tmultiply = %s\n\t}\n" % (inner, cfg["sign"] * cfg["weight"])
+    out = "\tadd = {\n\t\tvalue = 0\n%s\t\tmultiply = %s\n\t}\n" % (inner, cfg["sign"] * cfg["weight"])
+    if k["key"] == "make_peace":
+        # the war takes its toll on the winner too: peace is worth something to both sides
+        out += "\tadd = 10\n"
+    return out
 
 
 def _losing_body(ours, theirs, who, foe, side, scale):
@@ -303,7 +307,8 @@ def _war_benefit_body(k):
     else:
         # P ends a war against T. If D is T, D is the one at war with P: peace (or victory) is worth what the war
         # was costing D. Otherwise D pays for T's sake, as a friend of T.
-        base = {"make_peace": 0, "yield_war": 25, "leave_war": 6}[key]
+        # a white peace spares them the war's toll (levies, devastation, the war goal at risk)
+        base = {"make_peace": 12, "yield_war": 25, "leave_war": 6}[key]
         scale = {"make_peace": 1, "yield_war": 0.5, "leave_war": 0.5}[key]
         inner = ("\tadd = %d\n" % base) + _losing_body(ours, theirs, who, foe, side, scale)
         inner += _in_war(who, foe, "\t\t\tif = {\n\t\t\t\tlimit = { war_days >= 1095 }\n\t\t\t\tadd = 8\n\t\t\t}\n")
@@ -347,7 +352,8 @@ def sw(text):
 
 
 # How much more a title given away outright costs than one swapped (see goal_body, loss_title)
-LOSS_SCALE = {"secret_clause": 4}
+# (Title Swap too: in the panel the county that comes back is a good of its own, priced as land)
+LOSS_SCALE = {"secret_clause": 4, "title_swap": 4}
 
 
 def goal_value(k, swapped=False):
