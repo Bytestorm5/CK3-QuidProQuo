@@ -380,6 +380,23 @@ def refusal_flags(k, L, block):
     return s
 
 
+def target_exists(k):
+    """Trigger text: the Ask's target is in place (always, for an Ask without one)."""
+    T = goals.third_party(k)
+    if k["target"] == "artifact":
+        return "exists = scope:target"
+    return ("exists = %s" % T) if T else "always = yes"
+
+
+def circ_guarded(k, L, text):
+    """Their circumstances often turn on the target: count them once it is in place (0 until then)."""
+    if target_exists(k) == "always = yes":
+        return text
+    return ("\t\t\tset_variable = { name = qpq_ui_%s_a_circ value = 0 }\n"
+            "\t\t\tif = {\n\t\t\t\tlimit = { %s }\n%s\t\t\t}\n") % (
+        L, target_exists(k), "".join("\t" + x + "\n" for x in text.rstrip("\n").split("\n")))
+
+
 def compute_kind(k, L, block):
     key = k["key"]
     s = ""
@@ -414,7 +431,7 @@ def compute_kind(k, L, block):
         s += setv("offers", "qpq_%s_offer_points_value" % key)
         s += setv("char", "qpq_%s_character_value" % key)
         s += setv("dread", "qpq_%s_dread_value" % key)
-        s += setv("circ", "qpq_%s_circumstance_value" % key)
+        s += circ_guarded(k, L, setv("circ", "qpq_%s_circumstance_value" % key))
         s += setv("refuse", "qpq_%s_refusal_value" % key)
     else:
         if k["initiator"] == "payer":

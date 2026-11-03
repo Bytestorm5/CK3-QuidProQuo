@@ -621,7 +621,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_chartered_conquest_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_chartered_conquest_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_chartered_conquest_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_chartered_conquest_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_chartered_conquest_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_chartered_conquest_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_chartered_conquest_goal_value }
 			set_variable = {
@@ -660,19 +664,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -779,7 +792,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_sanctioned_conquest_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_sanctioned_conquest_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_sanctioned_conquest_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_sanctioned_conquest_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_sanctioned_conquest_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_sanctioned_conquest_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_sanctioned_conquest_goal_value }
 			set_variable = {
@@ -818,19 +835,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -934,7 +960,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marcher_charge_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_marcher_charge_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_marcher_charge_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_marcher_charge_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_marcher_charge_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_marcher_charge_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_marcher_charge_goal_value }
 			set_variable = {
@@ -973,19 +1003,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -1083,7 +1122,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_sponsorship_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_sponsorship_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_holy_sponsorship_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_sponsorship_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_sponsorship_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_holy_sponsorship_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_sponsorship_goal_value }
 			set_variable = {
@@ -1222,7 +1265,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_development_charter_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_development_charter_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_development_charter_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_development_charter_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_development_charter_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_development_charter_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
@@ -1355,7 +1402,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_electoral_purchase_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_electoral_purchase_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_electoral_purchase_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_electoral_purchase_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_electoral_purchase_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_electoral_purchase_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_electoral_purchase_goal_value }
 			set_variable = {
@@ -1394,10 +1445,13 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_rival = scope:secondary_recipient }
-							scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_rival = scope:secondary_recipient }
+								scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_rival_target
 			}
@@ -1644,7 +1698,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_licensed_feud_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_licensed_feud_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_licensed_feud_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_licensed_feud_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_licensed_feud_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_licensed_feud_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_licensed_feud_goal_value }
 			set_variable = {
@@ -1683,19 +1741,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -1794,7 +1861,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dossier_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dossier_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_dossier_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_dossier_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_dossier_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dossier_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_dossier_goal_value }
 			set_variable = {
@@ -1833,26 +1904,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -1968,7 +2048,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_quiet_removal_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_quiet_removal_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_quiet_removal_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_quiet_removal_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_quiet_removal_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_quiet_removal_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_quiet_removal_goal_value }
 			set_variable = {
@@ -2007,26 +2091,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -2131,7 +2224,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_heir_question_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_heir_question_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_heir_question_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_heir_question_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_heir_question_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_heir_question_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_heir_question_goal_value }
 			set_variable = {
@@ -2170,26 +2267,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -2301,7 +2407,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_snatch_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_snatch_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_snatch_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_snatch_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_snatch_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_snatch_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_snatch_goal_value }
 			set_variable = {
@@ -2340,26 +2450,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -2455,7 +2574,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispossession_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dispossession_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_dispossession_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_dispossession_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_dispossession_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dispossession_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispossession_goal_value }
 			set_variable = {
@@ -2494,26 +2617,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -2613,7 +2745,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_the_cloister_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_the_cloister_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_the_cloister_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_the_cloister_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_the_cloister_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_the_cloister_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_the_cloister_goal_value }
 			set_variable = {
@@ -2652,26 +2788,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -2771,7 +2916,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_marriage_by_command_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_marriage_by_command_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_marriage_by_command_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_marriage_by_command_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_marriage_by_command_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_marriage_by_command_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
@@ -2919,7 +3068,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_hand_over_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hand_over_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_goal_value }
 			set_variable = {
@@ -2958,26 +3111,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -3064,7 +3226,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hand_over_artifact_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hand_over_artifact_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_hand_over_artifact_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_artifact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_hand_over_artifact_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hand_over_artifact_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_hand_over_artifact_goal_value }
 			set_variable = {
@@ -3192,7 +3358,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_renunciation_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_renunciation_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_renunciation_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_renunciation_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_renunciation_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_renunciation_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_renunciation_goal_value }
 			set_variable = {
@@ -3494,7 +3664,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_blessing_for_a_feud_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_blessing_for_a_feud_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_blessing_for_a_feud_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_blessing_for_a_feud_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_blessing_for_a_feud_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_blessing_for_a_feud_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_blessing_for_a_feud_goal_value }
 			set_variable = {
@@ -3533,26 +3707,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -3753,10 +3936,13 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_rival = scope:secondary_recipient }
-							scope:actor = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_rival = scope:secondary_recipient }
+								scope:actor = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_rival_target
 			}
@@ -3827,7 +4013,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_mutual_defense_league_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_mutual_defense_league_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_mutual_defense_league_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_mutual_defense_league_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:actor.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_mutual_defense_league_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_mutual_defense_league_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_mutual_defense_league_goal_value }
 			set_variable = {
@@ -3912,7 +4102,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faction_pledge_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_faction_pledge_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_faction_pledge_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_faction_pledge_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:actor.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_faction_pledge_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_faction_pledge_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_faction_pledge_goal_value }
 			set_variable = {
@@ -4048,7 +4242,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_title_swap_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_title_swap_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_title_swap_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_title_swap_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_title_swap_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_title_swap_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_title_swap_goal_value }
 			set_variable = {
@@ -4128,7 +4326,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_coup_pact_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_coup_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_coup_pact_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_coup_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:actor.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_coup_pact_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_coup_pact_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_coup_pact_goal_value }
 			set_variable = {
@@ -4167,26 +4369,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:actor.liege }
+					AND = {
+						exists = scope:actor.liege
+						scope:recipient = { is_close_family_of = scope:actor.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:actor.liege }
-							scope:recipient = { opinion = { target = scope:actor.liege value >= 30 } }
-						}
+						exists = scope:actor.liege
+						AND = {
+								scope:recipient = { is_allied_to = scope:actor.liege }
+								scope:recipient = { opinion = { target = scope:actor.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:actor.liege }
-							scope:recipient = { has_relation_lover = scope:actor.liege }
-							scope:recipient = { has_relation_best_friend = scope:actor.liege }
-						}
+					AND = {
+						exists = scope:actor.liege
+						OR = {
+								scope:recipient = { has_relation_friend = scope:actor.liege }
+								scope:recipient = { has_relation_lover = scope:actor.liege }
+								scope:recipient = { has_relation_best_friend = scope:actor.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -4285,7 +4496,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_proxy_war_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_proxy_war_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_proxy_war_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_proxy_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_proxy_war_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_proxy_war_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_proxy_war_goal_value }
 			set_variable = {
@@ -4324,19 +4539,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -4435,7 +4659,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_partition_pact_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_partition_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_partition_pact_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_partition_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_partition_pact_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_partition_pact_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_partition_pact_goal_value }
 			set_variable = {
@@ -4474,19 +4702,28 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength add = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_t_stronger
 			}
@@ -4753,7 +4990,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_faithless_ally_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_faithless_ally_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_faithless_ally_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_faithless_ally_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_faithless_ally_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_faithless_ally_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_faithless_ally_goal_value }
 			set_variable = {
@@ -4792,26 +5033,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -4858,7 +5108,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_turncoat_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_turncoat_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_turncoat_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_turncoat_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_turncoat_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_turncoat_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_turncoat_goal_value }
 			set_variable = {
@@ -4897,26 +5151,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:recipient.liege }
+					AND = {
+						exists = scope:recipient.liege
+						scope:recipient = { is_close_family_of = scope:recipient.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:recipient.liege }
-							scope:recipient = { opinion = { target = scope:recipient.liege value >= 30 } }
-						}
+						exists = scope:recipient.liege
+						AND = {
+								scope:recipient = { is_allied_to = scope:recipient.liege }
+								scope:recipient = { opinion = { target = scope:recipient.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:recipient.liege }
-							scope:recipient = { has_relation_lover = scope:recipient.liege }
-							scope:recipient = { has_relation_best_friend = scope:recipient.liege }
-						}
+					AND = {
+						exists = scope:recipient.liege
+						OR = {
+								scope:recipient = { has_relation_friend = scope:recipient.liege }
+								scope:recipient = { has_relation_lover = scope:recipient.liege }
+								scope:recipient = { has_relation_best_friend = scope:recipient.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -4962,7 +5225,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_seed_the_separatists_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_seed_the_separatists_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_seed_the_separatists_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_seed_the_separatists_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_seed_the_separatists_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_seed_the_separatists_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_seed_the_separatists_goal_value }
 			set_variable = {
@@ -5095,7 +5362,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_shelter_the_pretender_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_shelter_the_pretender_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_shelter_the_pretender_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_shelter_the_pretender_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_shelter_the_pretender_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_shelter_the_pretender_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = 0 }
 			set_variable = {
@@ -5227,7 +5498,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_extradition_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_extradition_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_extradition_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_extradition_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_extradition_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_extradition_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_extradition_goal_value }
 			set_variable = {
@@ -5266,26 +5541,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -5331,7 +5615,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_councillor_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_councillor_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_buy_a_councillor_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_councillor_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_councillor_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_buy_a_councillor_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_councillor_goal_value }
 			set_variable = {
@@ -5370,26 +5658,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:recipient.liege }
+					AND = {
+						exists = scope:recipient.liege
+						scope:recipient = { is_close_family_of = scope:recipient.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:recipient.liege }
-							scope:recipient = { opinion = { target = scope:recipient.liege value >= 30 } }
-						}
+						exists = scope:recipient.liege
+						AND = {
+								scope:recipient = { is_allied_to = scope:recipient.liege }
+								scope:recipient = { opinion = { target = scope:recipient.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:recipient.liege }
-							scope:recipient = { has_relation_lover = scope:recipient.liege }
-							scope:recipient = { has_relation_best_friend = scope:recipient.liege }
-						}
+					AND = {
+						exists = scope:recipient.liege
+						OR = {
+								scope:recipient = { has_relation_friend = scope:recipient.liege }
+								scope:recipient = { has_relation_lover = scope:recipient.liege }
+								scope:recipient = { has_relation_best_friend = scope:recipient.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -5435,7 +5732,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_home_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_home_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_stay_home_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_home_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_home_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_stay_home_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_home_goal_value }
 			set_variable = {
@@ -5520,7 +5821,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_defection_pact_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_defection_pact_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_defection_pact_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_defection_pact_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_defection_pact_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_defection_pact_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_defection_pact_goal_value }
 			set_variable = {
@@ -5653,7 +5958,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_secret_clause_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_secret_clause_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_secret_clause_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_secret_clause_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:target.holder }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_secret_clause_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_secret_clause_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_secret_clause_goal_value }
 			set_variable = {
@@ -5798,7 +6107,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_hire_the_hashashin_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_hire_the_hashashin_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_hire_the_hashashin_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_hire_the_hashashin_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_hire_the_hashashin_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_hire_the_hashashin_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_hire_the_hashashin_goal_value }
 			set_variable = {
@@ -5837,26 +6150,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -5970,7 +6292,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_excommunication_for_hire_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_excommunication_for_hire_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_excommunication_for_hire_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_excommunication_for_hire_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_excommunication_for_hire_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_excommunication_for_hire_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_excommunication_for_hire_goal_value }
 			set_variable = {
@@ -6009,26 +6335,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -6125,7 +6460,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_dispensation_for_gold_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_dispensation_for_gold_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_dispensation_for_gold_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_dispensation_for_gold_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_dispensation_for_gold_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_dispensation_for_gold_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_dispensation_for_gold_goal_value }
 			set_variable = {
@@ -6164,10 +6503,13 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_rival = scope:secondary_recipient }
-							scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_rival = scope:secondary_recipient }
+								scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_rival_target
 			}
@@ -6275,7 +6617,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_steer_the_holy_war_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_steer_the_holy_war_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_steer_the_holy_war_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_steer_the_holy_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_steer_the_holy_war_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_steer_the_holy_war_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_steer_the_holy_war_goal_value }
 			set_variable = {
@@ -6314,13 +6660,19 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
@@ -6420,7 +6772,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_purchase_a_mitre_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_purchase_a_mitre_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_purchase_a_mitre_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_purchase_a_mitre_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_purchase_a_mitre_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_purchase_a_mitre_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_purchase_a_mitre_goal_value }
 			set_variable = {
@@ -6459,10 +6815,13 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_rival = scope:secondary_recipient }
-							scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_rival = scope:secondary_recipient }
+								scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_rival_target
 			}
@@ -6570,7 +6929,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_bought_claim_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_bought_claim_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_bought_claim_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_claim_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_bought_claim_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_bought_claim_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_bought_claim_goal_value }
 			set_variable = {
@@ -6609,26 +6972,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -6813,7 +7185,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_holy_warrant_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_holy_warrant_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_holy_warrant_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_warrant_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_holy_warrant_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_holy_warrant_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_holy_warrant_goal_value }
 			set_variable = {
@@ -6852,13 +7228,19 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
@@ -6972,7 +7354,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_buy_a_bull_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_buy_a_bull_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_buy_a_bull_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_bull_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_buy_a_bull_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_buy_a_bull_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_buy_a_bull_goal_value }
 			set_variable = {
@@ -7011,26 +7397,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -7134,7 +7529,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_conclave_votes_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_conclave_votes_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_conclave_votes_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_conclave_votes_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_conclave_votes_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_conclave_votes_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_conclave_votes_goal_value }
 			set_variable = {
@@ -7173,10 +7572,13 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_rival = scope:secondary_recipient }
-							scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_rival = scope:secondary_recipient }
+								scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_rival_target
 			}
@@ -7371,7 +7773,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_name_in_the_khutba_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_name_in_the_khutba_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_name_in_the_khutba_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_name_in_the_khutba_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_name_in_the_khutba_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_name_in_the_khutba_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_name_in_the_khutba_goal_value }
 			set_variable = {
@@ -7511,7 +7917,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fatwa_for_hire_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_fatwa_for_hire_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_fatwa_for_hire_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_fatwa_for_hire_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_fatwa_for_hire_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_fatwa_for_hire_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_fatwa_for_hire_goal_value }
 			set_variable = {
@@ -7550,26 +7960,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -7677,7 +8096,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_fund_the_dawa_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_fund_the_dawa_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_fund_the_dawa_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_fund_the_dawa_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_fund_the_dawa_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_fund_the_dawa_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_fund_the_dawa_goal_value }
 			set_variable = {
@@ -7716,26 +8139,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -7782,7 +8214,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_crowning_the_usurper_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_crowning_the_usurper_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_crowning_the_usurper_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_crowning_the_usurper_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:actor.top_liege }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_crowning_the_usurper_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_crowning_the_usurper_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_crowning_the_usurper_goal_value }
 			set_variable = {
@@ -7821,26 +8257,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:actor.top_liege }
+					AND = {
+						exists = scope:actor.top_liege
+						scope:recipient = { is_close_family_of = scope:actor.top_liege }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:actor.top_liege }
-							scope:recipient = { opinion = { target = scope:actor.top_liege value >= 30 } }
-						}
+						exists = scope:actor.top_liege
+						AND = {
+								scope:recipient = { is_allied_to = scope:actor.top_liege }
+								scope:recipient = { opinion = { target = scope:actor.top_liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:actor.top_liege }
-							scope:recipient = { has_relation_lover = scope:actor.top_liege }
-							scope:recipient = { has_relation_best_friend = scope:actor.top_liege }
-						}
+					AND = {
+						exists = scope:actor.top_liege
+						OR = {
+								scope:recipient = { has_relation_friend = scope:actor.top_liege }
+								scope:recipient = { has_relation_lover = scope:actor.top_liege }
+								scope:recipient = { has_relation_best_friend = scope:actor.top_liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -8023,7 +8468,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_favourable_omens_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_favourable_omens_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_favourable_omens_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_favourable_omens_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_favourable_omens_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_favourable_omens_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_favourable_omens_goal_value }
 			set_variable = {
@@ -8062,26 +8511,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -8263,7 +8721,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_temple_patronage_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_temple_patronage_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_temple_patronage_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_temple_patronage_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_temple_patronage_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_temple_patronage_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_temple_patronage_goal_value }
 			set_variable = {
@@ -8302,26 +8764,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -8430,7 +8901,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_make_peace_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_make_peace_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_make_peace_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_make_peace_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_make_peace_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_make_peace_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_make_peace_goal_value }
 			set_variable = {
@@ -8575,7 +9050,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_yield_war_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_yield_war_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_yield_war_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_yield_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_yield_war_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_yield_war_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_yield_war_goal_value }
 			set_variable = {
@@ -8723,7 +9202,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_join_war_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_join_war_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_join_war_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_join_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_join_war_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_join_war_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_join_war_goal_value }
 			set_variable = {
@@ -8762,13 +9245,19 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_ally
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
@@ -8897,7 +9386,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_leave_war_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_leave_war_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_leave_war_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_leave_war_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_leave_war_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_leave_war_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_leave_war_goal_value }
 			set_variable = {
@@ -9044,7 +9537,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_stay_out_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_stay_out_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_stay_out_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_out_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_stay_out_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_stay_out_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_stay_out_goal_value }
 			set_variable = {
@@ -9083,26 +9580,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:recipient = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:secondary_recipient }
-							scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:recipient = { is_allied_to = scope:secondary_recipient }
+								scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:secondary_recipient }
-							scope:recipient = { has_relation_lover = scope:secondary_recipient }
-							scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_friend = scope:secondary_recipient }
+								scope:recipient = { has_relation_lover = scope:secondary_recipient }
+								scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -9491,7 +9997,11 @@ qpq_ui_leg_t_refresh_effect = {
 			set_variable = { name = qpq_ui_t_a_offers value = qpq_cast_off_the_yoke_offer_points_value }
 			set_variable = { name = qpq_ui_t_a_char value = qpq_cast_off_the_yoke_character_value }
 			set_variable = { name = qpq_ui_t_a_dread value = qpq_cast_off_the_yoke_dread_value }
-			set_variable = { name = qpq_ui_t_a_circ value = qpq_cast_off_the_yoke_circumstance_value }
+			set_variable = { name = qpq_ui_t_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:recipient.suzerain }
+				set_variable = { name = qpq_ui_t_a_circ value = qpq_cast_off_the_yoke_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_t_a_refuse value = qpq_cast_off_the_yoke_refusal_value }
 			set_variable = { name = qpq_ui_t_a_goal value = qpq_cast_off_the_yoke_goal_value }
 			set_variable = {
@@ -9530,26 +10040,35 @@ qpq_ui_leg_t_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { is_close_family_of = scope:recipient.suzerain }
+					AND = {
+						exists = scope:recipient.suzerain
+						scope:recipient = { is_close_family_of = scope:recipient.suzerain }
+					}
 				}
 				set_variable = qpq_ui_ref_t_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:recipient = { is_allied_to = scope:recipient.suzerain }
-							scope:recipient = { opinion = { target = scope:recipient.suzerain value >= 30 } }
-						}
+						exists = scope:recipient.suzerain
+						AND = {
+								scope:recipient = { is_allied_to = scope:recipient.suzerain }
+								scope:recipient = { opinion = { target = scope:recipient.suzerain value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_friend = scope:recipient.suzerain }
-							scope:recipient = { has_relation_lover = scope:recipient.suzerain }
-							scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
-						}
+					AND = {
+						exists = scope:recipient.suzerain
+						OR = {
+								scope:recipient = { has_relation_friend = scope:recipient.suzerain }
+								scope:recipient = { has_relation_lover = scope:recipient.suzerain }
+								scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_t_friend
 			}
@@ -10191,19 +10710,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -10345,19 +10873,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -10496,19 +11033,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -10889,10 +11435,13 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_rival = scope:secondary_recipient }
-							scope:actor = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_rival = scope:secondary_recipient }
+								scope:actor = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_rival_target
 			}
@@ -11150,19 +11699,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -11296,26 +11854,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -11466,26 +12033,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -11625,26 +12201,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -11791,26 +12376,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -11941,26 +12535,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -12095,26 +12698,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -12385,26 +12997,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -12881,26 +13502,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -13059,7 +13689,11 @@ qpq_ui_leg_i_refresh_effect = {
 			set_variable = { name = qpq_ui_i_a_offers value = qpq_electoral_capitulation_offer_points_value }
 			set_variable = { name = qpq_ui_i_a_char value = qpq_electoral_capitulation_character_value }
 			set_variable = { name = qpq_ui_i_a_dread value = qpq_electoral_capitulation_dread_value }
-			set_variable = { name = qpq_ui_i_a_circ value = qpq_electoral_capitulation_circumstance_value }
+			set_variable = { name = qpq_ui_i_a_circ value = 0 }
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				set_variable = { name = qpq_ui_i_a_circ value = qpq_electoral_capitulation_circumstance_value }
+			}
 			set_variable = { name = qpq_ui_i_a_refuse value = qpq_electoral_capitulation_refusal_value }
 			set_variable = { name = qpq_ui_i_a_goal value = qpq_electoral_capitulation_goal_value }
 			set_variable = {
@@ -13074,10 +13708,13 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:recipient = { has_relation_rival = scope:secondary_recipient }
-							scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:recipient = { has_relation_rival = scope:secondary_recipient }
+								scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_rival_target
 			}
@@ -13440,26 +14077,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:recipient.liege }
+					AND = {
+						exists = scope:actor.liege
+						scope:actor = { is_close_family_of = scope:actor.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:recipient.liege }
-							scope:actor = { opinion = { target = scope:recipient.liege value >= 30 } }
-						}
+						exists = scope:actor.liege
+						AND = {
+								scope:actor = { is_allied_to = scope:actor.liege }
+								scope:actor = { opinion = { target = scope:actor.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:recipient.liege }
-							scope:actor = { has_relation_lover = scope:recipient.liege }
-							scope:actor = { has_relation_best_friend = scope:recipient.liege }
-						}
+					AND = {
+						exists = scope:actor.liege
+						OR = {
+								scope:actor = { has_relation_friend = scope:actor.liege }
+								scope:actor = { has_relation_lover = scope:actor.liege }
+								scope:actor = { has_relation_best_friend = scope:actor.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -13593,19 +14239,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -13739,19 +14394,28 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
-					scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength add = scope:recipient.max_military_strength multiply = 2 } }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:secondary_recipient = { max_military_strength > { value = scope:actor.max_military_strength add = scope:recipient.max_military_strength multiply = 2 } }
+					}
 				}
 				set_variable = qpq_ui_ref_i_stronger
 			}
@@ -14045,26 +14709,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -14146,26 +14819,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:actor.liege }
+					AND = {
+						exists = scope:recipient.liege
+						scope:actor = { is_close_family_of = scope:recipient.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:actor.liege }
-							scope:actor = { opinion = { target = scope:actor.liege value >= 30 } }
-						}
+						exists = scope:recipient.liege
+						AND = {
+								scope:actor = { is_allied_to = scope:recipient.liege }
+								scope:actor = { opinion = { target = scope:recipient.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:actor.liege }
-							scope:actor = { has_relation_lover = scope:actor.liege }
-							scope:actor = { has_relation_best_friend = scope:actor.liege }
-						}
+					AND = {
+						exists = scope:recipient.liege
+						OR = {
+								scope:actor = { has_relation_friend = scope:recipient.liege }
+								scope:actor = { has_relation_lover = scope:recipient.liege }
+								scope:actor = { has_relation_best_friend = scope:recipient.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -14495,26 +15177,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -14595,26 +15286,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:actor.liege }
+					AND = {
+						exists = scope:recipient.liege
+						scope:actor = { is_close_family_of = scope:recipient.liege }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:actor.liege }
-							scope:actor = { opinion = { target = scope:actor.liege value >= 30 } }
-						}
+						exists = scope:recipient.liege
+						AND = {
+								scope:actor = { is_allied_to = scope:recipient.liege }
+								scope:actor = { opinion = { target = scope:recipient.liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:actor.liege }
-							scope:actor = { has_relation_lover = scope:actor.liege }
-							scope:actor = { has_relation_best_friend = scope:actor.liege }
-						}
+					AND = {
+						exists = scope:recipient.liege
+						OR = {
+								scope:actor = { has_relation_friend = scope:recipient.liege }
+								scope:actor = { has_relation_lover = scope:recipient.liege }
+								scope:actor = { has_relation_best_friend = scope:recipient.liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -15038,26 +15738,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -15206,26 +15915,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -15357,10 +16075,13 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_rival = scope:secondary_recipient }
-							scope:actor = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_rival = scope:secondary_recipient }
+								scope:actor = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_rival_target
 			}
@@ -15503,13 +16224,19 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
@@ -15644,10 +16371,13 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_rival = scope:secondary_recipient }
-							scope:actor = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_rival = scope:secondary_recipient }
+								scope:actor = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_rival_target
 			}
@@ -15790,26 +16520,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -16017,13 +16756,19 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
@@ -16172,26 +16917,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -16330,10 +17084,13 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_rival = scope:secondary_recipient }
-							scope:actor = { has_relation_nemesis = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_rival = scope:secondary_recipient }
+								scope:actor = { has_relation_nemesis = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_rival_target
 			}
@@ -16667,26 +17424,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -16829,26 +17595,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -16930,26 +17705,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:recipient.top_liege }
+					AND = {
+						exists = scope:actor.top_liege
+						scope:actor = { is_close_family_of = scope:actor.top_liege }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:recipient.top_liege }
-							scope:actor = { opinion = { target = scope:recipient.top_liege value >= 30 } }
-						}
+						exists = scope:actor.top_liege
+						AND = {
+								scope:actor = { is_allied_to = scope:actor.top_liege }
+								scope:actor = { opinion = { target = scope:actor.top_liege value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:recipient.top_liege }
-							scope:actor = { has_relation_lover = scope:recipient.top_liege }
-							scope:actor = { has_relation_best_friend = scope:recipient.top_liege }
-						}
+					AND = {
+						exists = scope:actor.top_liege
+						OR = {
+								scope:actor = { has_relation_friend = scope:actor.top_liege }
+								scope:actor = { has_relation_lover = scope:actor.top_liege }
+								scope:actor = { has_relation_best_friend = scope:actor.top_liege }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -17155,26 +17939,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -17379,26 +18172,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -17811,13 +18613,19 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_allied_to = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_allied_to = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_ally
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
@@ -18116,26 +18924,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:secondary_recipient }
+					AND = {
+						exists = scope:secondary_recipient
+						scope:actor = { is_close_family_of = scope:secondary_recipient }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:secondary_recipient }
-							scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
-						}
+						exists = scope:secondary_recipient
+						AND = {
+								scope:actor = { is_allied_to = scope:secondary_recipient }
+								scope:actor = { opinion = { target = scope:secondary_recipient value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:secondary_recipient }
-							scope:actor = { has_relation_lover = scope:secondary_recipient }
-							scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-						}
+					AND = {
+						exists = scope:secondary_recipient
+						OR = {
+								scope:actor = { has_relation_friend = scope:secondary_recipient }
+								scope:actor = { has_relation_lover = scope:secondary_recipient }
+								scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}
@@ -18519,26 +19336,35 @@ qpq_ui_leg_i_refresh_effect = {
 			}
 			if = {
 				limit = {
-					scope:actor = { is_close_family_of = scope:actor.suzerain }
+					AND = {
+						exists = scope:recipient.suzerain
+						scope:actor = { is_close_family_of = scope:recipient.suzerain }
+					}
 				}
 				set_variable = qpq_ui_ref_i_kin
 			}
 			if = {
 				limit = {
 					AND = {
-							scope:actor = { is_allied_to = scope:actor.suzerain }
-							scope:actor = { opinion = { target = scope:actor.suzerain value >= 30 } }
-						}
+						exists = scope:recipient.suzerain
+						AND = {
+								scope:actor = { is_allied_to = scope:recipient.suzerain }
+								scope:actor = { opinion = { target = scope:recipient.suzerain value >= 30 } }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_liked_ally
 			}
 			if = {
 				limit = {
-					OR = {
-							scope:actor = { has_relation_friend = scope:actor.suzerain }
-							scope:actor = { has_relation_lover = scope:actor.suzerain }
-							scope:actor = { has_relation_best_friend = scope:actor.suzerain }
-						}
+					AND = {
+						exists = scope:recipient.suzerain
+						OR = {
+								scope:actor = { has_relation_friend = scope:recipient.suzerain }
+								scope:actor = { has_relation_lover = scope:recipient.suzerain }
+								scope:actor = { has_relation_best_friend = scope:recipient.suzerain }
+							}
+					}
 				}
 				set_variable = qpq_ui_ref_i_friend
 			}

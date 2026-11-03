@@ -3,8 +3,12 @@
 An Ask is judged by the character deciding (D: scope:recipient, the proposer being P: scope:actor) on what it does
 and what they want: a war on T is attractive to a rival of T who borders T and is stronger, repellent to T's ally or
 kin; a killing is wanted by an enemy, never by a friend. Each Ask is given the archetypes that apply, and each
-archetype adds points (the goal value) and may refuse outright. Written for the normal orientation; the swapped
-text (D: scope:actor) is made by qpq_ui_gen.sw().
+archetype adds points (the goal value) and may refuse outright. Written for the normal orientation. Swapped (the
+AI is the proposer and decides as scope:actor), only D and P change places: the orientation effect has already put
+the right characters in scope:actor and scope:recipient, so T, which the Ask itself derives (the agent's liege,
+the payer's suzerain), keeps the very text the Ask gives it.
+
+Everything about T is judged only once T exists: before a target is picked in the panel, there is none.
 """
 
 # Who is the third party, per target type
@@ -151,8 +155,6 @@ def goal_body(arch, D, P, T):
 def _roles(k, swapped):
     T = third_party(k)
     D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
-    if swapped and T:
-        T = sw(T)
     return D, P, T
 
 
@@ -181,11 +183,13 @@ def goal_helpers(k, swapped=False):
     D, P, T = _roles(k, swapped)
     m = {"D": D, "P": P, "T": T}
     who, foe, side = m[cfg["war"][0]], m[cfg["war"][1]], m[cfg["side"]]
-    ours = "\tvalue = 0\n" + _in_war(who, foe, _side_strength(side, True))
+    def guarded(inner):
+        return "\tif = {\n\t\tlimit = { exists = %s }\n%s\t}\n" % (T, _indent(inner)) if T else inner
+    ours = "\tvalue = 0\n" + guarded(_in_war(who, foe, _side_strength(side, True)))
     if cfg["add_self"]:
         ours += "\tadd = %s.current_military_strength\n" % D
     ours += "\tmin = 1\n"
-    theirs = "\tvalue = 0\n" + _in_war(who, foe, _side_strength(side, False))
+    theirs = "\tvalue = 0\n" + guarded(_in_war(who, foe, _side_strength(side, False)))
     return [("ours", ours), ("theirs", theirs)]
 
 
@@ -251,15 +255,20 @@ def goal_value(k, swapped=False):
     if T is None and any(a in ("war", "harm", "favour") for a in archs):
         return None
     D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
-    if swapped and T:
-        T = sw(T)
     body = ""
     for a in archs:
         if a == "war_side":
             body += _war_side_body(k, swapped)
         else:
             body += goal_body(a, D, P, T)
+    G = T or ("scope:target" if k["target"] == "artifact" else None)
+    if G:
+        body = "\tif = {\n\t\tlimit = { exists = %s }\n%s\t}\n" % (G, _indent(body))
     return "\tvalue = 0\n" + body
+
+
+def _indent(text):
+    return "".join("\t" + line + "\n" for line in text.rstrip("\n").split("\n"))
 
 
 # The reasons an AI will not do a deed at any price, whatever the deed (qpq_ai_refuses_<why>_trigger) and the
@@ -287,8 +296,6 @@ def goal_refusal_parts(k, swapped=False):
     archs = KIND_GOALS.get(k["key"]) or []
     T = third_party(k)
     D, P = ("scope:actor", "scope:recipient") if swapped else ("scope:recipient", "scope:actor")
-    if swapped and T:
-        T = sw(T)
     parts = []
     if "war" in archs and T:
         parts.append(("ally", "%s = { is_allied_to = %s }" % (D, T)))
@@ -315,6 +322,8 @@ def goal_refusal_parts(k, swapped=False):
     for label, text in parts:
         if label not in seen:
             seen.add(label)
+            if T and T in text:
+                text = "AND = {\n\texists = %s\n\t%s\n}" % (T, text.replace("\n", "\n\t"))
             out.append((label, text))
     return out
 
