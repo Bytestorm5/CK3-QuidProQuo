@@ -21,3 +21,8 @@ qpq_wronged_party = {
 	parent = qpq_deal
 	texture = "gfx/interface/icons/character_interactions/hook_icon.dds"
 }
+
+qpq_command = {
+	parent = qpq_deal
+	texture = "gfx/interface/icons/icon_liege.dds"
+}

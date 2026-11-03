@@ -1,4 +1,4 @@
-# Quid Pro Quo - Backroom Deal panel buttons (hand-written; the per-Ask buttons and pickers are in
+﻿# Quid Pro Quo - Backroom Deal panel buttons (hand-written; the per-Ask buttons and pickers are in
 # qpq_ui_kinds.txt). Root is always the player.
 
 qpq_ui_close = {
@@ -30,5 +30,67 @@ qpq_ui_propose = {
 		hidden_effect = {
 			qpq_ui_propose_effect = yes
 		}
+	}
+}
+
+# Command: your authority over a subordinate. Shown only for someone under you in your realm.
+qpq_ui_command_shown = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_command_possible_trigger = yes
+	}
+}
+
+qpq_ui_command_0 = {
+	scope = character
+	effect = {
+		set_variable = { name = qpq_ui_command value = 0 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_command_1 = {
+	scope = character
+	is_valid = {
+		custom_description = {
+			text = QPQ_UI_CMD_NEEDS_1
+			exists = var:qpq_ui_cmd_margin
+			var:qpq_ui_cmd_margin >= -1
+		}
+	}
+	effect = {
+		set_variable = { name = qpq_ui_command value = 1 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_command_2 = {
+	scope = character
+	is_valid = {
+		custom_description = {
+			text = QPQ_UI_CMD_NEEDS_2
+			exists = var:qpq_ui_cmd_margin
+			var:qpq_ui_cmd_margin >= 0
+		}
+	}
+	effect = {
+		set_variable = { name = qpq_ui_command value = 2 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_command_3 = {
+	scope = character
+	is_valid = {
+		custom_description = {
+			text = QPQ_UI_CMD_NEEDS_3
+			exists = var:qpq_ui_cmd_margin
+			var:qpq_ui_cmd_margin >= 2
+		}
+	}
+	effect = {
+		set_variable = { name = qpq_ui_command value = 3 }
+		qpq_ui_refresh_effect = yes
 	}
 }

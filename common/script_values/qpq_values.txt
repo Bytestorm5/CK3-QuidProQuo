@@ -1055,3 +1055,103 @@ qpq_ui_gift_secret_i_value = {
 		}
 	}
 }
+
+############################################################
+# Command: a liege's authority over a subordinate
+# scope:actor = the one commanding, scope:recipient = the subordinate
+############################################################
+
+# The commander's standing: their legitimacy level, or their prestige level where they have no legitimacy
+qpq_command_level_value = {
+	value = 0
+	scope:actor = {
+		if = {
+			limit = { has_legitimacy = yes }
+			if = { limit = { legitimacy_level >= 1 } add = 1 }
+			if = { limit = { legitimacy_level >= 2 } add = 1 }
+			if = { limit = { legitimacy_level >= 3 } add = 1 }
+			if = { limit = { legitimacy_level >= 4 } add = 1 }
+			if = { limit = { legitimacy_level >= 5 } add = 1 }
+		}
+		else = {
+			if = { limit = { prestige_level >= 1 } add = 1 }
+			if = { limit = { prestige_level >= 2 } add = 1 }
+			if = { limit = { prestige_level >= 3 } add = 1 }
+			if = { limit = { prestige_level >= 4 } add = 1 }
+			if = { limit = { prestige_level >= 5 } add = 1 }
+		}
+	}
+}
+
+# What the subordinate expects of the commander: vanilla's legitimacy expectation of a liege
+# (default_ai_legitimacy_expectation, written here with explicit scopes), and one level more for each step
+# further down the realm, since the writ of a distant lord carries less weight
+qpq_command_expectation_value = {
+	value = 1
+	if = {
+		limit = { scope:actor = { is_rightful_liege_of = scope:recipient } }
+		subtract = 1
+	}
+	if = {
+		limit = { scope:recipient = { is_powerful_vassal_of = scope:actor } }
+		add = 1
+	}
+	if = {
+		limit = { scope:recipient = { days_since_vassal_contract_liege_dynasty_reign_start >= 18250 } }
+		subtract = 1
+	}
+	if = {
+		limit = { scope:recipient = { days_since_vassal_contract_liege_dynasty_reign_start >= 36500 } }
+		subtract = 1
+	}
+	if = {
+		limit = { scope:recipient = { was_preferred_heir = scope:actor } }
+		subtract = 1
+	}
+	if = {
+		limit = {
+			scope:actor = {
+				OR = {
+					is_spouse_of = scope:recipient
+					is_close_family_of = scope:recipient
+				}
+			}
+		}
+		subtract = 1
+	}
+	if = {
+		limit = { scope:actor.highest_held_title_tier >= tier_county }
+		add = 1
+	}
+	if = {
+		limit = { scope:actor.highest_held_title_tier >= tier_duchy }
+		add = 1
+	}
+	if = {
+		limit = { scope:actor.highest_held_title_tier >= tier_kingdom }
+		add = 2
+	}
+	if = {
+		limit = { scope:actor.highest_held_title_tier >= tier_empire }
+		add = 2
+	}
+	if = {
+		limit = { scope:actor.culture = { has_cultural_era_or_later = culture_era_tribal } }
+		subtract = 1
+	}
+	else_if = {
+		limit = { scope:actor.culture = { has_cultural_era_or_later = culture_era_high_medieval } }
+		add = 2
+	}
+	min = 1
+	max = 4
+	# Deeper in the realm: a vassal's vassal expects more of you than of their own lord
+	if = {
+		limit = { NOT = { scope:recipient.liege ?= scope:actor } }
+		add = 1
+		if = {
+			limit = { NOT = { scope:recipient.liege.liege ?= scope:actor } }
+			add = 1
+		}
+	}
+}

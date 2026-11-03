@@ -1289,6 +1289,9 @@ qpq_on_pact_exposed_effect = {
 			}
 		}
 
+		# A deal made under command: the commander pays for using their authority in the dark
+		qpq_command_exposed_effect = yes
+
 		# Price both halves before the twin is consumed
 		if = {
 			limit = { exists = scope:qpq_payer_secret }

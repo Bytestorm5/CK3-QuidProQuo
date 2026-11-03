@@ -418,3 +418,16 @@ qpq_ai_refuses_no_leverage_trigger = {
 		NOT = { has_dread_level_towards = { target = $PAYER$ level = 1 } }
 	}
 }
+
+############################################################
+# Command
+############################################################
+
+# scope:actor may command scope:recipient: someone under them in their own realm, however far down
+qpq_command_possible_trigger = {
+	scope:actor = { is_landed = yes }
+	scope:recipient = {
+		NOT = { this = scope:actor }
+		target_is_liege_or_above = scope:actor
+	}
+}

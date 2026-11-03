@@ -231,3 +231,18 @@ qpq_grateful_patron_opinion = {
 	years = 10
 	decaying = yes
 }
+
+# Commanded into a deal they would have refused (added with an opinion value by Command tier)
+qpq_commanded_opinion = {
+	opinion = -15
+	years = 10
+	decaying = yes
+	stacking = yes
+}
+
+# A subordinate who refused a command (added with an opinion value by Command tier)
+qpq_defied_command_opinion = {
+	opinion = -10
+	years = 5
+	decaying = yes
+}

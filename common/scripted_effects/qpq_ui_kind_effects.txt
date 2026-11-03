@@ -15852,14 +15852,22 @@ qpq_ui_deal_finish_effect = {
 			}
 		}
 	}
+	qpq_ui_command_compute_effect = yes
 	if = {
 		limit = { has_variable = qpq_ui_deal_active }
 		set_variable = {
-			name = qpq_ui_acc_total
+			name = qpq_ui_acc_before_cmd
 			value = {
 				value = var:qpq_ui_acc_ask
 				add = var:qpq_ui_acc_offers
 				add = var:qpq_ui_acc_other
+			}
+		}
+		set_variable = {
+			name = qpq_ui_acc_total
+			value = {
+				value = var:qpq_ui_acc_before_cmd
+				add = var:qpq_ui_acc_cmd
 			}
 		}
 	}
@@ -15897,6 +15905,30 @@ qpq_ui_clear_derived_effect = {
 	if = {
 		limit = { has_variable = qpq_ui_ref_hatred }
 		remove_variable = qpq_ui_ref_hatred
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_before_cmd }
+		remove_variable = qpq_ui_acc_before_cmd
+	}
+	if = {
+		limit = { has_variable = qpq_ui_acc_cmd }
+		remove_variable = qpq_ui_acc_cmd
+	}
+	if = {
+		limit = { has_variable = qpq_ui_cmd_ok }
+		remove_variable = qpq_ui_cmd_ok
+	}
+	if = {
+		limit = { has_variable = qpq_ui_cmd_level }
+		remove_variable = qpq_ui_cmd_level
+	}
+	if = {
+		limit = { has_variable = qpq_ui_cmd_expect }
+		remove_variable = qpq_ui_cmd_expect
+	}
+	if = {
+		limit = { has_variable = qpq_ui_cmd_margin }
+		remove_variable = qpq_ui_cmd_margin
 	}
 	if = {
 		limit = { has_variable = qpq_ui_t_ekind }
@@ -16122,6 +16154,10 @@ qpq_ui_clear_choices_effect = {
 		remove_variable = qpq_ui_charter
 	}
 	if = {
+		limit = { has_variable = qpq_ui_command }
+		remove_variable = qpq_ui_command
+	}
+	if = {
 		limit = { has_variable = qpq_ui_t_amount }
 		remove_variable = qpq_ui_t_amount
 	}
@@ -16332,6 +16368,7 @@ qpq_ui_save_deal_effect = {
 		limit = { has_variable = qpq_ui_charter }
 		save_scope_value_as = { name = qpq_deal_charter value = yes }
 	}
+	qpq_ui_command_save_effect = yes
 	if = {
 		limit = { has_variable = qpq_ui_t_ekind }
 		if = {

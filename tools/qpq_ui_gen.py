@@ -613,14 +613,20 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     eff += ("\t\telse = {\n\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_my_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_my_tier value = 1 }\n\t\t\t}\n"
             "\t\t\tif = {\n\t\t\t\tlimit = { var:qpq_ui_their_tier < 1 }\n\t\t\t\tset_variable = { name = qpq_ui_their_tier value = 1 }\n\t\t\t}\n\t\t}\n")
     eff += "\t}\n"
+    # Your authority over a subordinate (Command): what it adds, and what they would have said without it
+    eff += "\tqpq_ui_command_compute_effect = yes\n"
     eff += ("\tif = {\n\t\tlimit = { has_variable = qpq_ui_deal_active }\n"
-            "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_total\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_ask\n"
-            "\t\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\t\tadd = var:qpq_ui_acc_other\n\t\t\t}\n\t\t}\n\t}\n}\n\n")
+            "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_before_cmd\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_ask\n"
+            "\t\t\t\tadd = var:qpq_ui_acc_offers\n\t\t\t\tadd = var:qpq_ui_acc_other\n\t\t\t}\n\t\t}\n"
+            "\t\tset_variable = {\n\t\t\tname = qpq_ui_acc_total\n\t\t\tvalue = {\n\t\t\t\tvalue = var:qpq_ui_acc_before_cmd\n"
+            "\t\t\t\tadd = var:qpq_ui_acc_cmd\n\t\t\t}\n\t\t}\n\t}\n}\n\n")
 
     # Clear everything the compute steps derive
     eff += "qpq_ui_clear_derived_effect = {\n"
     gv = ["qpq_ui_deal_active", "qpq_ui_my_tier", "qpq_ui_their_tier", "qpq_ui_acc_ask",
-          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_ref_hatred"]
+          "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_ref_hatred",
+          "qpq_ui_acc_before_cmd", "qpq_ui_acc_cmd", "qpq_ui_cmd_ok", "qpq_ui_cmd_level", "qpq_ui_cmd_expect",
+          "qpq_ui_cmd_margin"]
     for L in LEGS:
         gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
         gv += ["qpq_ui_ref_%s_%s" % (L, w) for w in WHYS[L]]
@@ -633,7 +639,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
     # Clear the player's choices (on opening and closing)
     eff += "qpq_ui_clear_choices_effect = {\n"
-    vs = ["qpq_ui_charter"]
+    vs = ["qpq_ui_charter", "qpq_ui_command"]
     for L in LEGS:
         vs += ["qpq_ui_%s_amount" % L, "qpq_ui_%s_pick_char" % L, "qpq_ui_%s_target_title" % L, "qpq_ui_%s_target_artifact" % L] + \
               ["qpq_ui_%s_o_%s" % (L, o) for o in UI_OFFERS] + ["qpq_ui_%s_%s" % (L, f) for f in extras()]
@@ -649,6 +655,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
     # Save the deal as scope values and scopes: for the proposal event and for sealing
     eff += "qpq_ui_save_deal_effect = {\n"
     eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_charter }\n\t\tsave_scope_value_as = { name = qpq_deal_charter value = yes }\n\t}\n"
+    eff += "\tqpq_ui_command_save_effect = yes\n"
     for L in LEGS:
         eff += "\tif = {\n\t\tlimit = { has_variable = qpq_ui_%s_ekind }\n" % L
         first = True
@@ -987,6 +994,11 @@ def gen_deal_events(write):
             if proposer_me(k, L):
                 out += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_deal_%s_kind ?= flag:%s }\n\t\t\t\tdesc = qpq_%s_pitch_ev\n\t\t\t}\n" % (L, k["key"], k["key"])
     out += "\t\t\tdesc = qpq_empty\n\t\t}\n"
+    # A liege who commands it rather than asks
+    out += "\t\tfirst_valid = {\n"
+    for t in (3, 2, 1):
+        out += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_deal_command ?= %d }\n\t\t\t\tdesc = qpq_deal.1.command_%d\n\t\t\t}\n" % (t, t)
+    out += "\t\t\tdesc = qpq_empty\n\t\t}\n"
 
     def side(deed_leg, goods_leg, header, nothing_trig):
         s = "\t\ttriggered_desc = {\n\t\t\ttrigger = { always = yes }\n\t\t\tdesc = %s\n\t\t}\n" % header
@@ -1019,7 +1031,8 @@ def gen_deal_events(write):
             "\t\tremove_character_flag = qpq_considering_proposal\n\t\tscope:actor = {\n\t\t\tsend_interface_toast = {\n"
             "\t\t\t\ttype = event_toast_effect_neutral\n\t\t\t\ttitle = qpq_msg_proposal_lapsed_title\n\t\t\t\tleft_icon = root\n"
             "\t\t\t\tcustom_tooltip = qpq_msg_proposal_lapsed_tt\n\t\t\t}\n\t\t}\n\t}\n") % ok
-    out += ("\toption = {\n\t\tname = qpq_hub.50.b\n\t\tremove_character_flag = qpq_considering_proposal\n\t\tscope:actor = {\n"
+    out += ("\toption = {\n\t\tname = qpq_hub.50.b\n\t\tremove_character_flag = qpq_considering_proposal\n"
+            "\t\tqpq_command_defied_effect = yes\n\t\tscope:actor = {\n"
             "\t\t\tadd_opinion = { target = root modifier = qpq_declined_pact_opinion }\n\t\t\tsend_interface_toast = {\n"
             "\t\t\t\ttype = event_toast_effect_neutral\n\t\t\t\ttitle = qpq_msg_proposal_declined_title\n\t\t\t\tleft_icon = root\n"
             "\t\t\t\tcustom_tooltip = qpq_msg_proposal_declined_tt\n\t\t\t}\n\t\t}\n\t}\n}\n")

@@ -1,0 +1,38 @@
+﻿# Quid Pro Quo - Command, in the deal panel (root: the player)
+
+QpqUiCommandNote = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { var:qpq_ui_command ?= 3 }
+		localization_key = QPQ_UI_CMD_NOTE_3
+	}
+	text = {
+		trigger = { var:qpq_ui_command ?= 2 }
+		localization_key = QPQ_UI_CMD_NOTE_2
+	}
+	text = {
+		trigger = { var:qpq_ui_command ?= 1 }
+		localization_key = QPQ_UI_CMD_NOTE_1
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_CMD_NOTE_0
+	}
+}
+
+QpqUiAccCmdLine = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_ui_acc_cmd
+			var:qpq_ui_acc_cmd > 0
+		}
+		localization_key = QPQ_UI_ACC_CMD_LINE
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_empty
+	}
+}

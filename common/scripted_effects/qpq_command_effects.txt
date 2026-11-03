@@ -1,0 +1,238 @@
+﻿# Quid Pro Quo - Command: a liege's authority over a subordinate, put into a deal.
+#
+# Tiers (var:qpq_ui_command in the panel, scope:qpq_deal_command once saved):
+#   0  Ask as an equal       nothing at stake
+#   1  Remind them of duty   margin >= -1   +15 to their acceptance   minor prestige and legitimacy at stake
+#   2  Command it            margin >=  0   +30                       medium
+#   3  Brook no refusal      margin >=  2   +45                       major
+# The margin is the commander's legitimacy level (prestige level without legitimacy) less what the
+# subordinate expects of them (qpq_command_expectation_value). A command never outweighs a refusal at any price.
+# If the deal comes out, the commander pays what was at stake (half as much again in prestige without
+# legitimacy). Proclaimed openly as a charter, a scandalous command pays half of it at once. An AI that would
+# have refused without the command obeys, and resents it.
+
+# Root: the player in the panel. Scopes: actor (the player), recipient (them).
+qpq_ui_command_compute_effect = {
+	if = {
+		limit = {
+			exists = scope:recipient
+			qpq_command_possible_trigger = yes
+		}
+		set_variable = qpq_ui_cmd_ok
+		set_variable = { name = qpq_ui_cmd_level value = qpq_command_level_value }
+		set_variable = { name = qpq_ui_cmd_expect value = qpq_command_expectation_value }
+		set_variable = {
+			name = qpq_ui_cmd_margin
+			value = {
+				value = var:qpq_ui_cmd_level
+				subtract = var:qpq_ui_cmd_expect
+			}
+		}
+		# A tier their standing no longer allows falls back to the strongest one it does
+		if = {
+			limit = {
+				var:qpq_ui_command ?= 3
+				var:qpq_ui_cmd_margin < 2
+			}
+			set_variable = { name = qpq_ui_command value = 2 }
+		}
+		if = {
+			limit = {
+				var:qpq_ui_command ?= 2
+				var:qpq_ui_cmd_margin < 0
+			}
+			set_variable = { name = qpq_ui_command value = 1 }
+		}
+		if = {
+			limit = {
+				var:qpq_ui_command ?= 1
+				var:qpq_ui_cmd_margin < -1
+			}
+			set_variable = { name = qpq_ui_command value = 0 }
+		}
+	}
+	else_if = {
+		limit = { has_variable = qpq_ui_command }
+		set_variable = { name = qpq_ui_command value = 0 }
+	}
+	# What it adds to their acceptance
+	set_variable = { name = qpq_ui_acc_cmd value = 0 }
+	if = {
+		limit = {
+			has_variable = qpq_ui_cmd_ok
+			var:qpq_ui_command ?= 1
+		}
+		set_variable = { name = qpq_ui_acc_cmd value = 15 }
+	}
+	else_if = {
+		limit = {
+			has_variable = qpq_ui_cmd_ok
+			var:qpq_ui_command ?= 2
+		}
+		set_variable = { name = qpq_ui_acc_cmd value = 30 }
+	}
+	else_if = {
+		limit = {
+			has_variable = qpq_ui_cmd_ok
+			var:qpq_ui_command ?= 3
+		}
+		set_variable = { name = qpq_ui_acc_cmd value = 45 }
+	}
+}
+
+# Root: the player. Saves the command with the deal (for sealing, and for the deal event a person receives)
+qpq_ui_command_save_effect = {
+	if = {
+		limit = {
+			has_variable = qpq_ui_cmd_ok
+			exists = var:qpq_ui_command
+			var:qpq_ui_command > 0
+		}
+		save_scope_value_as = { name = qpq_deal_command value = var:qpq_ui_command }
+		if = {
+			limit = {
+				exists = var:qpq_ui_my_tier
+				var:qpq_ui_my_tier > 0
+			}
+			save_scope_value_as = { name = qpq_deal_cmd_scandal value = yes }
+		}
+		if = {
+			limit = {
+				exists = var:qpq_ui_acc_before_cmd
+				var:qpq_ui_acc_before_cmd <= 0
+			}
+			save_scope_value_as = { name = qpq_deal_cmd_forced value = yes }
+		}
+	}
+}
+
+# Sealing a deal made under command. Scopes: qpq_deal_me (the commander), qpq_deal_them, the deal's stories.
+qpq_command_seal_effect = {
+	if = {
+		limit = { exists = scope:qpq_deal_command }
+		save_scope_value_as = { name = qpq_cmd_tier value = scope:qpq_deal_command }
+		# The command is written on one pact of the deal (theirs if there is one), on both its secrets, so that
+		# exposing the deal, even long after, makes the commander pay once
+		if = {
+			limit = { exists = scope:qpq_deal_t_story }
+			scope:qpq_deal_t_story = { save_scope_as = qpq_cmd_story }
+		}
+		else_if = {
+			limit = { exists = scope:qpq_deal_i_story }
+			scope:qpq_deal_i_story = { save_scope_as = qpq_cmd_story }
+		}
+		scope:qpq_cmd_story ?= {
+			set_variable = { name = qpq_command value = scope:qpq_deal_command }
+			var:qpq_payer_secret ?= {
+				set_variable = { name = qpq_command value = scope:qpq_deal_command }
+				set_variable = { name = qpq_commander value = scope:qpq_deal_me }
+			}
+			var:qpq_agent_secret ?= {
+				set_variable = { name = qpq_command value = scope:qpq_deal_command }
+				set_variable = { name = qpq_commander value = scope:qpq_deal_me }
+			}
+		}
+		# Proclaimed openly, a command to do something scandalous spends authority now, at half weight
+		if = {
+			limit = {
+				scope:qpq_deal_charter ?= yes
+				scope:qpq_deal_cmd_scandal ?= yes
+			}
+			scope:qpq_deal_me = { qpq_command_fallout_effect = { SCALE = 0.5 } }
+		}
+		# Commanded into what they would have refused: they obey, and resent it
+		if = {
+			limit = {
+				scope:qpq_deal_cmd_forced ?= yes
+				scope:qpq_deal_them = { is_ai = yes }
+			}
+			scope:qpq_deal_them = {
+				if = {
+					limit = { scope:qpq_cmd_tier >= 3 }
+					add_opinion = { target = scope:qpq_deal_me modifier = qpq_commanded_opinion opinion = -45 }
+				}
+				else_if = {
+					limit = { scope:qpq_cmd_tier >= 2 }
+					add_opinion = { target = scope:qpq_deal_me modifier = qpq_commanded_opinion opinion = -30 }
+				}
+				else = {
+					add_opinion = { target = scope:qpq_deal_me modifier = qpq_commanded_opinion opinion = -15 }
+				}
+			}
+		}
+	}
+}
+
+# Root: an exposed pact secret. The commander pays for having used the crown's authority in the dark.
+qpq_command_exposed_effect = {
+	if = {
+		limit = {
+			exists = var:qpq_command
+			exists = var:qpq_commander
+		}
+		save_scope_value_as = { name = qpq_cmd_tier value = var:qpq_command }
+		var:qpq_commander = {
+			if = {
+				limit = { is_alive = yes }
+				qpq_command_fallout_effect = { SCALE = 1 }
+			}
+		}
+	}
+}
+
+# Root: the commander. scope:qpq_cmd_tier: the Command tier. SCALE: 1 when exposed, 0.5 when proclaimed.
+qpq_command_fallout_effect = {
+	save_scope_value_as = { name = qpq_cmd_scale value = $SCALE$ }
+	if = {
+		limit = { scope:qpq_cmd_tier >= 3 }
+		add_prestige = { value = major_prestige_loss multiply = scope:qpq_cmd_scale }
+		if = {
+			limit = { is_valid_for_legitimacy_change = yes }
+			add_legitimacy = { value = major_legitimacy_loss multiply = scope:qpq_cmd_scale }
+		}
+		else = {
+			add_prestige = { value = major_prestige_loss multiply = scope:qpq_cmd_scale multiply = 0.5 }
+		}
+	}
+	else_if = {
+		limit = { scope:qpq_cmd_tier >= 2 }
+		add_prestige = { value = medium_prestige_loss multiply = scope:qpq_cmd_scale }
+		if = {
+			limit = { is_valid_for_legitimacy_change = yes }
+			add_legitimacy = { value = medium_legitimacy_loss multiply = scope:qpq_cmd_scale }
+		}
+		else = {
+			add_prestige = { value = medium_prestige_loss multiply = scope:qpq_cmd_scale multiply = 0.5 }
+		}
+	}
+	else = {
+		add_prestige = { value = minor_prestige_loss multiply = scope:qpq_cmd_scale }
+		if = {
+			limit = { is_valid_for_legitimacy_change = yes }
+			add_legitimacy = { value = minor_legitimacy_loss multiply = scope:qpq_cmd_scale }
+		}
+		else = {
+			add_prestige = { value = minor_prestige_loss multiply = scope:qpq_cmd_scale multiply = 0.5 }
+		}
+	}
+}
+
+# Root: a person who refused a deal (event qpq_deal.1). A command refused is defiance, and the liege remembers.
+qpq_command_defied_effect = {
+	if = {
+		limit = { exists = scope:qpq_deal_command }
+		scope:actor = {
+			if = {
+				limit = { scope:qpq_deal_command >= 3 }
+				add_opinion = { target = root modifier = qpq_defied_command_opinion opinion = -30 }
+			}
+			else_if = {
+				limit = { scope:qpq_deal_command >= 2 }
+				add_opinion = { target = root modifier = qpq_defied_command_opinion opinion = -20 }
+			}
+			else = {
+				add_opinion = { target = root modifier = qpq_defied_command_opinion opinion = -10 }
+			}
+		}
+	}
+}

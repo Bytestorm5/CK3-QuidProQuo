@@ -718,6 +718,80 @@ window = {
 					}
 				}
 
+				# Your authority over them: only for someone under you in your realm
+				vbox = {
+					visible = "[GetScriptedGui('qpq_ui_command_shown').IsShown( @@GS@@ )]"
+					layoutpolicy_horizontal = expanding
+					margin = { 12 6 }
+					spacing = 3
+
+					background = {
+						using = Background_Area_Dark
+					}
+
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "QPQ_UI_CMD_HEADER"
+						tooltip = "QPQ_UI_CMD_HEADER_TT"
+						default_format = "#T"
+						using = Font_Size_Medium
+					}
+					flowcontainer = {
+						ignoreinvisible = yes
+						spacing = 6
+						button_radio_label = {
+							onclick = "[GetScriptedGui('qpq_ui_command_0').Execute( @@GS_ROOT@@ )]"
+							enabled = "[GetScriptedGui('qpq_ui_command_0').IsValid( @@GS_ROOT@@ )]"
+							tooltip = "QPQ_UI_CMD_0_TT"
+							blockoverride "radio" {
+								frame = "[BoolTo1And2( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('qpq_ui_command').GetValue, '(CFixedPoint)0' ) )]"
+							}
+							blockoverride "text" {
+								text = "QPQ_UI_CMD_0_LABEL"
+							}
+						}
+						button_radio_label = {
+							onclick = "[GetScriptedGui('qpq_ui_command_1').Execute( @@GS_ROOT@@ )]"
+							enabled = "[GetScriptedGui('qpq_ui_command_1').IsValid( @@GS_ROOT@@ )]"
+							tooltip = "QPQ_UI_CMD_1_TT"
+							blockoverride "radio" {
+								frame = "[BoolTo1And2( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('qpq_ui_command').GetValue, '(CFixedPoint)1' ) )]"
+							}
+							blockoverride "text" {
+								text = "QPQ_UI_CMD_1_LABEL"
+							}
+						}
+						button_radio_label = {
+							onclick = "[GetScriptedGui('qpq_ui_command_2').Execute( @@GS_ROOT@@ )]"
+							enabled = "[GetScriptedGui('qpq_ui_command_2').IsValid( @@GS_ROOT@@ )]"
+							tooltip = "QPQ_UI_CMD_2_TT"
+							blockoverride "radio" {
+								frame = "[BoolTo1And2( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('qpq_ui_command').GetValue, '(CFixedPoint)2' ) )]"
+							}
+							blockoverride "text" {
+								text = "QPQ_UI_CMD_2_LABEL"
+							}
+						}
+						button_radio_label = {
+							onclick = "[GetScriptedGui('qpq_ui_command_3').Execute( @@GS_ROOT@@ )]"
+							enabled = "[GetScriptedGui('qpq_ui_command_3').IsValid( @@GS_ROOT@@ )]"
+							tooltip = "QPQ_UI_CMD_3_TT"
+							blockoverride "radio" {
+								frame = "[BoolTo1And2( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('qpq_ui_command').GetValue, '(CFixedPoint)3' ) )]"
+							}
+							blockoverride "text" {
+								text = "QPQ_UI_CMD_3_LABEL"
+							}
+						}
+					}
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						max_width = 420
+						autoresize = yes
+						text = "[GetPlayer.Custom('QpqUiCommandNote')]"
+					}
+				}
+
 				# The scandal, and what exposure would cost each side
 				vbox = {
 					layoutpolicy_horizontal = expanding

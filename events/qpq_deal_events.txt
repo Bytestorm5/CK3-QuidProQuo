@@ -806,6 +806,21 @@ qpq_deal.1 = {
 			}
 			desc = qpq_empty
 		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 3 }
+				desc = qpq_deal.1.command_3
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 2 }
+				desc = qpq_deal.1.command_2
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_deal_command ?= 1 }
+				desc = qpq_deal.1.command_1
+			}
+			desc = qpq_empty
+		}
 		triggered_desc = {
 			trigger = { always = yes }
 			desc = qpq_deal.1.they_will
@@ -1583,6 +1598,7 @@ qpq_deal.1 = {
 	option = {
 		name = qpq_hub.50.b
 		remove_character_flag = qpq_considering_proposal
+		qpq_command_defied_effect = yes
 		scope:actor = {
 			add_opinion = { target = root modifier = qpq_declined_pact_opinion }
 			send_interface_toast = {

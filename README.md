@@ -16,7 +16,7 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 | Where | What |
 | --- | --- |
-| Right-click a character, **Strike a Backroom Deal** | Opens the deal panel, built from the game's own window parts. **1. The Ask:** pick what you want done (only the Asks open between you two are listed) and its target. **2. The Terms:** tick what you offer (gold and when it is paid, land, claims, office, marriage, hooks, secrets, contract terms, succession, clemency, arms, artifacts, church favour, restraint, a hook to call in, or publishing it as a Charter); when you are the one doing the deed, these become what you demand. **3. Seal:** what each side gets and gives, and both Scandal tiers. The footer always shows whether they would accept, with the breakdown on hover, and Propose lists anything still missing. |
+| Right-click a character, **Strike a Backroom Deal** | Opens the deal panel, built from the game's own window parts. Your side is on the left, theirs on the right: each has a list of every deed and good it could put in, and what it has put in, with Edit and Remove. Anything that needs choosing (a deed's target and terms, how much gold and when, which titles, artifacts or secrets) opens its own pop-out. The middle shows whether they would agree (with the breakdown, and if they will not at any price, exactly why), your **authority** over them if they are under you in your realm, each side's Scandal tier and what exposure would cost it, and whether the deal is secret or a public Charter. Propose lists anything still missing. |
 | Situations window | Every active deal shows for both parties, with the target and the months left. |
 | **Honour the Deal** (on the payer) | For Asks done by a single act (take vows, marry, hand someone over, excommunicate, cede a county...). AI agents do this on their own. |
 | **Break the Deal** | Walk away openly. The other side becomes the wronged party. |
@@ -34,17 +34,23 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 **Goods are named, not waved at.** Land, artifacts and secrets are chosen item by item, and each is worth what it actually is to the one who gets it: a title by what it is and who wants land; an artifact by its rarity and wear, plus a share for each thing it does that they need (prestige for the prestige-poor, piety, gold, strength in war, schemes, standing), read from the artifact's own modifiers; a secret by who it is on, how bad it is (a crime, a shame, or neither) and what that person is to the one getting it (rival, liege, vassal, kin). There is no "marriage" good: its value swings too wildly to price.
 
+**Will not, at any price.** Some deeds an AI refuses whatever it is offered, and the panel and the acceptance breakdown say which reason holds: they despise you; a rival will risk nothing for you; the honest, just, zealous or compassionate will not commit a crime; nobody not cowed by you will do the damnable; nobody does something that dirty for someone they neither like nor fear; and, by the deed, they will not turn on an ally, close kin, a friend or lover, or a realm more than twice as strong.
+
 **What they want.** An Ask is judged by what the one deciding wants, not only by what is offered: a war on someone is attractive to their rival, their neighbour, the holder of a claim, the stronger party; repellent to their ally, kin or friend; and refused outright when the target outweighs them more than two to one in strength. Killings are wanted by enemies and refused by friends and kin; favours go to those they like; pacts to those who can protect them; matters of faith by faith. Rules live in `tools/qpq_goals.py`.
 
 **Sealing.** A story cycle (`qpq_pact_story`, owned by the payer) holds the Ask, target, payment, deadline (1 to 10 years, by Ask) and tiers, and checks every month for delivery, breach or expiry. Each party gets one half of a linked secret (`qpq_secret_<category>_<tier>`, ten Ask categories by five tiers); each half is revealed to the other party. Tier IV halves are criminal and Tier V halves criminal and shunned, so vanilla blackmail treats them as the strong dirt they are.
 
-**Payment.** Up front, on delivery, half and half, or yearly installments. Up-front gold is simply lost if the agent breaches. A player payer may renege on what is due on delivery; an AI payer pays if it can.
+**Payment.** In the panel, gold is an amount you name, paid at once or on delivery (the classic interaction window also offers half and half, and yearly installments). Up-front gold is simply lost if the agent breaches. A player payer may renege on what is due on delivery; an AI payer pays if it can.
 
 **Deliver or breach.** Every Ask maps to something the game tracks: a war won (recorded on the deal by `on_war_won_*`), a death, a title held, a faction joined or left, a county's faith or development, a prisoner taken, or the deadline passing with a promise kept. A breach gives the wronged party a strong hook and a 75% discount on exposing the deal. Deaths and impossible Asks void a deal without fault.
 
 **Scandal tiers.** Each Ask has a base tier for the payer and for the agent (Catalogue C and D list them separately), then the context table shifts it and clamps to 0-V: hostile-faith foreigner -1, co-religionist ally +1, fellow vassal +1, close family or heir +1, your own liege +2, clergy or head of faith +1. At exposure: more than 20 years or a dead party -1, the exposer's culture or faith tolerating intrigue -1 (read from By God Alone rite parameters plus a short tradition list), the winners of a deal that changed who rules -1 or -2, a cover-up +1.
 
-**Discretion.** A deal whose floor is 0 can be published as a Charter (prestige for both; for conquests the **Crown Mandate** casus belli, which lends your de jure right; the target's liege and allies are alerted and their allies weigh joining the defence by their opinion of the target). Anything private is at least Tier I.
+**Discretion.** A deal is either secret (a secret each, never below Tier I, the full fallout if it comes out) or a public Charter at any tier: nothing to expose, prestige for both if it is honourable, and for a scandalous one half its fallout at once and a higher price from the other side. Conquest charters grant the **Crown Mandate** casus belli, which lends your de jure right; the target's liege and allies are alerted and weigh joining the defence by their opinion of the target. An already sealed deal whose floor is Tier 0 can still be proclaimed afterwards.
+
+**Command.** Putting a deal to someone under you in your realm (a vassal, a vassal's vassal, a courtier), you can lean on your standing: *Ask*, *Remind* (of their duty), *Command* or *Decree*. Your standing is your legitimacy level (prestige level without legitimacy); what they expect of you is vanilla's legitimacy expectation of a liege (your rank, de jure ties, family, how long your dynasty has ruled them), plus one level for each step further down your realm they stand. *Remind* needs you no more than one level short of that, *Command* to meet it, *Decree* to exceed it by two. The tiers add 15, 30 and 45 to their acceptance, never enough to overturn a refusal at any price, and put minor, medium or major prestige and legitimacy at stake: you pay it if the deal comes out (half as much again in prestige without legitimacy), or half of it at once if you proclaim a scandalous command as a Charter. An AI that would have refused without the command obeys and resents it (-15, -30, -45 opinion); a person who refuses a command is remembered for it.
+
+**Tribute.** A suzerain and its tributary are bound to keep the peace like a truce: a deal aimed at your own tributary or suzerain is scandalous as a co-religionist truce partner is, and a war you paid for against either makes you a truce-breaker by proxy if it comes out.
 
 **Exposure.** The exposer pays the tier's baseline cost times their own share of guilt: the payer about 60%, the agent about 40% but always the full criminal weight of the deed. The wronged party pays 25% of their share; a third party who digs it up pays nothing and both members pay in full. The fallout menu: prestige (or Dread for rulers who already lean on it), Known Schemer, legitimacy and influence, "Betrayed Me" from the victim, their house and allies, a small capped bump to faction discontent, a strong hook for the victim, the **Avenge Perfidy** casus belli, imprisonment, revocation and (Tier V) execution reasons, piety and excommunication risk, dynasty renown, kinslaying, and lost Fervor for head-of-faith deals. Each Ask adds its own consequence from the catalogue's "If exposed" column.
 
@@ -56,7 +62,7 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 ## The catalogue
 
-All 61 Asks from the design doc are implemented; `tools/qpq_kinds.py` is the single source for each one's tiers, targets, delivery check, AI behaviour and exposure consequence.
+All 61 Asks from the design doc are implemented, plus five for tribute; `tools/qpq_kinds.py` is the single source for each one's tiers, targets, delivery check, AI behaviour and exposure consequence, and `tools/qpq_flavor.py` for its pitch.
 
 | Catalogue | Deals |
 | --- | --- |
@@ -66,6 +72,7 @@ All 61 Asks from the design doc are implemented; `tools/qpq_kinds.py` is the sin
 | D1. Any head of faith | Excommunication for Hire, Dispensation for Gold, Steer the Holy War, Purchase a Mitre, Bought Claim, Absolution by Concession, Holy Warrant |
 | D2. Catholic Church (By God Alone) | Buy a Bull, Conclave Votes (uses BGA's forced papal vote), Council Lobbying |
 | D3. Signature faith deals | Caliphal Investiture, Name in the Khutba, Fatwa for Hire, Fund the Da'wa, Crowning the Usurper, Pliant Patriarch, Favourable Omens, Consecration Rites, Temple Patronage |
+| F. Tribute | Heavier Tribute, Lighter Tribute, Bought Freedom, Accept the Yoke, Cast Off the Yoke |
 
 ## Interpretations and simplifications
 

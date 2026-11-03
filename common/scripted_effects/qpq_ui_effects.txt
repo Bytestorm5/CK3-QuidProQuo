@@ -115,6 +115,7 @@ qpq_seal_deal_effect = {
 		qpq_deal_seal_leg_i_effect = yes
 	}
 	qpq_deal_link_effect = yes
+	qpq_command_seal_effect = yes
 	scope:qpq_deal_me = {
 		if = {
 			limit = { has_variable_list = qpq_deal_land_t }
