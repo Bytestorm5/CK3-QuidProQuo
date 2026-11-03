@@ -23,7 +23,7 @@ import sys
 import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_sim import Library, Panel, find_vanilla, offered_pairs, kind_names, scenario, standard_world  # noqa: E402
+from qpq_sim import Library, Panel, Run, find_vanilla, offered_pairs, kind_names, scenario, standard_world  # noqa: E402
 
 TESTS = []
 
@@ -367,6 +367,69 @@ def a_county_given_away(lib, check):
     if county:
         p.pick("t", county[0])
         check(p.var("t_a_goal", 0) <= -30, "giving away a county costs foe only %s" % p.var("t_a_goal"))
+
+
+# --------------------------------------------------------------------------- AI proposals
+def ai_propose(lib, who, kind, setup=None, player="nobody"):
+    """An AI proposes KIND (qpq_ai_propose_kind_effect, as the AI broker runs it). Sealing is the pact engine's
+    own business, outside what the simulator runs: it is recorded instead. Returns (run, sealed?, world)."""
+    stubs = {k for k in lib.effects if k.endswith("_seal_from_scopes_effect")} | {"qpq_ai_command_seal_effect"}
+    lib.stubs |= stubs
+    try:
+        w, W = standard_world(player=player)
+        if setup:
+            setup(w, W)
+        r = Run(lib, w, W[who], {})
+        r.eff(lib.expand("effect", "qpq_ai_propose_kind_effect", {"KIND": kind}), (W[who], None))
+        sealed = any(e[0] == "stub" and e[1].endswith("_seal_from_scopes_effect") for e in r.events)
+        return r, sealed, W
+    finally:
+        lib.stubs -= stubs
+
+
+@test
+def ai_at_war_deals(lib, check):
+    """A losing war leader sues the other for peace; a side that is not winning hires a neighbour to join."""
+    def foe_losing(w, W):
+        W["war"].attacker_war_score = -40
+    r, sealed, W = ai_propose(lib, "foe", "make_peace", foe_losing)
+    check(r.scopes.get("recipient") is W["third"] and r.scopes.get("secondary_recipient") is W["foe"],
+          "a losing foe does not sue third for peace (%r)" % r.scopes.get("recipient"))
+    check(sealed, "third, winning, will not take a paid white peace from foe")
+    check(not r.errors, "script errors: %s" % r.errors[:3])
+    def third_losing(w, W):
+        W["war"].attacker_war_score = 40
+    r, sealed, W = ai_propose(lib, "third", "join_war", third_losing)
+    rec = r.scopes.get("recipient")
+    check(rec is not None and rec not in W["war"].attackers + W["war"].defenders,
+          "a losing third finds nobody outside the war to hire (%r)" % rec)
+    check(r.scopes.get("secondary_recipient") is W["foe"], "the war third hires for is not its war with foe")
+    r, sealed, W = ai_propose(lib, "third", "make_peace", third_losing, player="foe")
+    check(("event", "qpq_hub.50") in [(e[0], e[1]) for e in r.events] or any(e[1] == "qpq_hub.50" for e in r.events),
+          "a person at war with a losing AI is not sent its peace offer")
+
+
+@test
+def ai_commands_its_vassals(lib, check):
+    """An AI liege a vassal would refuse leans on its authority: the lightest tier that would do, only when its
+    standing allows, never when timid, and never past what goodwill can do."""
+    def trial(price, legit=5, bold=0):
+        w, W = standard_world(player="nobody")
+        W["king"].legitimacy_level, W["king"].boldness = legit, bold
+        sc = {"actor": W["king"], "recipient": W["duke"], "secondary_recipient": W["jarl"], "qpq_o_gold": True,
+              "qpq_price": float(price), "qpq_o_on_delivery": True}
+        r = Run(lib, w, W["king"], sc)
+        before = r.value("qpq_marcher_charge_ai_acceptance_value", (W["king"], None))
+        r.eff(lib.expand("effect", "qpq_ai_try_command_effect", {"KIND": "marcher_charge"}), (W["king"], None))
+        after = r.value("qpq_marcher_charge_ai_acceptance_value", (W["king"], None))
+        return before, r.scopes.get("qpq_deal_command"), after, r.errors
+    before, tier, after, errs = trial(40)
+    check(before <= 0 and tier == 1 and after > 0, "a reminder of duty does not tip a near deal (%s, %s, %s)" % (before, tier, after))
+    check(not errs, "script errors: %s" % errs[:3])
+    before, tier, after, errs = trial(1)
+    check(tier is None, "Command is used where even full goodwill cannot cover the deed (%s -> %s)" % (before, after))
+    check(trial(40, legit=1)[1] is None, "a liege without the standing for it commands anyway")
+    check(trial(40, bold=-80)[1] is None, "a timid liege commands anyway")
 
 
 # --------------------------------------------------------------------------- monotony

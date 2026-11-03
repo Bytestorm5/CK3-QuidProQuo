@@ -1942,6 +1942,64 @@ class Loc:
         return t.replace("\\n", " ").replace("•", "").strip()
 
 
+class PanelText:
+    """The panel's own text, as the player would read it: localization with its custom localization chosen by
+    the mod's triggers (run by the simulator), the panel variables filled in, formatting dropped."""
+
+    DATA = re.compile(r"\[([^\[\]]*)\]")
+
+    def __init__(self, lib, loc=None, mod=ROOT):
+        self.lib = lib
+        self.loc = loc or Loc(mod)
+        self.custom = {}
+        d = os.path.join(mod, "common", "customizable_localization")
+        for f in sorted(files_under(d)):
+            self.custom.update({n.key: n.value for n in parse(read(f), f) if n.key})
+
+    def render(self, panel, key, depth=0):
+        t = self.loc.text.get(key, key)
+        if depth > 12:
+            return t
+        t = re.sub(r"\$([A-Za-z0-9_.]+)\$", lambda m: self.render(panel, m.group(1), depth + 1), t)
+        t = self.DATA.sub(lambda m: self._data(panel, m.group(1), depth), t)
+        t = re.sub(r"#[A-Za-z_]+ ?|#!", "", t)
+        return t.replace("\\n", "\n")
+
+    def _data(self, panel, x, depth):
+        if "|E" in x:
+            return x.split("|")[0].replace("_", " ")
+        m = re.match(r"GetPlayer\.Custom\('([A-Za-z0-9_]+)'\)$", x)
+        if m:
+            return self.custom_text(panel, m.group(1), depth)
+        m = re.match(r"GetPlayer\.MakeScope\.Var\('([a-z0-9_]+)'\)\.(.*)$", x)
+        if m:
+            v = panel.me.vars.get(m.group(1))
+            rest = m.group(2).split("|")[0]
+            if rest == "GetValue":
+                if not isinstance(v, (int, float)):
+                    return "?"
+                return ("%+d" % _round_half_up(v)) if "|=+" in m.group(2) or "|+" in m.group(2) else "%d" % _round_half_up(v)
+            if isinstance(v, Obj):
+                if rest.endswith("Possessive"):
+                    return v.name + "'s"
+                return v.name
+            return "?"
+        return "..."
+
+    def custom_text(self, panel, name, depth=0):
+        body = self.custom.get(name)
+        if body is None:
+            return "<%s?>" % name
+        r = panel._run()
+        for x in body:
+            if x.key != "text":
+                continue
+            b = {y.key: y for y in x.value}
+            if "fallback" in b or "trigger" not in b or r.trig(b["trigger"].value, (panel.me, None)):
+                return self.render(panel, b["localization_key"].value, depth + 1)
+        return ""
+
+
 # ====================================================================== a standard world
 def standard_world(player="king"):
     """A world with something for every deed: an elective kingdom and its court, a Church, an orthodox empire,
