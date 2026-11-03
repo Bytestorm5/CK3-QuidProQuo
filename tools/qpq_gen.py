@@ -11,6 +11,7 @@ import textwrap
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qpq_kinds import KINDS, GROUPS, SECRET_CATEGORIES, TIER_NAMES  # noqa: E402
 import qpq_ui_gen  # noqa: E402
+from qpq_flavor import FLAVOR, GROUP_FLAVOR  # noqa: E402
 import qpq_goals as goals  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -693,7 +694,15 @@ qpq_hub.1 = {
     # 50: an AI character proposes a pact to a player
     out += """qpq_hub.50 = {
 	type = character_event
-	title = qpq_hub.50.t
+	title = {
+		first_valid = {
+""" + "".join("""			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:%s }
+				desc = qpq_%s_name
+			}
+""" % (k["key"], k["key"]) for k in KINDS) + """			desc = qpq_hub.50.t
+		}
+	}
 	desc = {
 		desc = qpq_hub.50.intro
 		first_valid = {
@@ -701,17 +710,6 @@ qpq_hub.1 = {
     for k in KINDS:
         out += "\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = { scope:qpq_proposed_kind = flag:%s }\n\t\t\t\tdesc = qpq_%s_proposal_desc\n\t\t\t}\n" % (k["key"], k["key"])
     out += """			desc = qpq_unknown_pact
-		}
-		first_valid = {
-			triggered_desc = {
-				trigger = { exists = scope:secondary_recipient }
-				desc = qpq_hub.50.target
-			}
-			triggered_desc = {
-				trigger = { exists = scope:target }
-				desc = qpq_hub.50.title
-			}
-			desc = qpq_hub.50.none
 		}
 		first_valid = {
 			triggered_desc = {
@@ -735,7 +733,13 @@ qpq_hub.1 = {
 			trigger = { scope:%s ?= yes }
 			desc = qpq_hub.50.term_%s
 		}
-""" % (x, x) for x in HUB50_EXTRAS) + """		desc = qpq_hub.50.price
+""" % (x, x) for x in HUB50_EXTRAS) + """		first_valid = {
+			triggered_desc = {
+				trigger = { scope:qpq_o_charter ?= yes }
+				desc = qpq_hub.50.stakes_charter
+			}
+			desc = qpq_hub.50.stakes_secret
+		}
 	}
 	theme = intrigue
 	left_portrait = root
@@ -830,20 +834,48 @@ def story_ask(ask):
     return ask
 
 
+DERIVED_EVENT = {"scope:actor.liege": "actor.GetLiege", "scope:recipient.liege": "recipient.GetLiege",
+                 "scope:actor.top_liege": "actor.GetTopLiege"}
+
+
+def ask_event(k):
+    """The Ask in the proposal event's scopes. Root (the one reading it) is the recipient: "me"."""
+    t = {"char": "secondary_recipient", "title": "target", "artifact": "target"}.get(k["target"])
+    if k["target"] == "derived":
+        t = DERIVED_EVENT[k["derive"]]
+    s = k["ask"].replace("[qpq_target_title.", "[target.").replace("[qpq_target_artifact.", "[target.")
+    if t:
+        s = s.replace("[qpq_target.", "[%s." % t)
+    me = "payer" if k["initiator"] == "agent" else "agent"
+    them = "agent" if me == "payer" else "payer"
+    s = (s.replace("[qpq_%s.GetShortUINamePossessive]" % me, "my")
+          .replace("[qpq_%s.GetShortUIName]" % me, "me")
+          .replace("[qpq_%s." % me, "[recipient.")
+          .replace("[qpq_%s." % them, "[actor."))
+    assert "[qpq_" not in s, (k["key"], s)
+    return s
+
+
 def gen_loc():
     L = ["l_english:"]
 
     def add(key, text):
         L.append(' %s:0 "%s"' % (key, esc(deal_words(text))))
 
-    for g, gname in GROUPS:
+    for gi, (g, gname) in enumerate(GROUPS):
         add("qpq_hub.group.%s" % g, gname)
+        add("qpq_hub.%d.desc" % (10 + gi), "%s\\n\\n#weak Hover over an Ask to see its [qpq_scandal_tiers|E] and how it is delivered.#!" % GROUP_FLAVOR[g])
     for k in KINDS:
         key = k["key"]
-        tiers = "Tier %s / %s" % (k["payer_base"], k["agent_base"]) if k["payer_base"] != k["agent_base"] else "Tier %s" % k["payer_base"]
+        R = ["0", "I", "II", "III", "IV", "V"]
+        tiers = ("%s for the payer, %s for the one who does it" % (R[k["payer_base"]], R[k["agent_base"]])
+                 if k["payer_base"] != k["agent_base"] else R[k["payer_base"]])
         add("qpq_%s_name" % key, k["name"])
+        # In-world: the proposer's pitch. Under it, what the Ask actually does.
+        add("qpq_%s_flavor" % key, "\"%s\"" % FLAVOR[key])
+        add("qpq_%s_rules" % key, k["desc"])
         add("qpq_%s_interaction" % key, "Propose: %s" % k["name"])
-        add("qpq_%s_interaction_desc" % key, k["desc"] + (" #italic %s#!" % k["echo"] if k.get("echo") else ""))
+        add("qpq_%s_interaction_desc" % key, "#F $qpq_%s_flavor$#!\\n\\n$qpq_%s_rules$" % (key, key))
         add("qpq_%s_prompt" % key, "Pick the target")
         if k["target"] == "char":
             add("recipient_secondary_qpq_%s_interaction" % key, "Target")
@@ -854,11 +886,20 @@ def gen_loc():
                .replace("[qpq_payer.", "[Story.MakeScope.Var('qpq_payer').Char.")
                .replace("[qpq_agent.", "[Story.MakeScope.Var('qpq_agent').Char."))
         add("qpq_%s_ask_story" % key, ask)
-        mode = {"condition": "Delivered when it happens.", "perform": "Delivered when they act on it (Honour the Pact).",
+        mode = {"condition": "Delivered when it happens.",
+                "perform": "Delivered when the one who does it acts: #bold Honour the Pact#!.",
                 "restraint": "Delivered if the promise holds until the deadline."}[k["mode"]]
-        add("qpq_%s_hub_tt" % key, "#bold %s#! (Catalogue %s, base %s)\\n%s\\n%s" % (
-            k["name"], k["cat"], tiers, k["desc"], mode))
-        add("qpq_%s_proposal_desc" % key, "#bold %s#!. %s" % (k["name"], k["desc"]))
+        tt = "#T %s#!\\n#F $qpq_%s_flavor$#!\\n\\n$qpq_%s_rules$\\n\\n#weak Base [qpq_scandal_tier|E]: %s. %s#!" % (
+            k["name"], key, key, tiers, mode)
+        if k.get("echo"):
+            tt += "\\n#weak #italic %s#!#!" % k["echo"]
+        add("qpq_%s_hub_tt" % key, tt)
+        add("qpq_%s_ask_event" % key, ask_event(k))
+        if k["initiator"] == "payer":
+            plain = "Plainly put, [actor.GetSheHe] would have me $qpq_%s_ask_event$." % key
+        else:
+            plain = "Plainly put, [actor.GetSheHe] offers to $qpq_%s_ask_event$, for a price." % key
+        add("qpq_%s_proposal_desc" % key, "#F $qpq_%s_flavor$#!\\n\\n%s" % (key, plain))
     for cat, (_icon, cname) in SECRET_CATEGORIES.items():
         for tier in range(1, 6):
             sk = "qpq_secret_%s_%d" % (cat, tier)

@@ -1826,7 +1826,259 @@ qpq_hub.17 = {
 
 qpq_hub.50 = {
 	type = character_event
-	title = qpq_hub.50.t
+	title = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:chartered_conquest }
+				desc = qpq_chartered_conquest_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:sanctioned_conquest }
+				desc = qpq_sanctioned_conquest_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:marcher_charge }
+				desc = qpq_marcher_charge_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:holy_sponsorship }
+				desc = qpq_holy_sponsorship_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:development_charter }
+				desc = qpq_development_charter_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:electoral_purchase }
+				desc = qpq_electoral_purchase_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:loyal_mole }
+				desc = qpq_loyal_mole_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:agent_provocateur }
+				desc = qpq_agent_provocateur_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:licensed_feud }
+				desc = qpq_licensed_feud_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:dossier }
+				desc = qpq_dossier_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:quiet_removal }
+				desc = qpq_quiet_removal_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:heir_question }
+				desc = qpq_heir_question_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:snatch }
+				desc = qpq_snatch_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:dispossession }
+				desc = qpq_dispossession_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:the_cloister }
+				desc = qpq_the_cloister_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:marriage_by_command }
+				desc = qpq_marriage_by_command_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:hand_over }
+				desc = qpq_hand_over_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:hand_over_artifact }
+				desc = qpq_hand_over_artifact_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:renunciation }
+				desc = qpq_renunciation_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:hush_money }
+				desc = qpq_hush_money_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:price_of_loyalty }
+				desc = qpq_price_of_loyalty_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:blessing_for_a_feud }
+				desc = qpq_blessing_for_a_feud_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:clemency_bargain }
+				desc = qpq_clemency_bargain_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:electoral_capitulation }
+				desc = qpq_electoral_capitulation_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:mutual_defense_league }
+				desc = qpq_mutual_defense_league_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:faction_pledge }
+				desc = qpq_faction_pledge_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:title_swap }
+				desc = qpq_title_swap_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:coup_pact }
+				desc = qpq_coup_pact_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:proxy_war }
+				desc = qpq_proxy_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:partition_pact }
+				desc = qpq_partition_pact_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:secret_alliance }
+				desc = qpq_secret_alliance_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:bought_truce }
+				desc = qpq_bought_truce_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:faithless_ally }
+				desc = qpq_faithless_ally_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:turncoat }
+				desc = qpq_turncoat_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:seed_the_separatists }
+				desc = qpq_seed_the_separatists_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:shelter_the_pretender }
+				desc = qpq_shelter_the_pretender_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:extradition }
+				desc = qpq_extradition_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:buy_a_councillor }
+				desc = qpq_buy_a_councillor_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:stay_home }
+				desc = qpq_stay_home_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:defection_pact }
+				desc = qpq_defection_pact_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:secret_clause }
+				desc = qpq_secret_clause_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:hire_the_hashashin }
+				desc = qpq_hire_the_hashashin_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:excommunication_for_hire }
+				desc = qpq_excommunication_for_hire_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:dispensation_for_gold }
+				desc = qpq_dispensation_for_gold_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:steer_the_holy_war }
+				desc = qpq_steer_the_holy_war_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:purchase_a_mitre }
+				desc = qpq_purchase_a_mitre_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:bought_claim }
+				desc = qpq_bought_claim_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:absolution_by_concession }
+				desc = qpq_absolution_by_concession_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:holy_warrant }
+				desc = qpq_holy_warrant_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:buy_a_bull }
+				desc = qpq_buy_a_bull_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:conclave_votes }
+				desc = qpq_conclave_votes_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:council_lobbying }
+				desc = qpq_council_lobbying_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:caliphal_investiture }
+				desc = qpq_caliphal_investiture_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:name_in_the_khutba }
+				desc = qpq_name_in_the_khutba_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:fatwa_for_hire }
+				desc = qpq_fatwa_for_hire_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:fund_the_dawa }
+				desc = qpq_fund_the_dawa_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:crowning_the_usurper }
+				desc = qpq_crowning_the_usurper_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:pliant_patriarch }
+				desc = qpq_pliant_patriarch_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:favourable_omens }
+				desc = qpq_favourable_omens_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:consecration_rites }
+				desc = qpq_consecration_rites_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:temple_patronage }
+				desc = qpq_temple_patronage_name
+			}
+			triggered_desc = {
+				trigger = { scope:qpq_proposed_kind = flag:barter }
+				desc = qpq_barter_name
+			}
+			desc = qpq_hub.50.t
+		}
+	}
 	desc = {
 		desc = qpq_hub.50.intro
 		first_valid = {
@@ -2082,17 +2334,6 @@ qpq_hub.50 = {
 		}
 		first_valid = {
 			triggered_desc = {
-				trigger = { exists = scope:secondary_recipient }
-				desc = qpq_hub.50.target
-			}
-			triggered_desc = {
-				trigger = { exists = scope:target }
-				desc = qpq_hub.50.title
-			}
-			desc = qpq_hub.50.none
-		}
-		first_valid = {
-			triggered_desc = {
 				trigger = { qpq_proposed_kind_is_agent_init_trigger = yes }
 				desc = qpq_hub.50.terms_demand
 			}
@@ -2212,7 +2453,13 @@ qpq_hub.50 = {
 			trigger = { scope:qpq_x_armies ?= yes }
 			desc = qpq_hub.50.term_qpq_x_armies
 		}
-		desc = qpq_hub.50.price
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:qpq_o_charter ?= yes }
+				desc = qpq_hub.50.stakes_charter
+			}
+			desc = qpq_hub.50.stakes_secret
+		}
 	}
 	theme = intrigue
 	left_portrait = root

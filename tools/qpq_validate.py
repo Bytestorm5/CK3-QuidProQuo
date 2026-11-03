@@ -555,6 +555,7 @@ def main():
             if re.search(r'(?<!\\)"', text):
                 report("LOC-QUOTE %s:%d unescaped quote" % (relp(f, ROOT), i))
 
+    check_concepts(report, loc, V)
     if args.tiger:
         check_gui(report, trees, my, loc, V, args.tiger)
     else:
@@ -564,6 +565,45 @@ def main():
         print(p)
     print("\n%d problem(s)" % len(set(problems)))
     return 1 if problems else 0
+
+
+# =============================================================== game concepts
+def concept_names(path):
+    names, keys = set(), set()
+    for f in files_under(path, ".txt"):
+        t = read(f)
+        for m in re.finditer(r"^([a-z_0-9]+)\s*=\s*\{", t, re.M):
+            names.add(m.group(1))
+            keys.add(m.group(1))
+        for m in re.finditer(r"alias\s*=\s*\{([^}]*)\}", t):
+            names.update(m.group(1).split())
+    return names, keys
+
+
+def check_concepts(report, loc, V):
+    """[name|E] links in our text must name a game concept (vanilla or ours); ours need their text."""
+    van, _ = concept_names(os.path.join(V, "common/game_concepts"))
+    mine, mine_keys = concept_names(os.path.join(ROOT, "common/game_concepts"))
+    known = van | mine
+    for f in files_under(os.path.join(ROOT, "localization"), ".yml"):
+        for i, line in enumerate(read(f).split("\n"), 1):
+            for name in re.findall(r"\[([A-Za-z_0-9]+)\|E\]", line):
+                if name not in known:
+                    report("LOC-CONCEPT %s:%d unknown game concept %s" % (relp(f, ROOT), i, name))
+    for f in files_under(os.path.join(ROOT, "common/game_concepts"), ".txt"):
+        t = read(f)
+        for m in re.finditer(r"^([a-z_0-9]+)\s*=\s*\{(.*?)^\}", t, re.M | re.S):
+            key = m.group(1)
+            for k in ("game_concept_" + key, "game_concept_" + key + "_desc"):
+                if k not in loc:
+                    report("LOC-MISSING %s (game concept)" % k)
+            al = re.search(r"alias\s*=\s*\{([^}]*)\}", m.group(2))
+            for a in (al.group(1).split() if al else []):
+                if "game_concept_" + a not in loc:
+                    report("LOC-MISSING game_concept_%s (game concept alias)" % a)
+            par = re.search(r"parent\s*=\s*([a-z_0-9]+)", m.group(2))
+            if par and par.group(1) not in mine_keys and par.group(1) not in van:
+                report("CONCEPT-PARENT %s has unknown parent %s" % (key, par.group(1)))
 
 
 # =============================================================== GUI files

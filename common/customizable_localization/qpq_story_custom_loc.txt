@@ -590,3 +590,28 @@ QpqSecretLine = {
 	}
 }
 
+
+# The opening line of the entry, in the game's own voice: who you are in this bargain, and whether it is public
+QpqStoryFlavor = {
+	type = all
+	log_loc_errors = no
+	text = {
+		trigger = {
+			exists = var:qpq_main
+			exists = var:qpq_charter
+		}
+		localization_key = qpq_sf_agent_charter
+	}
+	text = {
+		trigger = { exists = var:qpq_main }
+		localization_key = qpq_sf_agent_secret
+	}
+	text = {
+		trigger = { exists = var:qpq_charter }
+		localization_key = qpq_sf_payer_charter
+	}
+	text = {
+		fallback = yes
+		localization_key = qpq_sf_payer_secret
+	}
+}
