@@ -62,6 +62,8 @@ KIND_GOALS = {
 
 # What one gives up weighs this much more than what one gets: an even swap is refused
 LOSS_AVERSION = 1.25
+# A deal's term, in years: the shortest and the longest either side may set
+TERM_YEARS = (1, 20)
 
 # The wartime deeds are judged on the war in question, found from the deed's parties: D (deciding), P (proposer)
 # and T (the war leader of the other side, the deed's target).

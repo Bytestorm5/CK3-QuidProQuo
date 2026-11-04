@@ -1902,6 +1902,22 @@ class Panel:
     def timing(self, leg, when):
         self.click("qpq_ui_timing_%s_%s" % (leg, when))
 
+    def years(self, leg):
+        """The term the panel shows for a leg's deed, in years (None: no deed with a term)."""
+        v = self.var(leg + "_years_shown")
+        return None if v is None else int(v)
+
+    def term(self, leg, years=None):
+        """Set a leg's term through the panel's buttons, five years or one at a time; None: the usual term."""
+        if years is None:
+            if self.valid("qpq_ui_term_usual_" + leg):
+                self.click("qpq_ui_term_usual_" + leg)
+            return
+        while self.years(leg) != years:
+            gap = years - self.years(leg)
+            step = 5 if abs(gap) >= 5 else 1
+            self.click("qpq_ui_term_%s_%s_%d" % ("up" if gap > 0 else "down", leg, step))
+
     def public(self, yes=True):
         self.click("qpq_ui_secrecy_public" if yes else "qpq_ui_secrecy_secret")
 

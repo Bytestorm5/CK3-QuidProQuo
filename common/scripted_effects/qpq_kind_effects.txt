@@ -6196,6 +6196,8 @@ qpq_ai_propose_kind_effect = {
 	clear_saved_scope = qpq_deal_command
 	clear_saved_scope = qpq_cmd_bonus
 	clear_saved_scope = qpq_proposed_kind
+	# an AI asks for the deed's usual term
+	clear_saved_scope = qpq_term_months
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {
