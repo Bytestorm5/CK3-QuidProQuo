@@ -1044,6 +1044,69 @@ QpqUiKindHint_t = {
 	}
 }
 
+QpqUiTermLine_t = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { NOT = { qpq_ui_leg_t_has_term_trigger = yes } }
+		localization_key = qpq_empty
+	}
+	text = {
+		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes var:qpq_ui_t_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_FOR_ONE
+	}
+	text = {
+		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_FOR_T
+	}
+	text = {
+		trigger = { var:qpq_ui_t_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_WITHIN_ONE
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_WITHIN_T
+	}
+}
+
+QpqUiTermShort_t = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { NOT = { qpq_ui_leg_t_has_term_trigger = yes } }
+		localization_key = qpq_empty
+	}
+	text = {
+		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes var:qpq_ui_t_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_SHORT_FOR_ONE
+	}
+	text = {
+		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_SHORT_FOR_T
+	}
+	text = {
+		trigger = { var:qpq_ui_t_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_SHORT_WITHIN_ONE
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_SHORT_WITHIN_T
+	}
+}
+
+QpqUiTermInfo_t = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_INFO_RESTRAINT_T
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_INFO_DEADLINE_T
+	}
+}
+
 QpqUiGoldLine_t = {
 	type = character
 	log_loc_errors = no
@@ -2102,6 +2165,69 @@ QpqUiKindHint_i = {
 	text = {
 		fallback = yes
 		localization_key = qpq_empty
+	}
+}
+
+QpqUiTermLine_i = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { NOT = { qpq_ui_leg_i_has_term_trigger = yes } }
+		localization_key = qpq_empty
+	}
+	text = {
+		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes var:qpq_ui_i_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_FOR_ONE
+	}
+	text = {
+		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_FOR_I
+	}
+	text = {
+		trigger = { var:qpq_ui_i_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_WITHIN_ONE
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_WITHIN_I
+	}
+}
+
+QpqUiTermShort_i = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { NOT = { qpq_ui_leg_i_has_term_trigger = yes } }
+		localization_key = qpq_empty
+	}
+	text = {
+		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes var:qpq_ui_i_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_SHORT_FOR_ONE
+	}
+	text = {
+		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_SHORT_FOR_I
+	}
+	text = {
+		trigger = { var:qpq_ui_i_years_shown ?= 1 }
+		localization_key = QPQ_UI_TERM_SHORT_WITHIN_ONE
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_SHORT_WITHIN_I
+	}
+}
+
+QpqUiTermInfo_i = {
+	type = character
+	log_loc_errors = no
+	text = {
+		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes }
+		localization_key = QPQ_UI_TERM_INFO_RESTRAINT_I
+	}
+	text = {
+		fallback = yes
+		localization_key = QPQ_UI_TERM_INFO_DEADLINE_I
 	}
 }
 

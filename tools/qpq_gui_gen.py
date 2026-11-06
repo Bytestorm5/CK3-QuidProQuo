@@ -287,6 +287,78 @@ def gen_gui(write):
                 x["desc"], D, flag, x["loc"])
         return s
 
+    def term_steps(D, sign):
+        s = ""
+        for n in ((5, 1) if sign < 0 else (1, 5)):
+            name = "qpq_ui_term_%s_%s_%d" % ("up" if sign > 0 else "down", D, n)
+            s += """
+							button_standard_list = {
+								size = { 52 30 }
+								text = "%s%d"
+								onclick = "%s"
+								enabled = "%s"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+""" % ("+" if sign > 0 else "-", n, sg(name, "Execute", GS_ROOT), sg(name, "IsValid", GS_ROOT))
+        return s
+
+    def term_box(D):
+        """How long the deed has, or the promise holds: one to twenty years, a year or five at a time."""
+        return """
+					vbox = {
+						visible = "%(shown)s"
+						layoutpolicy_horizontal = expanding
+						margin = { 10 8 }
+						spacing = 4
+
+						background = {
+							using = Background_Area_Dark
+						}
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_TERM_HEADER"
+							default_format = "#T"
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+%(down)s
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = center|nobaseline
+								text = "[GetPlayer.Custom('QpqUiTermLine_%(D)s')]"
+								using = Font_Size_Medium
+							}
+%(up)s
+						}
+						button_standard_list = {
+							layoutpolicy_horizontal = expanding
+							size = { 0 30 }
+							text = "QPQ_UI_TERM_USUAL"
+							visible = "%(usual_shown)s"
+							onclick = "%(usual_exec)s"
+							tooltip = "QPQ_UI_TERM_USUAL_TT"
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							align = center|nobaseline
+							visible = "[Not( %(usual_shown_expr)s )]"
+							text = "QPQ_UI_TERM_IS_USUAL"
+							default_format = "#weak"
+						}
+						text_multi = {
+							layoutpolicy_horizontal = expanding
+							max_width = 480
+							autoresize = yes
+							default_format = "#weak"
+							text = "[GetPlayer.Custom('QpqUiTermInfo_%(D)s')]"
+						}
+					}
+""" % dict(D=D, shown=sg("qpq_ui_term_shown_%s" % D, "IsShown", GS_ROOT), down=term_steps(D, -1), up=term_steps(D, 1),
+           usual_shown=sg("qpq_ui_term_usual_%s" % D, "IsShown", GS_ROOT),
+           usual_shown_expr=sg("qpq_ui_term_usual_%s" % D, "IsShown", GS_ROOT)[1:-1], usual_exec=sg("qpq_ui_term_usual_%s" % D, "Execute", GS_ROOT))
+
     def deed_popup(side):
         D = SIDES[side]["D"]
         return """
@@ -325,7 +397,7 @@ def gen_gui(write):
 							text = "QPQ_UI_HINT_LINE_%(DU)s"
 						}
 					}
-
+%(term_box)s
 					text_single = {
 						visible = "%(any_target)s"
 						layoutpolicy_horizontal = expanding
@@ -402,7 +474,7 @@ def gen_gui(write):
 %(extra_items)s
 					}
 				}
-""" % dict(side=side, D=D, DU=D.upper(), not_none=not_none(D),
+""" % dict(side=side, D=D, DU=D.upper(), not_none=not_none(D), term_box=term_box(D),
            any_target=sg("qpq_ui_needs_any_target_%s" % D, "IsShown", GS_ROOT),
            needs_char=sg("qpq_ui_needs_char_target_%s" % D, "IsShown", GS_ROOT),
            needs_char_expr=sg("qpq_ui_needs_char_target_%s" % D, "IsShown", GS_ROOT)[1:-1],

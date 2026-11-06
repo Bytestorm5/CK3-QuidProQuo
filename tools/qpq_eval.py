@@ -103,10 +103,14 @@ def leg_text(p, L, me, them):
         k = KIND[kind]
         names = {"qpq_payer": payer.name, "qpq_agent": doer.name, "qpq_target": tgt.name if tgt is not None else "the target",
                  "qpq_target_title": title.name if title is not None else "the title"}
-        deed = "%s, that is: %s %s. (%s In this text, 'you' is %s.)%s Scandal tier for %s: %s, for %s: %s" % (
+        yrs, usual = p.years(L), max(1, round(k["term"] / 12))
+        term = "%s %d year%s (the usual term for this deed is %d year%s)." % (
+            "A promise kept for" if k["mode"] == "restraint" else "To be done within", yrs, "" if yrs == 1 else "s",
+            usual, "" if usual == 1 else "s")
+        deed = "%s, that is: %s %s. (%s In this text, 'you' is %s.)%s %s Scandal tier for %s: %s, for %s: %s" % (
             k["name"], doer.name, ask_text(k, names), plain(k["desc"]), payer.name,
             (" Target: %s%s." % (tgt.name, (" (holder of %s)" % title.name) if title is not None else "")) if tgt is not None else "",
-            doer.name, TIER[int(a.get("agent_tier", 0))], payer.name, TIER[int(a.get("payer_tier", 0))])
+            term, doer.name, TIER[int(a.get("agent_tier", 0))], payer.name, TIER[int(a.get("payer_tier", 0))])
     return "%s does: %s\n  %s gives: %s" % (doer.name, deed, payer.name, ", ".join(goods) or "nothing")
 
 
@@ -209,6 +213,9 @@ def make_case(lib, rng, kinds_t, kinds_i, idx):
                     if tweaks["target_rel"] and hasattr(target, "relations") and target is not them:
                         w.relate(them, tweaks["target_rel"], target)
                         w.opinion(them, target, -70 if tweaks["target_rel"] == "rival" else 70)
+                # the term: often the usual one, otherwise anything from a year to twenty
+                if rng.random() < 0.4:
+                    p.term(L, rng.choice([1, 2, 3, 5, 10, 15, 20]))
             # payment: the leg that is paid in gold is the other side's goods
             paid = [L for L, _k in legs]
             if not other_kind:

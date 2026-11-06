@@ -407,7 +407,7 @@ qpq_chartered_conquest_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_chartered_conquest_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -1059,7 +1059,7 @@ qpq_marcher_charge_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_marcher_charge_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -1692,7 +1692,7 @@ qpq_holy_sponsorship_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_holy_sponsorship_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -2294,7 +2294,7 @@ qpq_development_charter_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_development_charter_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -2898,7 +2898,7 @@ qpq_electoral_purchase_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_electoral_purchase_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -3498,7 +3498,7 @@ qpq_loyal_mole_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_loyal_mole_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -4083,7 +4083,7 @@ qpq_agent_provocateur_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_agent_provocateur_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -4690,7 +4690,7 @@ qpq_dossier_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_dossier_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -5354,7 +5354,7 @@ qpq_quiet_removal_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_quiet_removal_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -6012,7 +6012,7 @@ qpq_heir_question_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_heir_question_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -6672,7 +6672,7 @@ qpq_snatch_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_snatch_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -7308,7 +7308,7 @@ qpq_dispossession_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_dispossession_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -7928,7 +7928,7 @@ qpq_the_cloister_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_the_cloister_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -8581,7 +8581,7 @@ qpq_marriage_by_command_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_marriage_by_command_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -9180,7 +9180,7 @@ qpq_hand_over_artifact_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_hand_over_artifact_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -9783,7 +9783,7 @@ qpq_renunciation_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_renunciation_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -10372,7 +10372,7 @@ qpq_hush_money_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_hush_money_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -11301,7 +11301,7 @@ qpq_blessing_for_a_feud_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_blessing_for_a_feud_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -11926,7 +11926,7 @@ qpq_clemency_bargain_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_clemency_bargain_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -12527,7 +12527,7 @@ qpq_mutual_defense_league_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_mutual_defense_league_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -13130,7 +13130,7 @@ qpq_faction_pledge_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_faction_pledge_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -13775,7 +13775,7 @@ qpq_title_swap_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_title_swap_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -14370,7 +14370,7 @@ qpq_coup_pact_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_coup_pact_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -15061,7 +15061,7 @@ qpq_proxy_war_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_proxy_war_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -15728,7 +15728,7 @@ qpq_partition_pact_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_partition_pact_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -16344,7 +16344,7 @@ qpq_secret_alliance_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_secret_alliance_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -16944,7 +16944,7 @@ qpq_bought_truce_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_bought_truce_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -17565,7 +17565,7 @@ qpq_faithless_ally_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_faithless_ally_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -18198,7 +18198,7 @@ qpq_turncoat_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_turncoat_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -18822,7 +18822,7 @@ qpq_seed_the_separatists_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_seed_the_separatists_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -19449,7 +19449,7 @@ qpq_shelter_the_pretender_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_shelter_the_pretender_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -20084,7 +20084,7 @@ qpq_extradition_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_extradition_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -20707,7 +20707,7 @@ qpq_buy_a_councillor_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_buy_a_councillor_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -21336,7 +21336,7 @@ qpq_stay_home_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_stay_home_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -21934,7 +21934,7 @@ qpq_defection_pact_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_defection_pact_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -22559,7 +22559,7 @@ qpq_hire_the_hashashin_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_hire_the_hashashin_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -23214,7 +23214,7 @@ qpq_excommunication_for_hire_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_excommunication_for_hire_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -23858,7 +23858,7 @@ qpq_dispensation_for_gold_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_dispensation_for_gold_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -24487,7 +24487,7 @@ qpq_steer_the_holy_war_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_steer_the_holy_war_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -25113,7 +25113,7 @@ qpq_purchase_a_mitre_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_purchase_a_mitre_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -25742,7 +25742,7 @@ qpq_bought_claim_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_bought_claim_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -26364,7 +26364,7 @@ qpq_absolution_by_concession_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_absolution_by_concession_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -26985,7 +26985,7 @@ qpq_holy_warrant_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_holy_warrant_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -27623,7 +27623,7 @@ qpq_buy_a_bull_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_buy_a_bull_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -28271,7 +28271,7 @@ qpq_conclave_votes_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_conclave_votes_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -28874,7 +28874,7 @@ qpq_council_lobbying_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_council_lobbying_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -29465,7 +29465,7 @@ qpq_caliphal_investiture_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_caliphal_investiture_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -30061,7 +30061,7 @@ qpq_name_in_the_khutba_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_name_in_the_khutba_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -30685,7 +30685,7 @@ qpq_fatwa_for_hire_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_fatwa_for_hire_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -31337,7 +31337,7 @@ qpq_fund_the_dawa_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_fund_the_dawa_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -31964,7 +31964,7 @@ qpq_crowning_the_usurper_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_crowning_the_usurper_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -32588,7 +32588,7 @@ qpq_pliant_patriarch_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_pliant_patriarch_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -33211,7 +33211,7 @@ qpq_favourable_omens_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_favourable_omens_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -33839,7 +33839,7 @@ qpq_consecration_rites_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_consecration_rites_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -34460,7 +34460,7 @@ qpq_temple_patronage_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_temple_patronage_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -35108,7 +35108,7 @@ qpq_join_war_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_join_war_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -35751,7 +35751,7 @@ qpq_stay_out_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_stay_out_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -36346,7 +36346,7 @@ qpq_heavier_tribute_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_heavier_tribute_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -36932,7 +36932,7 @@ qpq_lighter_tribute_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_lighter_tribute_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -37514,7 +37514,7 @@ qpq_bought_freedom_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_bought_freedom_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -38109,7 +38109,7 @@ qpq_accept_the_yoke_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_accept_the_yoke_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -38716,7 +38716,7 @@ qpq_cast_off_the_yoke_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_cast_off_the_yoke_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}
@@ -39333,7 +39333,7 @@ qpq_barter_interaction = {
 			desc = QPQ_REASON_OFFER_GOLD
 		}
 		modifier = {
-			add = -8
+			add = qpq_barter_wait_value
 			scope:qpq_o_on_delivery ?= yes
 			desc = QPQ_REASON_ON_DELIVERY
 		}

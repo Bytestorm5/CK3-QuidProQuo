@@ -17,8 +17,12 @@
 # Called with the scopes above saved, plus scope values
 #   qpq_payer_tier / qpq_agent_tier (0-5) and qpq_o_* offer flags (yes/no).
 qpq_seal_pact_effect = {
-	# The term as a scope value, so durations show correctly in tooltips before the story exists
-	save_scope_value_as = { name = qpq_term_months value = $TERM$ }
+	# The term as a scope value, so durations show correctly in tooltips before the story exists: the one the
+	# two sides settled on (the deal panel saves it, 1 to 20 years), else the deed's usual one
+	if = {
+		limit = { NOT = { exists = scope:qpq_term_months } }
+		save_scope_value_as = { name = qpq_term_months value = $TERM$ }
+	}
 	# Discretion: a pact with floor 0 may be published as a Charter; anything private is at least Tier I
 	if = {
 		limit = { scope:qpq_o_charter ?= yes }
@@ -59,10 +63,10 @@ qpq_seal_pact_effect = {
 			limit = { exists = scope:qpq_target_artifact }
 			set_variable = { name = qpq_target_artifact value = scope:qpq_target_artifact }
 		}
-		set_variable = { name = qpq_term value = $TERM$ }
+		set_variable = { name = qpq_term value = scope:qpq_term_months }
 		set_variable = { name = qpq_payer_tier value = scope:qpq_payer_tier }
 		set_variable = { name = qpq_agent_tier value = scope:qpq_agent_tier }
-		set_variable = { name = qpq_months_left value = $TERM$ }
+		set_variable = { name = qpq_months_left value = scope:qpq_term_months }
 		if = {
 			limit = { exists = scope:qpq_is_charter }
 			set_variable = qpq_charter
@@ -98,7 +102,7 @@ qpq_seal_pact_effect = {
 			limit = { exists = scope:qpq_target_title }
 			set_variable = { name = qpq_target_title value = scope:qpq_target_title }
 		}
-		set_variable = { name = qpq_months_left value = $TERM$ }
+		set_variable = { name = qpq_months_left value = scope:qpq_term_months }
 	}
 	if = {
 		limit = {
@@ -136,6 +140,8 @@ qpq_seal_pact_effect = {
 			left_icon = scope:qpq_payer
 		}
 	}
+	# the next pact sealed in this effect (the other leg of a deal) brings its own term
+	clear_saved_scope = qpq_term_months
 }
 
 # Adds a pact secret of the right tier to OWNER, aimed at the other party (TARGET)

@@ -62,6 +62,8 @@ KIND_GOALS = {
 
 # What one gives up weighs this much more than what one gets: an even swap is refused
 LOSS_AVERSION = 1.25
+# A deal's term, in years: the shortest and the longest either side may set
+TERM_YEARS = (1, 20)
 
 # The wartime deeds are judged on the war in question, found from the deed's parties: D (deciding), P (proposer)
 # and T (the war leader of the other side, the deed's target).
@@ -333,7 +335,7 @@ def sw(text):
 
 
 # How much more a title given away outright costs than one swapped (see goal_body, loss_title)
-# (Title Swap too: in the panel the county that comes back is a good of its own, priced as land)
+# (Transfer a County too: in the panel the county that comes back is a good of its own, priced as land)
 LOSS_SCALE = {"title_swap": 4}
 
 

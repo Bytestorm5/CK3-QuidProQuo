@@ -116,10 +116,11 @@ def gen_values():
         # fifth over, plus what waiting for payment on delivery costs them, in months of their stake (five
         # points a month, less for a dirtier deed: see the gold points), but never past the twenty months no sum
         # goes beyond.
-        out += ("qpq_%s_price_value = {\n\tvalue = qpq_%s_demand_value\n\tmultiply = -1.2\n\tadd = 8\n"
+        out += ("qpq_%s_price_value = {\n\tvalue = qpq_%s_demand_value\n\tmultiply = -1.2\n\tsubtract = qpq_%s_wait_value\n"
                 "\tdivide = {\n\t\tvalue = 5\n\t\tmultiply = qpq_%s_gold_mult_value\n\t}\n"
                 "\tmax = 20\n\tmultiply = %s.qpq_stake_value\n"
-                "\tmin = 25\n\tround = yes\n}\n") % (key, key, key, a)
+                "\tmin = 25\n\tround = yes\n}\n") % (key, key, key, key, a)
+        out += term_values(k)
         # How much gold weighs against the deed: the dirtier, the less
         out += ("qpq_%s_gold_mult_value = {\n\tvalue = 1\n\tsubtract = { value = qpq_%s_agent_tier_value multiply = 0.1 }\n"
                 "\tmin = 0.5\n}\n") % (key, key)
@@ -136,16 +137,19 @@ def gen_values():
                 "\tround = yes\n}\n") % (key, key, key)
         # What the Ask costs the agent. A plain exchange of goods asks no deed of anyone.
         if key == "barter":
-            out += "qpq_%s_demand_value = {\n\tvalue = 0\n}\n" % key
+            out += "qpq_%s_base_demand_value = {\n\tvalue = 0\n}\n" % key
         else:
-            out += ("qpq_%s_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
+            out += ("qpq_%s_base_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
                     "\tadd = %d\n}\n") % (key, key, -k["effort"])
+        out += "qpq_%s_demand_value = {\n\tvalue = qpq_%s_base_demand_value\n\tadd = qpq_%s_time_value\n}\n" % (key, key, key)
         # What the Ask is worth to the recipient before anything is offered
         out += "qpq_%s_ask_value = {\n" % key
         if k["initiator"] == "payer":
             out += "\tvalue = qpq_%s_demand_value\n" % key
         else:
-            out += "\tvalue = %d\n\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n" % (AGENT_INIT_BASE, key)
+            # to the payer it is asked of, at the term asked
+            out += ("\tvalue = {\n\t\tvalue = %d\n\t\tadd = { value = qpq_%s_payer_tier_value multiply = -5 }\n\t}\n"
+                    "\tmultiply = qpq_%s_term_worth_mult_value\n") % (AGENT_INIT_BASE, key, key)
         out += "}\n"
         # What is offered (or, when the proposer does the deed, what is demanded), in acceptance points
         out += "qpq_%s_offer_points_value = {\n" % key
@@ -159,7 +163,8 @@ def gen_values():
         if True:
             out += "\tvalue = {\n\t\tvalue = 0\n"
             out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_gold ?= yes }\n\t\t\tadd = qpq_%s_gold_points_value\n\t\t}\n" % key
-            for o, pts in (("on_delivery", -8), ("split", -3), ("stipend", -5)):
+            out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_on_delivery ?= yes }\n\t\t\tadd = qpq_%s_wait_value\n\t\t}\n" % key
+            for o, pts in (("split", -3), ("stipend", -5)):
                 out += "\t\tif = {\n\t\t\tlimit = { scope:qpq_o_%s ?= yes }\n\t\t\tadd = %d\n\t\t}\n" % (o, pts)
             for o in k["offers"]:
                 if o in OFFER_POINTS:
@@ -199,20 +204,23 @@ def gen_values():
         # What the deed is worth to the one who would pay for it, when someone else offers to do it (the deal
         # panel's other leg). Their wishes about the target are the swapped goal; this is the rest.
         archs = set(goals.KIND_GOALS.get(key, []))
+        # At the term asked (see term_values): a promise held longer is worth more, a deed done sooner too.
         out += "qpq_%s_worth_value = {\n" % key
         if k["initiator"] != "payer":
             out += "\tvalue = qpq_%s_ask_value\n" % key
         elif key in WAR_HELP:
             # the strength it takes off the enemy, against their own: little from a man with no army
             out += ("\tvalue = 5\n\tadd = {\n\t\tvalue = scope:recipient.max_military_strength\n"
-                    "\t\tdivide = { value = scope:actor.max_military_strength min = 1 }\n\t\tmultiply = 30\n\t\tmax = 25\n\t}\n")
+                    "\t\tdivide = { value = scope:actor.max_military_strength min = 1 }\n\t\tmultiply = 30\n\t\tmax = 25\n\t}\n"
+                    "\tmultiply = qpq_%s_term_worth_mult_value\n") % key
         elif key == "barter" or (archs & WISH_ARCHETYPES and key not in INTRINSIC):
             out += "\tvalue = 0\n"
         else:
             # a share of the deed's own size (its base tier and effort), the same whoever does it: never what it
             # happens to cost the one offering to do it
             size = 18 * k["agent_base"] + 12 + k["effort"]
-            out += "\tvalue = %d\n" % max(WORTH_MIN, min(WORTH_MAX, round(WORTH_SHARE * size)))
+            out += "\tvalue = %d\n\tmultiply = qpq_%s_term_worth_mult_value\n" % (
+                max(WORTH_MIN, min(WORTH_MAX, round(WORTH_SHARE * size))), key)
         out += "}\n"
         # The payer's own risk and character, when they would pay for it: anyone fears what it costs them if it
         # comes out, an honest or just lord shrinks from a dirty bargain, a schemer warms to it
@@ -266,6 +274,12 @@ def gen_values():
             for part, body in goals.goal_helpers(k, sw_):
                 out += "qpq_%s_goal%s_%s_value = {\n%s}\n\n" % (key, "_sw" if sw_ else "", part, body)
             if gv:
+                # what the deed brings them weighs by the term too: a promise held longer, for good or ill, and
+                # for the one who pays, a deed done sooner rather than later
+                payer_view = sw_ == (k["initiator"] == "payer")
+                if k["mode"] == "restraint" or payer_view:
+                    gv = "\tvalue = {\n%s\t}\n\tmultiply = qpq_%s_term_worth_mult_value\n" % (
+                        "".join("\t" + x + "\n" for x in gv.rstrip("\n").split("\n")), key)
                 out += "qpq_%s_goal%s_value = {\n%s}\n\n" % (key, "_sw" if sw_ else "", gv)
                 gr = goals.goal_refusal(k, sw_)
                 if gr:
@@ -287,6 +301,54 @@ WISH_ARCHETYPES = {"war", "harm", "favour", "war_side", "loss_title", "loss_arti
 # payer's own), and deeds whose harm brings the payer a gain of its own (a regency)
 WAR_HELP = {"turncoat", "faithless_ally"}
 INTRINSIC = {"coup_pact"}
+
+
+# A deal's term (scope:qpq_term_months, chosen in the panel; otherwise the deed's usual term) weighs on it by
+# what kind of deed it is:
+#   condition  something to achieve by the deadline (a war won, a county converted): less time is harder,
+#              more time easier, within bounds
+#   perform    a single act: a little harder when rushed
+#   restraint  a promise kept for the term: the longer, the more it costs the one bound, and the more it is
+#              worth to the one it protects; shorter than usual, down to half; longer, half again for every
+#              usual term (or five years, if that is longer) beyond it
+# The one who pays for a deed to be done (condition, perform) wants it soon: three in a hundred of its worth for
+# every year sooner or later than usual, from 0.6 to 1.15 of it.
+# And payment on delivery waits: the whole term for a promise, about half of it for the rest.
+TERM_SHAPE = {"condition": (0.5, -0.3, 1.5), "perform": (0.25, -0.15, 0.75)}
+TERM_YEARS = goals.TERM_YEARS
+
+
+def term_values(k):
+    key, T0, mode = k["key"], k["term"], k["mode"]
+    out = ""
+    if key == "barter":
+        out += "qpq_%s_time_value = {\n\tvalue = 0\n}\n" % key
+        out += "qpq_%s_term_worth_mult_value = {\n\tvalue = 1\n}\n" % key
+    elif mode == "restraint":
+        # how much a promise of this length weighs, against one of the usual length
+        out += ("qpq_%s_term_worth_mult_value = {\n\tvalue = 1\n\tif = {\n\t\tlimit = { exists = scope:qpq_term_months }\n"
+                "\t\tif = {\n\t\t\tlimit = { scope:qpq_term_months <= %d }\n\t\t\tvalue = scope:qpq_term_months\n"
+                "\t\t\tdivide = %d\n\t\t\tmultiply = 0.5\n\t\t\tadd = 0.5\n\t\t}\n"
+                "\t\telse = {\n\t\t\tvalue = scope:qpq_term_months\n\t\t\tsubtract = %d\n\t\t\tdivide = %d\n"
+                "\t\t\tmultiply = 0.5\n\t\t\tadd = 1\n\t\t}\n\t}\n}\n") % (key, T0, T0, T0, max(T0, 60))
+        out += ("qpq_%s_time_value = {\n\tvalue = qpq_%s_term_worth_mult_value\n\tsubtract = 1\n"
+                "\tmultiply = qpq_%s_base_demand_value\n}\n") % (key, key, key)
+    else:
+        scale, lo, hi = TERM_SHAPE[mode]
+        out += ("qpq_%s_time_value = {\n\tvalue = 0\n\tif = {\n\t\tlimit = { exists = scope:qpq_term_months }\n"
+                "\t\tvalue = qpq_%s_base_demand_value\n\t\tmultiply = {\n\t\t\tvalue = %d\n\t\t\tdivide = scope:qpq_term_months\n"
+                "\t\t\tsubtract = 1\n\t\t\tmultiply = %s\n\t\t\tmin = %s\n\t\t\tmax = %s\n\t\t}\n\t}\n}\n") % (
+                    key, key, T0, scale, lo, hi)
+        # sooner is better, to the one who wants it done
+        out += ("qpq_%s_term_worth_mult_value = {\n\tvalue = 1\n\tif = {\n\t\tlimit = { exists = scope:qpq_term_months }\n"
+                "\t\tadd = {\n\t\t\tvalue = %d\n\t\t\tsubtract = scope:qpq_term_months\n\t\t\tmultiply = 0.0025\n\t\t}\n"
+                "\t}\n\tmin = 0.6\n\tmax = 1.15\n}\n") % (key, T0)
+    # what waiting for payment on delivery costs the one paid: three points, and one and a half a year waited
+    share = 1 if mode == "restraint" else 0.5
+    out += ("qpq_%s_wait_value = {\n\tvalue = %d\n\tif = {\n\t\tlimit = { exists = scope:qpq_term_months }\n"
+            "\t\tvalue = scope:qpq_term_months\n\t}\n\tmultiply = %s\n\tdivide = 12\n\tmultiply = -1.5\n\tadd = -3\n"
+            "\tmin = -25\n}\n") % (key, T0, share)
+    return out
 
 
 def goods_cost_body(G, R, price):
@@ -528,7 +590,7 @@ def interaction(k):
     if k["initiator"] == "payer":
         s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_demand_value\n\t\t\tdesc = QPQ_REASON_DEMAND\n\t\t}\n" % key
         s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_gold_points_value\n\t\t\tscope:qpq_o_gold ?= yes\n\t\t\tdesc = QPQ_REASON_OFFER_GOLD\n\t\t}\n" % key
-        s += "\t\tmodifier = {\n\t\t\tadd = -8\n\t\t\tscope:qpq_o_on_delivery ?= yes\n\t\t\tdesc = QPQ_REASON_ON_DELIVERY\n\t\t}\n"
+        s += "\t\tmodifier = {\n\t\t\tadd = qpq_%s_wait_value\n\t\t\tscope:qpq_o_on_delivery ?= yes\n\t\t\tdesc = QPQ_REASON_ON_DELIVERY\n\t\t}\n" % key
         s += "\t\tmodifier = {\n\t\t\tadd = -3\n\t\t\tscope:qpq_o_split ?= yes\n\t\t\tdesc = QPQ_REASON_SPLIT\n\t\t}\n"
         s += "\t\tmodifier = {\n\t\t\tadd = -5\n\t\t\tscope:qpq_o_stipend ?= yes\n\t\t\tdesc = QPQ_REASON_STIPEND\n\t\t}\n"
         for o in k["offers"]:
@@ -756,6 +818,8 @@ if = {
 	clear_saved_scope = qpq_deal_command
 	clear_saved_scope = qpq_cmd_bonus
 	clear_saved_scope = qpq_proposed_kind
+	# an AI asks for the deed's usual term
+	clear_saved_scope = qpq_term_months
 	save_scope_as = actor
 	qpq_k_$KIND$_ai_find_effect = yes
 	if = {

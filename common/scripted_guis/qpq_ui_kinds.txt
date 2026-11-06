@@ -2125,6 +2125,92 @@ qpq_ui_secret_clear_t = {
 	}
 }
 
+qpq_ui_term_shown_t = {
+	scope = character
+	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
+}
+
+qpq_ui_term_down_t_5 = {
+	scope = character
+	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_t_years_shown
+		var:qpq_ui_t_years_shown > 1
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_years } }
+			set_variable = { name = qpq_ui_t_years value = var:qpq_ui_t_years_shown }
+		}
+		change_variable = { name = qpq_ui_t_years add = -5 }
+		clamp_variable = { name = qpq_ui_t_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_down_t_1 = {
+	scope = character
+	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_t_years_shown
+		var:qpq_ui_t_years_shown > 1
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_years } }
+			set_variable = { name = qpq_ui_t_years value = var:qpq_ui_t_years_shown }
+		}
+		change_variable = { name = qpq_ui_t_years add = -1 }
+		clamp_variable = { name = qpq_ui_t_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_up_t_1 = {
+	scope = character
+	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_t_years_shown
+		var:qpq_ui_t_years_shown < 20
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_years } }
+			set_variable = { name = qpq_ui_t_years value = var:qpq_ui_t_years_shown }
+		}
+		change_variable = { name = qpq_ui_t_years add = 1 }
+		clamp_variable = { name = qpq_ui_t_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_up_t_5 = {
+	scope = character
+	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_t_years_shown
+		var:qpq_ui_t_years_shown < 20
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_t_years } }
+			set_variable = { name = qpq_ui_t_years value = var:qpq_ui_t_years_shown }
+		}
+		change_variable = { name = qpq_ui_t_years add = 5 }
+		clamp_variable = { name = qpq_ui_t_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_usual_t = {
+	scope = character
+	is_shown = { has_variable = qpq_ui_t_years }
+	effect = {
+		remove_variable = qpq_ui_t_years
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_config_t = {
 	scope = character
 	is_shown = {
@@ -2132,6 +2218,7 @@ qpq_ui_config_t = {
 			qpq_ui_leg_t_needs_char_trigger = yes
 			qpq_ui_leg_t_needs_title_trigger = yes
 			qpq_ui_leg_t_needs_artifact_trigger = yes
+			qpq_ui_leg_t_has_term_trigger = yes
 			qpq_ui_leg_t_has_extra_qpq_x_armed_trigger = yes
 			qpq_ui_leg_t_has_extra_qpq_x_consent_trigger = yes
 			qpq_ui_leg_t_has_extra_qpq_x_armies_trigger = yes
@@ -5986,6 +6073,92 @@ qpq_ui_secret_clear_i = {
 	}
 }
 
+qpq_ui_term_shown_i = {
+	scope = character
+	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+}
+
+qpq_ui_term_down_i_5 = {
+	scope = character
+	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_i_years_shown
+		var:qpq_ui_i_years_shown > 1
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_years } }
+			set_variable = { name = qpq_ui_i_years value = var:qpq_ui_i_years_shown }
+		}
+		change_variable = { name = qpq_ui_i_years add = -5 }
+		clamp_variable = { name = qpq_ui_i_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_down_i_1 = {
+	scope = character
+	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_i_years_shown
+		var:qpq_ui_i_years_shown > 1
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_years } }
+			set_variable = { name = qpq_ui_i_years value = var:qpq_ui_i_years_shown }
+		}
+		change_variable = { name = qpq_ui_i_years add = -1 }
+		clamp_variable = { name = qpq_ui_i_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_up_i_1 = {
+	scope = character
+	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_i_years_shown
+		var:qpq_ui_i_years_shown < 20
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_years } }
+			set_variable = { name = qpq_ui_i_years value = var:qpq_ui_i_years_shown }
+		}
+		change_variable = { name = qpq_ui_i_years add = 1 }
+		clamp_variable = { name = qpq_ui_i_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_up_i_5 = {
+	scope = character
+	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+	is_valid = {
+		exists = var:qpq_ui_i_years_shown
+		var:qpq_ui_i_years_shown < 20
+	}
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = qpq_ui_i_years } }
+			set_variable = { name = qpq_ui_i_years value = var:qpq_ui_i_years_shown }
+		}
+		change_variable = { name = qpq_ui_i_years add = 5 }
+		clamp_variable = { name = qpq_ui_i_years min = 1 max = 20 }
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_term_usual_i = {
+	scope = character
+	is_shown = { has_variable = qpq_ui_i_years }
+	effect = {
+		remove_variable = qpq_ui_i_years
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_config_i = {
 	scope = character
 	is_shown = {
@@ -5993,6 +6166,7 @@ qpq_ui_config_i = {
 			qpq_ui_leg_i_needs_char_trigger = yes
 			qpq_ui_leg_i_needs_title_trigger = yes
 			qpq_ui_leg_i_needs_artifact_trigger = yes
+			qpq_ui_leg_i_has_term_trigger = yes
 			qpq_ui_leg_i_has_extra_qpq_x_armed_trigger = yes
 			qpq_ui_leg_i_has_extra_qpq_x_consent_trigger = yes
 			qpq_ui_leg_i_has_extra_qpq_x_armies_trigger = yes

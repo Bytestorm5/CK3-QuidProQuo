@@ -423,7 +423,7 @@ def main():
                     report("MISSING-INTERACTION %s:%d %s" % (rel, n.line, v))
                 if k in LOC_FIELDS and re.match(r"^[A-Za-z0-9_.\-]+$", v) and not v.startswith("$"):
                     if k == "name" and pkeys and pkeys[-1] in ("set_variable", "add_to_variable_list", "change_variable",
-                                                                "save_scope_value_as", "is_target_in_variable_list",
+                                                                "save_scope_value_as", "is_target_in_variable_list", "clamp_variable",
                                                                 "remove_list_variable", "variable_list_size",
                                                                 "save_temporary_scope_value_as", "change_global_variable",
                                                                 "set_local_variable"):

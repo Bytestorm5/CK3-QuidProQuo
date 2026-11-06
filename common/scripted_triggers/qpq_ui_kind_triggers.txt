@@ -1657,6 +1657,31 @@ qpq_ui_leg_t_allows_on_delivery_trigger = {
 	}
 }
 
+qpq_ui_leg_t_is_restraint_trigger = {
+	OR = {
+		var:qpq_ui_t_ekind = flag:marcher_charge
+		var:qpq_ui_t_ekind = flag:electoral_purchase
+		var:qpq_ui_t_ekind = flag:hush_money
+		var:qpq_ui_t_ekind = flag:price_of_loyalty
+		var:qpq_ui_t_ekind = flag:blessing_for_a_feud
+		var:qpq_ui_t_ekind = flag:mutual_defense_league
+		var:qpq_ui_t_ekind = flag:secret_alliance
+		var:qpq_ui_t_ekind = flag:bought_truce
+		var:qpq_ui_t_ekind = flag:faithless_ally
+		var:qpq_ui_t_ekind = flag:buy_a_councillor
+		var:qpq_ui_t_ekind = flag:stay_home
+		var:qpq_ui_t_ekind = flag:conclave_votes
+		var:qpq_ui_t_ekind = flag:council_lobbying
+		var:qpq_ui_t_ekind = flag:join_war
+		var:qpq_ui_t_ekind = flag:stay_out
+	}
+}
+
+qpq_ui_leg_t_has_term_trigger = {
+	has_variable = qpq_ui_t_ekind
+	NOT = { var:qpq_ui_t_ekind = flag:barter }
+}
+
 qpq_ui_leg_t_has_goods_trigger = {
 	OR = {
 		has_variable = qpq_ui_t_o_gold
@@ -4679,6 +4704,31 @@ qpq_ui_leg_i_allows_on_delivery_trigger = {
 		var:qpq_ui_i_kind = flag:cast_off_the_yoke
 		var:qpq_ui_i_kind = flag:none
 	}
+}
+
+qpq_ui_leg_i_is_restraint_trigger = {
+	OR = {
+		var:qpq_ui_i_ekind = flag:marcher_charge
+		var:qpq_ui_i_ekind = flag:electoral_purchase
+		var:qpq_ui_i_ekind = flag:hush_money
+		var:qpq_ui_i_ekind = flag:price_of_loyalty
+		var:qpq_ui_i_ekind = flag:blessing_for_a_feud
+		var:qpq_ui_i_ekind = flag:mutual_defense_league
+		var:qpq_ui_i_ekind = flag:secret_alliance
+		var:qpq_ui_i_ekind = flag:bought_truce
+		var:qpq_ui_i_ekind = flag:faithless_ally
+		var:qpq_ui_i_ekind = flag:buy_a_councillor
+		var:qpq_ui_i_ekind = flag:stay_home
+		var:qpq_ui_i_ekind = flag:conclave_votes
+		var:qpq_ui_i_ekind = flag:council_lobbying
+		var:qpq_ui_i_ekind = flag:join_war
+		var:qpq_ui_i_ekind = flag:stay_out
+	}
+}
+
+qpq_ui_leg_i_has_term_trigger = {
+	has_variable = qpq_ui_i_ekind
+	NOT = { var:qpq_ui_i_ekind = flag:barter }
 }
 
 qpq_ui_leg_i_has_goods_trigger = {

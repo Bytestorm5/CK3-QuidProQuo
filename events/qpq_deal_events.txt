@@ -1044,6 +1044,71 @@ qpq_deal.1 = {
 			}
 			desc = qpq_empty
 		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					scope:qpq_deal_i_years = 1
+					OR = {
+						scope:qpq_deal_i_kind ?= flag:marcher_charge
+						scope:qpq_deal_i_kind ?= flag:electoral_purchase
+						scope:qpq_deal_i_kind ?= flag:hush_money
+						scope:qpq_deal_i_kind ?= flag:price_of_loyalty
+						scope:qpq_deal_i_kind ?= flag:blessing_for_a_feud
+						scope:qpq_deal_i_kind ?= flag:mutual_defense_league
+						scope:qpq_deal_i_kind ?= flag:secret_alliance
+						scope:qpq_deal_i_kind ?= flag:bought_truce
+						scope:qpq_deal_i_kind ?= flag:faithless_ally
+						scope:qpq_deal_i_kind ?= flag:buy_a_councillor
+						scope:qpq_deal_i_kind ?= flag:stay_home
+						scope:qpq_deal_i_kind ?= flag:conclave_votes
+						scope:qpq_deal_i_kind ?= flag:council_lobbying
+						scope:qpq_deal_i_kind ?= flag:join_war
+						scope:qpq_deal_i_kind ?= flag:stay_out
+					}
+				}
+				desc = qpq_deal.1.term_for_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					scope:qpq_deal_i_years = 1
+				}
+				desc = qpq_deal.1.term_within_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					always = yes
+					OR = {
+						scope:qpq_deal_i_kind ?= flag:marcher_charge
+						scope:qpq_deal_i_kind ?= flag:electoral_purchase
+						scope:qpq_deal_i_kind ?= flag:hush_money
+						scope:qpq_deal_i_kind ?= flag:price_of_loyalty
+						scope:qpq_deal_i_kind ?= flag:blessing_for_a_feud
+						scope:qpq_deal_i_kind ?= flag:mutual_defense_league
+						scope:qpq_deal_i_kind ?= flag:secret_alliance
+						scope:qpq_deal_i_kind ?= flag:bought_truce
+						scope:qpq_deal_i_kind ?= flag:faithless_ally
+						scope:qpq_deal_i_kind ?= flag:buy_a_councillor
+						scope:qpq_deal_i_kind ?= flag:stay_home
+						scope:qpq_deal_i_kind ?= flag:conclave_votes
+						scope:qpq_deal_i_kind ?= flag:council_lobbying
+						scope:qpq_deal_i_kind ?= flag:join_war
+						scope:qpq_deal_i_kind ?= flag:stay_out
+					}
+				}
+				desc = qpq_deal.1.term_for_i
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					always = yes
+				}
+				desc = qpq_deal.1.term_within_i
+			}
+			desc = qpq_empty
+		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_t_o_gold ?= yes }
 			desc = qpq_deal.1.gold_t
@@ -1443,6 +1508,71 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:cast_off_the_yoke }
 				desc = qpq_cast_off_the_yoke_ask_ev_t
+			}
+			desc = qpq_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					scope:qpq_deal_t_years = 1
+					OR = {
+						scope:qpq_deal_t_kind ?= flag:marcher_charge
+						scope:qpq_deal_t_kind ?= flag:electoral_purchase
+						scope:qpq_deal_t_kind ?= flag:hush_money
+						scope:qpq_deal_t_kind ?= flag:price_of_loyalty
+						scope:qpq_deal_t_kind ?= flag:blessing_for_a_feud
+						scope:qpq_deal_t_kind ?= flag:mutual_defense_league
+						scope:qpq_deal_t_kind ?= flag:secret_alliance
+						scope:qpq_deal_t_kind ?= flag:bought_truce
+						scope:qpq_deal_t_kind ?= flag:faithless_ally
+						scope:qpq_deal_t_kind ?= flag:buy_a_councillor
+						scope:qpq_deal_t_kind ?= flag:stay_home
+						scope:qpq_deal_t_kind ?= flag:conclave_votes
+						scope:qpq_deal_t_kind ?= flag:council_lobbying
+						scope:qpq_deal_t_kind ?= flag:join_war
+						scope:qpq_deal_t_kind ?= flag:stay_out
+					}
+				}
+				desc = qpq_deal.1.term_for_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					scope:qpq_deal_t_years = 1
+				}
+				desc = qpq_deal.1.term_within_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					always = yes
+					OR = {
+						scope:qpq_deal_t_kind ?= flag:marcher_charge
+						scope:qpq_deal_t_kind ?= flag:electoral_purchase
+						scope:qpq_deal_t_kind ?= flag:hush_money
+						scope:qpq_deal_t_kind ?= flag:price_of_loyalty
+						scope:qpq_deal_t_kind ?= flag:blessing_for_a_feud
+						scope:qpq_deal_t_kind ?= flag:mutual_defense_league
+						scope:qpq_deal_t_kind ?= flag:secret_alliance
+						scope:qpq_deal_t_kind ?= flag:bought_truce
+						scope:qpq_deal_t_kind ?= flag:faithless_ally
+						scope:qpq_deal_t_kind ?= flag:buy_a_councillor
+						scope:qpq_deal_t_kind ?= flag:stay_home
+						scope:qpq_deal_t_kind ?= flag:conclave_votes
+						scope:qpq_deal_t_kind ?= flag:council_lobbying
+						scope:qpq_deal_t_kind ?= flag:join_war
+						scope:qpq_deal_t_kind ?= flag:stay_out
+					}
+				}
+				desc = qpq_deal.1.term_for_t
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					always = yes
+				}
+				desc = qpq_deal.1.term_within_t
 			}
 			desc = qpq_empty
 		}

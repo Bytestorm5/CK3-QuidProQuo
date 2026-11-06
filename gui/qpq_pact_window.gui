@@ -3954,6 +3954,89 @@ window = {
 						}
 					}
 
+					vbox = {
+						visible = "[GetScriptedGui('qpq_ui_term_shown_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						margin = { 10 8 }
+						spacing = 4
+
+						background = {
+							using = Background_Area_Dark
+						}
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_TERM_HEADER"
+							default_format = "#T"
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "-5"
+								onclick = "[GetScriptedGui('qpq_ui_term_down_i_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_down_i_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "-1"
+								onclick = "[GetScriptedGui('qpq_ui_term_down_i_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_down_i_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = center|nobaseline
+								text = "[GetPlayer.Custom('QpqUiTermLine_i')]"
+								using = Font_Size_Medium
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "+1"
+								onclick = "[GetScriptedGui('qpq_ui_term_up_i_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_up_i_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "+5"
+								onclick = "[GetScriptedGui('qpq_ui_term_up_i_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_up_i_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+						}
+						button_standard_list = {
+							layoutpolicy_horizontal = expanding
+							size = { 0 30 }
+							text = "QPQ_UI_TERM_USUAL"
+							visible = "[GetScriptedGui('qpq_ui_term_usual_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_term_usual_i').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							tooltip = "QPQ_UI_TERM_USUAL_TT"
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							align = center|nobaseline
+							visible = "[Not( GetScriptedGui('qpq_ui_term_usual_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+							text = "QPQ_UI_TERM_IS_USUAL"
+							default_format = "#weak"
+						}
+						text_multi = {
+							layoutpolicy_horizontal = expanding
+							max_width = 480
+							autoresize = yes
+							default_format = "#weak"
+							text = "[GetPlayer.Custom('QpqUiTermInfo_i')]"
+						}
+					}
+
 					text_single = {
 						visible = "[GetScriptedGui('qpq_ui_needs_any_target_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
@@ -4380,6 +4463,89 @@ window = {
 							autoresize = yes
 							default_format = "#weak"
 							text = "QPQ_UI_HINT_LINE_T"
+						}
+					}
+
+					vbox = {
+						visible = "[GetScriptedGui('qpq_ui_term_shown_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						margin = { 10 8 }
+						spacing = 4
+
+						background = {
+							using = Background_Area_Dark
+						}
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_TERM_HEADER"
+							default_format = "#T"
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "-5"
+								onclick = "[GetScriptedGui('qpq_ui_term_down_t_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_down_t_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "-1"
+								onclick = "[GetScriptedGui('qpq_ui_term_down_t_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_down_t_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = center|nobaseline
+								text = "[GetPlayer.Custom('QpqUiTermLine_t')]"
+								using = Font_Size_Medium
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "+1"
+								onclick = "[GetScriptedGui('qpq_ui_term_up_t_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_up_t_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+							button_standard_list = {
+								size = { 52 30 }
+								text = "+5"
+								onclick = "[GetScriptedGui('qpq_ui_term_up_t_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('qpq_ui_term_up_t_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "QPQ_UI_TERM_STEP_TT"
+							}
+
+						}
+						button_standard_list = {
+							layoutpolicy_horizontal = expanding
+							size = { 0 30 }
+							text = "QPQ_UI_TERM_USUAL"
+							visible = "[GetScriptedGui('qpq_ui_term_usual_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							onclick = "[GetScriptedGui('qpq_ui_term_usual_t').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							tooltip = "QPQ_UI_TERM_USUAL_TT"
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							align = center|nobaseline
+							visible = "[Not( GetScriptedGui('qpq_ui_term_usual_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+							text = "QPQ_UI_TERM_IS_USUAL"
+							default_format = "#weak"
+						}
+						text_multi = {
+							layoutpolicy_horizontal = expanding
+							max_width = 480
+							autoresize = yes
+							default_format = "#weak"
+							text = "[GetPlayer.Custom('QpqUiTermInfo_t')]"
 						}
 					}
 

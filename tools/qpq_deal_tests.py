@@ -313,7 +313,7 @@ def stated_tiers(lib, check):
             p.click("qpq_ui_extra_%s_%s" % (leg, extra)) if ("qpq_ui_extra_%s_%s" % (leg, extra)) in lib.guis else None
         return p.var(leg + "_agent_tier"), p.var(leg + "_payer_tier")
     a, pt = tier("duke", "duke2", "t", "mutual_defense_league")
-    check((a, pt) == (3, 3), "Mutual Defense League: text says Tier III, script gives agent %s payer %s" % (a, pt))
+    check((a, pt) == (3, 3), "Mutual Defense: text says Tier III, script gives agent %s payer %s" % (a, pt))
     a, pt = tier("duke", "duke2", "t", "title_swap")
     check(a == 3, "Transfer a County (hidden): text says Tier III, script gives %s" % a)
     a, pt = tier("king", "foe", "t", "title_swap")
@@ -805,6 +805,142 @@ def ai_commands_its_vassals(lib, check):
     check(tier is None, "Command is used where even full goodwill cannot cover the deed (%s -> %s)" % (before, after))
     check(trial(40, legit=1)[1] is None, "a liege without the standing for it commands anyway")
     check(trial(40, bold=-80)[1] is None, "a timid liege commands anyway")
+
+
+# --------------------------------------------------------------------------- time
+def with_term(lib, me, them, L, kind, years, setup=None):
+    """KIND in leg L at a term of YEARS (None: the usual one), nothing on the other side."""
+    def compose(p, W):
+        W[me].gold = 10 ** 6
+        p.deed(L, kind)
+        c = p.candidates(L)
+        if c:
+            p.pick(L, c[0])
+        p.term(L, years)
+    return scenario(lib, me, them, compose)[0]
+
+
+@test
+def time_weighs_on_deeds(lib, check):
+    """The term weighs on what a deed asks of the one who does it. Something to bring about by a deadline (a war
+    won, a rival ruined) is harder in less time: a year asks more than ten. A promise is dearer the longer it
+    binds. The usual term sits in between."""
+    for kind in kind_names(lib, "t"):
+        mode = next(k["mode"] for k in KINDS if k["key"] == kind)
+        for me, them in offered_pairs(lib, "t", kind)[:1]:
+            ask = {y: with_term(lib, me, them, "t", kind, y).var("t_a_ask") for y in (1, None, 10, 20)}
+            line = "%s %s->%s (%s): %r" % (kind, me, them, mode, ask)
+            if mode == "restraint":
+                check(ask[1] >= ask[None] >= ask[10] >= ask[20] and ask[1] > ask[20],
+                      "a promise is not dearer the longer it binds: " + line)
+            else:
+                check(ask[1] <= ask[None] <= ask[10] <= ask[20] and ask[1] < ask[10],
+                      "a deed is not harder in less time: " + line)
+
+
+@test
+def a_war_in_a_year(lib, check):
+    """A war in one year is harder to pull off than a war in ten: the duke takes the king's gold to conquer his
+    rival in ten years, but the same sum will not buy it in one."""
+    def rivals(w, W):
+        w.relate(W["king"], "rival", W["jarl"])
+        w.opinion(W["king"], W["jarl"], -80)
+
+    def conquest(years, gold=None):
+        p, W = panel(lib, "king", "duke", setup=rivals, king=dict(gold=5000))
+        p.deed("t", "chartered_conquest")
+        p.pick("t", W["jarl"])
+        p.term("t", years)
+        p.gold("t", gold)
+        return p
+    fair = {y: conquest(y).var("t_fair") for y in (1, None, 10)}
+    check(fair[1] > fair[None] >= fair[10], "the fair price of a conquest does not fall with time: %r" % fair)
+    p = conquest(10, fair[10])
+    check(p.ai_accepts(), "the duke will not conquer his liege's rival in ten years for %s gold (total %.1f, %s)" % (
+        fair[10], total(p), p.failures()))
+    p = conquest(1, fair[10])
+    check(not p.ai_accepts(), "the duke conquers in one year for what ten years would cost (%s gold, total %.1f)" % (
+        fair[10], total(p)))
+
+
+@test
+def sooner_is_better(lib, check):
+    """To the one who pays, a deed done for them is worth more the sooner it is done, and a promise made to them
+    more the longer it holds."""
+    def world(w, W):
+        w.relate(W["king"], "rival", W["count2"])
+        w.opinion(W["king"], W["count2"], -80)
+    for kind in ("quiet_removal", "dossier"):
+        fair = {}
+        for y in (1, None, 10):
+            p, W = panel(lib, "duke", "king", setup=world)
+            p.deed("i", kind)
+            p.pick("i", W["count2"])
+            p.term("i", y)
+            p.deed("t", None)
+            p.gold("i")
+            fair[y] = p.var("i_fair")
+        check(fair[1] > fair[None] > fair[10], "%s: the king does not pay more to have it done sooner: %r" % (kind, fair))
+    for kind in kind_names(lib, "i"):
+        k = next(k for k in KINDS if k["key"] == kind)
+        if k["mode"] != "restraint":
+            continue
+        for me, them in offered_pairs(lib, "i", kind)[:1]:
+            worth = {y: with_term(lib, me, them, "i", kind, y) for y in (1, None, 20)}
+            worth = {y: p.var("i_a_ask", 0) + p.var("i_a_goal", 0) for y, p in worth.items()}
+            if worth[None] > 0:
+                check(worth[1] < worth[None] < worth[20], "%s %s->%s: a promise held longer is not worth more to them: %r" % (
+                    kind, me, them, worth))
+
+
+@test
+def the_term_is_kept(lib, check):
+    """The term runs from one year to twenty, a year or five at a time; the deal is sealed with the term chosen,
+    each leg its own; and a goods-only leg has none to set."""
+    p, W = panel(lib, "king", "duke")
+    p.deed("t", "marcher_charge")
+    usual = p.years("t")
+    check(usual == 5, "marcher charge's usual term is not five years (%r)" % usual)
+    check(not p.shown("qpq_ui_term_usual_t"), "'back to the usual term' shown on the usual term")
+    p.term("t", 1)
+    check(not p.valid("qpq_ui_term_down_t_1") and not p.valid("qpq_ui_term_down_t_5"), "the term goes below a year")
+    p.term("t", 3)
+    p.click("qpq_ui_term_down_t_5")
+    check(p.years("t") == 1, "five years off three leaves %r, not one" % p.years("t"))
+    p.term("t", 20)
+    check(not p.valid("qpq_ui_term_up_t_1") and not p.valid("qpq_ui_term_up_t_5"), "the term goes past twenty years")
+    p.term("t", 18)
+    p.click("qpq_ui_term_up_t_5")
+    check(p.years("t") == 20, "five years on eighteen leaves %r, not twenty" % p.years("t"))
+    check(p.var("t_term") == 240, "twenty years is not 240 months (%r)" % p.var("t_term"))
+    p.term("t", None)
+    check(p.years("t") == usual, "'back to the usual term' leaves %r years" % p.years("t"))
+    p.deed("t", "chartered_conquest")
+    check(p.years("t") == 8, "a new deed keeps the old one's term (%r)" % p.years("t"))
+    p.deed("t", None)
+    check(not p.shown("qpq_ui_term_shown_t"), "a goods-only leg has a term to set")
+
+    # sealed with the terms chosen: the pact engine (which the simulator does not run) is handed each leg's own
+    def world(w, W):
+        w.relate(W["king"], "rival", W["count2"])
+        w.opinion(W["king"], W["count2"], -80)
+    lib.stubs.add("qpq_seal_pact_effect")
+    try:
+        p, W = panel(lib, "duke", "king", setup=world, duke=dict(gold=5000))
+        p.deed("i", "dossier")
+        p.pick("i", W["count2"])
+        p.term("i", 3)
+        p.deed("t", "blessing_for_a_feud")
+        p.pick("t", W["count2"])
+        p.term("t", 2)
+        p.gold("t", 1000)
+        check(p.ai_accepts(), "the test deal is refused (%s, total %.1f)" % (p.failures(), total(p)))
+        r = p.click("qpq_ui_propose")
+        terms = [e[3].get("qpq_term_months") for e in r.events if e[0] == "stub" and e[1] == "qpq_seal_pact_effect"]
+        check(terms == [24, 36], "the legs are sealed with terms %r, not 24 and 36 months" % terms)
+        check(not r.errors, "script errors: %s" % r.errors[:3])
+    finally:
+        lib.stubs.discard("qpq_seal_pact_effect")
 
 
 # --------------------------------------------------------------------------- monotony
