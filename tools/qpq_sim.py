@@ -34,6 +34,16 @@ DEFAULT_VANILLA = [
 
 
 DATABASES = {"religion": "Religion", "faith": "Faith", "culture": "Culture", "title": "Title"}
+CONTRACT_LEVEL = "vassal_contract_obligation_level:"
+# The flags vanilla's granted contract rights set
+CONTRACT_FLAGS = {"vassal_contract_cannot_revoke_titles": "title_revocation_rights", "can_demand_council_seat": "council_rights",
+                  "vassal_contract_war_override": "war_declaration_rights", "religiously_protected": "religious_rights"}
+
+
+def contract_level(c, term):
+    """A vassal contract obligation's level: taxes and levies start at normal (level 2), rights at none."""
+    default = 2 if term in ("feudal_government_taxes", "feudal_government_levies") else 0
+    return (c.obligations or {}).get(term, default)
 
 
 class SimError(Exception):
@@ -109,6 +119,7 @@ class Faith(Obj):
 class Culture(Obj):
     KIND = "culture"
     era = 2
+    innovations = ()
 
 
 class Dynasty(Obj):
@@ -231,7 +242,7 @@ class Character(Obj):
     character_flags = ()
     powerful_vassal = False
     contract_reign_days = 3650  # days_since_vassal_contract_liege_dynasty_reign_start
-    obligations = None         # {contract: level}
+    obligations = None         # {contract: level}; contract_level gives the defaults
     opinion_modifiers = ()     # (target, modifier)
     preferred_heir_of = ()     # lieges whose preferred heir they were
     joined_faction = None
@@ -536,6 +547,8 @@ class Run:
         return self._link(this, seg, fr, node)
 
     def _link(self, cur, seg, fr, node):
+        if seg.startswith(CONTRACT_LEVEL):
+            return float(contract_level(cur, seg[len(CONTRACT_LEVEL):]))
         if seg.startswith("var:"):
             if not isinstance(cur, Obj):
                 raise SimError("var: on %r" % (cur,))
@@ -561,7 +574,7 @@ class Run:
     def is_path(self, tok, fr):
         """Can tok be read as a value or scope here? (used where a key may be a trigger or a path)"""
         first = _split_path(tok)[0]
-        if first in ("root", "this", "prev") or first.startswith(("scope:", "var:", "flag:", "global_var:")) \
+        if first in ("root", "this", "prev") or first.startswith(("scope:", "var:", "flag:", "global_var:", CONTRACT_LEVEL)) \
                 or first.split(":", 1)[0] in DATABASES and ":" in first:
             return True
         if first in self.lib.values or CALL_RE.match(first):
@@ -1012,6 +1025,8 @@ CHAR_LINKS = {
     "is_incapable": lambda r, c: False,
     "is_councillor": lambda r, c: c.councillor_of is not None,
     "is_tributary": lambda r, c: c.suzerain is not None,
+    "vassal_contract_has_modifiable_obligations": lambda r, c: c.liege is not None,
+    "subject_contract_is_blocked_from_modification": lambda r, c: False,
     "joined_faction": lambda r, c: c.joined_faction,
     "realm_priest": lambda r, c: c.realm_priest,
     "house": lambda r, c: c.dynasty,
@@ -1343,6 +1358,15 @@ def _t_has_doctrine_parameter(run, fr, n):
     return n.value in (this.parameters if isinstance(this, Faith) else this.faith.parameters)
 
 
+def _t_vassal_contract_has_flag(run, fr, n):
+    term = CONTRACT_FLAGS.get(n.value)
+    return term is not None and contract_level(fr[0], term) > 0
+
+
+def _t_has_innovation(run, fr, n):
+    return n.value in fr[0].innovations
+
+
 def _t_has_doctrine(run, fr, n):
     this = fr[0]
     return n.value in (this.doctrines if isinstance(this, Faith) else this.faith.doctrines)
@@ -1412,6 +1436,9 @@ TRIGGERS = {
     "has_relation_torturer": _rel("torturer"),
     "has_character_flag": _t_has_character_flag,
     "government_has_flag": _t_government_has_flag,
+    "vassal_contract_has_flag": _t_vassal_contract_has_flag,
+    "has_innovation": _t_has_innovation,
+    "rite_has_tenet": lambda run, fr, n: False,
     "has_game_rule": _t_has_game_rule,
     "has_claim_on": _t_has_claim_on,
     "is_known_by": _t_is_known_by,
@@ -1597,6 +1624,31 @@ def _e_clamp_variable(run, fr, n):
     fr[0].vars[name] = cur
 
 
+def _e_random_list(run, fr, n):
+    """Deterministic: of the options whose trigger holds, the heaviest, or the world's random_list_pick-th."""
+    options = [o for o in n.value if isinstance(o.value, list)]
+    def holds(o):
+        return all(run.trig(x.value, fr) for x in o.value if x.key == "trigger")
+    valid = [o for o in options if holds(o)]
+    if not valid:
+        return
+    pick = getattr(run.w, "random_list_pick", None)
+    chosen = valid[pick % len(valid)] if pick is not None else max(valid, key=lambda o: float(o.key))
+    run.eff([x for x in chosen.value if x.key != "trigger"], fr)
+
+
+def _e_add_hook(run, fr, n):
+    b = _block(n)
+    run.w.hooks[(fr[0], run.resolve(b["target"].value, fr, b["target"]))] = "weak"
+
+
+def _e_vassal_contract_set_obligation_level(run, fr, n):
+    b = _block(n)
+    this = fr[0]
+    this.obligations = dict(this.obligations or {})
+    this.obligations[b["type"].value] = int(float(b["level"].value))
+
+
 def _e_remove_variable(run, fr, n):
     if n.value not in fr[0].vars:
         run.err(n, "remove_variable on unset %s" % n.value)
@@ -1678,6 +1730,9 @@ def _e_remove_character_flag(run, fr, n):
 
 
 EFFECTS = {
+    "vassal_contract_set_obligation_level": _e_vassal_contract_set_obligation_level,
+    "add_hook": _e_add_hook,
+    "random_list": _e_random_list,
     "set_variable": _e_set_variable,
     "change_variable": _e_change_variable,
     "clamp_variable": _e_clamp_variable,

@@ -33,30 +33,32 @@ qpq_hub.1 = {
 					}
 				}
 				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-				}
-				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-				}
-				AND = {
 					scope:actor = {
 						liege ?= scope:recipient
 						is_landed = yes
 					}
 				}
 				AND = {
+					OR = {
+						AND = {
+
+					scope:recipient = {
+						liege ?= scope:actor
+						is_landed = yes
+					}
+
+						}
+						AND = {
+
 					NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 					scope:actor = { is_landed = yes }
 					scope:recipient = {
 						is_independent_ruler = yes
 						is_landed = yes
+					}
+
+						}
 					}
 				}
 				AND = {
@@ -80,12 +82,6 @@ qpq_hub.1 = {
 		name = qpq_hub.group.favours
 		trigger = {
 			OR = {
-				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-				}
 				AND = {
 					scope:recipient = {
 						liege ?= scope:actor
@@ -134,32 +130,26 @@ qpq_hub.1 = {
 		trigger = {
 			OR = {
 				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-
 					exists = scope:actor.primary_title
 					scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-				}
-				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-				}
-				AND = {
-					scope:recipient = {
-						liege ?= scope:actor
-						is_landed = yes
-					}
-				}
-				AND = {
-					exists = scope:recipient.primary_title
-					scope:recipient.primary_title = { any_elector = { this = scope:actor } }
 					NOT = { scope:actor = scope:recipient }
 				}
 				AND = {
+					scope:recipient = {
+						liege ?= scope:actor
+						is_landed = yes
+					}
+				}
+				AND = {
+					scope:recipient = {
+						liege ?= scope:actor
+						is_landed = yes
+					}
+				}
+				AND = {
+					OR = {
+						AND = {
+
 					scope:actor = { is_landed = yes }
 					scope:recipient = {
 						is_landed = yes
@@ -167,19 +157,23 @@ qpq_hub.1 = {
 					}
 					exists = scope:actor.liege
 					scope:actor.liege = scope:recipient.liege
-				}
-				AND = {
+
+						}
+						AND = {
+
 					NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
-					exists = scope:actor.house
-					scope:recipient = {
-						is_landed = yes
-						OR = {
-							any_spouse = { house ?= scope:actor.house }
-							any_close_family_member = {
+							exists = scope:actor.house
+							scope:recipient = {
+								is_landed = yes
 								OR = {
 									any_spouse = { house ?= scope:actor.house }
-									betrothed.house ?= scope:actor.house
+									any_close_family_member = {
+										OR = {
+											any_spouse = { house ?= scope:actor.house }
+											betrothed.house ?= scope:actor.house
+										}
+									}
 								}
 							}
 						}
@@ -236,12 +230,26 @@ qpq_hub.1 = {
 					}
 				}
 				AND = {
+					OR = {
+						AND = {
+
+					scope:recipient = {
+						liege ?= scope:actor
+						is_landed = yes
+					}
+
+						}
+						AND = {
+
 					NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 					scope:actor = { is_landed = yes }
 					scope:recipient = {
 						is_independent_ruler = yes
 						is_landed = yes
+					}
+
+						}
 					}
 				}
 				AND = {
@@ -688,21 +696,6 @@ qpq_hub.10 = {
 		}
 	}
 	option = {
-		name = qpq_sanctioned_conquest_name
-		trigger = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-		}
-		custom_tooltip = qpq_sanctioned_conquest_hub_tt
-		open_interaction_window = {
-			interaction = qpq_sanctioned_conquest_interaction
-			actor = root
-			recipient = scope:recipient
-		}
-	}
-	option = {
 		name = qpq_marcher_charge_name
 		trigger = {
 			scope:recipient = {
@@ -713,21 +706,6 @@ qpq_hub.10 = {
 		custom_tooltip = qpq_marcher_charge_hub_tt
 		open_interaction_window = {
 			interaction = qpq_marcher_charge_interaction
-			actor = root
-			recipient = scope:recipient
-		}
-	}
-	option = {
-		name = qpq_licensed_feud_name
-		trigger = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-		}
-		custom_tooltip = qpq_licensed_feud_hub_tt
-		open_interaction_window = {
-			interaction = qpq_licensed_feud_interaction
 			actor = root
 			recipient = scope:recipient
 		}
@@ -750,12 +728,26 @@ qpq_hub.10 = {
 	option = {
 		name = qpq_proxy_war_name
 		trigger = {
+			OR = {
+				AND = {
+
+			scope:recipient = {
+				liege ?= scope:actor
+				is_landed = yes
+			}
+
+				}
+				AND = {
+
 			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_independent_ruler = yes
 				is_landed = yes
+			}
+
+				}
 			}
 		}
 		custom_tooltip = qpq_proxy_war_hub_tt
@@ -844,21 +836,6 @@ qpq_hub.11 = {
 		}
 	}
 	option = {
-		name = qpq_hand_over_name
-		trigger = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-		}
-		custom_tooltip = qpq_hand_over_hub_tt
-		open_interaction_window = {
-			interaction = qpq_hand_over_interaction
-			actor = root
-			recipient = scope:recipient
-		}
-	}
-	option = {
 		name = qpq_hand_over_artifact_name
 		trigger = {
 			scope:recipient = {
@@ -941,13 +918,9 @@ qpq_hub.12 = {
 	option = {
 		name = qpq_electoral_purchase_name
 		trigger = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-
 			exists = scope:actor.primary_title
 			scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+			NOT = { scope:actor = scope:recipient }
 		}
 		custom_tooltip = qpq_electoral_purchase_hub_tt
 		open_interaction_window = {
@@ -987,22 +960,11 @@ qpq_hub.12 = {
 		}
 	}
 	option = {
-		name = qpq_electoral_capitulation_name
-		trigger = {
-			exists = scope:recipient.primary_title
-			scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-			NOT = { scope:actor = scope:recipient }
-		}
-		custom_tooltip = qpq_electoral_capitulation_hub_tt
-		open_interaction_window = {
-			interaction = qpq_electoral_capitulation_interaction
-			actor = root
-			recipient = scope:recipient
-		}
-	}
-	option = {
 		name = qpq_title_swap_name
 		trigger = {
+			OR = {
+				AND = {
+
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_landed = yes
@@ -1010,36 +972,31 @@ qpq_hub.12 = {
 			}
 			exists = scope:actor.liege
 			scope:actor.liege = scope:recipient.liege
-		}
-		custom_tooltip = qpq_title_swap_hub_tt
-		open_interaction_window = {
-			interaction = qpq_title_swap_interaction
-			actor = root
-			recipient = scope:recipient
-		}
-	}
-	option = {
-		name = qpq_secret_clause_name
-		trigger = {
+
+				}
+				AND = {
+
 			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
-			exists = scope:actor.house
-			scope:recipient = {
-				is_landed = yes
-				OR = {
-					any_spouse = { house ?= scope:actor.house }
-					any_close_family_member = {
+					exists = scope:actor.house
+					scope:recipient = {
+						is_landed = yes
 						OR = {
 							any_spouse = { house ?= scope:actor.house }
-							betrothed.house ?= scope:actor.house
+							any_close_family_member = {
+								OR = {
+									any_spouse = { house ?= scope:actor.house }
+									betrothed.house ?= scope:actor.house
+								}
+							}
 						}
 					}
 				}
 			}
 		}
-		custom_tooltip = qpq_secret_clause_hub_tt
+		custom_tooltip = qpq_title_swap_hub_tt
 		open_interaction_window = {
-			interaction = qpq_secret_clause_interaction
+			interaction = qpq_title_swap_interaction
 			actor = root
 			recipient = scope:recipient
 		}
@@ -1142,12 +1099,26 @@ qpq_hub.13 = {
 	option = {
 		name = qpq_extradition_name
 		trigger = {
+			OR = {
+				AND = {
+
+			scope:recipient = {
+				liege ?= scope:actor
+				is_landed = yes
+			}
+
+				}
+				AND = {
+
 			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_independent_ruler = yes
 				is_landed = yes
+			}
+
+				}
 			}
 		}
 		custom_tooltip = qpq_extradition_hub_tt
@@ -2018,10 +1989,6 @@ qpq_hub.50 = {
 				desc = qpq_chartered_conquest_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:marcher_charge }
 				desc = qpq_marcher_charge_name
 			}
@@ -2044,10 +2011,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:agent_provocateur }
 				desc = qpq_agent_provocateur_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:licensed_feud }
-				desc = qpq_licensed_feud_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:dossier }
@@ -2078,10 +2041,6 @@ qpq_hub.50 = {
 				desc = qpq_marriage_by_command_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:hand_over }
-				desc = qpq_hand_over_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_name
 			}
@@ -2104,10 +2063,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:clemency_bargain }
 				desc = qpq_clemency_bargain_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:mutual_defense_league }
@@ -2172,10 +2127,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:defection_pact }
 				desc = qpq_defection_pact_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:secret_clause }
-				desc = qpq_secret_clause_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:hire_the_hashashin }
@@ -2300,10 +2251,6 @@ qpq_hub.50 = {
 				desc = qpq_chartered_conquest_proposal_desc
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_proposal_desc
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:marcher_charge }
 				desc = qpq_marcher_charge_proposal_desc
 			}
@@ -2326,10 +2273,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:agent_provocateur }
 				desc = qpq_agent_provocateur_proposal_desc
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:licensed_feud }
-				desc = qpq_licensed_feud_proposal_desc
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:dossier }
@@ -2360,10 +2303,6 @@ qpq_hub.50 = {
 				desc = qpq_marriage_by_command_proposal_desc
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:hand_over }
-				desc = qpq_hand_over_proposal_desc
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_proposal_desc
 			}
@@ -2386,10 +2325,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:clemency_bargain }
 				desc = qpq_clemency_bargain_proposal_desc
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_proposal_desc
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:mutual_defense_league }
@@ -2454,10 +2389,6 @@ qpq_hub.50 = {
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:defection_pact }
 				desc = qpq_defection_pact_proposal_desc
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_proposed_kind = flag:secret_clause }
-				desc = qpq_secret_clause_proposal_desc
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_proposed_kind = flag:hire_the_hashashin }
@@ -2617,12 +2548,12 @@ qpq_hub.50 = {
 			desc = qpq_hub.50.term_my_word
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_o_secret ?= yes }
-			desc = qpq_hub.50.term_secret
+			trigger = { scope:qpq_o_hook ?= yes }
+			desc = qpq_hub.50.term_hook
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_o_contract ?= yes }
-			desc = qpq_hub.50.term_contract
+			trigger = { scope:qpq_o_secret ?= yes }
+			desc = qpq_hub.50.term_secret
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_o_succession ?= yes }
@@ -2645,12 +2576,48 @@ qpq_hub.50 = {
 			desc = qpq_hub.50.term_church
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_o_restraint ?= yes }
-			desc = qpq_hub.50.term_restraint
+			trigger = { scope:qpq_o_ct_tax_down ?= yes }
+			desc = qpq_hub.50.term_ct_tax_down
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_o_hook ?= yes }
-			desc = qpq_hub.50.term_hook
+			trigger = { scope:qpq_o_ct_levy_down ?= yes }
+			desc = qpq_hub.50.term_ct_levy_down
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_revocation ?= yes }
+			desc = qpq_hub.50.term_ct_revocation
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_council ?= yes }
+			desc = qpq_hub.50.term_ct_council
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_war ?= yes }
+			desc = qpq_hub.50.term_ct_war
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_fort ?= yes }
+			desc = qpq_hub.50.term_ct_fort
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_coinage ?= yes }
+			desc = qpq_hub.50.term_ct_coinage
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_faith ?= yes }
+			desc = qpq_hub.50.term_ct_faith
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_tax_up ?= yes }
+			desc = qpq_hub.50.term_ct_tax_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_ct_levy_up ?= yes }
+			desc = qpq_hub.50.term_ct_levy_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_o_restraint ?= yes }
+			desc = qpq_hub.50.term_restraint
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_o_charter ?= yes }
@@ -2668,15 +2635,24 @@ qpq_hub.50 = {
 					scope:qpq_o_office ?= yes
 					scope:qpq_o_release_hook ?= yes
 					scope:qpq_o_my_word ?= yes
+					scope:qpq_o_hook ?= yes
 					scope:qpq_o_secret ?= yes
-					scope:qpq_o_contract ?= yes
 					scope:qpq_o_succession ?= yes
 					scope:qpq_o_clemency ?= yes
 					scope:qpq_o_arms ?= yes
 					scope:qpq_o_artifact ?= yes
 					scope:qpq_o_church ?= yes
+					scope:qpq_o_ct_tax_down ?= yes
+					scope:qpq_o_ct_levy_down ?= yes
+					scope:qpq_o_ct_revocation ?= yes
+					scope:qpq_o_ct_council ?= yes
+					scope:qpq_o_ct_war ?= yes
+					scope:qpq_o_ct_fort ?= yes
+					scope:qpq_o_ct_coinage ?= yes
+					scope:qpq_o_ct_faith ?= yes
+					scope:qpq_o_ct_tax_up ?= yes
+					scope:qpq_o_ct_levy_up ?= yes
 					scope:qpq_o_restraint ?= yes
-					scope:qpq_o_hook ?= yes
 					scope:qpq_o_charter ?= yes
 				}
 			}

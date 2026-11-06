@@ -14,20 +14,6 @@ qpq_k_chartered_conquest_can_perform_trigger = {
 	always = no
 }
 
-#### Sanctioned Conquest
-qpq_k_sanctioned_conquest_delivered_trigger = {
-	qpq_beat_trigger = { LIST = qpq_agent_beat WHO = scope:qpq_target }
-}
-qpq_k_sanctioned_conquest_breached_trigger = {
-	always = no
-}
-qpq_k_sanctioned_conquest_invalid_trigger = {
-	NOT = { exists = scope:qpq_target }
-}
-qpq_k_sanctioned_conquest_can_perform_trigger = {
-	always = no
-}
-
 #### Marcher Charge
 qpq_k_marcher_charge_delivered_trigger = {
 	always = no
@@ -134,20 +120,6 @@ qpq_k_agent_provocateur_can_perform_trigger = {
 	always = no
 }
 
-#### Licensed Feud
-qpq_k_licensed_feud_delivered_trigger = {
-	qpq_beat_trigger = { LIST = qpq_agent_beat WHO = scope:qpq_target }
-}
-qpq_k_licensed_feud_breached_trigger = {
-	always = no
-}
-qpq_k_licensed_feud_invalid_trigger = {
-	NOT = { exists = scope:qpq_target }
-}
-qpq_k_licensed_feud_can_perform_trigger = {
-	always = no
-}
-
 #### Dossier
 qpq_k_dossier_delivered_trigger = {
 	OR = {
@@ -234,7 +206,7 @@ qpq_k_dispossession_can_perform_trigger = {
 	always = no
 }
 
-#### The Cloister
+#### Abdicate to Heir
 qpq_k_the_cloister_delivered_trigger = {
 	always = no
 }
@@ -262,21 +234,7 @@ qpq_k_marriage_by_command_can_perform_trigger = {
 	scope:qpq_target = { is_alive = yes is_married = no }
 }
 
-#### Hand-Over
-qpq_k_hand_over_delivered_trigger = {
-	always = no
-}
-qpq_k_hand_over_breached_trigger = {
-	always = no
-}
-qpq_k_hand_over_invalid_trigger = {
-	scope:qpq_target = { is_alive = no }
-}
-qpq_k_hand_over_can_perform_trigger = {
-	scope:qpq_target = { is_alive = yes }
-}
-
-#### Hand-Over: Treasure
+#### Surrender a Treasure
 qpq_k_hand_over_artifact_delivered_trigger = {
 	always = no
 }
@@ -363,21 +321,7 @@ qpq_k_clemency_bargain_can_perform_trigger = {
 	always = yes
 }
 
-#### Electoral Capitulation
-qpq_k_electoral_capitulation_delivered_trigger = {
-	always = no
-}
-qpq_k_electoral_capitulation_breached_trigger = {
-	always = no
-}
-qpq_k_electoral_capitulation_invalid_trigger = {
-	scope:qpq_target = { is_alive = no }
-}
-qpq_k_electoral_capitulation_can_perform_trigger = {
-	always = no
-}
-
-#### Mutual Defense League
+#### Mutual Defense
 qpq_k_mutual_defense_league_delivered_trigger = {
 	always = no
 }
@@ -413,7 +357,7 @@ qpq_k_faction_pledge_can_perform_trigger = {
 	always = no
 }
 
-#### Title Swap
+#### Transfer a County
 qpq_k_title_swap_delivered_trigger = {
 	always = no
 }
@@ -445,7 +389,10 @@ qpq_k_coup_pact_can_perform_trigger = {
 qpq_k_proxy_war_delivered_trigger = {
 	OR = {
 	qpq_beat_trigger = { LIST = qpq_agent_beat WHO = scope:qpq_target }
-		qpq_beat_trigger = { LIST = qpq_agent_fought WHO = scope:qpq_target }
+		AND = {
+			scope:qpq_agent = { NOT = { liege ?= scope:qpq_payer } }
+			qpq_beat_trigger = { LIST = qpq_agent_fought WHO = scope:qpq_target }
+		}
 	}
 }
 qpq_k_proxy_war_breached_trigger = {
@@ -622,21 +569,7 @@ qpq_k_defection_pact_can_perform_trigger = {
 	always = no
 }
 
-#### Secret Clause
-qpq_k_secret_clause_delivered_trigger = {
-	always = no
-}
-qpq_k_secret_clause_breached_trigger = {
-	always = no
-}
-qpq_k_secret_clause_invalid_trigger = {
-	NOT = { scope:qpq_target_title.holder ?= scope:qpq_agent }
-}
-qpq_k_secret_clause_can_perform_trigger = {
-	scope:qpq_target_title.holder ?= scope:qpq_agent
-}
-
-#### Hire the Hashashin
+#### Hire Holy Order Assassins
 qpq_k_hire_the_hashashin_delivered_trigger = {
 	scope:qpq_target = { is_alive = no }
 }
@@ -692,7 +625,7 @@ qpq_k_steer_the_holy_war_can_perform_trigger = {
 	always = no
 }
 
-#### Purchase a Mitre
+#### Buy a Bishopric
 qpq_k_purchase_a_mitre_delivered_trigger = {
 	always = no
 }
@@ -1041,10 +974,6 @@ qpq_kind_delivered_trigger = {
 			qpq_k_chartered_conquest_delivered_trigger = yes
 		}
 		AND = {
-			var:qpq_kind = flag:sanctioned_conquest
-			qpq_k_sanctioned_conquest_delivered_trigger = yes
-		}
-		AND = {
 			var:qpq_kind = flag:holy_sponsorship
 			qpq_k_holy_sponsorship_delivered_trigger = yes
 		}
@@ -1063,10 +992,6 @@ qpq_kind_delivered_trigger = {
 		AND = {
 			var:qpq_kind = flag:agent_provocateur
 			qpq_k_agent_provocateur_delivered_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:licensed_feud
-			qpq_k_licensed_feud_delivered_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:dossier
@@ -1243,10 +1168,6 @@ qpq_kind_invalid_trigger = {
 			qpq_k_chartered_conquest_invalid_trigger = yes
 		}
 		AND = {
-			var:qpq_kind = flag:sanctioned_conquest
-			qpq_k_sanctioned_conquest_invalid_trigger = yes
-		}
-		AND = {
 			var:qpq_kind = flag:holy_sponsorship
 			qpq_k_holy_sponsorship_invalid_trigger = yes
 		}
@@ -1257,10 +1178,6 @@ qpq_kind_invalid_trigger = {
 		AND = {
 			var:qpq_kind = flag:electoral_purchase
 			qpq_k_electoral_purchase_invalid_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:licensed_feud
-			qpq_k_licensed_feud_invalid_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:dossier
@@ -1283,20 +1200,12 @@ qpq_kind_invalid_trigger = {
 			qpq_k_marriage_by_command_invalid_trigger = yes
 		}
 		AND = {
-			var:qpq_kind = flag:hand_over
-			qpq_k_hand_over_invalid_trigger = yes
-		}
-		AND = {
 			var:qpq_kind = flag:hand_over_artifact
 			qpq_k_hand_over_artifact_invalid_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:renunciation
 			qpq_k_renunciation_invalid_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:electoral_capitulation
-			qpq_k_electoral_capitulation_invalid_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:title_swap
@@ -1333,10 +1242,6 @@ qpq_kind_invalid_trigger = {
 		AND = {
 			var:qpq_kind = flag:defection_pact
 			qpq_k_defection_pact_invalid_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:secret_clause
-			qpq_k_secret_clause_invalid_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:excommunication_for_hire
@@ -1404,10 +1309,6 @@ qpq_kind_can_perform_trigger = {
 			qpq_k_marriage_by_command_can_perform_trigger = yes
 		}
 		AND = {
-			var:qpq_kind = flag:hand_over
-			qpq_k_hand_over_can_perform_trigger = yes
-		}
-		AND = {
 			var:qpq_kind = flag:hand_over_artifact
 			qpq_k_hand_over_artifact_can_perform_trigger = yes
 		}
@@ -1430,10 +1331,6 @@ qpq_kind_can_perform_trigger = {
 		AND = {
 			var:qpq_kind = flag:extradition
 			qpq_k_extradition_can_perform_trigger = yes
-		}
-		AND = {
-			var:qpq_kind = flag:secret_clause
-			qpq_k_secret_clause_can_perform_trigger = yes
 		}
 		AND = {
 			var:qpq_kind = flag:excommunication_for_hire
@@ -1501,7 +1398,6 @@ qpq_kind_is_restraint_trigger = {
 		var:qpq_kind = flag:hush_money
 		var:qpq_kind = flag:price_of_loyalty
 		var:qpq_kind = flag:blessing_for_a_feud
-		var:qpq_kind = flag:electoral_capitulation
 		var:qpq_kind = flag:mutual_defense_league
 		var:qpq_kind = flag:secret_alliance
 		var:qpq_kind = flag:bought_truce
@@ -1519,14 +1415,12 @@ qpq_kind_is_performable_trigger = {
 	OR = {
 		var:qpq_kind = flag:the_cloister
 		var:qpq_kind = flag:marriage_by_command
-		var:qpq_kind = flag:hand_over
 		var:qpq_kind = flag:hand_over_artifact
 		var:qpq_kind = flag:renunciation
 		var:qpq_kind = flag:clemency_bargain
 		var:qpq_kind = flag:title_swap
 		var:qpq_kind = flag:turncoat
 		var:qpq_kind = flag:extradition
-		var:qpq_kind = flag:secret_clause
 		var:qpq_kind = flag:excommunication_for_hire
 		var:qpq_kind = flag:dispensation_for_gold
 		var:qpq_kind = flag:purchase_a_mitre
@@ -1547,8 +1441,6 @@ qpq_kind_is_performable_trigger = {
 qpq_kind_grants_war_licence_trigger = {
 	OR = {
 		var:qpq_kind = flag:chartered_conquest
-		var:qpq_kind = flag:sanctioned_conquest
-		var:qpq_kind = flag:licensed_feud
 		var:qpq_kind = flag:proxy_war
 		var:qpq_kind = flag:partition_pact
 		var:qpq_kind = flag:holy_warrant
@@ -1556,17 +1448,6 @@ qpq_kind_grants_war_licence_trigger = {
 }
 
 qpq_k_chartered_conquest_ai_target_ok_trigger = {
-	exists = scope:secondary_recipient
-	scope:recipient = {
-		liege ?= scope:actor
-		is_landed = yes
-	}
-	scope:secondary_recipient = {
-		is_landed = yes
-		NOT = { top_liege = scope:actor.top_liege }
-	}
-}
-qpq_k_sanctioned_conquest_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
 	scope:recipient = {
 		liege ?= scope:actor
@@ -1585,13 +1466,12 @@ qpq_k_marcher_charge_ai_target_ok_trigger = {
 	}
 	scope:secondary_recipient = { is_landed = yes NOT = { top_liege = scope:actor.top_liege } }
 }
-qpq_k_licensed_feud_ai_target_ok_trigger = {
+qpq_k_electoral_purchase_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
-	scope:recipient = {
-		liege ?= scope:actor
-		is_landed = yes
-	}
-	scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }
+	exists = scope:actor.primary_title
+	scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+	NOT = { scope:actor = scope:recipient }
+	scope:secondary_recipient = { NOT = { this = scope:recipient } }
 }
 qpq_k_dossier_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
@@ -1643,13 +1523,6 @@ qpq_k_clemency_bargain_ai_target_ok_trigger = {
 		}
 	}
 }
-qpq_k_electoral_capitulation_ai_target_ok_trigger = {
-	exists = scope:secondary_recipient
-	exists = scope:recipient.primary_title
-	scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-	NOT = { scope:actor = scope:recipient }
-	scope:secondary_recipient = { NOT = { this = scope:actor } }
-}
 qpq_k_mutual_defense_league_ai_target_ok_trigger = {
 	exists = scope:actor.liege
 	scope:actor = { is_landed = yes }
@@ -1662,6 +1535,9 @@ qpq_k_mutual_defense_league_ai_target_ok_trigger = {
 }
 qpq_k_title_swap_ai_target_ok_trigger = {
 	exists = scope:target
+	OR = {
+		AND = {
+
 	scope:actor = { is_landed = yes }
 	scope:recipient = {
 		is_landed = yes
@@ -1669,6 +1545,27 @@ qpq_k_title_swap_ai_target_ok_trigger = {
 	}
 	exists = scope:actor.liege
 	scope:actor.liege = scope:recipient.liege
+
+		}
+		AND = {
+
+	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+			exists = scope:actor.house
+			scope:recipient = {
+				is_landed = yes
+				OR = {
+					any_spouse = { house ?= scope:actor.house }
+					any_close_family_member = {
+						OR = {
+							any_spouse = { house ?= scope:actor.house }
+							betrothed.house ?= scope:actor.house
+						}
+					}
+				}
+			}
+		}
+	}
 	scope:target = { tier = tier_county holder ?= scope:recipient }
 }
 qpq_k_coup_pact_ai_target_ok_trigger = {
@@ -1686,6 +1583,17 @@ qpq_k_coup_pact_ai_target_ok_trigger = {
 }
 qpq_k_proxy_war_ai_target_ok_trigger = {
 	exists = scope:secondary_recipient
+	OR = {
+		AND = {
+
+	scope:recipient = {
+		liege ?= scope:actor
+		is_landed = yes
+	}
+
+		}
+		AND = {
+
 	NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 	scope:actor = { is_landed = yes }
@@ -1693,7 +1601,19 @@ qpq_k_proxy_war_ai_target_ok_trigger = {
 		is_independent_ruler = yes
 		is_landed = yes
 	}
-	scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }
+
+		}
+	}
+	scope:secondary_recipient = {
+		is_landed = yes
+		NOT = { this = scope:actor }
+		NOT = { this = scope:recipient }
+	}
+	OR = {
+		scope:recipient = { NOT = { liege ?= scope:actor } }
+		scope:secondary_recipient = { liege ?= scope:actor }
+		NOT = { scope:secondary_recipient.top_liege = scope:actor.top_liege }
+	}
 }
 qpq_k_secret_alliance_ai_target_ok_trigger = {
 	always = yes
@@ -1843,25 +1763,9 @@ qpq_any_pact_possible_trigger = {
 			}
 		}
 		AND = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-		}
-		AND = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
-
 			exists = scope:actor.primary_title
 			scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-		}
-		AND = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
+			NOT = { scope:actor = scope:recipient }
 		}
 		AND = {
 			scope:recipient = {
@@ -1939,12 +1843,6 @@ qpq_any_pact_possible_trigger = {
 				liege ?= scope:actor
 				is_landed = yes
 			}
-		}
-		AND = {
-			scope:recipient = {
-				liege ?= scope:actor
-				is_landed = yes
-			}
 			scope:recipient = { any_character_artifact = { always = yes } }
 		}
 		AND = {
@@ -1987,11 +1885,6 @@ qpq_any_pact_possible_trigger = {
 			}
 		}
 		AND = {
-			exists = scope:recipient.primary_title
-			scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-			NOT = { scope:actor = scope:recipient }
-		}
-		AND = {
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_landed = yes
@@ -2011,6 +1904,9 @@ qpq_any_pact_possible_trigger = {
 			scope:actor = { exists = joined_faction joined_faction = { faction_target = scope:actor.liege } }
 		}
 		AND = {
+			OR = {
+				AND = {
+
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_landed = yes
@@ -2018,6 +1914,27 @@ qpq_any_pact_possible_trigger = {
 			}
 			exists = scope:actor.liege
 			scope:actor.liege = scope:recipient.liege
+
+				}
+				AND = {
+
+			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+					exists = scope:actor.house
+					scope:recipient = {
+						is_landed = yes
+						OR = {
+							any_spouse = { house ?= scope:actor.house }
+							any_close_family_member = {
+								OR = {
+									any_spouse = { house ?= scope:actor.house }
+									betrothed.house ?= scope:actor.house
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		AND = {
 			exists = scope:actor.liege
@@ -2032,12 +1949,26 @@ qpq_any_pact_possible_trigger = {
 			}
 		}
 		AND = {
+			OR = {
+				AND = {
+
+			scope:recipient = {
+				liege ?= scope:actor
+				is_landed = yes
+			}
+
+				}
+				AND = {
+
 			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_independent_ruler = yes
 				is_landed = yes
+			}
+
+				}
 			}
 		}
 		AND = {
@@ -2094,12 +2025,26 @@ qpq_any_pact_possible_trigger = {
 			scope:actor = { is_landed = yes }
 		}
 		AND = {
+			OR = {
+				AND = {
+
+			scope:recipient = {
+				liege ?= scope:actor
+				is_landed = yes
+			}
+
+				}
+				AND = {
+
 			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 			scope:actor = { is_landed = yes }
 			scope:recipient = {
 				is_independent_ruler = yes
 				is_landed = yes
+			}
+
+				}
 			}
 		}
 		AND = {
@@ -2129,23 +2074,6 @@ qpq_any_pact_possible_trigger = {
 				is_landed = yes
 				is_independent_ruler = no
 				exists = liege
-			}
-		}
-		AND = {
-			NOT = { scope:recipient.top_liege = scope:actor.top_liege }
-
-			exists = scope:actor.house
-			scope:recipient = {
-				is_landed = yes
-				OR = {
-					any_spouse = { house ?= scope:actor.house }
-					any_close_family_member = {
-						OR = {
-							any_spouse = { house ?= scope:actor.house }
-							betrothed.house ?= scope:actor.house
-						}
-					}
-				}
 			}
 		}
 		AND = {
@@ -2391,15 +2319,21 @@ qpq_k_chartered_conquest_ai_valid_trigger = {
 	is_landed = yes
 	any_vassal = { is_landed = yes is_ai = yes }
 }
-qpq_k_sanctioned_conquest_ai_valid_trigger = {
-	is_landed = yes
-	any_vassal = { is_landed = yes is_ai = yes }
-}
 qpq_k_marcher_charge_ai_valid_trigger = {
 	is_landed = yes any_vassal = { is_landed = yes is_ai = yes }
 }
-qpq_k_licensed_feud_ai_valid_trigger = {
-	is_landed = yes any_vassal = { count >= 2 is_landed = yes }
+qpq_k_electoral_purchase_ai_valid_trigger = {
+	is_landed = yes
+	exists = primary_title
+	exists = primary_heir
+	primary_title = {
+		any_elector = {
+			is_ai = yes
+			NOT = { this = root }
+			NOT = { this = root.primary_heir }
+		}
+	}
+	OR = { has_trait = ambitious has_trait = paranoid }
 }
 qpq_k_dossier_ai_valid_trigger = {
 	is_landed = yes any_vassal = { count >= 2 }
@@ -2415,12 +2349,6 @@ qpq_k_clemency_bargain_ai_valid_trigger = {
 	any_known_secret = { NOT = { secret_owner = root } NOT = { is_known_by = root.liege } }
 	liege = { has_imprisonment_reason = root }
 }
-qpq_k_electoral_capitulation_ai_valid_trigger = {
-	exists = liege
-	exists = liege.primary_title
-	liege.primary_title = { any_elector = { this = root } }
-	OR = { has_trait = greedy has_trait = ambitious }
-}
 qpq_k_mutual_defense_league_ai_valid_trigger = {
 	exists = liege
 	opinion = { target = root.liege value <= -10 }
@@ -2435,7 +2363,16 @@ qpq_k_coup_pact_ai_valid_trigger = {
 	OR = { has_trait = ambitious has_trait = deceitful has_trait = callous }
 }
 qpq_k_proxy_war_ai_valid_trigger = {
-	is_independent_ruler = yes any_relation = { type = rival is_landed = yes }
+	OR = {
+		AND = {
+			is_landed = yes
+			any_vassal = { is_landed = yes is_ai = yes }
+		}
+		AND = {
+			is_independent_ruler = yes
+			any_relation = { type = rival is_landed = yes }
+		}
+	}
 }
 qpq_k_secret_alliance_ai_valid_trigger = {
 	is_landed = yes is_at_war = no

@@ -24,6 +24,8 @@ ai.find: root = the AI proposer. Must save scope:recipient and (if needed) scope
     For initiator == 'payer' the proposer is the payer (scope:actor).
 """
 
+from qpq_contracts import CONTRACT_DEMANDS, CONTRACT_KEYS
+
 # ---------------------------------------------------------------- relationships
 REL_VASSAL = """
 scope:recipient = {
@@ -256,12 +258,12 @@ if = {
 }
 """
 
-ALL_OFFERS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office",
-              "release_hook", "my_word", "secret", "contract", "succession", "clemency", "arms",
-              "artifact", "church", "restraint", "hook", "charter"]
+ALL_OFFERS = (["gold", "on_delivery", "split", "stipend", "land", "claim", "office",
+               "release_hook", "my_word", "hook", "secret", "succession", "clemency", "arms",
+               "artifact", "church"] + CONTRACT_KEYS + ["restraint", "charter"])
 NO_CLAIM = [o for o in ALL_OFFERS if o != "claim"]
-AGENT_DEMANDS = ["gold", "on_delivery", "split", "stipend", "land", "office", "contract", "release_hook",
-                 "my_word", "clemency", "artifact", "church"]
+AGENT_DEMANDS = (["gold", "on_delivery", "split", "stipend", "land", "office", "release_hook",
+                  "my_word", "clemency", "artifact", "church"] + CONTRACT_DEMANDS)
 
 KINDS = []
 
@@ -354,61 +356,6 @@ scope:qpq_agent = {
 """,
   exposed="",
   ai=dict(weight=6, valid="""
-is_landed = yes
-any_vassal = { is_landed = yes is_ai = yes }
-""", find="""
-# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
-ordered_vassal = {
-    limit = {
-        is_landed = yes
-        is_ai = yes
-        is_at_war = no
-        any_neighboring_and_across_water_top_liege_realm_owner = {
-            NOT = { top_liege = root.top_liege }
-        }
-    }
-    order_by = max_military_strength
-    save_scope_as = recipient
-}
-scope:recipient ?= {
-    save_scope_as = qpq_ai_fighter
-    ordered_neighboring_and_across_water_top_liege_realm_owner = {
-        limit = {
-            NOT = { top_liege = root.top_liege }
-            NOT = { this = root }
-        }
-        order_by = qpq_ai_war_target_value
-        save_scope_as = secondary_recipient
-    }
-}
-"""))
-
-K(key="sanctioned_conquest", licence=True, cat="A", group="war", secret="conquest", icon="declare_war_interaction",
-  name="Sanctioned Conquest",
-  ask="privately take land from [qpq_target.GetTitledFirstName]",
-  desc="Privately back a [vassal|E]'s conquest of a named target. They fight with their own [casus_belli|E], a [claim|E] you fabricate as part of the payment, or the Pact War you license.",
-  payer_base=1, agent_base=1, claim_ok=True, term=96, effort=20,
-  rel=REL_VASSAL, pick=PICK_NEIGHBOUR_RULERS_OF_RECIPIENT,
-  target_valid="""
-scope:secondary_recipient = {
-    is_landed = yes
-    NOT = { top_liege = scope:actor.top_liege }
-}
-""",
-  demand=[("10", "scope:recipient = { has_trait = ambitious }", "QPQ_REASON_AMBITIOUS_CONQUEST"),
-          ("-15", "scope:recipient = { has_trait = craven }", "QPQ_REASON_CRAVEN_WAR")],
-  deliver=AGENT_BEAT_TARGET, invalid=TARGET_GONE_INVALID,
-  on_seal=GRANT_LICENCE, attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
-  exposed="""
-# The target's liege treats the war as yours
-if = {
-    limit = { scope:qpq_target = { is_alive = yes } }
-    scope:qpq_target = {
-        add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
-    }
-}
-""" + TRUCE_BREAKER,
-  ai=dict(weight=8, valid="""
 is_landed = yes
 any_vassal = { is_landed = yes is_ai = yes }
 """, find="""
@@ -560,12 +507,14 @@ K(key="electoral_purchase", cat="A", group="family", secret="bribery", icon="hei
   desc="Buy an [elector|E]'s vote for your chosen [heir|E]. If it comes out, the vote stands, but the other electors remember it was bought.",
   echo="The 1257 double election, where both candidates spent heavily on the electors.",
   payer_base=2, agent_base=2, term=120, mode="restraint", effort=0,
-  rel=REL_VASSAL + """
+  rel="""
 exists = scope:actor.primary_title
 scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+NOT = { scope:actor = scope:recipient }
 """,
   pick="""
 scope:actor = {
+    add_to_list = characters
     every_close_family_member = {
         limit = { is_adult = yes }
         add_to_list = characters
@@ -601,7 +550,33 @@ if = {
         }
     }
 }
-""")
+""",
+  ai=dict(weight=3, valid="""
+is_landed = yes
+exists = primary_title
+exists = primary_heir
+primary_title = {
+    any_elector = {
+        is_ai = yes
+        NOT = { this = root }
+        NOT = { this = root.primary_heir }
+    }
+}
+OR = { has_trait = ambitious has_trait = paranoid }
+""", find="""
+primary_heir = { save_scope_as = secondary_recipient }
+primary_title = {
+    ordered_elector = {
+        limit = {
+            is_ai = yes
+            NOT = { this = root }
+            NOT = { this = root.primary_heir }
+        }
+        order_by = max_military_strength
+        save_scope_as = recipient
+    }
+}
+"""))
 
 K(key="loyal_mole", cat="A", group="shadows", secret="faction", icon="faction",
   name="The Loyal Mole",
@@ -733,56 +708,6 @@ scope:qpq_payer = {
     }
 }
 """)
-
-K(key="licensed_feud", licence=True, cat="A", group="war", secret="conquest", icon="declare_war_interaction",
-  name="Licensed Feud",
-  ask="wage war on fellow vassal [qpq_target.GetTitledFirstName], with your quiet blessing",
-  desc="You quietly sanction a [vassal|E]'s war on a fellow vassal despite [crown_authority|E]. They get a Pact War [casus_belli|E] against the target, and a favour [hook|E] on you to get it past the law.",
-  payer_base=3, agent_base=3, term=72, effort=15,
-  rel=REL_VASSAL, pick=PICK_FELLOW_VASSALS,
-  target_valid="scope:secondary_recipient = { liege ?= scope:actor is_landed = yes }",
-  demand=[("15", "scope:recipient = { has_relation_rival = scope:secondary_recipient }", "QPQ_REASON_HATES_TARGET")],
-  deliver=AGENT_BEAT_TARGET, invalid=TARGET_GONE_INVALID,
-  on_seal=GRANT_LICENCE + """
-scope:qpq_agent = { add_hook = { type = favor_hook target = scope:qpq_payer } }
-""",
-  attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
-  exposed="""
-scope:qpq_payer = {
-    every_vassal = {
-        limit = {
-            NOT = { this = scope:qpq_agent }
-            NOT = { this = scope:qpq_target }
-        }
-        add_opinion = { target = scope:qpq_payer modifier = qpq_plays_favourites_opinion }
-    }
-}
-if = {
-    limit = { scope:qpq_target = { is_alive = yes } }
-    scope:qpq_target = {
-        add_opinion = { target = scope:qpq_agent modifier = qpq_avenge_perfidy_opinion }
-    }
-}
-""",
-  ai=dict(weight=4, valid="""is_landed = yes any_vassal = { count >= 2 is_landed = yes }""", find="""
-# the strongest vassal with a rival among root's vassals, against the weakest such rival
-ordered_vassal = {
-    limit = {
-        is_landed = yes
-        is_ai = yes
-        any_relation = { type = rival liege ?= root is_landed = yes }
-    }
-    order_by = max_military_strength
-    save_scope_as = recipient
-    save_scope_as = qpq_ai_fighter
-    ordered_relation = {
-        type = rival
-        limit = { liege ?= root is_landed = yes }
-        order_by = qpq_ai_weakness_value
-        save_scope_as = secondary_recipient
-    }
-}
-"""))
 
 K(key="dossier", cat="A", group="shadows", secret="espionage", icon="secret",
   name="Dossier",
@@ -1029,38 +954,23 @@ scope:qpq_agent = { add_tyranny = -20 }
 """ + VICTIM_HOUSE_HOSTILE)
 
 K(key="the_cloister", cat="A", group="family", secret="dynastic", icon="religious",
-  name="The Cloister",
-  ask="see [qpq_target.GetTitledFirstName] take vows",
-  desc="They, or an awkward relative, take holy vows. If the vassal takes vows themselves, they abdicate to their [heir|E].",
+  name="Abdicate to Heir",
+  ask="abdicate in favour of their heir and take holy vows",
+  desc="They give up their titles to their [heir|E] and retire to holy orders.",
   echo="Abdications into monasteries were a standard way to clear a claimant.",
-  payer_base=2, agent_base=2, mode="perform", term=24, effort=15,
+  payer_base=2, agent_base=2, target="derived", derive="scope:recipient", mode="perform", term=24, effort=15,
   rel=REL_VASSAL,
-  pick="""
-scope:recipient = {
-    add_to_list = characters
-    every_close_family_member = {
-        limit = {
-            is_adult = yes
-            NOT = { has_trait = devoted }
-        }
-        add_to_list = characters
-    }
-}
-""",
-  target_valid="scope:secondary_recipient = { NOT = { has_trait = devoted } NOT = { this = scope:actor } }",
-  demand=[("-25", "scope:secondary_recipient = scope:recipient", "QPQ_REASON_MUST_ABDICATE"),
+  target_valid="scope:secondary_recipient = { NOT = { has_trait = devoted } }",
+  demand=[("-65", "always = yes", "QPQ_REASON_MUST_ABDICATE"),
           ("10", "scope:recipient = { has_trait = zealous }", "QPQ_REASON_ZEALOUS_VOWS")],
   can_perform="scope:qpq_target = { is_alive = yes NOT = { has_trait = devoted } }",
   invalid=TARGET_DEAD,
   perform="""
 if = {
-    limit = { scope:qpq_target = scope:qpq_agent }
-    if = {
-        limit = { exists = scope:qpq_agent.primary_heir }
-        scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
-    }
-    scope:qpq_agent = { depose = yes }
+    limit = { exists = scope:qpq_agent.primary_heir }
+    scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
 }
+scope:qpq_agent = { depose = yes }
 scope:qpq_target = {
     if = {
         limit = { is_married = yes }
@@ -1136,80 +1046,8 @@ scope:qpq_payer_secret ?= {
 }
 """)
 
-K(key="hand_over", cat="A", group="favours", secret="abduction", icon="prison",
-  name="Hand-Over",
-  ask="surrender [qpq_target.GetTitledFirstName] to [qpq_payer.GetShortUIName]",
-  desc="Surrender a [prisoner|E], [hostage|E] or [claimant|E] they shelter. Tier III if the person is their kin or [guest|E].",
-  payer_base=1, agent_base=1, mode="perform", term=12, effort=5,
-  # kin and guests are counted below (Tier III, as the text says), not again by the general context
-  agent_ctx=False,
-  rel=REL_VASSAL,
-  pick="""
-scope:recipient = {
-    every_prisoner = { add_to_list = characters }
-    every_courtier = {
-        limit = {
-            OR = {
-                is_hostage = yes
-                any_claim = { holder ?= scope:actor }
-            }
-        }
-        add_to_list = characters
-    }
-    every_foreign_court_guest = { add_to_list = characters }
-    every_pool_guest = { add_to_list = characters }
-}
-""",
-  agent_adj="""
-if = {
-    limit = {
-        exists = scope:secondary_recipient
-        scope:secondary_recipient = {
-            OR = {
-                is_close_family_of = scope:recipient
-                is_pool_guest_of = scope:recipient
-                is_foreign_court_guest_of = scope:recipient
-            }
-        }
-    }
-    add = 2
-}
-""",
-  payer_adj="""
-if = {
-    limit = {
-        exists = scope:secondary_recipient
-        scope:secondary_recipient = {
-            OR = {
-                is_pool_guest_of = scope:recipient
-                is_foreign_court_guest_of = scope:recipient
-            }
-        }
-    }
-    add = 1
-}
-""",
-  can_perform="scope:qpq_target = { is_alive = yes }",
-  invalid=TARGET_DEAD,
-  perform="""
-if = {
-    limit = { scope:qpq_target = { is_imprisoned = yes } }
-    qpq_hand_prisoner_to_payer_effect = yes
-}
-else = {
-    scope:qpq_payer = { add_courtier = scope:qpq_target }
-}
-""",
-  exposed="""
-scope:qpq_agent = {
-    every_courtier = {
-        add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_a_guest_opinion }
-    }
-}
-""")
-
 K(key="hand_over_artifact", cat="A", group="favours", secret="bribery", icon="artifact",
-  name="Hand-Over: Treasure",
+  name="Surrender a Treasure",
   ask="hand [qpq_target_artifact.GetName] over to [qpq_payer.GetShortUIName]",
   desc="Surrender a named [artifact|E] from their treasury.",
   payer_base=1, agent_base=1, mode="perform", target="artifact", term=12, effort=5,
@@ -1424,64 +1262,9 @@ any_known_secret = { NOT = { secret_owner = root } NOT = { is_known_by = root.li
 liege = { has_imprisonment_reason = root }
 """, find="liege = { save_scope_as = recipient }"))
 
-K(key="electoral_capitulation", cat="B", group="family", secret="bribery", icon="heir",
-  icategory="interaction_category_vassal", initiator="agent", offers=AGENT_DEMANDS,
-  name="Electoral Capitulation",
-  ask="vote for [qpq_target.GetTitledFirstName], [qpq_payer.GetShortUINamePossessive] candidate",
-  desc="As an [elector|E], trade your vote for concessions in your [vassal_contract|E]. If it comes out, the other electors demand the same terms.",
-  payer_base=1, agent_base=2, term=120, mode="restraint", effort=0,
-  rel="""
-exists = scope:recipient.primary_title
-scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-NOT = { scope:actor = scope:recipient }
-""",
-  pick="""
-scope:recipient = {
-    add_to_list = characters
-    every_close_family_member = {
-        limit = { is_adult = yes }
-        add_to_list = characters
-    }
-}
-""",
-  target_valid="scope:secondary_recipient = { NOT = { this = scope:actor } }",
-  on_seal="""
-scope:qpq_agent = {
-    add_opinion = { target = scope:qpq_target modifier = qpq_bought_vote_opinion }
-    recalculate_succession_election_vote = yes
-}
-""",
-  invalid="scope:qpq_target = { is_alive = no }",
-  exposed="""
-if = {
-    limit = { exists = scope:qpq_payer.primary_title }
-    scope:qpq_payer.primary_title = {
-        every_elector = {
-            limit = {
-                NOT = { this = scope:qpq_agent }
-                NOT = { this = scope:qpq_payer }
-            }
-            add_opinion = { target = scope:qpq_payer modifier = qpq_precedent_opinion }
-        }
-    }
-}
-""",
-  ai=dict(weight=3, valid="""
-exists = liege
-exists = liege.primary_title
-liege.primary_title = { any_elector = { this = root } }
-OR = { has_trait = greedy has_trait = ambitious }
-""", find="""
-liege = { save_scope_as = recipient }
-if = {
-    limit = { exists = liege.primary_heir }
-    liege.primary_heir = { save_scope_as = secondary_recipient }
-}
-"""))
-
 K(key="mutual_defense_league", cat="B", group="shadows", secret="faction", icon="alliance",
   icategory="interaction_category_vassal",
-  name="Mutual Defense League",
+  name="Mutual Defense",
   ask="stand with [qpq_payer.GetShortUIName] if [qpq_target.GetTitledFirstName] revokes from either of you",
   desc="Two [vassals|E] swear to stand against their [liege|E] together if either has titles revoked. Tier III towards the liege, IV if armed. If it comes out, the liege may [imprison|E] both as conspirators.",
   payer_base=3, agent_base=3, target="derived", derive="scope:actor.liege", mode="restraint", term=120, effort=10,
@@ -1602,15 +1385,49 @@ scope:qpq_agent = {
 }
 """)
 
+# Between fellow vassals, a transfer hidden from the liege is two tiers worse
+COUNTY_HIDDEN = """
+if = {
+    limit = {
+        exists = scope:actor.liege
+        exists = scope:recipient.liege
+        scope:actor.liege = scope:recipient.liege
+        NOT = { scope:qpq_x_consent ?= yes }
+    }
+    add = 2
+}
+"""
+
 K(key="title_swap", cat="B", group="family", secret="dynastic", icon="grant_titles_interaction",
-  icategory="interaction_category_vassal",
-  name="Title Swap",
+  name="Transfer a County",
   ask="cede [qpq_target_title.GetName] to [qpq_payer.GetShortUIName]",
-  desc="Two [vassals|E] exchange [counties|E]. Tier I with your [liege|E]'s consent, III if hidden; a hidden swap can be voided by the liege.",
-  payer_base=3, agent_base=3, mode="perform", target="title", term=12, effort=10,
-  # Tier I with consent, III hidden, as the text says: the swap's own terms set it, not who holds what
+  desc="Someone cedes you a [county|E]. A fellow [vassal|E]: Tier I with your [liege|E]'s consent, III if hidden, and a hidden transfer can be voided by the liege. A foreign house married into yours: Tier I, as a dowry the marriage contract leaves out, and if it comes out their house feels cheated.",
+  payer_base=1, agent_base=1, mode="perform", target="title", term=24, effort=10,
+  # the tiers the text states: the deal's own terms set them, not who holds what
   agent_ctx=False, payer_ctx=False,
-  rel=REL_PEER_VASSAL,
+  rel="""
+OR = {
+    AND = {
+""" + REL_PEER_VASSAL + """
+    }
+    AND = {
+""" + REL_FOREIGN + """
+        exists = scope:actor.house
+        scope:recipient = {
+            is_landed = yes
+            OR = {
+                any_spouse = { house ?= scope:actor.house }
+                any_close_family_member = {
+                    OR = {
+                        any_spouse = { house ?= scope:actor.house }
+                        betrothed.house ?= scope:actor.house
+                    }
+                }
+            }
+        }
+    }
+}
+""",
   pick=dict(source="recipient", filter="domain_titles", can_pick="""
 scope:target = {
     tier = tier_county
@@ -1618,9 +1435,9 @@ scope:target = {
 }
 """),
   target_valid="scope:target = { tier = tier_county holder ?= scope:recipient }",
-  extra_options=[dict(flag="qpq_x_consent", loc="qpq_x_consent", desc="qpq_x_consent_desc", is_shown="always = yes")],
-  payer_adj="if = { limit = { scope:qpq_x_consent ?= yes } add = -2 }",
-  agent_adj="if = { limit = { scope:qpq_x_consent ?= yes } add = -2 }",
+  extra_options=[dict(flag="qpq_x_consent", loc="qpq_x_consent", desc="qpq_x_consent_desc",
+                      is_shown="exists = scope:actor.liege exists = scope:recipient.liege scope:actor.liege = scope:recipient.liege")],
+  payer_adj=COUNTY_HIDDEN, agent_adj=COUNTY_HIDDEN,
   on_seal="""
 if = {
     limit = { scope:qpq_x_consent ?= yes }
@@ -1639,8 +1456,19 @@ if = {
   invalid="NOT = { scope:qpq_target_title.holder ?= scope:qpq_agent }",
   perform="qpq_agent_cedes_title_effect = yes",
   exposed="""
-scope:qpq_payer.liege ?= {
-    add_opinion = { target = scope:qpq_payer modifier = qpq_conspirator_opinion opinion = -15 }
+if = {
+    limit = { scope:qpq_agent.top_liege = scope:qpq_payer.top_liege }
+    scope:qpq_payer.liege ?= {
+        add_opinion = { target = scope:qpq_payer modifier = qpq_conspirator_opinion opinion = -15 }
+    }
+}
+else = {
+    scope:qpq_agent = {
+        every_close_family_member = {
+            limit = { is_alive = yes }
+            add_opinion = { target = scope:qpq_payer modifier = qpq_cheated_by_marriage_opinion }
+        }
+    }
 }
 """,
   ai=dict(weight=2, valid="exists = liege is_landed = yes", find="""
@@ -1766,42 +1594,216 @@ scope:qpq_payer = {
 K(key="proxy_war", licence=True, cat="C", group="war", secret="conquest", icon="declare_war_interaction",
   name="Proxy War",
   ask="attack [qpq_target.GetTitledFirstName]",
-  desc="Pay a foreign ruler to attack your rival. If it comes out, the victim gains the Avenge Perfidy [casus_belli|E] against you, and your allies cool.",
+  desc="Pay someone to attack a named target: your own [vassal|E], who fights a neighbour with their own [casus_belli|E], a [claim|E] you fabricate or the Pact War you license, or a foreign ruler. Set a vassal on a fellow vassal and it is far more scandalous: they also get a favour [hook|E] on you, to get it past [crown_authority|E]. If it comes out, the victim gains the Avenge Perfidy [casus_belli|E] against you, and your allies cool.",
   echo="Nikephoros II paid Svyatoslav of Kiev to attack Bulgaria (967-968); Svyatoslav then tried to keep it.",
-  payer_base=2, agent_base=1, claim_ok=True, term=72, effort=20,
-  rel=REL_FOREIGN_RULER, pick=PICK_NEIGHBOUR_RULERS_OF_RECIPIENT,
-  target_valid="scope:secondary_recipient = { NOT = { this = scope:actor } NOT = { this = scope:recipient } is_landed = yes }",
-  demand=[("10", "scope:recipient = { has_relation_rival = scope:secondary_recipient }", "QPQ_REASON_HATES_TARGET"),
+  payer_base=1, agent_base=1, claim_ok=True, term=84, effort=20,
+  rel="""
+OR = {
+    AND = {
+""" + REL_VASSAL + """
+    }
+    AND = {
+""" + REL_FOREIGN_RULER + """
+    }
+}
+""",
+  pick=PICK_NEIGHBOUR_RULERS_OF_RECIPIENT + """
+if = {
+    limit = { scope:recipient = { liege ?= scope:actor } }
+    scope:actor = {
+        every_vassal = {
+            limit = {
+                is_landed = yes
+                NOT = { this = scope:recipient }
+            }
+            add_to_list = characters
+        }
+    }
+}
+""",
+  # your vassal may go abroad or against a fellow vassal; a foreign ruler goes where the money says
+  target_valid="""
+scope:secondary_recipient = {
+    is_landed = yes
+    NOT = { this = scope:actor }
+    NOT = { this = scope:recipient }
+}
+OR = {
+    scope:recipient = { NOT = { liege ?= scope:actor } }
+    scope:secondary_recipient = { liege ?= scope:actor }
+    NOT = { scope:secondary_recipient.top_liege = scope:actor.top_liege }
+}
+""",
+  # a foreign hand costs the payer one tier more; a feud inside the realm costs both two
+  payer_adj="""
+if = {
+    limit = { scope:recipient = { NOT = { liege ?= scope:actor } } }
+    add = 1
+}
+else_if = {
+    limit = {
+        exists = scope:secondary_recipient
+        scope:secondary_recipient = { liege ?= scope:actor }
+    }
+    add = 2
+}
+""",
+  agent_adj="""
+if = {
+    limit = {
+        scope:recipient = { liege ?= scope:actor }
+        exists = scope:secondary_recipient
+        scope:secondary_recipient = { liege ?= scope:actor }
+    }
+    add = 2
+}
+""",
+  demand=[("10", "scope:recipient = { has_trait = ambitious }", "QPQ_REASON_AMBITIOUS_CONQUEST"),
+          ("-15", "scope:recipient = { has_trait = craven }", "QPQ_REASON_CRAVEN_WAR"),
+          ("10", "scope:recipient = { has_relation_rival = scope:secondary_recipient }", "QPQ_REASON_HATES_TARGET"),
           ("-20", "scope:recipient = { is_allied_to = scope:secondary_recipient }", "QPQ_REASON_ALLIED_TO_TARGET")],
+  # a vassal must win it; a foreign ruler has done what was paid for by fighting it
   deliver="""
 OR = {
 """ + AGENT_BEAT_TARGET + """
-    qpq_beat_trigger = { LIST = qpq_agent_fought WHO = scope:qpq_target }
+    AND = {
+        scope:qpq_agent = { NOT = { liege ?= scope:qpq_payer } }
+        qpq_beat_trigger = { LIST = qpq_agent_fought WHO = scope:qpq_target }
+    }
 }
 """,
   invalid=TARGET_GONE_INVALID,
-  on_seal=GRANT_LICENCE, attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
-  exposed=PROXY_FALLOUT,
-  ai=dict(weight=6, valid="""is_independent_ruler = yes any_relation = { type = rival is_landed = yes }""", find="""
-# the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
-ordered_relation = {
-    type = rival
-    limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
-    order_by = qpq_ai_enmity_value
-    save_scope_as = secondary_recipient
-}
+  on_seal=GRANT_LICENCE + """
 if = {
-    limit = { exists = scope:secondary_recipient }
-    scope:secondary_recipient.top_liege = {
-        ordered_neighboring_and_across_water_top_liege_realm_owner = {
+    limit = {
+        scope:qpq_agent = { liege ?= scope:qpq_payer }
+        scope:qpq_target = { liege ?= scope:qpq_payer }
+    }
+    scope:qpq_agent = { add_hook = { type = favor_hook target = scope:qpq_payer } }
+}
+""",
+  attempt=AI_PACT_WAR, on_end=REVOKE_LICENCE,
+  exposed="""
+if = {
+    limit = {
+        exists = scope:qpq_target
+        scope:qpq_agent = { liege ?= scope:qpq_payer }
+        scope:qpq_target = { liege ?= scope:qpq_payer }
+    }
+    scope:qpq_payer = {
+        every_vassal = {
             limit = {
-                NOT = { this = root }
+                NOT = { this = scope:qpq_agent }
+                NOT = { this = scope:qpq_target }
+            }
+            add_opinion = { target = scope:qpq_payer modifier = qpq_plays_favourites_opinion }
+        }
+    }
+    scope:qpq_target = {
+        add_opinion = { target = scope:qpq_agent modifier = qpq_avenge_perfidy_opinion }
+    }
+}
+else_if = {
+    limit = { scope:qpq_agent = { liege ?= scope:qpq_payer } }
+    # The target's liege treats the war as yours
+    if = {
+        limit = { scope:qpq_target = { is_alive = yes } }
+        scope:qpq_target = {
+            add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
+        }
+    }
+    """ + TRUCE_BREAKER + """
+}
+else = {
+    """ + PROXY_FALLOUT + """
+}
+""",
+  ai=dict(weight=18, valid="""
+OR = {
+    AND = {
+        is_landed = yes
+        any_vassal = { is_landed = yes is_ai = yes }
+    }
+    AND = {
+        is_independent_ruler = yes
+        any_relation = { type = rival is_landed = yes }
+    }
+}
+""", find="""
+random_list = {
+    8 = {
+        trigger = { any_vassal = { is_landed = yes is_ai = yes } }
+        # the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+        ordered_vassal = {
+            limit = {
+                is_landed = yes
                 is_ai = yes
                 is_at_war = no
-                NOT = { is_allied_to = scope:secondary_recipient }
+                any_neighboring_and_across_water_top_liege_realm_owner = {
+                    NOT = { top_liege = root.top_liege }
+                }
             }
-            order_by = qpq_ai_hired_sword_value
+            order_by = max_military_strength
             save_scope_as = recipient
+        }
+        scope:recipient ?= {
+            save_scope_as = qpq_ai_fighter
+            ordered_neighboring_and_across_water_top_liege_realm_owner = {
+                limit = {
+                    NOT = { top_liege = root.top_liege }
+                    NOT = { this = root }
+                }
+                order_by = qpq_ai_war_target_value
+                save_scope_as = secondary_recipient
+            }
+        }
+    }
+    6 = {
+        trigger = {
+            is_independent_ruler = yes
+            any_relation = { type = rival is_landed = yes }
+        }
+        # the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
+        ordered_relation = {
+            type = rival
+            limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
+            order_by = qpq_ai_enmity_value
+            save_scope_as = secondary_recipient
+        }
+        if = {
+            limit = { exists = scope:secondary_recipient }
+            scope:secondary_recipient.top_liege = {
+                ordered_neighboring_and_across_water_top_liege_realm_owner = {
+                    limit = {
+                        NOT = { this = root }
+                        is_ai = yes
+                        is_at_war = no
+                        NOT = { is_allied_to = scope:secondary_recipient }
+                    }
+                    order_by = qpq_ai_hired_sword_value
+                    save_scope_as = recipient
+                }
+            }
+        }
+    }
+    4 = {
+        trigger = { any_vassal = { count >= 2 is_landed = yes } }
+        # the strongest vassal with a rival among root's vassals, against the weakest such rival
+        ordered_vassal = {
+            limit = {
+                is_landed = yes
+                is_ai = yes
+                any_relation = { type = rival liege ?= root is_landed = yes }
+            }
+            order_by = max_military_strength
+            save_scope_as = recipient
+            save_scope_as = qpq_ai_fighter
+            ordered_relation = {
+                type = rival
+                limit = { liege ?= root is_landed = yes }
+                order_by = qpq_ai_weakness_value
+                save_scope_as = secondary_recipient
+            }
         }
     }
 }
@@ -2169,33 +2171,98 @@ scope:qpq_payer = { add_hook = { type = strong_favor_hook target = scope:qpq_age
 K(key="extradition", cat="C", group="blood", secret="abduction", icon="prison",
   icategory="interaction_category_hostile",
   name="Extradition",
-  ask="hand [qpq_target.GetTitledFirstName] over to [qpq_payer.GetShortUIName], hospitality or no",
-  desc="A foreign ruler hands over a refugee, [claimant|E] or exile who sought their hospitality. If it comes out, they are known to have betrayed a [guest|E].",
-  payer_base=3, agent_base=3, mode="perform", term=12, effort=15,
-  rel=REL_FOREIGN_RULER,
+  ask="hand [qpq_target.GetTitledFirstName] over to [qpq_payer.GetShortUIName]",
+  desc="Surrender a [prisoner|E], [hostage|E], [claimant|E] or refugee they hold or shelter. Tier I from your own [vassal|E]; Tier III from a foreign ruler, or if the person is their kin or [guest|E]. If it comes out, they are known to have betrayed a [guest|E].",
+  payer_base=1, agent_base=1, mode="perform", term=12, effort=10,
+  # kin, guests and foreign courts are counted below (as the text says), not again by the general context
+  agent_ctx=False,
+  rel="""
+OR = {
+    AND = {
+""" + REL_VASSAL + """
+    }
+    AND = {
+""" + REL_FOREIGN_RULER + """
+    }
+}
+""",
   pick="""
 scope:recipient = {
+    every_prisoner = { add_to_list = characters }
     every_courtier = {
-        limit = { NOT = { is_close_family_of = scope:recipient } }
+        limit = {
+            OR = {
+                is_hostage = yes
+                any_claim = { holder ?= scope:actor }
+                NOT = { is_close_family_of = scope:recipient }
+            }
+        }
         add_to_list = characters
     }
     every_foreign_court_guest = { add_to_list = characters }
     every_pool_guest = { add_to_list = characters }
-    every_prisoner = { add_to_list = characters }
+}
+""",
+  agent_adj="""
+if = {
+    limit = {
+        OR = {
+            NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+            AND = {
+                exists = scope:secondary_recipient
+                scope:secondary_recipient = {
+                    OR = {
+                        is_close_family_of = scope:recipient
+                        is_pool_guest_of = scope:recipient
+                        is_foreign_court_guest_of = scope:recipient
+                    }
+                }
+            }
+        }
+    }
+    add = 2
 }
 """,
   payer_adj="""
 if = {
+    limit = { NOT = { scope:recipient.top_liege = scope:actor.top_liege } }
+    add = 2
+    if = {
+        limit = {
+            exists = scope:secondary_recipient
+            scope:secondary_recipient = { any_claim = { holder ?= scope:actor } }
+        }
+        add = 1
+    }
+}
+else_if = {
     limit = {
         exists = scope:secondary_recipient
-        scope:secondary_recipient = { any_claim = { holder ?= scope:actor } }
+        scope:secondary_recipient = {
+            OR = {
+                is_pool_guest_of = scope:recipient
+                is_foreign_court_guest_of = scope:recipient
+            }
+        }
     }
     add = 1
 }
 """,
   can_perform="scope:qpq_target = { is_alive = yes }",
   invalid=TARGET_DEAD,
-  perform="qpq_hand_prisoner_to_payer_effect = yes",
+  # their own vassal's courtier simply comes to court; anyone else arrives a prisoner
+  perform="""
+if = {
+    limit = {
+        scope:qpq_agent = { liege ?= scope:qpq_payer }
+        scope:qpq_target = { is_imprisoned = no }
+    }
+    scope:qpq_payer = { add_courtier = scope:qpq_target }
+}
+else = {
+    qpq_hand_prisoner_to_payer_effect = yes
+}
+""",
   exposed="""
 scope:qpq_agent = {
     every_courtier = {
@@ -2324,43 +2391,9 @@ if = {
 """,
   exposed="")
 
-K(key="secret_clause", cat="C", group="family", secret="dynastic", icon="icon_marriage",
-  name="Secret Clause",
-  ask="hand over [qpq_target_title.GetName] as a hidden dowry",
-  desc="A [marriage|E] between your houses with a hidden term: a dowry [county|E] handed over later. If it comes out, the other house feels cheated.",
-  payer_base=1, agent_base=1, mode="perform", target="title", term=60, effort=10,
-  rel=REL_FOREIGN + """
-exists = scope:actor.house
-scope:recipient = {
-    is_landed = yes
-    OR = {
-        any_spouse = { house ?= scope:actor.house }
-        any_close_family_member = {
-            OR = {
-                any_spouse = { house ?= scope:actor.house }
-                betrothed.house ?= scope:actor.house
-            }
-        }
-    }
-}
-""",
-  pick=dict(source="recipient", filter="domain_titles", can_pick="scope:target = { tier = tier_county NOT = { this = scope:recipient.capital_county } }"),
-  target_valid="scope:target = { tier = tier_county holder ?= scope:recipient }",
-  can_perform="scope:qpq_target_title.holder ?= scope:qpq_agent",
-  invalid="NOT = { scope:qpq_target_title.holder ?= scope:qpq_agent }",
-  perform="qpq_agent_cedes_title_effect = yes",
-  exposed="""
-scope:qpq_agent = {
-    every_close_family_member = {
-        limit = { is_alive = yes }
-        add_opinion = { target = scope:qpq_payer modifier = qpq_cheated_by_marriage_opinion }
-    }
-}
-""")
-
 K(key="hire_the_hashashin", cat="C", group="blood", secret="murder", icon="icon_scheme_murder",
   icategory="interaction_category_hostile",
-  name="Hire the Hashashin",
+  name="Hire Holy Order Assassins",
   ask="have [qpq_target.GetTitledFirstName] killed by their order",
   desc="Commission a murder through a foreign [holy_order|E]. If it comes out, the victim's house and [faith|E] turn hostile.",
   echo="Conrad of Montferrat, 1192: rumours of a paymaster pointed at Richard I.",
@@ -2502,7 +2535,7 @@ scope:qpq_agent.faith = {
 
 K(key="purchase_a_mitre", cat="D1", group="church_favours", secret="simony", icon="religious",
   icategory="interaction_category_religion",
-  name="Purchase a Mitre",
+  name="Buy a Bishopric",
   ask="give [qpq_target.GetTitledFirstName] a bishopric or temple",
   desc="Buy a bishopric, [temple_holding|E] or other theocratic seat for a relative.",
   echo="The core grievance of the Investiture Controversy.",

@@ -19,6 +19,7 @@ Hand-written companions:
 import os
 import re
 from qpq_kinds import KINDS, GROUPS
+from qpq_contracts import CONTRACT_DEMANDS, CONTRACT_KEYS
 import qpq_goals as goals
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,8 +39,10 @@ GS = ("GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.Make
       ".AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End")
 GS_ROOT = "GuiScope.SetRoot( GetPlayer.MakeScope ).End"
 # Charter is a property of the whole deal, not of one leg's goods
-UI_OFFERS = ["gold", "land", "claim", "office", "release_hook", "my_word", "secret", "contract",
-             "succession", "clemency", "arms", "artifact", "church", "restraint", "hook"]
+UI_OFFERS = (["gold", "land", "claim", "office", "release_hook", "my_word", "hook", "secret",
+              "succession", "clemency", "arms", "artifact", "church"] + CONTRACT_KEYS + ["restraint"])
+# The panel lists these together under their own heading
+CONTRACT_OFFERS = CONTRACT_KEYS + ["restraint"]
 TIMINGS = ["up_front", "on_delivery"]
 GOLD_STEPS = [10, 100, 1000]
 CANDIDATE_CAP = 120
@@ -54,8 +57,8 @@ TITLE_SOURCES = {
 
 DEEDS = [k for k in KINDS if not k.get("carrier")]
 BARTER = [k for k in KINDS if k.get("carrier")][0]
-DEMAND_KEYS = {"gold", "on_delivery", "split", "stipend", "land", "office", "contract", "release_hook",
-               "my_word", "clemency", "artifact", "church"}
+DEMAND_KEYS = {"gold", "on_delivery", "split", "stipend", "land", "office", "release_hook",
+               "my_word", "clemency", "artifact", "church", *CONTRACT_DEMANDS}
 
 
 # ------------------------------------------------------------------ orientation helpers
@@ -253,6 +256,13 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
             out += "\teffect = {\n\t\tif = {\n\t\t\tlimit = { has_variable = qpq_ui_%s_o_%s }\n\t\t\tremove_variable = qpq_ui_%s_o_%s\n\t\t}\n" % (L, o, L, o)
             out += "\t\telse = {\n\t\t\tset_variable = qpq_ui_%s_o_%s\n\t\t}\n" % (L, o)
             out += "\t\tqpq_ui_refresh_effect = yes\n\t}\n}\n\n"
+        # The heading over the contract terms: shown only if one of them is on offer
+        out += "qpq_ui_contract_goods_%s = {\n\tscope = character\n\tsaved_scopes = { actor recipient }\n\tis_shown = {\n\t\tOR = {\n" % L
+        for o in CONTRACT_OFFERS:
+            out += "\t\t\thas_variable = qpq_ui_%s_o_%s\n\t\t\tAND = {\n\t\t\t\tqpq_ui_leg_%s_allows_%s_trigger = yes\n" % (L, o, L, o)
+            out += offer_shown(block, fmt_shown, OFFER_DEFS, o, L, 4)
+            out += "\t\t\t}\n"
+        out += "\t\t}\n\t}\n}\n\n"
         # Payment timing (only with gold)
         for t in TIMINGS:
             out += "qpq_ui_timing_%s_%s = {\n\tscope = character\n\tis_shown = {\n\t\thas_variable = qpq_ui_%s_o_gold\n" % (L, t, L)
@@ -1085,9 +1095,9 @@ def gen_ui_loc(write):
 
 
 # ------------------------------------------------------------------ the deal event (a human recipient)
-HUB50_TERMS = ["on_delivery", "land", "claim", "office", "release_hook",
-               "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
-               "restraint", "hook"]
+HUB50_TERMS = (["on_delivery", "land", "claim", "office", "release_hook",
+                "my_word", "hook", "secret", "succession", "clemency", "arms", "artifact", "church"]
+               + CONTRACT_KEYS + ["restraint"])
 HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]
 
 

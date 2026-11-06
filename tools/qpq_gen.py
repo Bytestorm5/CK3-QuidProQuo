@@ -13,6 +13,7 @@ from qpq_kinds import KINDS, GROUPS, SECRET_CATEGORIES, TIER_NAMES  # noqa: E402
 import qpq_ui_gen  # noqa: E402
 from qpq_flavor import FLAVOR, GROUP_FLAVOR  # noqa: E402
 import qpq_goals as goals  # noqa: E402
+import qpq_contracts as contracts  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOM = "﻿"
@@ -317,18 +318,20 @@ def goods_cost_body(G, R, price):
     s += good("my_word", "\t\tadd = 12\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = honest } }\n\t\t\tadd = 4\n\t\t}\n" % G)
     s += good("secret", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_secret_points }\n\t\t\tadd = scope:qpq_gift_secret_points\n\t\t}\n"
                         "\t\telse = {\n\t\t\tadd = 12\n\t\t}\n")
-    s += good("contract", "\t\tadd = 22\n\t\tif = {\n\t\t\tlimit = { %s = { has_trait = greedy } }\n\t\t\tadd = 5\n\t\t}\n" % G)
+    for ct in contracts.CONTRACT_KEYS:
+        s += good(ct, contracts.cost_body(ct, G, R))
     s += good("succession", "\t\tadd = 18\n" + "".join(
         "\t\t%sif = {\n\t\t\tlimit = { %s = { highest_held_title_tier = %s } }\n\t\t\tadd = %d\n\t\t}\n" % (
             "" if i == 0 else "else_", G, t, v) for i, (t, v) in enumerate(
             (("tier_county", 6), ("tier_duchy", 16), ("tier_kingdom", 28), ("tier_empire", 40)))).replace("\t\telse_if", "\t\telse_if"))
     s += good("clemency", "\t\tadd = 25\n")
-    s += good("arms", "\t\tadd = 10\n\t\tif = {\n\t\t\tlimit = { %s = { is_at_war = yes } }\n\t\t\tadd = 15\n\t\t}\n" % G)
+    # about what lowering their levies a level would cost for good (a contract score point): the men are gone for the term
+    s += good("arms", "\t\tadd = 15\n\t\tif = {\n\t\t\tlimit = { %s = { is_at_war = yes } }\n\t\t\tadd = 15\n\t\t}\n" % G)
     s += good("artifact", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_artifact_cost }\n\t\t\tadd = scope:qpq_gift_artifact_cost\n\t\t}\n"
                           "\t\telse = {\n\t\t\tadd = 20\n\t\t}\n")
     s += good("church", "\t\tadd = 10\n")
-    s += good("restraint", "\t\tadd = 8\n\t\tif = {\n\t\t\tlimit = { %s = { max_military_strength > { value = %s.max_military_strength multiply = 1.5 } } }\n"
-                           "\t\t\tadd = 10\n\t\t}\n" % (G, R))
+    s += good("restraint", "\t\tadd = 5\n\t\tif = {\n\t\t\tlimit = { %s = { max_military_strength > { value = %s.max_military_strength multiply = 1.5 } } }\n"
+                           "\t\t\tadd = 5\n\t\t}\n" % (G, R))
     s += "\tmin = 0\n"
     return s
 
@@ -382,7 +385,6 @@ custom_description = {
     }
 }
 """),
-    "contract": dict(shown="{A} = { liege ?= {P} }"),
     "succession": dict(shown="{A} = { is_child_of = {P} } NOT = { {P}.primary_heir ?= {A} }"),
     "clemency": dict(shown="""
 OR = {
@@ -396,6 +398,7 @@ OR = {
     "church": dict(shown="{P} = { qpq_is_head_of_faith_trigger = yes faith = { qpq_faith_has_church_trigger = yes } }"),
     "restraint": dict(shown="{A} = { liege ?= {P} }"),
     "hook": dict(shown="{P} = { has_usable_hook = {A} }"),
+    **{g["key"]: dict(shown=contracts.shown(g)) for g in contracts.CONTRACT_GOODS},
     "charter": dict(shown="""
 qpq_{K}_payer_tier_value <= 0
 qpq_{K}_agent_tier_value <= 0
@@ -409,25 +412,25 @@ OFFER_POINTS = {
     "release_hook": "qpq_offer_release_hook_points_value",
     "my_word": "qpq_offer_my_word_points_value",
     "secret": "qpq_offer_secret_points_value",
-    "contract": "qpq_offer_contract_points_value",
     "succession": "qpq_offer_succession_points_value",
     "clemency": "qpq_offer_clemency_points_value",
     "arms": "qpq_offer_arms_points_value",
     "artifact": "qpq_offer_artifact_points_value",
     "church": "qpq_offer_church_points_value",
     "restraint": "qpq_offer_restraint_points_value",
+    **{k: "qpq_offer_%s_points_value" % k for k in contracts.CONTRACT_KEYS},
 }
 
 # What a payer gives up when the agent demands it (agent-initiated pacts)
 DEMAND_COST = {"gold": -30, "on_delivery": 10, "split": 5, "stipend": 5, "land": -40, "office": -15,
-               "contract": -30, "release_hook": -25, "my_word": -12, "clemency": -20, "artifact": -20,
-               "church": -15}
+               "release_hook": -25, "my_word": -12, "clemency": -20, "artifact": -20,
+               "church": -15, **{k: contracts.demand_cost(k) for k in contracts.CONTRACT_DEMANDS}}
 
 
 # Terms listed in the proposal event (qpq_hub.50), in this order
-HUB50_TERMS = ["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "release_hook",
-               "my_word", "secret", "contract", "succession", "clemency", "arms", "artifact", "church",
-               "restraint", "hook", "charter"]
+HUB50_TERMS = (["gold", "on_delivery", "split", "stipend", "land", "claim", "office", "release_hook",
+                "my_word", "hook", "secret", "succession", "clemency", "arms", "artifact", "church"]
+               + contracts.CONTRACT_KEYS + ["restraint", "charter"])
 # Ask-specific terms (they change the tiers), listed after the offers
 HUB50_EXTRAS = ["qpq_x_armed", "qpq_x_consent", "qpq_x_armies"]
 
@@ -1050,7 +1053,8 @@ def story_ask(ask):
 
 
 DERIVED_EVENT = {"scope:actor.liege": "actor.GetLiege", "scope:recipient.liege": "recipient.GetLiege",
-                 "scope:actor.top_liege": "actor.GetTopLiege", "scope:recipient.suzerain": "recipient.GetSuzerain"}
+                 "scope:actor.top_liege": "actor.GetTopLiege", "scope:recipient.suzerain": "recipient.GetSuzerain",
+                 "scope:recipient": "recipient"}
 
 
 def ask_event(k):
@@ -1149,6 +1153,11 @@ def main():
     gen_proposal_desc()
     gen_loc()
     qpq_ui_gen.gen_all(block, fmt_shown, OFFER_DEFS, write)
+    write("common/script_values/qpq_contract_values.txt", contracts.gen_values())
+    write("common/scripted_effects/qpq_contract_effects.txt", contracts.gen_effects())
+    write("common/scripted_triggers/qpq_contract_triggers.txt", contracts.gen_triggers())
+    write("common/customizable_localization/qpq_contract_custom_loc.txt", contracts.gen_custom_loc())
+    write("localization/english/qpq_contract_l_english.yml", contracts.gen_loc())
     print("generated %d pacts" % len(KINDS))
 
 

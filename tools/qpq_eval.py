@@ -28,7 +28,8 @@ KIND = {k["key"]: k for k in KINDS}
 TIER = {0: "none", 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V"}
 TRAIT_POOL = ["honest", "just", "deceitful", "schemer", "greedy", "generous", "ambitious", "content", "craven",
               "brave", "compassionate", "callous", "paranoid", "trusting", "zealous", "vengeful"]
-GOODS_POOL = ["land", "artifact", "office", "my_word", "contract", "arms", "restraint", "release_hook", "hook",
+GOODS_POOL = ["land", "artifact", "office", "my_word", "ct_tax_down", "ct_levy_down", "ct_revocation", "ct_council", "ct_war",
+              "ct_tax_up", "ct_levy_up", "arms", "restraint", "release_hook", "hook",
               "clemency", "succession", "church", "secret"]
 
 

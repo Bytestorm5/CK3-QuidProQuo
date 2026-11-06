@@ -29,22 +29,22 @@ def third_party(k):
 
 KIND_GOALS = {
     # war on the third party
-    "chartered_conquest": ["war"], "sanctioned_conquest": ["war"], "marcher_charge": ["war"],
-    "licensed_feud": ["war"], "proxy_war": ["war"], "partition_pact": ["war"], "steer_the_holy_war": ["war"],
+    "chartered_conquest": ["war"], "marcher_charge": ["war"],
+    "proxy_war": ["war"], "partition_pact": ["war"], "steer_the_holy_war": ["war"],
     "holy_warrant": ["war"],
     # harm to the third party
     "quiet_removal": ["harm"], "heir_question": ["harm"], "snatch": ["harm"], "dispossession": ["harm"],
-    "hire_the_hashashin": ["harm"], "dossier": ["harm"], "coup_pact": ["harm"], "hand_over": ["harm"],
+    "hire_the_hashashin": ["harm"], "dossier": ["harm"], "coup_pact": ["harm"],
     "extradition": ["harm"], "excommunication_for_hire": ["harm"], "fatwa_for_hire": ["harm"],
     "blessing_for_a_feud": ["harm"], "buy_a_councillor": ["harm"], "buy_a_bull": ["harm"],
     "crowning_the_usurper": ["harm"], "favourable_omens": ["harm"], "temple_patronage": ["harm"],
     "bought_claim": ["harm"], "faithless_ally": ["harm"], "turncoat": ["harm"], "fund_the_dawa": ["harm", "faith"],
     "the_cloister": ["harm"],
     # good done to the third party
-    "electoral_purchase": ["favour"], "electoral_capitulation": ["favour"], "conclave_votes": ["favour"],
+    "electoral_purchase": ["favour"], "conclave_votes": ["favour"],
     "purchase_a_mitre": ["favour"], "dispensation_for_gold": ["favour"],
     # giving up something
-    "title_swap": ["loss_title"], "secret_clause": ["loss_title"], "renunciation": ["loss_title"],
+    "title_swap": ["loss_title"], "renunciation": ["loss_title"],
     "hand_over_artifact": ["loss_artifact"],
     # binding oneself to the proposer
     "mutual_defense_league": ["pact"], "faction_pledge": ["pact"], "secret_alliance": ["pact"],
@@ -334,7 +334,7 @@ def sw(text):
 
 # How much more a title given away outright costs than one swapped (see goal_body, loss_title)
 # (Title Swap too: in the panel the county that comes back is a good of its own, priced as land)
-LOSS_SCALE = {"secret_clause": 4, "title_swap": 4}
+LOSS_SCALE = {"title_swap": 4}
 
 
 def goal_value(k, swapped=False):

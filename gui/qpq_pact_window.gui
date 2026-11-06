@@ -150,6 +150,17 @@ window = {
 					}
 
 					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_hook"
+						tooltip = "qpq_offer_hook_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_hook').IsSet]"
+					}
+
+					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_t_secret').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -158,17 +169,6 @@ window = {
 						using = tooltip_ne
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_me' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_secret').IsSet]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_t_contract').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_contract"
-						tooltip = "qpq_offer_contract_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_t_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_contract').IsSet]"
 					}
 
 					button_standard_list = {
@@ -226,6 +226,125 @@ window = {
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_church').IsSet]"
 					}
 
+						text_single = {
+							visible = "[GetScriptedGui('qpq_ui_contract_goods_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							layoutpolicy_horizontal = expanding
+							margin = { 6 4 }
+							text = "QPQ_UI_LIST_CONTRACT"
+							default_format = "#T"
+							using = Font_Size_Medium
+						}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_down').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_tax_down"
+						tooltip = "qpq_offer_ct_tax_down_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_tax_down').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_down').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_levy_down"
+						tooltip = "qpq_offer_ct_levy_down_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_levy_down').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_revocation').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_revocation"
+						tooltip = "qpq_offer_ct_revocation_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_revocation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_revocation').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_council').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_council"
+						tooltip = "qpq_offer_ct_council_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_council').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_council').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_war"
+						tooltip = "qpq_offer_ct_war_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_war').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_fort').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_fort"
+						tooltip = "qpq_offer_ct_fort_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_fort').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_fort').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_coinage').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_coinage"
+						tooltip = "qpq_offer_ct_coinage_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_coinage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_coinage').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_faith').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_faith"
+						tooltip = "qpq_offer_ct_faith_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_faith').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_faith').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_up').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_tax_up"
+						tooltip = "qpq_offer_ct_tax_up_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_tax_up').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_up').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_levy_up"
+						tooltip = "qpq_offer_ct_levy_up_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_levy_up').IsSet]"
+					}
+
 					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_t_restraint').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
@@ -235,17 +354,6 @@ window = {
 						using = tooltip_ne
 						onclick = "[GetScriptedGui('qpq_ui_offer_t_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_restraint').IsSet]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_t_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_hook"
-						tooltip = "qpq_offer_hook_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_t_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_hook').IsSet]"
 					}
 
 					text_single = {
@@ -271,19 +379,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_sanctioned_conquest').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_sanctioned_conquest_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_sanctioned_conquest').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_sanctioned_conquest').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_sanctioned_conquest_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_sanctioned_conquest').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_sanctioned_conquest').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'sanctioned_conquest' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_i_marcher_charge').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -294,19 +389,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_i_marcher_charge').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'marcher_charge' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_licensed_feud').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_licensed_feud_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_licensed_feud').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_licensed_feud').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_licensed_feud_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_licensed_feud').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_licensed_feud').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'licensed_feud' )]"
 					}
 
 					button_standard_list = {
@@ -394,19 +476,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_i_development_charter').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'development_charter' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_hand_over').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_hand_over_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_hand_over').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_hand_over').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_hand_over_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_hand_over').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_hand_over').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'hand_over' )]"
 					}
 
 					button_standard_list = {
@@ -510,19 +579,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_electoral_capitulation').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_electoral_capitulation_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_electoral_capitulation').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_electoral_capitulation').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_electoral_capitulation_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_electoral_capitulation').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_electoral_capitulation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'electoral_capitulation' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_i_title_swap').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -533,19 +589,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_i_title_swap').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'title_swap' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_i_secret_clause').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_secret_clause_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_i_secret_clause').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_i_secret_clause').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_secret_clause_hub_tt' ), GetScriptedGui('qpq_ui_kind_i_secret_clause').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_i_secret_clause').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_i_kind').GetFlagName, 'secret_clause' )]"
 					}
 
 					text_single = {
@@ -1406,6 +1449,23 @@ window = {
 					}
 
 					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_hook').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_hook"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_secret').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -1440,23 +1500,6 @@ window = {
 								text = "[Scope.Char.GetUINameNoTooltip]"
 								default_format = "#low"
 							}
-						}
-					}
-
-					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_contract').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_contract"
-						}
-
-						button_cancel_small = {
-							size = { 28 28 }
-							tooltip = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_t_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
 
@@ -1567,6 +1610,176 @@ window = {
 					}
 
 					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_tax_down').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_tax_down"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_levy_down').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_levy_down"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_revocation').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_revocation"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_revocation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_council').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_council"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_council').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_war').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_war"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_fort').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_fort"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_fort').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_coinage').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_coinage"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_coinage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_faith').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_faith"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_faith').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_tax_up').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_tax_up"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_tax_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_ct_levy_up').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_levy_up"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_t_ct_levy_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_restraint').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -1580,23 +1793,6 @@ window = {
 							size = { 28 28 }
 							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_t_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						}
-					}
-
-					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_t_o_hook').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_hook"
-						}
-
-						button_cancel_small = {
-							size = { 28 28 }
-							tooltip = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_t_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
 
@@ -2067,6 +2263,23 @@ window = {
 					}
 
 					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_hook').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_hook"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_secret').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -2101,23 +2314,6 @@ window = {
 								text = "[Scope.Char.GetUINameNoTooltip]"
 								default_format = "#low"
 							}
-						}
-					}
-
-					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_contract').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_contract"
-						}
-
-						button_cancel_small = {
-							size = { 28 28 }
-							tooltip = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_i_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
 
@@ -2228,6 +2424,176 @@ window = {
 					}
 
 					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_tax_down').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_tax_down"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_levy_down').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_levy_down"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_revocation').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_revocation"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_revocation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_council').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_council"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_council').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_war').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_war"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_fort').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_fort"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_fort').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_coinage').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_coinage"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_coinage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_faith').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_faith"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_faith').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_tax_up').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_tax_up"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_levy_up').IsSet]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_OFFER_ct_levy_up"
+						}
+
+						button_cancel_small = {
+							size = { 28 28 }
+							tooltip = "QPQ_UI_REMOVE"
+							onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
 						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_restraint').IsSet]"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
@@ -2241,23 +2607,6 @@ window = {
 							size = { 28 28 }
 							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						}
-					}
-
-					hbox = {
-						visible = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_hook').IsSet]"
-						layoutpolicy_horizontal = expanding
-						spacing = 4
-
-						text_single = {
-							layoutpolicy_horizontal = expanding
-							text = "QPQ_UI_BULLET_OFFER_hook"
-						}
-
-						button_cancel_small = {
-							size = { 28 28 }
-							tooltip = "QPQ_UI_REMOVE"
-							onclick = "[GetScriptedGui('qpq_ui_offer_i_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
 					}
 
@@ -2359,6 +2708,17 @@ window = {
 					}
 
 					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_hook"
+						tooltip = "qpq_offer_hook_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_hook').IsSet]"
+					}
+
+					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_i_secret').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -2367,17 +2727,6 @@ window = {
 						using = tooltip_ne
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'secret_them' )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_secret').IsSet]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_i_contract').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_contract"
-						tooltip = "qpq_demand_contract_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_i_contract').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_contract').IsSet]"
 					}
 
 					button_standard_list = {
@@ -2435,6 +2784,125 @@ window = {
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_church').IsSet]"
 					}
 
+						text_single = {
+							visible = "[GetScriptedGui('qpq_ui_contract_goods_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+							layoutpolicy_horizontal = expanding
+							margin = { 6 4 }
+							text = "QPQ_UI_LIST_CONTRACT"
+							default_format = "#T"
+							using = Font_Size_Medium
+						}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_down').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_tax_down"
+						tooltip = "qpq_demand_ct_tax_down_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_tax_down').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_down').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_levy_down"
+						tooltip = "qpq_demand_ct_levy_down_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_down').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_levy_down').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_revocation').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_revocation"
+						tooltip = "qpq_demand_ct_revocation_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_revocation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_revocation').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_council').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_council"
+						tooltip = "qpq_demand_ct_council_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_council').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_council').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_war').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_war"
+						tooltip = "qpq_demand_ct_war_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_war').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_war').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_fort').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_fort"
+						tooltip = "qpq_demand_ct_fort_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_fort').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_fort').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_coinage').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_coinage"
+						tooltip = "qpq_demand_ct_coinage_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_coinage').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_coinage').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_faith').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_faith"
+						tooltip = "qpq_demand_ct_faith_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_faith').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_faith').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_up').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_tax_up"
+						tooltip = "qpq_offer_ct_tax_up_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_tax_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_tax_up').IsSet]"
+					}
+
+					button_standard_list = {
+						visible = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_up').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						size = { 0 32 }
+						text = "qpq_offer_ct_levy_up"
+						tooltip = "qpq_offer_ct_levy_up_desc"
+						using = tooltip_ne
+						onclick = "[GetScriptedGui('qpq_ui_offer_i_ct_levy_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
+						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_ct_levy_up').IsSet]"
+					}
+
 					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_offer_i_restraint').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
@@ -2444,17 +2912,6 @@ window = {
 						using = tooltip_ne
 						onclick = "[GetScriptedGui('qpq_ui_offer_i_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_restraint').IsSet]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_offer_i_hook').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_offer_hook"
-						tooltip = "qpq_offer_hook_desc"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_offer_i_hook').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						down = "[GetPlayer.MakeScope.Var('qpq_ui_i_o_hook').IsSet]"
 					}
 
 					text_single = {
@@ -2480,19 +2937,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_sanctioned_conquest').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_sanctioned_conquest_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_sanctioned_conquest').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_sanctioned_conquest').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_sanctioned_conquest_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_sanctioned_conquest').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_sanctioned_conquest').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'sanctioned_conquest' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_t_marcher_charge').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -2503,19 +2947,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_t_marcher_charge').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'marcher_charge' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_licensed_feud').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_licensed_feud_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_licensed_feud').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_licensed_feud').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_licensed_feud_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_licensed_feud').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_licensed_feud').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'licensed_feud' )]"
 					}
 
 					button_standard_list = {
@@ -2603,19 +3034,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_t_development_charter').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'development_charter' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_hand_over').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_hand_over_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_hand_over').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_hand_over').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_hand_over_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_hand_over').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_hand_over').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'hand_over' )]"
 					}
 
 					button_standard_list = {
@@ -2719,19 +3137,6 @@ window = {
 					}
 
 					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_electoral_capitulation').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_electoral_capitulation_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_electoral_capitulation').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_electoral_capitulation').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_electoral_capitulation_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_electoral_capitulation').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_electoral_capitulation').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'electoral_capitulation' )]"
-					}
-
-					button_standard_list = {
 						visible = "[GetScriptedGui('qpq_ui_kind_t_title_swap').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						layoutpolicy_horizontal = expanding
 						size = { 0 32 }
@@ -2742,19 +3147,6 @@ window = {
 						onclick = "[GetScriptedGui('qpq_ui_kind_t_title_swap').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
 						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'title_swap' )]"
-					}
-
-					button_standard_list = {
-						visible = "[GetScriptedGui('qpq_ui_kind_t_secret_clause').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						layoutpolicy_horizontal = expanding
-						size = { 0 32 }
-						text = "qpq_secret_clause_name"
-						enabled = "[GetScriptedGui('qpq_ui_kind_t_secret_clause').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						tooltip = "[Select_CString( GetScriptedGui('qpq_ui_kind_t_secret_clause').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ), Localize( 'qpq_secret_clause_hub_tt' ), GetScriptedGui('qpq_ui_kind_t_secret_clause').BuildTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End ) )]"
-						using = tooltip_ne
-						onclick = "[GetScriptedGui('qpq_ui_kind_t_secret_clause').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
-						onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
-						down = "[EqualTo_string( GetPlayer.MakeScope.Var('qpq_ui_t_kind').GetFlagName, 'secret_clause' )]"
 					}
 
 					text_single = {

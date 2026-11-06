@@ -30,36 +30,6 @@ qpq_chartered_conquest_goal_sw_refuses_trigger = {
 	}
 }
 
-qpq_sanctioned_conquest_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_allied_to = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
-	}
-	}
-}
-
-qpq_sanctioned_conquest_goal_sw_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_allied_to = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_close_family_of = scope:secondary_recipient }
-	}
-	}
-}
-
 qpq_marcher_charge_goal_refuses_trigger = {
 	OR = {
 		AND = {
@@ -110,36 +80,6 @@ qpq_electoral_purchase_goal_sw_refuses_trigger = {
 				scope:actor = { has_relation_rival = scope:secondary_recipient }
 				scope:actor = { has_relation_nemesis = scope:secondary_recipient }
 			}
-	}
-	}
-}
-
-qpq_licensed_feud_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_allied_to = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:secondary_recipient = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 2 } }
-	}
-	}
-}
-
-qpq_licensed_feud_goal_sw_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_allied_to = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_close_family_of = scope:secondary_recipient }
 	}
 	}
 }
@@ -372,22 +312,22 @@ qpq_dispossession_goal_sw_refuses_trigger = {
 qpq_the_cloister_goal_refuses_trigger = {
 	OR = {
 		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_close_family_of = scope:secondary_recipient }
+		exists = scope:recipient
+		scope:recipient = { is_close_family_of = scope:recipient }
 	}
 		AND = {
-		exists = scope:secondary_recipient
+		exists = scope:recipient
 		AND = {
-				scope:recipient = { is_allied_to = scope:secondary_recipient }
-				scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
+				scope:recipient = { is_allied_to = scope:recipient }
+				scope:recipient = { opinion = { target = scope:recipient value >= 30 } }
 			}
 	}
 		AND = {
-		exists = scope:secondary_recipient
+		exists = scope:recipient
 		OR = {
-				scope:recipient = { has_relation_friend = scope:secondary_recipient }
-				scope:recipient = { has_relation_lover = scope:secondary_recipient }
-				scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
+				scope:recipient = { has_relation_friend = scope:recipient }
+				scope:recipient = { has_relation_lover = scope:recipient }
+				scope:recipient = { has_relation_best_friend = scope:recipient }
 			}
 	}
 	}
@@ -396,64 +336,19 @@ qpq_the_cloister_goal_refuses_trigger = {
 qpq_the_cloister_goal_sw_refuses_trigger = {
 	OR = {
 		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_allied_to = scope:secondary_recipient }
+		exists = scope:recipient
+		scope:actor = { is_allied_to = scope:recipient }
 	}
 		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_close_family_of = scope:secondary_recipient }
+		exists = scope:recipient
+		scope:actor = { is_close_family_of = scope:recipient }
 	}
 		AND = {
-		exists = scope:secondary_recipient
+		exists = scope:recipient
 		OR = {
-				scope:actor = { has_relation_friend = scope:secondary_recipient }
-				scope:actor = { has_relation_lover = scope:secondary_recipient }
-				scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-			}
-	}
-	}
-}
-
-qpq_hand_over_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:recipient = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		AND = {
-				scope:recipient = { is_allied_to = scope:secondary_recipient }
-				scope:recipient = { opinion = { target = scope:secondary_recipient value >= 30 } }
-			}
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:recipient = { has_relation_friend = scope:secondary_recipient }
-				scope:recipient = { has_relation_lover = scope:secondary_recipient }
-				scope:recipient = { has_relation_best_friend = scope:secondary_recipient }
-			}
-	}
-	}
-}
-
-qpq_hand_over_goal_sw_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_allied_to = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		scope:actor = { is_close_family_of = scope:secondary_recipient }
-	}
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:actor = { has_relation_friend = scope:secondary_recipient }
-				scope:actor = { has_relation_lover = scope:secondary_recipient }
-				scope:actor = { has_relation_best_friend = scope:secondary_recipient }
+				scope:actor = { has_relation_friend = scope:recipient }
+				scope:actor = { has_relation_lover = scope:recipient }
+				scope:actor = { has_relation_best_friend = scope:recipient }
 			}
 	}
 	}
@@ -511,30 +406,6 @@ qpq_blessing_for_a_feud_goal_sw_refuses_trigger = {
 				scope:actor = { has_relation_friend = scope:secondary_recipient }
 				scope:actor = { has_relation_lover = scope:secondary_recipient }
 				scope:actor = { has_relation_best_friend = scope:secondary_recipient }
-			}
-	}
-	}
-}
-
-qpq_electoral_capitulation_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:recipient = { has_relation_rival = scope:secondary_recipient }
-				scope:recipient = { has_relation_nemesis = scope:secondary_recipient }
-			}
-	}
-	}
-}
-
-qpq_electoral_capitulation_goal_sw_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:secondary_recipient
-		OR = {
-				scope:actor = { has_relation_rival = scope:secondary_recipient }
-				scope:actor = { has_relation_nemesis = scope:secondary_recipient }
 			}
 	}
 	}

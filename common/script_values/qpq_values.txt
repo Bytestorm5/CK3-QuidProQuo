@@ -314,17 +314,17 @@ qpq_offer_office_points_value = {
 
 # Letting go of a hold over them: worth what the hold was worth. A strong hook is a leash; a weak one a nuisance.
 qpq_offer_release_hook_points_value = {
-	value = 14
+	value = 15
 	if = {
 		limit = { scope:actor = { has_strong_hook = scope:recipient } }
-		add = 31
+		add = 30
 	}
 }
 
 # The payer's word is a hook on them (qpq_my_word_hook): worth what a favour owed is worth to the one who holds
 # it, whoever gives it
 qpq_offer_my_word_points_value = {
-	value = 14
+	value = 15
 }
 
 # A secret is worth what it can do to the one it is on, to the one who gets it. With a person named, this is the
@@ -337,23 +337,6 @@ qpq_offer_secret_points_value = {
 	}
 	else = {
 		add = 12
-	}
-}
-
-# Easier terms are worth most to a vassal who is strong enough to use them, and to one who feels wronged
-qpq_offer_contract_points_value = {
-	value = 22
-	if = {
-		limit = { scope:recipient = { has_trait = greedy } }
-		add = 5
-	}
-	if = {
-		limit = { scope:recipient = { opinion = { target = scope:actor value < 0 } } }
-		add = 8
-	}
-	if = {
-		limit = { scope:recipient = { is_powerful_vassal = yes } }
-		add = 10
 	}
 }
 
@@ -439,16 +422,16 @@ qpq_offer_church_points_value = {
 
 # A promise not to strike is worth the threat it lifts: the stronger the promiser against the one promised, the more
 qpq_offer_restraint_points_value = {
-	value = 6
+	value = 5
 	add = {
 		value = scope:actor.max_military_strength
 		divide = { value = scope:recipient.max_military_strength min = 1 }
-		multiply = 14
-		max = 28
+		multiply = 5
+		max = 10
 	}
 	if = {
 		limit = { scope:recipient = { has_trait = paranoid } }
-		add = 10
+		add = 5
 	}
 }
 

@@ -18,12 +18,15 @@ script as written) and checks the answer against a rule of good sense:
 Deterministic: the same files give the same results. Exit code 1 if any test fails.
 """
 import argparse
+import re
 import os
 import sys
 import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_sim import Library, Panel, Run, find_vanilla, offered_pairs, kind_names, scenario, standard_world  # noqa: E402
+from qpq_sim import (Library, Panel, Run, Story, contract_level, find_vanilla, offered_pairs, kind_names,  # noqa: E402
+                     scenario, standard_world)
+from qpq_contracts import CONTRACT_GOODS, TERMS, step_points  # noqa: E402
 
 TESTS = []
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -312,15 +315,19 @@ def stated_tiers(lib, check):
     a, pt = tier("duke", "duke2", "t", "mutual_defense_league")
     check((a, pt) == (3, 3), "Mutual Defense League: text says Tier III, script gives agent %s payer %s" % (a, pt))
     a, pt = tier("duke", "duke2", "t", "title_swap")
-    check(a == 3, "Title Swap (hidden): text says Tier III, script gives %s" % a)
+    check(a == 3, "Transfer a County (hidden): text says Tier III, script gives %s" % a)
+    a, pt = tier("king", "foe", "t", "title_swap")
+    check((a, pt) == (1, 1), "Transfer a County as a foreign dowry: text says Tier I, script gives agent %s payer %s" % (a, pt))
     a, pt = tier("king", "foe", "t", "secret_alliance")
     check(a == 1, "Secret Alliance between independent rulers: text says Tier I, script gives %s" % a)
     def kin(w, W):
         W["count"].liege = W["duke"]
         W["count"].father = W["duke"]
         W["count"].imprisoned_by = W["duke"]
-    a, pt = tier("king", "duke", "t", "hand_over", setup=kin, pick="count")
-    check(a == 3, "Hand-Over of their own kin: text says Tier III, script gives %s" % a)
+    a, pt = tier("king", "duke", "t", "extradition", setup=kin, pick="count")
+    check(a == 3, "Extradition of a vassal's own kin: text says Tier III, script gives %s" % a)
+    a, pt = tier("king", "foe", "t", "extradition")
+    check(a == 3, "Extradition from a foreign ruler: text says Tier III, script gives %s" % a)
 
 
 @test
@@ -360,10 +367,211 @@ def a_blessing_for_oneself(lib, check):
 
 
 @test
+def contract_weights_match_vanilla(lib, check):
+    """The contract goods are priced from vanilla's own numbers: if a patch changes them, the prices must follow."""
+    if not lib.vanilla:
+        return
+    def block_after(text, start):
+        depth, i = 1, start
+        while depth and i < len(text):
+            depth += {"{": 1, "}": -1}.get(text[i], 0)
+            i += 1
+        return text[start:i - 1]
+    def field(body, name, default):
+        m = re.search(r"^\t\t\t%s\s*=\s*(\{|[-@\w.]+)" % name, body, re.M)
+        if not m:
+            return default
+        if m.group(1) == "{":
+            return float(re.search(r"value\s*=\s*(-?[\d.]+)", body[m.end():]).group(1))
+        v = m.group(1)
+        return float(CONST[v]) if v.startswith("@") else float(v)
+    text = ""
+    folder = os.path.join(lib.vanilla, "common", "subject_contracts", "contracts")
+    for fn in ("feudal.txt", "special_contracts.txt"):
+        with open(os.path.join(folder, fn), encoding="utf-8-sig") as f:
+            text += re.sub(r"#.*", "", f.read()) + "\n"
+    CONST = dict(re.findall(r"^(@\w+)\s*=\s*(-?[\d.]+)", text, re.M))
+    for term, want in TERMS.items():
+        m = re.search(r"^%s\s*=\s*\{" % term, text, re.M)
+        check(m, "vanilla has no contract term %s" % term)
+        if not m:
+            continue
+        lv = re.search(r"obligation_levels\s*=\s*\{", block_after(text, m.end()))
+        body = block_after(text, m.end() + lv.end())
+        levels = []
+        for lm in re.finditer(r"^\t\t(\w+)\s*=\s*\{", body, re.M):
+            levels.append(block_after(body, lm.end()).replace("\n\t\t\t", "\n\t\t\t"))
+        got = dict(score=[field("\n" + b, "score", i) for i, b in enumerate(levels)],
+                   liege=[field("\n" + b, "ai_liege_desire", None) for b in levels],
+                   subject=[field("\n" + b, "ai_subject_desire", None) for b in levels])
+        for which in ("score", "liege", "subject"):
+            check(got[which] == [float(x) for x in want[which]],
+                  "%s %s: the mod copies %s, vanilla says %s" % (term, which, want[which], got[which]))
+
+
+def contract_panel(lib, me, them, setup=None):
+    def both(w, W):
+        W[me].culture.innovations = W[them].culture.innovations = ("innovation_battlements", "innovation_currency_02")
+        if setup:
+            setup(w, W)
+    return panel(lib, me, them, setup=both)
+
+
+@test
+def contract_goods_follow_the_anchor(lib, check):
+    """What a contract good is worth to the one who gets it is vanilla's score step times the anchor, and it never
+    costs the giver less than that. Loss aversion is the same 1.25 as on every other good."""
+    for g in CONTRACT_GOODS:
+        me, them = ("duke", "king") if g["step"] == "up" else ("king", "duke")
+        frm, to = (2, 3) if g["step"] == "up" else (2, 1) if g["step"] == "down" else (0, 1)
+        gain, cost = step_points(g, frm, to)
+        check(cost >= gain, "%s costs less to give (%s) than it is worth to get (%s)" % (g["key"], cost, gain))
+        if g["key"] == "ct_faith":
+            continue
+        p, W = contract_panel(lib, me, them)
+        p.deed("t", None)
+        base = total(p)
+        check(p.shown("qpq_ui_offer_t_" + g["key"]), "%s is not on offer from %s to %s" % (g["key"], me, them))
+        p.offer("t", g["key"])
+        check(abs(total(p) - base - gain) < 0.01, "%s gives %s: worth %s, expected %s" % (g["key"], them, total(p) - base, gain))
+        p, W = contract_panel(lib, them, me)
+        p.deed("i", None)
+        base = total(p)
+        p.offer("i", g["key"])
+        check(abs(base - total(p) - cost * 1.25) < 0.01, "%s from %s: costs %s, expected %s" % (g["key"], me, base - total(p), cost * 1.25))
+
+
+@test
+def contract_goods_only_where_they_can_apply(lib, check):
+    """A contract term is on offer only between liege and vassal, and only if it can still move."""
+    def on_offer(me, them, good, setup=None):
+        p, W = contract_panel(lib, me, them, setup)
+        return p.shown("qpq_ui_offer_t_" + good)
+    check(on_offer("king", "duke", "ct_tax_down"), "a liege cannot lower a vassal's taxes")
+    check(not on_offer("duke", "king", "ct_tax_down"), "a vassal can lower its liege's taxes")
+    check(on_offer("duke", "king", "ct_tax_up"), "a vassal cannot offer its liege higher taxes")
+    check(not on_offer("king", "foe", "ct_tax_down"), "taxes lowered for a foreign ruler")
+    def exempt(w, W):
+        W["duke"].obligations = {"feudal_government_taxes": 0}
+    check(not on_offer("king", "duke", "ct_tax_down", exempt), "taxes lowered below exempt")
+    def maxed(w, W):
+        W["duke"].obligations = {"feudal_government_taxes": 4}
+    check(not on_offer("duke", "king", "ct_tax_up", maxed), "taxes raised above extortionate")
+    def granted(w, W):
+        W["duke"].obligations = {"title_revocation_rights": 1}
+    check(not on_offer("king", "duke", "ct_revocation", granted), "a right granted twice")
+    p, W = panel(lib, "king", "duke")
+    check(not p.shown("qpq_ui_offer_t_ct_fort"), "fortification rights without vanilla's innovation")
+    check(not on_offer("king", "duke", "ct_faith"), "religious protection for a vassal of the liege's own faith")
+    def other_faith(w, W):
+        W["duke"].faith = W["foe"].faith
+    check(on_offer("king", "duke", "ct_faith", other_faith), "no religious protection for a vassal of another faith")
+
+
+@test
+def contract_goods_change_the_contract(lib, check):
+    """On delivery the vassal's real contract moves one step, in the right direction, and only while they are bound."""
+    def deliver(good, payer, agent, setup=None):
+        w, W = standard_world(player="king")
+        if setup:
+            setup(W)
+        s = Story("deal")
+        s.vars["qpq_offer_" + good] = True
+        r = Run(lib, w, W["king"], {"qpq_payer": W[payer], "qpq_agent": W[agent]})
+        r.eff(lib.effects["qpq_contract_goods_deliver_effect"], (s, None))
+        return W
+    W = deliver("ct_tax_down", "king", "duke")
+    check(contract_level(W["duke"], "feudal_government_taxes") == 1, "lower taxes left the level at %s" % W["duke"].obligations)
+    W = deliver("ct_levy_up", "duke", "king")
+    check(contract_level(W["duke"], "feudal_government_levies") == 3, "higher levies left the level at %s" % W["duke"].obligations)
+    W = deliver("ct_revocation", "king", "duke")
+    check(contract_level(W["duke"], "title_revocation_rights") == 1, "revocation protection not granted: %s" % W["duke"].obligations)
+    W = deliver("ct_tax_down", "king", "foe")
+    check(contract_level(W["foe"], "feudal_government_taxes") == 2, "a contract changed between strangers")
+
+
+@test
+def permanent_outweighs_promised(lib, check):
+    """The anchor's first rule: a promise that lapses at the deadline is worth no more than the same protection
+    written into the contract for good."""
+    p, W = contract_panel(lib, "king", "duke")
+    p.deed("t", None)
+    base = total(p)
+    p.offer("t", "restraint")
+    promise = total(p) - base
+    p, W = contract_panel(lib, "king", "duke")
+    p.deed("t", None)
+    base = total(p)
+    p.offer("t", "ct_revocation")
+    permanent = total(p) - base
+    check(promise <= permanent, "Promise of Safety is worth %s, permanent Revocation Protection %s" % (promise, permanent))
+
+
+@test
+def abdication_outweighs_a_county(lib, check):
+    """Giving up every title is a bigger ask than ceding one county."""
+    p, W = panel(lib, "king", "duke")
+    p.deed("t", "the_cloister")
+    abdicate = total(p)
+    p, W = panel(lib, "duke", "duke2")
+    p.deed("t", "title_swap")
+    cands = p.me.var_lists.get("qpq_ui_t_title_candidates", [])
+    if cands:
+        p.pick("t", cands[0])
+    check(abdicate < total(p), "abdicating asks %s, one county asks %s" % (abdicate, total(p)))
+
+
+@test
+def one_proxy_war_three_ways(lib, check):
+    """Proxy War is one deed asked of different people: each way keeps its own target rules, tiers and terms."""
+    def deal(me, them, target):
+        p, W = panel(lib, me, them)
+        p.deed("t", "proxy_war")
+        names = [c.name for c in p.candidates("t")]
+        if target not in names:
+            return None, names, p
+        p.pick("t", W[target])
+        return (p.var("t_agent_tier"), p.var("t_payer_tier")), names, p
+    abroad, names, _ = deal("king", "duke", "foe")
+    check(abroad is not None, "a vassal cannot be sent against a foreign neighbour: %s" % names)
+    feud, names, _ = deal("king", "duke", "duke2")
+    check(feud is not None, "a vassal cannot be sent against a fellow vassal: %s" % names)
+    if abroad and feud:
+        check(feud[0] >= abroad[0] + 2 and feud[1] >= abroad[1] + 2, "a feud is no worse than a war abroad: %s, %s" % (feud, abroad))
+    hired, names, _ = deal("king", "foe", "third")
+    check(hired is not None, "a foreign ruler cannot be hired: %s" % names)
+    _, names, _ = deal("king", "foe", "duke")
+    check("duke" not in names, "a foreign ruler offered your own vassal as a target: %s" % names)
+    # the tiers the three deeds had apart: abroad is a tier lower here for the foe's hostile faith
+    check(abroad == (1, 0), "a vassal sent abroad: agent and payer tiers %s, expected (1, 0)" % (abroad,))
+    check(hired == (1, 2), "a foreign ruler hired: agent and payer tiers %s, expected (1, 2)" % (hired,))
+    # only a feud inside the realm hands the vassal a hook on the liege
+    def seal(agent, target):
+        w, W = standard_world(player="king")
+        r = Run(lib, w, W["king"], {"qpq_payer": W["king"], "qpq_agent": W[agent], "qpq_target": W[target]})
+        r.eff(lib.effects["qpq_k_proxy_war_on_seal_effect"], (Story("deal"), None))
+        return (W[agent], W["king"]) in w.hooks
+    check(seal("duke", "duke2"), "a feud gave the vassal no hook on the liege")
+    check(not seal("duke", "foe"), "a war abroad gave the vassal a hook on the liege")
+    check(not seal("foe", "third"), "a foreign ruler gained a hook on the payer")
+
+
+@test
+def an_elector_can_sell_a_vote(lib, check):
+    """The vote is one deed: a liege can buy it, and an elector can offer it, through the same panel."""
+    p, W = panel(lib, "king", "duke")
+    check(p.shown("qpq_ui_kind_t_electoral_purchase"), "a liege cannot buy an elector's vote")
+    p, W = panel(lib, "duke", "king")
+    check(p.shown("qpq_ui_kind_i_electoral_purchase"), "an elector cannot offer their vote")
+    p, W = panel(lib, "king", "foe")
+    check(not p.shown("qpq_ui_kind_t_electoral_purchase"), "a vote bought from someone who has none")
+
+
+@test
 def a_county_given_away(lib, check):
     """A county handed over in a dowry is a loss to the giver, about what land is worth."""
     p, W = panel(lib, "king", "foe")
-    p.deed("t", "secret_clause")
+    p.deed("t", "title_swap")
     titles = p.me.var_lists.get("qpq_ui_t_title_candidates", [])
     county = [t for t in titles if t.tier == 2]
     check(county, "no county offered for the dowry")
@@ -530,6 +738,50 @@ def ai_picks_its_targets(lib, check):
           "the king's conquest is not aimed at the rival a vassal can beat (%r)" % r.scopes.get("secondary_recipient"))
     check(r.scopes.get("recipient") is W["duke"], "the conquest is not given to the strongest vassal (%r)" % r.scopes.get("recipient"))
     check(sealed, "the duke will not take a conquest of a weak rival")
+
+
+@test
+def ai_hires_wars_three_ways(lib, check):
+    """The AI's one Proxy War still has its three ways: a vassal sent abroad, a foreign hand, a feud between vassals."""
+    def world(pick):
+        def setup(w, W):
+            w.random_list_pick = pick
+            w.relate(W["king"], "rival", W["foe"])
+            w.opinion(W["king"], W["foe"], -80)
+            w.relate(W["duke"], "rival", W["duke2"])
+        return setup
+    r, sealed, W = ai_propose(lib, "king", "proxy_war", world(0))
+    check(r.scopes.get("recipient") in (W["duke"], W["duke2"]), "no vassal sent abroad (%r)" % r.scopes.get("recipient"))
+    target = r.scopes.get("secondary_recipient")
+    check(target is not None and r.w.top_liege(target) is not W["king"], "the war abroad is aimed at home (%r)" % target)
+    r, sealed, W = ai_propose(lib, "king", "proxy_war", world(1))
+    check(r.scopes.get("secondary_recipient") is W["foe"], "the foreign rival is not the target (%r)" % r.scopes.get("secondary_recipient"))
+    hired = r.scopes.get("recipient")
+    check(hired is None or hired.liege is None, "the hired hand is someone's vassal (%r)" % hired)
+    r, sealed, W = ai_propose(lib, "king", "proxy_war", world(2))
+    check(r.scopes.get("recipient") is W["duke"], "the feud does not go to the vassal with the rival (%r)" % r.scopes.get("recipient"))
+    check(r.scopes.get("secondary_recipient") is W["duke2"], "the feud is not aimed at the rival (%r)" % r.scopes.get("secondary_recipient"))
+    check(not r.errors, "script errors: %s" % r.errors[:3])
+
+
+@test
+def ai_buys_votes_for_its_heir(lib, check):
+    """An AI liege who has reason to worry buys an elector's vote for the heir, not for anyone else."""
+    def setup(w, W):
+        W["king"].primary_heir = W["count"]
+        W["king"].traits = set(W["king"].traits) | {"ambitious"}
+    r, sealed, W = ai_propose(lib, "king", "electoral_purchase", setup)
+    check(r.scopes.get("secondary_recipient") is W["count"], "the vote is not for the heir (%r)" % r.scopes.get("secondary_recipient"))
+    check(r.scopes.get("recipient") in (W["duke"], W["duke2"]), "the vote is not bought from an elector (%r)" % r.scopes.get("recipient"))
+    check(not r.errors, "script errors: %s" % r.errors[:3])
+    w, W = standard_world(player="nobody")
+    W["king"].primary_heir = W["count"]
+    r = Run(lib, w, W["king"], {})
+    check(not r.trig(lib.triggers["qpq_k_electoral_purchase_ai_valid_trigger"], (W["king"], None)),
+          "a liege with no reason to worry buys votes")
+    W["king"].traits = set(W["king"].traits) | {"ambitious"}
+    check(r.trig(lib.triggers["qpq_k_electoral_purchase_ai_valid_trigger"], (W["king"], None)),
+          "an ambitious liege with electors does not think of buying votes")
 
 
 @test

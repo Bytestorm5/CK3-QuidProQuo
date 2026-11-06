@@ -34,6 +34,8 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 **Goods are named, not waved at.** Land, artifacts and secrets are chosen item by item, and each is worth what it actually is to the one who gets it: a title by what it is and who wants land; an artifact by its rarity and wear, plus a share for each thing it does that they need (prestige for the prestige-poor, piety, gold, strength in war, schemes, standing), read from the artifact's own modifiers; a secret by who it is on, how bad it is (a crime, a shame, or neither) and what that person is to the one getting it (rival, liege, vassal, kin). There is no "marriage" good: its value swings too wildly to price.
 
+**Contract terms are the scale.** Everything else is priced against vanilla's own contract numbers, the `score` and AI desires each obligation level defines in `common/subject_contracts` (copied in `tools/qpq_contracts.py`; a deal test fails if a patch changes them). One point of score is 15 acceptance points. A term is worth that to the one who gets it, and costs the one who gives it that, plus 15 more for each point by which vanilla says the giver wants to keep the level more than the other wants the change: a right costs a liege more than it is worth to the vassal. So lower taxes from normal is worth 15 and costs 15, a Council Guarantee is worth 45 and costs 60, both before the usual quarter more for what is given up. A weak hook is one point and a strong hook three. A promise that lapses at the deadline is worth no more than the same protection written into the contract. `python3 tools/qpq_balance.py` prints every good and deed in these units.
+
 **What a deal is worth to them.** An AI weighs the whole deal from its own side, and agrees above 0:
 - *Goods are weighed at their own purse.* Gold is five points per month of their stake (income, at least 8, times rank: half for the unlanded, up to eight for an emperor, four times for a Head of Faith), so the same sum matters more to a poorer lord. Gold they receive counts for at most twenty months of stake, less for a dirtier deed; gold they pay is never capped. What they give up weighs a quarter more than what they get, so an even swap is refused and 30 gold for their 90 is refused by every lord in the realm.
 - *A deed they do* costs them its demand (its tier, the effort, their own risk), set against their wishes about the target, their traits and their circumstances.
@@ -69,20 +71,130 @@ Everything is prefixed `qpq_` and no vanilla file or object is overridden, so it
 
 **AI.** AI rulers aim their deals where they want them: at the rival they hate most, the holder of land they claim, a neighbour of a hostile faith, and at someone the one they hire can beat, given to the vassal or neighbour best able and keenest to do it. At war, a side that is not winning hires a neighbour with no love for the enemy to join it, or pays the enemy's ally to stay home. Before a war, an AI that means to fall on a neighbour it could beat alone, but whose ally would tip the war against it, tries to buy that ally's promise to ignore the call to arms (a Faithless Ally); and a ruler threatened by a stronger neighbour with a claim on it, a rivalry or a hostile faith tries to buy a truce. An AI proposes only what is worth its price to itself, by its own lights (what the deed brings it, its own risk and scruples, against the gold at its own purse), and offers what the other side would need to agree: AIs do not overpay, so they deal less often than before, and mostly where there is a rival to ruin, a war to win or a gain to be had. An AI liege whose deal would be refused leans on its authority (Command) when its standing allows, with the lightest tier that would do, and never when even full goodwill could not cover what the deed costs; a timid ruler does not try. The command is written on the pact as a player's is, an AI commanded into it resents it, and a person who refuses it defies their liege. AI proposals obey each deed's own rules and target conditions, as the panel does. AI agents work towards what they were paid for (declare the paid-for war, start the murder or abduction scheme, join or start the faction, convert or develop the county, perform the act) and occasionally renege when the deal sours. AI characters propose deals slightly rarer than uncommonly, more often if they are intrigue-heavy; to players this arrives as an event with the terms. AI holders of deal secrets blackmail or burn them, and Honest or Zealous characters near a stress break, or on their deathbed, sometimes confess.
 
-## The catalogue
+## What can be traded
 
-All 61 Asks from the design doc are implemented, plus five for tribute and two for wartime; `tools/qpq_kinds.py` is the single source for each one's tiers, targets, delivery check, AI behaviour and exposure consequence, and `tools/qpq_flavor.py` for its pitch.
+There are 63 deeds (things a character agrees to do) and 24 goods (things handed over or promised). `tools/qpq_kinds.py` is the single source for each deed's tiers, targets, delivery check, AI behaviour and exposure consequence, and `tools/qpq_flavor.py` for its pitch. Many deeds only appear for certain relationships, faiths or situations.
 
-| Catalogue | Deals |
-| --- | --- |
-| A. Liege to vassal | Chartered Conquest, Sanctioned Conquest, Marcher Charge, Holy Sponsorship, Development Charter, Electoral Purchase, The Loyal Mole, Agent Provocateur, Licensed Feud, Dossier, Quiet Removal, The Heir Question, Snatch, Dispossession, The Cloister, Marriage by Command, Hand-Over (and Hand-Over: Treasure), Renunciation, Hush Money |
-| B. Vassal-initiated | Price of Loyalty, Blessing for a Feud, Clemency Bargain, Electoral Capitulation, Mutual Defense League, Faction Pledge, Title Swap, Coup Deal |
-| C. Foreign courts | Proxy War, Partition Deal, Secret Alliance, Bought Truce, Faithless Ally, Turncoat, Seed the Separatists, Shelter the Pretender, Extradition, Buy a Councillor, Stay Home, Defection Deal, Secret Clause, Hire the Hashashin |
-| D1. Any head of faith | Excommunication for Hire, Dispensation for Gold, Steer the Holy War, Purchase a Mitre, Bought Claim, Absolution by Concession, Holy Warrant |
-| D2. Catholic Church (By God Alone) | Buy a Bull, Conclave Votes (uses BGA's forced papal vote), Council Lobbying |
-| D3. Signature faith deals | Caliphal Investiture, Name in the Khutba, Fatwa for Hire, Fund the Da'wa, Crowning the Usurper, Pliant Patriarch, Favourable Omens, Consecration Rites, Temple Patronage |
-| F. Tribute | Heavier Tribute, Lighter Tribute, Bought Freedom, Accept the Yoke, Cast Off the Yoke |
-| G. In time of war | Join the War, Stay Out of the War |
+### Deeds
+
+#### Liege to vassal (17)
+- **Chartered Conquest:** conquer a neighbour's land under a published charter
+- **Marcher Charge:** hold the border against a target
+- **Holy Sponsorship:** convert a title to the payer's faith
+- **Development Charter:** raise a title's development
+- **Electoral Purchase:** vote for a target in the next election (a liege can buy it, an elector can offer it)
+- **The Loyal Mole:** join a faction against the payer and sabotage it
+- **Agent Provocateur:** start a revolt against the payer so it can be crushed
+- **Dossier:** find or plant dirt on a target
+- **Quiet Removal:** see that a target doesn't live out the term
+- **The Heir Question:** remove the payer's own heir
+- **Snatch:** kidnap a target and deliver them to the payer
+- **Dispossession:** imprison a target or strip their lands, and bear the tyranny for it
+- **Abdicate to Heir:** give up their titles to their heir and take holy vows
+- **Marriage by Command:** set aside any spouse and marry a target
+- **Surrender a Treasure:** hand an artifact over to the payer
+- **Renunciation:** renounce any claim on a title
+- **Hush Money:** never expose what they know about the payer
+
+#### Vassal-initiated (7)
+- **Price of Loyalty:** answer the call to arms and stay loyal through the war
+- **Blessing for a Feud:** look away while the payer attacks a fellow vassal
+- **Clemency Bargain:** pardon the payer in exchange for secrets on others
+- **Mutual Defense:** stand together if the liege revokes from either party
+- **Faction Pledge:** stay in a faction until it wins, and share the spoils
+- **Transfer a County:** a fellow vassal, or a foreign house married into yours, cedes a county to the payer
+- **Coup Deal:** kill a target so the payer can seize the regency
+
+#### Foreign courts (13)
+- **Proxy War:** attack a target (asked of a foreign ruler, or of your own vassal against a neighbour or a fellow vassal)
+- **Partition Deal:** join a conquest and keep off the counties bordering the payer
+- **Secret Alliance:** secretly come to the payer's defence if they're attacked
+- **Bought Truce:** make peace with the payer and keep it
+- **Faithless Ally:** abandon an ally in any war against the payer
+- **Turncoat:** desert a side and join the payer mid-war
+- **Seed the Separatists:** win independence from a liege on the payer's gold
+- **Shelter the Pretender:** take a title with the payer's backing
+- **Extradition:** hand a prisoner, hostage, claimant or refugee over to the payer (also asked of your own vassals)
+- **Buy a Councillor:** leak from and sabotage a council
+- **Stay Home:** ignore a liege's call to arms when the payer attacks
+- **Defection Deal:** become the payer's vassal if their liege loses
+- **Hire Holy Order Assassins:** have a target killed by a holy order
+
+#### Any head of faith (7)
+- **Excommunication for Hire:** excommunicate a target
+- **Dispensation for Gold:** grant a dispensation concerning a target
+- **Steer the Holy War:** aim the next great holy war at a target
+- **Buy a Bishopric:** give a target a bishopric or temple
+- **Bought Claim:** grant the payer a claim on a target's title
+- **Absolution by Concession:** lift the payer's excommunication
+- **Holy Warrant:** declare a holy war on a target for the payer
+
+#### Catholic Church, needs By God Alone (3)
+- **Buy a Bull:** issue a bull concerning a target
+- **Conclave Votes:** vote for a target in the next papal election
+- **Council Lobbying:** vote with the payer at the next Ecumenical Council
+
+#### Signature faith deals (9)
+- **Caliphal Investiture:** recognise the payer's title as sultan or emir
+- **Name in the Khutba:** read Friday prayers in the payer's caliph's name
+- **Fatwa for Hire:** rule a target's war or reign unlawful
+- **Fund the Da'wa:** send missionaries to turn a target's capital to the payer's faith
+- **Crowning the Usurper:** bless and crown the payer against a target
+- **Pliant Patriarch:** owe the payer a favour for the patriarchal throne
+- **Favourable Omens:** read a target's omens as the payer wishes
+- **Consecration Rites:** perform the rites that raise the payer to kingship
+- **Temple Patronage:** have the clergy back the payer against a target
+
+#### Tribute (5)
+- **Heavier Tribute:** raise the tribute paid to the payer
+- **Lighter Tribute:** lower the tribute the payer pays
+- **Bought Freedom:** release the payer from tribute
+- **Accept the Yoke:** become the payer's tributary
+- **Cast Off the Yoke:** stop paying tribute to an overlord
+
+#### In time of war (2)
+- **Join the War:** join the payer's war and see it through
+- **Stay Out of the War:** stay out of the payer's war
+
+### Goods
+
+#### General (13)
+- **Gold:** an amount you name, paid at once or on delivery
+- **Land:** one of your counties
+- **A claim:** a fabricated claim on the target's land
+- **Office:** a seat on your council, and dismissing them early is a breach
+- **Release a hook:** free them from a hook you hold on them
+- **Weak Hook:** a weak hook on yourself
+- **Use Hook:** use a hook you hold on them to press the deal
+- **A secret on someone:** what you know about a named person
+- **Succession:** name them your designated heir
+- **Clemency:** free them or their kin from prison, and drop charges
+- **Arms:** lend levies and knights until the deadline
+- **Artifacts:** chosen by name
+- **Church favour:** an indulgence and absolution from a head of faith
+
+#### Contract terms (11)
+Only between a liege and their own vassal, and only where the term can still move. Each changes the vassal's real contract, one step, on delivery, and lasts. **Promise of Safety** is the exception: a promise for the term, not a contract right.
+
+Given by the liege:
+- **Lower Taxes:** the vassal's taxes fall one level
+- **Lower Levies:** the vassal's levies fall one level
+- **Revocation Protection:** their titles can never be revoked
+- **Council Guarantee:** the right to demand a council seat
+- **War Declaration Rights:** the right to declare war freely
+- **Fortification Rights:** needs the liege's culture to have the innovation
+- **Coinage Rights:** needs the liege's culture to have the innovation
+- **Religious Protection:** for a vassal of a different faith
+- **Promise of Safety:** no revocation or imprisonment until the deadline
+
+Given by the vassal:
+- **Higher Taxes:** the vassal's taxes rise one level
+- **Higher Levies:** the vassal's levies rise one level
+
+### Structure
+- If neither side does a deed, the trade runs as **Exchange of Goods**, which is not counted among the 63.
+- A public Charter is a setting on the whole deal, not a good.
+- The classic interaction window also offers half-and-half and yearly gold payments.
 
 ## Interpretations and simplifications
 
@@ -90,12 +202,12 @@ The design doc is a brainstorm; where it left a choice open, this is what the mo
 
 - **No deal settles a war.** The design doc's *Bought Truce* ("pay to end or avoid a war") and *Faithless Ally* ("ignore the call to arms, or withdraw mid-war") are kept to their peacetime halves: a truce bought between rulers not at war, and a promise to stay out of wars to come. Ending a war, or taking a participant out of one, is war resolution, which vanilla offers no diplomatic action for, so deals leave it alone.
 - **Open questions in the doc:** the borrowed de jure casus belli keeps the name *Crown Mandate*; a Charter pulls the target's allies in scaled by their opinion of the targeted vassal; confession costs are 75% of your share, 25%/10% on the deathbed, plus a penance; all catalogues are built, not just a v1 slice; Catalogue D uses the 1.20 script names (`pam_forced_papal_vote_target`, `has_clerical_electors`, `set_great_holy_war_target`, `excommunicate_character`).
-- **Wars for hire** (Sanctioned Conquest, Proxy War, Partition Deal, Licensed Feud, Blessing for a Feud, Holy Warrant) grant a **Deal War** casus belli against the target, so the AI and players always have a way to deliver. Licensed Feud also gives the vassal a favour hook on the liege, meant to get the war past crown authority (vanilla gates banned vassal wars on a hook on the liege, see `war_declarer_needs_hook_on_liege`).
-- **Effects CK3 cannot script directly** use modifiers: contract terms are a 20-year income modifier, lent arms a levy and knight modifier, a Pope's bull a favour or condemnation modifier, omens an advantage modifier, Stay Home and a refused Price of Loyalty a levy penalty.
-- **Electoral Purchase / Electoral Capitulation** buy the vote through a strong opinion of the candidate, which the vanilla elective scripts weigh; the deal is a promise kept until the deadline.
-- **The Cloister** abdicates the vassal to their own heir (choosing the heir is not scriptable reliably); a relative simply takes vows. **Dispensation for Gold** covers annulment and legitimisation, not consanguinity waivers. **Fund the Da'wa** is open to Shia faiths (Ismaili is not a separate faith key in 1.20).
-- **Mutual Defense League** is called when the liege revokes from the proposer; the partner then has six months to join a faction against the liege.
-- **Faith boundaries** follow vanilla's own doctrines rather than a hand-made list. Excommunication, absolution, church favour (indulgences), penance in gold and Purchase a Mitre need a sacramental faith with a spiritual head (`faith_has_sacraments_central_trigger`). Annulments also work where divorce needs the head of faith's approval. Bought Claim needs a spiritual head, Holy Warrant a temporal one, and Steer the Holy War a faith that wages great holy wars. Everywhere else a confession's gold goes to alms, and the Hajj counts as the pilgrimage.
+- **Wars for hire** (Proxy War, Partition Deal, Blessing for a Feud, Holy Warrant) grant a **Deal War** casus belli against the target, so the AI and players always have a way to deliver. A Proxy War between two of your own vassals also gives the one you send a favour hook on you, meant to get the war past crown authority (vanilla gates banned vassal wars on a hook on the liege, see `war_declarer_needs_hook_on_liege`).
+- **Effects CK3 cannot script directly** use modifiers: lent arms a levy and knight modifier, a Pope's bull a favour or condemnation modifier, omens an advantage modifier, Stay Home and a refused Price of Loyalty a levy penalty.
+- **Electoral Purchase** buys the vote through a strong opinion of the candidate, which the vanilla elective scripts weigh; the deal is a promise kept until the deadline.
+- **Abdicate to Heir** abdicates the vassal to their own heir (choosing the heir is not scriptable reliably). **Dispensation for Gold** covers annulment and legitimisation, not consanguinity waivers. **Fund the Da'wa** is open to Shia faiths (Ismaili is not a separate faith key in 1.20).
+- **Mutual Defense** is called when the liege revokes from the proposer; the partner then has six months to join a faction against the liege.
+- **Faith boundaries** follow vanilla's own doctrines rather than a hand-made list. Excommunication, absolution, church favour (indulgences), penance in gold and Buy a Bishopric need a sacramental faith with a spiritual head (`faith_has_sacraments_central_trigger`). Annulments also work where divorce needs the head of faith's approval. Bought Claim needs a spiritual head, Holy Warrant a temporal one, and Steer the Holy War a faith that wages great holy wars. Everywhere else a confession's gold goes to alms, and the Hajj counts as the pilgrimage.
 - **Inherited halves** are priced one tier lower by the mod, but keep their original secret type, so vanilla blackmail still treats a Tier IV-V stain as criminal.
 - **The deal panel** decides for AI recipients with the same numbers as the interaction's acceptance (they agree above 0). A human recipient gets the proposal as an event listing every term, and can only accept while the deal still stands (target, ties, gold and room for another deal are checked again when they answer). Propose also re-checks everything at the moment it is pressed. You cannot run two deals of the same Ask with the same person. The target lists show at most 120 rows (rivals first, then people at either court or in either's service, then by rank), so a large realm does not build hundreds of portraits; a pick stays valid even if it falls outside them.
 - **Hush Money** over vanilla secrets uses `disable_exposure_by`, so the holder truly can never expose them; over deal secrets, exposing it anyway breaches the hush money deal.
@@ -106,5 +218,6 @@ The design doc is a brainstorm; where it left a choice open, this is what the mo
 - Text follows the game's own split. Events, decisions, situations and each Ask's pitch speak in the world's voice; what things do sits under that in plain tooltip text, with the mod's rules behind game-concept links (`[qpq_deal|E]`, `[qpq_scandal_tier|E]`, `[qpq_charter|E]`, `[qpq_wronged_party|E]`, in `common/game_concepts/qpq_game_concepts.txt`). An Ask's pitch is in `tools/qpq_flavor.py`: the words of whoever wants the deed done, quoted in the panel, the hub and the proposal events. What it does is its `desc` in `tools/qpq_kinds.py`.
 - `python3 tools/qpq_deal_tests.py [--vanilla <CK3>/game]` runs the deal tests: `tools/qpq_sim.py` parses the mod's own scripted effects, triggers, values and scripted GUIs (and vanilla's that they call), builds a small world (an elective kingdom and its court, a Church, an orthodox empire, sunni and shia realms, a pagan jarl, a holy order, a tributary chief, a war), and drives the Backroom Deal panel through its own buttons, reading back every part of the answer. The tests check rules of good sense on that: no free lunch on goods, goodwill held to the deed, worth judged by the one who would pay, more gold never hurts, every refusal at any price explained, the tiers a deed's text states, and no script error on any deed between any pair it is offered to (`python3 tools/qpq_sim.py kinds` sweeps them all). The simulator is strict: a keyword it does not know stops it, so it is taught, never skipped.
 - `python3 tools/qpq_eval.py --n 320 --seed 1 --out <dir>` composes that many varied deals (barter, deeds each way, goods, opinion, traits, dread, rivalries, Command, Charters) and writes each as a short brief with the AI's answer and breakdown, for a reader to judge which answers do not make sense.
-- `python3 tools/qpq_validate.py --vanilla <CK3>/game [--tiger <tiger checkout>]` parses every script file and checks keywords against the vanilla 1.20 files (and the tiger tables), references to modifiers, opinions, hooks, secrets, traits, schemes, factions, events and interactions, saved scopes and variables that are used but never set, and localization keys, BOMs and syntax. For `gui/` it checks widget types, properties, templates, block overrides, data functions, scripted GUI names and the scopes each scripted GUI is given, and the localization keys used. Every `[concept|E]` link must name a vanilla or mod game concept. It reports 0 problems on this version.
+- `python3 tools/qpq_balance.py [--vanilla <CK3>/game]` prints every good and deed in contract score points, read from the mod's own script through the panel, for rebalancing: permanent should outweigh temporary, and nothing should sit far from what it is comparable to.
+- `python3 tools/qpq_validate.py --vanilla <CK3>/game [--tiger <tiger checkout>]` parses every script file and checks keywords against the vanilla 1.20 files (and the tiger tables), references to modifiers, opinions, hooks, secrets, traits, schemes, factions, events and interactions, saved scopes and variables that are used but never set, and localization keys, BOMs and syntax. For `gui/` it checks widget types, properties, templates, block overrides, data functions, scripted GUI names and the scopes each scripted GUI is given, and the localization keys used. Every `[concept|E]` link must name a vanilla or mod game concept. On this version it reports eight unknown keywords it cannot confirm from vanilla's files (`ordered_secret`, `every_elector`, `tributary_contract_obligation_level_can_be_increased` and `_decreased`); run tiger to settle them.
 - This was written and checked without running the game. Before relying on it, run [ck3-tiger](https://github.com/amtep/tiger) for scope-level validation and check `error.log` after a few in-game years.

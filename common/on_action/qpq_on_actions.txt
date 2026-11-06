@@ -119,7 +119,7 @@ qpq_on_join_war_as_secondary = {
 
 qpq_on_title_lost = {
 	effect = {
-		# Mutual Defense League: a revocation by the liege calls the league to arms (six months to answer)
+		# Mutual Defense: a revocation by the liege calls the league to arms (six months to answer)
 		if = {
 			limit = {
 				exists = scope:transfer_type

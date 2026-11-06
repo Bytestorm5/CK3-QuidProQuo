@@ -295,8 +295,8 @@ qpq_avenge_perfidy_cb = {
 }
 
 #################################################################
-# Pact War: a war someone else is paying for (Sanctioned Conquest, Proxy War,
-# Partition Pact, Licensed Feud, Blessing for a Feud, Holy Warrant).
+# Pact War: a war someone else is paying for (Proxy War,
+# Partition Pact, Blessing for a Feud, Holy Warrant).
 # The agent keeps a list of characters they are licensed to attack: qpq_war_licence_against
 #################################################################
 qpq_pact_war_cb = {

@@ -630,10 +630,7 @@ qpq_store_and_pay_offers_effect = {
 				limit = { scope:qpq_o_office ?= yes }
 				set_variable = qpq_offer_office
 			}
-			if = {
-				limit = { scope:qpq_o_contract ?= yes }
-				set_variable = qpq_offer_contract
-			}
+			qpq_contract_goods_seal_effect = yes
 			if = {
 				limit = { scope:qpq_o_succession ?= yes }
 				set_variable = qpq_offer_succession
@@ -1081,6 +1078,8 @@ qpq_pay_on_delivery_effect = {
 				}
 			}
 		}
+		qpq_contract_goods_deliver_effect = yes
+		# Deals sealed before contract terms became goods of their own
 		if = {
 			limit = { has_variable = qpq_offer_contract }
 			scope:qpq_agent = {
@@ -2063,6 +2062,7 @@ qpq_sync_mirror_effect = {
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_artifact }
 			qpq_mirror_copy_var_effect = { VAR = qpq_target_artifact }
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_contract }
+			qpq_contract_goods_mirror_effect = yes
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_succession }
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_office }
 			qpq_mirror_copy_var_effect = { VAR = qpq_offer_restraint }

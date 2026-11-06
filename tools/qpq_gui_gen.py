@@ -46,6 +46,17 @@ def gen_gui(write):
 						}
 """
         for o in U.UI_OFFERS:
+            if o == U.CONTRACT_OFFERS[0]:
+                s += """
+						text_single = {
+							visible = "%s"
+							layoutpolicy_horizontal = expanding
+							margin = { 6 4 }
+							text = "QPQ_UI_LIST_CONTRACT"
+							default_format = "#T"
+							using = Font_Size_Medium
+						}
+""" % sg("qpq_ui_contract_goods_%s" % G, "IsShown")
             tip = ("qpq_demand_%s_desc" if side == "them" and o in U.DEMAND_KEYS else "qpq_offer_%s_desc") % o
             if o in PICKED_GOODS:
                 clicks = '						onclick = "%s"\n' % popup("%s_%s" % (o, side))

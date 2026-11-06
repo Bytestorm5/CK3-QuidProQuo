@@ -129,104 +129,6 @@ qpq_k_chartered_conquest_ai_find_effect = {
 	}
 }
 
-#### Sanctioned Conquest
-qpq_k_sanctioned_conquest_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_sanctioned_conquest_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_sanctioned_conquest_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_sanctioned_conquest_price_value }
-	}
-	if = {
-		limit = {
-			qpq_sanctioned_conquest_payer_tier_value <= 0
-			qpq_sanctioned_conquest_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = sanctioned_conquest SECRET = conquest TERM = 96 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_sanctioned_conquest_on_seal_effect = {
-	qpq_grant_war_licence_effect = { AGENT = scope:qpq_agent TARGET = scope:qpq_target }
-}
-qpq_k_sanctioned_conquest_on_deliver_effect = {
-	# nothing
-}
-qpq_k_sanctioned_conquest_on_end_effect = {
-	if = {
-		limit = { exists = scope:qpq_target }
-		qpq_revoke_war_licence_effect = { AGENT = scope:qpq_agent TARGET = scope:qpq_target }
-	}
-}
-qpq_k_sanctioned_conquest_tick_effect = {
-	# nothing
-}
-qpq_k_sanctioned_conquest_perform_effect = {
-	# nothing
-}
-qpq_k_sanctioned_conquest_ai_attempt_effect = {
-	if = {
-		limit = {
-			scope:qpq_agent = { is_at_war = no }
-			scope:qpq_target = { is_alive = yes }
-		}
-		random = {
-			chance = 20
-			qpq_ai_declare_pact_war_effect = { ATTACKER = scope:qpq_agent DEFENDER = scope:qpq_target }
-		}
-	}
-}
-qpq_k_sanctioned_conquest_exposed_effect = {
-	# The target's liege treats the war as yours
-	if = {
-		limit = { scope:qpq_target = { is_alive = yes } }
-		scope:qpq_target = {
-			add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
-		}
-	}
-
-	if = {
-		limit = {
-			exists = scope:qpq_target
-			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
-		}
-		scope:qpq_payer = { add_prestige = major_prestige_loss }
-	}
-}
-qpq_k_sanctioned_conquest_ai_find_effect = {
-	# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
-	ordered_vassal = {
-		limit = {
-			is_landed = yes
-			is_ai = yes
-			is_at_war = no
-			any_neighboring_and_across_water_top_liege_realm_owner = {
-				NOT = { top_liege = root.top_liege }
-			}
-		}
-		order_by = max_military_strength
-		save_scope_as = recipient
-	}
-	scope:recipient ?= {
-		save_scope_as = qpq_ai_fighter
-		ordered_neighboring_and_across_water_top_liege_realm_owner = {
-			limit = {
-				NOT = { top_liege = root.top_liege }
-				NOT = { this = root }
-			}
-			order_by = qpq_ai_war_target_value
-			save_scope_as = secondary_recipient
-		}
-	}
-}
-
 #### Marcher Charge
 qpq_k_marcher_charge_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
@@ -485,6 +387,20 @@ qpq_k_electoral_purchase_exposed_effect = {
 		}
 	}
 }
+qpq_k_electoral_purchase_ai_find_effect = {
+	primary_heir = { save_scope_as = secondary_recipient }
+	primary_title = {
+		ordered_elector = {
+			limit = {
+				is_ai = yes
+				NOT = { this = root }
+				NOT = { this = root.primary_heir }
+			}
+			order_by = max_military_strength
+			save_scope_as = recipient
+		}
+	}
+}
 
 #### The Loyal Mole
 qpq_k_loyal_mole_seal_from_scopes_effect = {
@@ -651,98 +567,6 @@ qpq_k_agent_provocateur_exposed_effect = {
 		add_tyranny = 30
 		every_vassal = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_plays_favourites_opinion opinion = -10 }
-		}
-	}
-}
-
-#### Licensed Feud
-qpq_k_licensed_feud_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_licensed_feud_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_licensed_feud_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_licensed_feud_price_value }
-	}
-	if = {
-		limit = {
-			qpq_licensed_feud_payer_tier_value <= 0
-			qpq_licensed_feud_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = licensed_feud SECRET = conquest TERM = 72 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_licensed_feud_on_seal_effect = {
-	qpq_grant_war_licence_effect = { AGENT = scope:qpq_agent TARGET = scope:qpq_target }
-	scope:qpq_agent = { add_hook = { type = favor_hook target = scope:qpq_payer } }
-}
-qpq_k_licensed_feud_on_deliver_effect = {
-	# nothing
-}
-qpq_k_licensed_feud_on_end_effect = {
-	if = {
-		limit = { exists = scope:qpq_target }
-		qpq_revoke_war_licence_effect = { AGENT = scope:qpq_agent TARGET = scope:qpq_target }
-	}
-}
-qpq_k_licensed_feud_tick_effect = {
-	# nothing
-}
-qpq_k_licensed_feud_perform_effect = {
-	# nothing
-}
-qpq_k_licensed_feud_ai_attempt_effect = {
-	if = {
-		limit = {
-			scope:qpq_agent = { is_at_war = no }
-			scope:qpq_target = { is_alive = yes }
-		}
-		random = {
-			chance = 20
-			qpq_ai_declare_pact_war_effect = { ATTACKER = scope:qpq_agent DEFENDER = scope:qpq_target }
-		}
-	}
-}
-qpq_k_licensed_feud_exposed_effect = {
-	scope:qpq_payer = {
-		every_vassal = {
-			limit = {
-				NOT = { this = scope:qpq_agent }
-				NOT = { this = scope:qpq_target }
-			}
-			add_opinion = { target = scope:qpq_payer modifier = qpq_plays_favourites_opinion }
-		}
-	}
-	if = {
-		limit = { scope:qpq_target = { is_alive = yes } }
-		scope:qpq_target = {
-			add_opinion = { target = scope:qpq_agent modifier = qpq_avenge_perfidy_opinion }
-		}
-	}
-}
-qpq_k_licensed_feud_ai_find_effect = {
-	# the strongest vassal with a rival among root's vassals, against the weakest such rival
-	ordered_vassal = {
-		limit = {
-			is_landed = yes
-			is_ai = yes
-			any_relation = { type = rival liege ?= root is_landed = yes }
-		}
-		order_by = max_military_strength
-		save_scope_as = recipient
-		save_scope_as = qpq_ai_fighter
-		ordered_relation = {
-			type = rival
-			limit = { liege ?= root is_landed = yes }
-			order_by = qpq_ai_weakness_value
-			save_scope_as = secondary_recipient
 		}
 	}
 }
@@ -1134,11 +958,11 @@ qpq_k_dispossession_exposed_effect = {
 	}
 }
 
-#### The Cloister
+#### Abdicate to Heir
 qpq_k_the_cloister_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
+	scope:recipient = { save_scope_as = qpq_target }
 	save_scope_value_as = { name = qpq_payer_tier value = qpq_the_cloister_payer_tier_value }
 	save_scope_value_as = { name = qpq_agent_tier value = qpq_the_cloister_agent_tier_value }
 	if = {
@@ -1172,13 +996,10 @@ qpq_k_the_cloister_tick_effect = {
 }
 qpq_k_the_cloister_perform_effect = {
 	if = {
-		limit = { scope:qpq_target = scope:qpq_agent }
-		if = {
-			limit = { exists = scope:qpq_agent.primary_heir }
-			scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
-		}
-		scope:qpq_agent = { depose = yes }
+		limit = { exists = scope:qpq_agent.primary_heir }
+		scope:qpq_payer_secret ?= { set_variable = { name = qpq_successor value = scope:qpq_agent.primary_heir } }
 	}
+	scope:qpq_agent = { depose = yes }
 	scope:qpq_target = {
 		if = {
 			limit = { is_married = yes }
@@ -1288,70 +1109,7 @@ qpq_k_marriage_by_command_exposed_effect = {
 	}
 }
 
-#### Hand-Over
-qpq_k_hand_over_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_hand_over_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_hand_over_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_hand_over_price_value }
-	}
-	if = {
-		limit = {
-			qpq_hand_over_payer_tier_value <= 0
-			qpq_hand_over_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = hand_over SECRET = abduction TERM = 12 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_hand_over_on_seal_effect = {
-	# nothing
-}
-qpq_k_hand_over_on_deliver_effect = {
-	# nothing
-}
-qpq_k_hand_over_on_end_effect = {
-	# nothing
-}
-qpq_k_hand_over_tick_effect = {
-	# nothing
-}
-qpq_k_hand_over_perform_effect = {
-	if = {
-		limit = { scope:qpq_target = { is_imprisoned = yes } }
-		qpq_hand_prisoner_to_payer_effect = yes
-	}
-	else = {
-		scope:qpq_payer = { add_courtier = scope:qpq_target }
-	}
-}
-qpq_k_hand_over_ai_attempt_effect = {
-	if = {
-		limit = { qpq_k_hand_over_can_perform_trigger = yes }
-		random = {
-			chance = 25
-			qpq_k_hand_over_perform_effect = yes
-			qpq_deliver_pact_effect = yes
-		}
-	}
-}
-qpq_k_hand_over_exposed_effect = {
-	scope:qpq_agent = {
-		every_courtier = {
-			add_opinion = { target = scope:qpq_agent modifier = qpq_betrayed_a_guest_opinion }
-		}
-	}
-}
-
-#### Hand-Over: Treasure
+#### Surrender a Treasure
 qpq_k_hand_over_artifact_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -1744,74 +1502,7 @@ qpq_k_clemency_bargain_ai_find_effect = {
 	liege = { save_scope_as = recipient }
 }
 
-#### Electoral Capitulation
-qpq_k_electoral_capitulation_seal_from_scopes_effect = {
-	scope:recipient = { save_scope_as = qpq_payer }
-	scope:actor = { save_scope_as = qpq_agent }
-	scope:secondary_recipient = { save_scope_as = qpq_target }
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_electoral_capitulation_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_electoral_capitulation_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_electoral_capitulation_price_value }
-	}
-	if = {
-		limit = {
-			qpq_electoral_capitulation_payer_tier_value <= 0
-			qpq_electoral_capitulation_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = electoral_capitulation SECRET = bribery TERM = 120 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_electoral_capitulation_on_seal_effect = {
-	scope:qpq_agent = {
-		add_opinion = { target = scope:qpq_target modifier = qpq_bought_vote_opinion }
-		recalculate_succession_election_vote = yes
-	}
-}
-qpq_k_electoral_capitulation_on_deliver_effect = {
-	# nothing
-}
-qpq_k_electoral_capitulation_on_end_effect = {
-	# nothing
-}
-qpq_k_electoral_capitulation_tick_effect = {
-	# nothing
-}
-qpq_k_electoral_capitulation_perform_effect = {
-	# nothing
-}
-qpq_k_electoral_capitulation_ai_attempt_effect = {
-	# nothing
-}
-qpq_k_electoral_capitulation_exposed_effect = {
-	if = {
-		limit = { exists = scope:qpq_payer.primary_title }
-		scope:qpq_payer.primary_title = {
-			every_elector = {
-				limit = {
-					NOT = { this = scope:qpq_agent }
-					NOT = { this = scope:qpq_payer }
-				}
-				add_opinion = { target = scope:qpq_payer modifier = qpq_precedent_opinion }
-			}
-		}
-	}
-}
-qpq_k_electoral_capitulation_ai_find_effect = {
-	liege = { save_scope_as = recipient }
-	if = {
-		limit = { exists = liege.primary_heir }
-		liege.primary_heir = { save_scope_as = secondary_recipient }
-	}
-}
-
-#### Mutual Defense League
+#### Mutual Defense
 qpq_k_mutual_defense_league_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -1960,7 +1651,7 @@ qpq_k_faction_pledge_exposed_effect = {
 	}
 }
 
-#### Title Swap
+#### Transfer a County
 qpq_k_title_swap_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -1982,7 +1673,7 @@ qpq_k_title_swap_seal_from_scopes_effect = {
 		}
 		save_scope_value_as = { name = qpq_floor_zero value = yes }
 	}
-	qpq_seal_pact_effect = { KIND = title_swap SECRET = dynastic TERM = 12 }
+	qpq_seal_pact_effect = { KIND = title_swap SECRET = dynastic TERM = 24 }
 	if = {
 		limit = { exists = scope:qpq_floor_zero }
 		scope:qpq_story = { set_variable = qpq_floor0 }
@@ -2025,8 +1716,19 @@ qpq_k_title_swap_ai_attempt_effect = {
 	}
 }
 qpq_k_title_swap_exposed_effect = {
-	scope:qpq_payer.liege ?= {
-		add_opinion = { target = scope:qpq_payer modifier = qpq_conspirator_opinion opinion = -15 }
+	if = {
+		limit = { scope:qpq_agent.top_liege = scope:qpq_payer.top_liege }
+		scope:qpq_payer.liege ?= {
+			add_opinion = { target = scope:qpq_payer modifier = qpq_conspirator_opinion opinion = -15 }
+		}
+	}
+	else = {
+		scope:qpq_agent = {
+			every_close_family_member = {
+				limit = { is_alive = yes }
+				add_opinion = { target = scope:qpq_payer modifier = qpq_cheated_by_marriage_opinion }
+			}
+		}
 	}
 }
 qpq_k_title_swap_ai_find_effect = {
@@ -2171,7 +1873,7 @@ qpq_k_proxy_war_seal_from_scopes_effect = {
 		}
 		save_scope_value_as = { name = qpq_floor_zero value = yes }
 	}
-	qpq_seal_pact_effect = { KIND = proxy_war SECRET = conquest TERM = 72 }
+	qpq_seal_pact_effect = { KIND = proxy_war SECRET = conquest TERM = 84 }
 	if = {
 		limit = { exists = scope:qpq_floor_zero }
 		scope:qpq_story = { set_variable = qpq_floor0 }
@@ -2179,6 +1881,13 @@ qpq_k_proxy_war_seal_from_scopes_effect = {
 }
 qpq_k_proxy_war_on_seal_effect = {
 	qpq_grant_war_licence_effect = { AGENT = scope:qpq_agent TARGET = scope:qpq_target }
+	if = {
+		limit = {
+			scope:qpq_agent = { liege ?= scope:qpq_payer }
+			scope:qpq_target = { liege ?= scope:qpq_payer }
+		}
+		scope:qpq_agent = { add_hook = { type = favor_hook target = scope:qpq_payer } }
+	}
 }
 qpq_k_proxy_war_on_deliver_effect = {
 	# nothing
@@ -2209,6 +1918,46 @@ qpq_k_proxy_war_ai_attempt_effect = {
 }
 qpq_k_proxy_war_exposed_effect = {
 	if = {
+		limit = {
+			exists = scope:qpq_target
+			scope:qpq_agent = { liege ?= scope:qpq_payer }
+			scope:qpq_target = { liege ?= scope:qpq_payer }
+		}
+		scope:qpq_payer = {
+			every_vassal = {
+				limit = {
+					NOT = { this = scope:qpq_agent }
+					NOT = { this = scope:qpq_target }
+				}
+				add_opinion = { target = scope:qpq_payer modifier = qpq_plays_favourites_opinion }
+			}
+		}
+		scope:qpq_target = {
+			add_opinion = { target = scope:qpq_agent modifier = qpq_avenge_perfidy_opinion }
+		}
+	}
+	else_if = {
+		limit = { scope:qpq_agent = { liege ?= scope:qpq_payer } }
+		# The target's liege treats the war as yours
+		if = {
+			limit = { scope:qpq_target = { is_alive = yes } }
+			scope:qpq_target = {
+				add_opinion = { target = scope:qpq_payer modifier = qpq_betrayed_me_opinion opinion = -30 }
+			}
+		}
+
+	if = {
+		limit = {
+			exists = scope:qpq_target
+			qpq_bound_by_peace_trigger = { A = scope:qpq_payer B = scope:qpq_target }
+		}
+		scope:qpq_payer = { add_prestige = major_prestige_loss }
+	}
+
+	}
+	else = {
+
+	if = {
 		limit = { scope:qpq_target = { is_alive = yes } }
 		scope:qpq_target = {
 			add_opinion = { target = scope:qpq_payer modifier = qpq_avenge_perfidy_opinion }
@@ -2227,27 +1976,84 @@ qpq_k_proxy_war_exposed_effect = {
 		}
 		scope:qpq_payer = { add_prestige = major_prestige_loss }
 	}
+
+	}
 }
 qpq_k_proxy_war_ai_find_effect = {
-	# the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
-	ordered_relation = {
-		type = rival
-		limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
-		order_by = qpq_ai_enmity_value
-		save_scope_as = secondary_recipient
-	}
-	if = {
-		limit = { exists = scope:secondary_recipient }
-		scope:secondary_recipient.top_liege = {
-			ordered_neighboring_and_across_water_top_liege_realm_owner = {
+	random_list = {
+		8 = {
+			trigger = { any_vassal = { is_landed = yes is_ai = yes } }
+			# the strongest vassal free to fight, against the neighbour root most wants brought low and they can beat
+			ordered_vassal = {
 				limit = {
-					NOT = { this = root }
+					is_landed = yes
 					is_ai = yes
 					is_at_war = no
-					NOT = { is_allied_to = scope:secondary_recipient }
+					any_neighboring_and_across_water_top_liege_realm_owner = {
+						NOT = { top_liege = root.top_liege }
+					}
 				}
-				order_by = qpq_ai_hired_sword_value
+				order_by = max_military_strength
 				save_scope_as = recipient
+			}
+			scope:recipient ?= {
+				save_scope_as = qpq_ai_fighter
+				ordered_neighboring_and_across_water_top_liege_realm_owner = {
+					limit = {
+						NOT = { top_liege = root.top_liege }
+						NOT = { this = root }
+					}
+					order_by = qpq_ai_war_target_value
+					save_scope_as = secondary_recipient
+				}
+			}
+		}
+		6 = {
+			trigger = {
+				is_independent_ruler = yes
+				any_relation = { type = rival is_landed = yes }
+			}
+			# the foreign rival root hates most, attacked by the neighbour of theirs best placed and keenest to do it
+			ordered_relation = {
+				type = rival
+				limit = { is_landed = yes NOT = { top_liege = root.top_liege } }
+				order_by = qpq_ai_enmity_value
+				save_scope_as = secondary_recipient
+			}
+			if = {
+				limit = { exists = scope:secondary_recipient }
+				scope:secondary_recipient.top_liege = {
+					ordered_neighboring_and_across_water_top_liege_realm_owner = {
+						limit = {
+							NOT = { this = root }
+							is_ai = yes
+							is_at_war = no
+							NOT = { is_allied_to = scope:secondary_recipient }
+						}
+						order_by = qpq_ai_hired_sword_value
+						save_scope_as = recipient
+					}
+				}
+			}
+		}
+		4 = {
+			trigger = { any_vassal = { count >= 2 is_landed = yes } }
+			# the strongest vassal with a rival among root's vassals, against the weakest such rival
+			ordered_vassal = {
+				limit = {
+					is_landed = yes
+					is_ai = yes
+					any_relation = { type = rival liege ?= root is_landed = yes }
+				}
+				order_by = max_military_strength
+				save_scope_as = recipient
+				save_scope_as = qpq_ai_fighter
+				ordered_relation = {
+					type = rival
+					limit = { liege ?= root is_landed = yes }
+					order_by = qpq_ai_weakness_value
+					save_scope_as = secondary_recipient
+				}
 			}
 		}
 	}
@@ -2812,7 +2618,16 @@ qpq_k_extradition_tick_effect = {
 	# nothing
 }
 qpq_k_extradition_perform_effect = {
-	qpq_hand_prisoner_to_payer_effect = yes
+	if = {
+		limit = {
+			scope:qpq_agent = { liege ?= scope:qpq_payer }
+			scope:qpq_target = { is_imprisoned = no }
+		}
+		scope:qpq_payer = { add_courtier = scope:qpq_target }
+	}
+	else = {
+		qpq_hand_prisoner_to_payer_effect = yes
+	}
 }
 qpq_k_extradition_ai_attempt_effect = {
 	if = {
@@ -3028,69 +2843,7 @@ qpq_k_defection_pact_exposed_effect = {
 	# nothing
 }
 
-#### Secret Clause
-qpq_k_secret_clause_seal_from_scopes_effect = {
-	scope:actor = { save_scope_as = qpq_payer }
-	scope:recipient = { save_scope_as = qpq_agent }
-	scope:target = { save_scope_as = qpq_target_title }
-	if = {
-		limit = { exists = scope:target.holder }
-		scope:target.holder = { save_scope_as = qpq_target }
-	}
-	save_scope_value_as = { name = qpq_payer_tier value = qpq_secret_clause_payer_tier_value }
-	save_scope_value_as = { name = qpq_agent_tier value = qpq_secret_clause_agent_tier_value }
-	if = {
-		limit = { NOT = { exists = scope:qpq_price } }
-		save_scope_value_as = { name = qpq_price value = qpq_secret_clause_price_value }
-	}
-	if = {
-		limit = {
-			qpq_secret_clause_payer_tier_value <= 0
-			qpq_secret_clause_agent_tier_value <= 0
-		}
-		save_scope_value_as = { name = qpq_floor_zero value = yes }
-	}
-	qpq_seal_pact_effect = { KIND = secret_clause SECRET = dynastic TERM = 60 }
-	if = {
-		limit = { exists = scope:qpq_floor_zero }
-		scope:qpq_story = { set_variable = qpq_floor0 }
-	}
-}
-qpq_k_secret_clause_on_seal_effect = {
-	# nothing
-}
-qpq_k_secret_clause_on_deliver_effect = {
-	# nothing
-}
-qpq_k_secret_clause_on_end_effect = {
-	# nothing
-}
-qpq_k_secret_clause_tick_effect = {
-	# nothing
-}
-qpq_k_secret_clause_perform_effect = {
-	qpq_agent_cedes_title_effect = yes
-}
-qpq_k_secret_clause_ai_attempt_effect = {
-	if = {
-		limit = { qpq_k_secret_clause_can_perform_trigger = yes }
-		random = {
-			chance = 25
-			qpq_k_secret_clause_perform_effect = yes
-			qpq_deliver_pact_effect = yes
-		}
-	}
-}
-qpq_k_secret_clause_exposed_effect = {
-	scope:qpq_agent = {
-		every_close_family_member = {
-			limit = { is_alive = yes }
-			add_opinion = { target = scope:qpq_payer modifier = qpq_cheated_by_marriage_opinion }
-		}
-	}
-}
-
-#### Hire the Hashashin
+#### Hire Holy Order Assassins
 qpq_k_hire_the_hashashin_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -3349,7 +3102,7 @@ qpq_k_steer_the_holy_war_exposed_effect = {
 	}
 }
 
-#### Purchase a Mitre
+#### Buy a Bishopric
 qpq_k_purchase_a_mitre_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -4922,10 +4675,6 @@ qpq_kind_on_deliver_effect = {
 		qpq_k_chartered_conquest_on_deliver_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:sanctioned_conquest }
-		qpq_k_sanctioned_conquest_on_deliver_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:marcher_charge }
 		qpq_k_marcher_charge_on_deliver_effect = yes
 	}
@@ -4948,10 +4697,6 @@ qpq_kind_on_deliver_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:agent_provocateur }
 		qpq_k_agent_provocateur_on_deliver_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:licensed_feud }
-		qpq_k_licensed_feud_on_deliver_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:dossier }
@@ -4982,10 +4727,6 @@ qpq_kind_on_deliver_effect = {
 		qpq_k_marriage_by_command_on_deliver_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:hand_over }
-		qpq_k_hand_over_on_deliver_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_on_deliver_effect = yes
 	}
@@ -5008,10 +4749,6 @@ qpq_kind_on_deliver_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:clemency_bargain }
 		qpq_k_clemency_bargain_on_deliver_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:electoral_capitulation }
-		qpq_k_electoral_capitulation_on_deliver_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:mutual_defense_league }
@@ -5076,10 +4813,6 @@ qpq_kind_on_deliver_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:defection_pact }
 		qpq_k_defection_pact_on_deliver_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:secret_clause }
-		qpq_k_secret_clause_on_deliver_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:hire_the_hashashin }
@@ -5201,10 +4934,6 @@ qpq_kind_on_end_effect = {
 		qpq_k_chartered_conquest_on_end_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:sanctioned_conquest }
-		qpq_k_sanctioned_conquest_on_end_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:marcher_charge }
 		qpq_k_marcher_charge_on_end_effect = yes
 	}
@@ -5227,10 +4956,6 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:agent_provocateur }
 		qpq_k_agent_provocateur_on_end_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:licensed_feud }
-		qpq_k_licensed_feud_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:dossier }
@@ -5261,10 +4986,6 @@ qpq_kind_on_end_effect = {
 		qpq_k_marriage_by_command_on_end_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:hand_over }
-		qpq_k_hand_over_on_end_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_on_end_effect = yes
 	}
@@ -5287,10 +5008,6 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:clemency_bargain }
 		qpq_k_clemency_bargain_on_end_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:electoral_capitulation }
-		qpq_k_electoral_capitulation_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:mutual_defense_league }
@@ -5355,10 +5072,6 @@ qpq_kind_on_end_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:defection_pact }
 		qpq_k_defection_pact_on_end_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:secret_clause }
-		qpq_k_secret_clause_on_end_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:hire_the_hashashin }
@@ -5507,10 +5220,6 @@ qpq_kind_perform_effect = {
 		qpq_k_marriage_by_command_perform_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:hand_over }
-		qpq_k_hand_over_perform_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_perform_effect = yes
 	}
@@ -5533,10 +5242,6 @@ qpq_kind_perform_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:extradition }
 		qpq_k_extradition_perform_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:secret_clause }
-		qpq_k_secret_clause_perform_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:excommunication_for_hire }
@@ -5602,10 +5307,6 @@ qpq_kind_ai_attempt_effect = {
 		qpq_k_chartered_conquest_ai_attempt_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:sanctioned_conquest }
-		qpq_k_sanctioned_conquest_ai_attempt_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:marcher_charge }
 		qpq_k_marcher_charge_ai_attempt_effect = yes
 	}
@@ -5628,10 +5329,6 @@ qpq_kind_ai_attempt_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:agent_provocateur }
 		qpq_k_agent_provocateur_ai_attempt_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:licensed_feud }
-		qpq_k_licensed_feud_ai_attempt_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:dossier }
@@ -5662,10 +5359,6 @@ qpq_kind_ai_attempt_effect = {
 		qpq_k_marriage_by_command_ai_attempt_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:hand_over }
-		qpq_k_hand_over_ai_attempt_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_ai_attempt_effect = yes
 	}
@@ -5688,10 +5381,6 @@ qpq_kind_ai_attempt_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:clemency_bargain }
 		qpq_k_clemency_bargain_ai_attempt_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:electoral_capitulation }
-		qpq_k_electoral_capitulation_ai_attempt_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:mutual_defense_league }
@@ -5756,10 +5445,6 @@ qpq_kind_ai_attempt_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:defection_pact }
 		qpq_k_defection_pact_ai_attempt_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:secret_clause }
-		qpq_k_secret_clause_ai_attempt_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:hire_the_hashashin }
@@ -5877,10 +5562,6 @@ qpq_kind_ai_attempt_effect = {
 
 qpq_kind_exposed_effect = {
 	if = {
-		limit = { var:qpq_kind = flag:sanctioned_conquest }
-		qpq_k_sanctioned_conquest_exposed_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:holy_sponsorship }
 		qpq_k_holy_sponsorship_exposed_effect = yes
 	}
@@ -5895,10 +5576,6 @@ qpq_kind_exposed_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:agent_provocateur }
 		qpq_k_agent_provocateur_exposed_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:licensed_feud }
-		qpq_k_licensed_feud_exposed_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:dossier }
@@ -5929,10 +5606,6 @@ qpq_kind_exposed_effect = {
 		qpq_k_marriage_by_command_exposed_effect = yes
 	}
 	else_if = {
-		limit = { var:qpq_kind = flag:hand_over }
-		qpq_k_hand_over_exposed_effect = yes
-	}
-	else_if = {
 		limit = { var:qpq_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_exposed_effect = yes
 	}
@@ -5947,10 +5620,6 @@ qpq_kind_exposed_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:clemency_bargain }
 		qpq_k_clemency_bargain_exposed_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:electoral_capitulation }
-		qpq_k_electoral_capitulation_exposed_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:mutual_defense_league }
@@ -5999,10 +5668,6 @@ qpq_kind_exposed_effect = {
 	else_if = {
 		limit = { var:qpq_kind = flag:stay_home }
 		qpq_k_stay_home_exposed_effect = yes
-	}
-	else_if = {
-		limit = { var:qpq_kind = flag:secret_clause }
-		qpq_k_secret_clause_exposed_effect = yes
 	}
 	else_if = {
 		limit = { var:qpq_kind = flag:hire_the_hashashin }
@@ -6097,17 +5762,13 @@ qpq_ai_broker_pact_effect = {
 			trigger = { qpq_k_chartered_conquest_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = chartered_conquest }
 		}
-		8 = {
-			trigger = { qpq_k_sanctioned_conquest_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = sanctioned_conquest }
-		}
 		5 = {
 			trigger = { qpq_k_marcher_charge_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = marcher_charge }
 		}
-		4 = {
-			trigger = { qpq_k_licensed_feud_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = licensed_feud }
+		3 = {
+			trigger = { qpq_k_electoral_purchase_ai_valid_trigger = yes }
+			qpq_ai_propose_kind_effect = { KIND = electoral_purchase }
 		}
 		6 = {
 			trigger = { qpq_k_dossier_ai_valid_trigger = yes }
@@ -6126,10 +5787,6 @@ qpq_ai_broker_pact_effect = {
 			qpq_ai_propose_kind_effect = { KIND = clemency_bargain }
 		}
 		3 = {
-			trigger = { qpq_k_electoral_capitulation_ai_valid_trigger = yes }
-			qpq_ai_propose_kind_effect = { KIND = electoral_capitulation }
-		}
-		3 = {
 			trigger = { qpq_k_mutual_defense_league_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = mutual_defense_league }
 		}
@@ -6141,7 +5798,7 @@ qpq_ai_broker_pact_effect = {
 			trigger = { qpq_k_coup_pact_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = coup_pact }
 		}
-		6 = {
+		18 = {
 			trigger = { qpq_k_proxy_war_ai_valid_trigger = yes }
 			qpq_ai_propose_kind_effect = { KIND = proxy_war }
 		}
@@ -6282,10 +5939,6 @@ qpq_seal_proposed_kind_effect = {
 		qpq_k_chartered_conquest_seal_from_scopes_effect = yes
 	}
 	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:sanctioned_conquest }
-		qpq_k_sanctioned_conquest_seal_from_scopes_effect = yes
-	}
-	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:marcher_charge }
 		qpq_k_marcher_charge_seal_from_scopes_effect = yes
 	}
@@ -6308,10 +5961,6 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:agent_provocateur }
 		qpq_k_agent_provocateur_seal_from_scopes_effect = yes
-	}
-	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:licensed_feud }
-		qpq_k_licensed_feud_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:dossier }
@@ -6342,10 +5991,6 @@ qpq_seal_proposed_kind_effect = {
 		qpq_k_marriage_by_command_seal_from_scopes_effect = yes
 	}
 	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:hand_over }
-		qpq_k_hand_over_seal_from_scopes_effect = yes
-	}
-	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:hand_over_artifact }
 		qpq_k_hand_over_artifact_seal_from_scopes_effect = yes
 	}
@@ -6368,10 +6013,6 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:clemency_bargain }
 		qpq_k_clemency_bargain_seal_from_scopes_effect = yes
-	}
-	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:electoral_capitulation }
-		qpq_k_electoral_capitulation_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:mutual_defense_league }
@@ -6436,10 +6077,6 @@ qpq_seal_proposed_kind_effect = {
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:defection_pact }
 		qpq_k_defection_pact_seal_from_scopes_effect = yes
-	}
-	else_if = {
-		limit = { scope:qpq_proposed_kind = flag:secret_clause }
-		qpq_k_secret_clause_seal_from_scopes_effect = yes
 	}
 	else_if = {
 		limit = { scope:qpq_proposed_kind = flag:hire_the_hashashin }

@@ -8,10 +8,6 @@ QpqUiKindName_t = {
 		localization_key = qpq_chartered_conquest_name
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_name
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_name
 	}
@@ -34,10 +30,6 @@ QpqUiKindName_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_name
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_name
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:dossier }
@@ -68,10 +60,6 @@ QpqUiKindName_t = {
 		localization_key = qpq_marriage_by_command_name
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_name
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_name
 	}
@@ -94,10 +82,6 @@ QpqUiKindName_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_name
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_name
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:mutual_defense_league }
@@ -162,10 +146,6 @@ QpqUiKindName_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_name
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_name
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hire_the_hashashin }
@@ -289,10 +269,6 @@ QpqUiKindDesc_t = {
 		localization_key = qpq_chartered_conquest_interaction_desc
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_interaction_desc
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_interaction_desc
 	}
@@ -315,10 +291,6 @@ QpqUiKindDesc_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_interaction_desc
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_interaction_desc
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:dossier }
@@ -349,10 +321,6 @@ QpqUiKindDesc_t = {
 		localization_key = qpq_marriage_by_command_interaction_desc
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_interaction_desc
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_interaction_desc
 	}
@@ -375,10 +343,6 @@ QpqUiKindDesc_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_interaction_desc
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_desc_them
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:mutual_defense_league }
@@ -443,10 +407,6 @@ QpqUiKindDesc_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_interaction_desc
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_interaction_desc
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hire_the_hashashin }
@@ -570,10 +530,6 @@ QpqUiKindAsk_t = {
 		localization_key = qpq_chartered_conquest_ask_ui_t
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_ask_ui_t
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_ask_ui_t
 	}
@@ -596,10 +552,6 @@ QpqUiKindAsk_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_ask_ui_t
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_ask_ui_t
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:dossier }
@@ -630,10 +582,6 @@ QpqUiKindAsk_t = {
 		localization_key = qpq_marriage_by_command_ask_ui_t
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_ask_ui_t
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_ask_ui_t
 	}
@@ -656,10 +604,6 @@ QpqUiKindAsk_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_ask_ui_t
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_ask_ui_t
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:mutual_defense_league }
@@ -724,10 +668,6 @@ QpqUiKindAsk_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_ask_ui_t
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_ask_ui_t
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hire_the_hashashin }
@@ -851,10 +791,6 @@ QpqUiKindHint_t = {
 		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:sanctioned_conquest }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:marcher_charge }
 		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
@@ -876,10 +812,6 @@ QpqUiKindHint_t = {
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:agent_provocateur }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:licensed_feud }
 		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
@@ -911,10 +843,6 @@ QpqUiKindHint_t = {
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:hand_over }
-		localization_key = QPQ_UI_HINT_PERFORM
-	}
-	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hand_over_artifact }
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
@@ -937,10 +865,6 @@ QpqUiKindHint_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:clemency_bargain }
 		localization_key = QPQ_UI_HINT_PERFORM
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:electoral_capitulation }
-		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:mutual_defense_league }
@@ -1005,10 +929,6 @@ QpqUiKindHint_t = {
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:defection_pact }
 		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_t_kind ?= flag:secret_clause }
-		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
 		trigger = { var:qpq_ui_t_kind ?= flag:hire_the_hashashin }
@@ -1149,10 +1069,6 @@ QpqUiKindName_i = {
 		localization_key = qpq_chartered_conquest_name
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_name
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_name
 	}
@@ -1175,10 +1091,6 @@ QpqUiKindName_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_name
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_name
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:dossier }
@@ -1209,10 +1121,6 @@ QpqUiKindName_i = {
 		localization_key = qpq_marriage_by_command_name
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_name
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_name
 	}
@@ -1235,10 +1143,6 @@ QpqUiKindName_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_name
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_name
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:mutual_defense_league }
@@ -1303,10 +1207,6 @@ QpqUiKindName_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_name
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_name
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hire_the_hashashin }
@@ -1430,10 +1330,6 @@ QpqUiKindDesc_i = {
 		localization_key = qpq_chartered_conquest_desc_them
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_desc_them
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_desc_them
 	}
@@ -1456,10 +1352,6 @@ QpqUiKindDesc_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_desc_them
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_desc_them
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:dossier }
@@ -1490,10 +1382,6 @@ QpqUiKindDesc_i = {
 		localization_key = qpq_marriage_by_command_desc_them
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_desc_them
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_desc_them
 	}
@@ -1516,10 +1404,6 @@ QpqUiKindDesc_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_desc_them
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_interaction_desc
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:mutual_defense_league }
@@ -1584,10 +1468,6 @@ QpqUiKindDesc_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_desc_them
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_desc_them
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hire_the_hashashin }
@@ -1711,10 +1591,6 @@ QpqUiKindAsk_i = {
 		localization_key = qpq_chartered_conquest_ask_ui_i
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_ask_ui_i
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_ask_ui_i
 	}
@@ -1737,10 +1613,6 @@ QpqUiKindAsk_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_ask_ui_i
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_ask_ui_i
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:dossier }
@@ -1771,10 +1643,6 @@ QpqUiKindAsk_i = {
 		localization_key = qpq_marriage_by_command_ask_ui_i
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_ask_ui_i
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_ask_ui_i
 	}
@@ -1797,10 +1665,6 @@ QpqUiKindAsk_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_ask_ui_i
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_ask_ui_i
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:mutual_defense_league }
@@ -1865,10 +1729,6 @@ QpqUiKindAsk_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_ask_ui_i
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_ask_ui_i
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hire_the_hashashin }
@@ -1992,10 +1852,6 @@ QpqUiKindHint_i = {
 		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:sanctioned_conquest }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:marcher_charge }
 		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
@@ -2017,10 +1873,6 @@ QpqUiKindHint_i = {
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:agent_provocateur }
-		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:licensed_feud }
 		localization_key = QPQ_UI_HINT_CONDITION
 	}
 	text = {
@@ -2052,10 +1904,6 @@ QpqUiKindHint_i = {
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:hand_over }
-		localization_key = QPQ_UI_HINT_PERFORM
-	}
-	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hand_over_artifact }
 		localization_key = QPQ_UI_HINT_PERFORM
 	}
@@ -2078,10 +1926,6 @@ QpqUiKindHint_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:clemency_bargain }
 		localization_key = QPQ_UI_HINT_PERFORM
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:electoral_capitulation }
-		localization_key = QPQ_UI_HINT_RESTRAINT
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:mutual_defense_league }
@@ -2146,10 +1990,6 @@ QpqUiKindHint_i = {
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:defection_pact }
 		localization_key = QPQ_UI_HINT_CONDITION
-	}
-	text = {
-		trigger = { var:qpq_ui_i_kind ?= flag:secret_clause }
-		localization_key = QPQ_UI_HINT_PERFORM
 	}
 	text = {
 		trigger = { var:qpq_ui_i_kind ?= flag:hire_the_hashashin }

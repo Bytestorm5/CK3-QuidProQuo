@@ -11,10 +11,6 @@ qpq_deal.1 = {
 				desc = qpq_chartered_conquest_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:marcher_charge }
 				desc = qpq_marcher_charge_name
 			}
@@ -37,10 +33,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:agent_provocateur }
 				desc = qpq_agent_provocateur_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:licensed_feud }
-				desc = qpq_licensed_feud_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:dossier }
@@ -71,10 +63,6 @@ qpq_deal.1 = {
 				desc = qpq_marriage_by_command_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over }
-				desc = qpq_hand_over_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_name
 			}
@@ -97,10 +85,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:clemency_bargain }
 				desc = qpq_clemency_bargain_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:mutual_defense_league }
@@ -165,10 +149,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:defection_pact }
 				desc = qpq_defection_pact_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:secret_clause }
-				desc = qpq_secret_clause_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hire_the_hashashin }
@@ -283,10 +263,6 @@ qpq_deal.1 = {
 				desc = qpq_chartered_conquest_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:marcher_charge }
 				desc = qpq_marcher_charge_name
 			}
@@ -309,10 +285,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:agent_provocateur }
 				desc = qpq_agent_provocateur_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:licensed_feud }
-				desc = qpq_licensed_feud_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:dossier }
@@ -343,10 +315,6 @@ qpq_deal.1 = {
 				desc = qpq_marriage_by_command_name
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:hand_over }
-				desc = qpq_hand_over_name
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_name
 			}
@@ -369,10 +337,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:clemency_bargain }
 				desc = qpq_clemency_bargain_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:mutual_defense_league }
@@ -437,10 +401,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:defection_pact }
 				desc = qpq_defection_pact_name
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:secret_clause }
-				desc = qpq_secret_clause_name
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:hire_the_hashashin }
@@ -561,10 +521,6 @@ qpq_deal.1 = {
 				desc = qpq_chartered_conquest_pitch_ev
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_pitch_ev
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:marcher_charge }
 				desc = qpq_marcher_charge_pitch_ev
 			}
@@ -587,10 +543,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:agent_provocateur }
 				desc = qpq_agent_provocateur_pitch_ev
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:licensed_feud }
-				desc = qpq_licensed_feud_pitch_ev
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:dossier }
@@ -619,10 +571,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:marriage_by_command }
 				desc = qpq_marriage_by_command_pitch_ev
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over }
-				desc = qpq_hand_over_pitch_ev
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over_artifact }
@@ -707,10 +655,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:defection_pact }
 				desc = qpq_defection_pact_pitch_ev
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:secret_clause }
-				desc = qpq_secret_clause_pitch_ev
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hire_the_hashashin }
@@ -824,10 +768,6 @@ qpq_deal.1 = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:price_of_loyalty }
 				desc = qpq_price_of_loyalty_pitch_ev
 			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_pitch_ev
-			}
 			desc = qpq_empty
 		}
 		first_valid = {
@@ -855,10 +795,6 @@ qpq_deal.1 = {
 				desc = qpq_chartered_conquest_ask_ev_i
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_ask_ev_i
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:marcher_charge }
 				desc = qpq_marcher_charge_ask_ev_i
 			}
@@ -881,10 +817,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:agent_provocateur }
 				desc = qpq_agent_provocateur_ask_ev_i
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:licensed_feud }
-				desc = qpq_licensed_feud_ask_ev_i
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:dossier }
@@ -915,10 +847,6 @@ qpq_deal.1 = {
 				desc = qpq_marriage_by_command_ask_ev_i
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:hand_over }
-				desc = qpq_hand_over_ask_ev_i
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_ask_ev_i
 			}
@@ -941,10 +869,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:clemency_bargain }
 				desc = qpq_clemency_bargain_ask_ev_i
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_ask_ev_i
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:mutual_defense_league }
@@ -1009,10 +933,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:defection_pact }
 				desc = qpq_defection_pact_ask_ev_i
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_i_kind ?= flag:secret_clause }
-				desc = qpq_secret_clause_ask_ev_i
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_i_kind ?= flag:hire_the_hashashin }
@@ -1153,12 +1073,12 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_my_word
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_secret ?= yes }
-			desc = qpq_hub.50.term_secret
+			trigger = { scope:qpq_deal_t_o_hook ?= yes }
+			desc = qpq_hub.50.term_hook
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_contract ?= yes }
-			desc = qpq_hub.50.term_contract
+			trigger = { scope:qpq_deal_t_o_secret ?= yes }
+			desc = qpq_hub.50.term_secret
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_t_o_succession ?= yes }
@@ -1181,12 +1101,48 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_church
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_restraint ?= yes }
-			desc = qpq_hub.50.term_restraint
+			trigger = { scope:qpq_deal_t_o_ct_tax_down ?= yes }
+			desc = qpq_hub.50.term_ct_tax_down
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_t_o_hook ?= yes }
-			desc = qpq_hub.50.term_hook
+			trigger = { scope:qpq_deal_t_o_ct_levy_down ?= yes }
+			desc = qpq_hub.50.term_ct_levy_down
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_revocation ?= yes }
+			desc = qpq_hub.50.term_ct_revocation
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_council ?= yes }
+			desc = qpq_hub.50.term_ct_council
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_war ?= yes }
+			desc = qpq_hub.50.term_ct_war
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_fort ?= yes }
+			desc = qpq_hub.50.term_ct_fort
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_coinage ?= yes }
+			desc = qpq_hub.50.term_ct_coinage
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_faith ?= yes }
+			desc = qpq_hub.50.term_ct_faith
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_tax_up ?= yes }
+			desc = qpq_hub.50.term_ct_tax_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_ct_levy_up ?= yes }
+			desc = qpq_hub.50.term_ct_levy_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_t_o_restraint ?= yes }
+			desc = qpq_hub.50.term_restraint
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_i_qpq_x_armed ?= yes }
@@ -1210,15 +1166,24 @@ qpq_deal.1 = {
 				NOT = { scope:qpq_deal_t_o_office ?= yes }
 				NOT = { scope:qpq_deal_t_o_release_hook ?= yes }
 				NOT = { scope:qpq_deal_t_o_my_word ?= yes }
+				NOT = { scope:qpq_deal_t_o_hook ?= yes }
 				NOT = { scope:qpq_deal_t_o_secret ?= yes }
-				NOT = { scope:qpq_deal_t_o_contract ?= yes }
 				NOT = { scope:qpq_deal_t_o_succession ?= yes }
 				NOT = { scope:qpq_deal_t_o_clemency ?= yes }
 				NOT = { scope:qpq_deal_t_o_arms ?= yes }
 				NOT = { scope:qpq_deal_t_o_artifact ?= yes }
 				NOT = { scope:qpq_deal_t_o_church ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_tax_down ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_levy_down ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_revocation ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_council ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_war ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_fort ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_coinage ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_faith ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_tax_up ?= yes }
+				NOT = { scope:qpq_deal_t_o_ct_levy_up ?= yes }
 				NOT = { scope:qpq_deal_t_o_restraint ?= yes }
-				NOT = { scope:qpq_deal_t_o_hook ?= yes }
 			}
 			desc = qpq_deal.1.nothing
 		}
@@ -1230,10 +1195,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:chartered_conquest }
 				desc = qpq_chartered_conquest_ask_ev_t
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:sanctioned_conquest }
-				desc = qpq_sanctioned_conquest_ask_ev_t
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:marcher_charge }
@@ -1258,10 +1219,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:agent_provocateur }
 				desc = qpq_agent_provocateur_ask_ev_t
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:licensed_feud }
-				desc = qpq_licensed_feud_ask_ev_t
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:dossier }
@@ -1292,10 +1249,6 @@ qpq_deal.1 = {
 				desc = qpq_marriage_by_command_ask_ev_t
 			}
 			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over }
-				desc = qpq_hand_over_ask_ev_t
-			}
-			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hand_over_artifact }
 				desc = qpq_hand_over_artifact_ask_ev_t
 			}
@@ -1318,10 +1271,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:clemency_bargain }
 				desc = qpq_clemency_bargain_ask_ev_t
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:electoral_capitulation }
-				desc = qpq_electoral_capitulation_ask_ev_t
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:mutual_defense_league }
@@ -1386,10 +1335,6 @@ qpq_deal.1 = {
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:defection_pact }
 				desc = qpq_defection_pact_ask_ev_t
-			}
-			triggered_desc = {
-				trigger = { scope:qpq_deal_t_kind ?= flag:secret_clause }
-				desc = qpq_secret_clause_ask_ev_t
 			}
 			triggered_desc = {
 				trigger = { scope:qpq_deal_t_kind ?= flag:hire_the_hashashin }
@@ -1530,12 +1475,12 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_my_word
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_secret ?= yes }
-			desc = qpq_hub.50.term_secret
+			trigger = { scope:qpq_deal_i_o_hook ?= yes }
+			desc = qpq_hub.50.term_hook
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_contract ?= yes }
-			desc = qpq_hub.50.term_contract
+			trigger = { scope:qpq_deal_i_o_secret ?= yes }
+			desc = qpq_hub.50.term_secret
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_i_o_succession ?= yes }
@@ -1558,12 +1503,48 @@ qpq_deal.1 = {
 			desc = qpq_hub.50.term_church
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_restraint ?= yes }
-			desc = qpq_hub.50.term_restraint
+			trigger = { scope:qpq_deal_i_o_ct_tax_down ?= yes }
+			desc = qpq_hub.50.term_ct_tax_down
 		}
 		triggered_desc = {
-			trigger = { scope:qpq_deal_i_o_hook ?= yes }
-			desc = qpq_hub.50.term_hook
+			trigger = { scope:qpq_deal_i_o_ct_levy_down ?= yes }
+			desc = qpq_hub.50.term_ct_levy_down
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_revocation ?= yes }
+			desc = qpq_hub.50.term_ct_revocation
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_council ?= yes }
+			desc = qpq_hub.50.term_ct_council
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_war ?= yes }
+			desc = qpq_hub.50.term_ct_war
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_fort ?= yes }
+			desc = qpq_hub.50.term_ct_fort
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_coinage ?= yes }
+			desc = qpq_hub.50.term_ct_coinage
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_faith ?= yes }
+			desc = qpq_hub.50.term_ct_faith
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_tax_up ?= yes }
+			desc = qpq_hub.50.term_ct_tax_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_ct_levy_up ?= yes }
+			desc = qpq_hub.50.term_ct_levy_up
+		}
+		triggered_desc = {
+			trigger = { scope:qpq_deal_i_o_restraint ?= yes }
+			desc = qpq_hub.50.term_restraint
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_t_qpq_x_armed ?= yes }
@@ -1587,15 +1568,24 @@ qpq_deal.1 = {
 				NOT = { scope:qpq_deal_i_o_office ?= yes }
 				NOT = { scope:qpq_deal_i_o_release_hook ?= yes }
 				NOT = { scope:qpq_deal_i_o_my_word ?= yes }
+				NOT = { scope:qpq_deal_i_o_hook ?= yes }
 				NOT = { scope:qpq_deal_i_o_secret ?= yes }
-				NOT = { scope:qpq_deal_i_o_contract ?= yes }
 				NOT = { scope:qpq_deal_i_o_succession ?= yes }
 				NOT = { scope:qpq_deal_i_o_clemency ?= yes }
 				NOT = { scope:qpq_deal_i_o_arms ?= yes }
 				NOT = { scope:qpq_deal_i_o_artifact ?= yes }
 				NOT = { scope:qpq_deal_i_o_church ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_tax_down ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_levy_down ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_revocation ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_council ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_war ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_fort ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_coinage ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_faith ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_tax_up ?= yes }
+				NOT = { scope:qpq_deal_i_o_ct_levy_up ?= yes }
 				NOT = { scope:qpq_deal_i_o_restraint ?= yes }
-				NOT = { scope:qpq_deal_i_o_hook ?= yes }
 			}
 			desc = qpq_deal.1.nothing
 		}

@@ -93,11 +93,71 @@ qpq_goods_cost_value = {
 		}
 	}
 	if = {
-		limit = { scope:qpq_o_contract ?= yes }
-		add = 22
-		if = {
-			limit = { scope:actor = { has_trait = greedy } }
-			add = 5
+		limit = { scope:qpq_o_ct_tax_down ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_tax_down_cost_value
+			if = {
+				limit = { scope:actor = { has_trait = greedy } }
+				multiply = 1.25
+			}
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_levy_down ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_levy_down_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_revocation ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_revocation_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_council ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_council_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_war ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_war_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_fort ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_fort_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_coinage ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_coinage_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_faith ?= yes }
+		add = {
+			value = scope:recipient.qpq_ct_faith_cost_value
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_tax_up ?= yes }
+		add = {
+			value = scope:actor.qpq_ct_tax_up_cost_value
+			if = {
+				limit = { scope:actor = { has_trait = greedy } }
+				multiply = 1.25
+			}
+		}
+	}
+	if = {
+		limit = { scope:qpq_o_ct_levy_up ?= yes }
+		add = {
+			value = scope:actor.qpq_ct_levy_up_cost_value
 		}
 	}
 	if = {
@@ -126,7 +186,7 @@ qpq_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_arms ?= yes }
-		add = 10
+		add = 15
 		if = {
 			limit = { scope:actor = { is_at_war = yes } }
 			add = 15
@@ -148,10 +208,10 @@ qpq_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_restraint ?= yes }
-		add = 8
+		add = 5
 		if = {
 			limit = { scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 1.5 } } }
-			add = 10
+			add = 5
 		}
 	}
 	min = 0

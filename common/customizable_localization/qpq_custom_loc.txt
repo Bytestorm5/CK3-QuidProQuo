@@ -8,10 +8,6 @@ QpqKindName = {
 		localization_key = qpq_chartered_conquest_name
 	}
 	text = {
-		trigger = { var:qpq_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_name
-	}
-	text = {
 		trigger = { var:qpq_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_name
 	}
@@ -34,10 +30,6 @@ QpqKindName = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_name
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_name
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:dossier }
@@ -68,10 +60,6 @@ QpqKindName = {
 		localization_key = qpq_marriage_by_command_name
 	}
 	text = {
-		trigger = { var:qpq_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_name
-	}
-	text = {
 		trigger = { var:qpq_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_name
 	}
@@ -94,10 +82,6 @@ QpqKindName = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_name
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_name
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:mutual_defense_league }
@@ -162,10 +146,6 @@ QpqKindName = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_name
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_name
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:hire_the_hashashin }
@@ -293,10 +273,6 @@ QpqKindAsk = {
 		localization_key = qpq_chartered_conquest_ask_story
 	}
 	text = {
-		trigger = { var:qpq_kind ?= flag:sanctioned_conquest }
-		localization_key = qpq_sanctioned_conquest_ask_story
-	}
-	text = {
 		trigger = { var:qpq_kind ?= flag:marcher_charge }
 		localization_key = qpq_marcher_charge_ask_story
 	}
@@ -319,10 +295,6 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:agent_provocateur }
 		localization_key = qpq_agent_provocateur_ask_story
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:licensed_feud }
-		localization_key = qpq_licensed_feud_ask_story
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:dossier }
@@ -353,10 +325,6 @@ QpqKindAsk = {
 		localization_key = qpq_marriage_by_command_ask_story
 	}
 	text = {
-		trigger = { var:qpq_kind ?= flag:hand_over }
-		localization_key = qpq_hand_over_ask_story
-	}
-	text = {
 		trigger = { var:qpq_kind ?= flag:hand_over_artifact }
 		localization_key = qpq_hand_over_artifact_ask_story
 	}
@@ -379,10 +347,6 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:clemency_bargain }
 		localization_key = qpq_clemency_bargain_ask_story
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:electoral_capitulation }
-		localization_key = qpq_electoral_capitulation_ask_story
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:mutual_defense_league }
@@ -447,10 +411,6 @@ QpqKindAsk = {
 	text = {
 		trigger = { var:qpq_kind ?= flag:defection_pact }
 		localization_key = qpq_defection_pact_ask_story
-	}
-	text = {
-		trigger = { var:qpq_kind ?= flag:secret_clause }
-		localization_key = qpq_secret_clause_ask_story
 	}
 	text = {
 		trigger = { var:qpq_kind ?= flag:hire_the_hashashin }

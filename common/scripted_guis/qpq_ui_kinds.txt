@@ -25,31 +25,6 @@ qpq_ui_kind_t_chartered_conquest = {
 	}
 }
 
-qpq_ui_kind_t_sanctioned_conquest = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:sanctioned_conquest } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:sanctioned_conquest }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_t_marcher_charge = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -129,22 +104,14 @@ qpq_ui_kind_t_electoral_purchase = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-
 		exists = scope:actor.primary_title
 		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+		NOT = { scope:actor = scope:recipient }
 	}
 	is_valid = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-
 		exists = scope:actor.primary_title
 		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+		NOT = { scope:actor = scope:recipient }
 	}
 	effect = {
 		if = {
@@ -202,31 +169,6 @@ qpq_ui_kind_t_agent_provocateur = {
 			qpq_ui_clear_leg_t_effect = yes
 		}
 		set_variable = { name = qpq_ui_t_kind value = flag:agent_provocateur }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_t_licensed_feud = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:licensed_feud } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:licensed_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -440,31 +382,6 @@ qpq_ui_kind_t_marriage_by_command = {
 	}
 }
 
-qpq_ui_kind_t_hand_over = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:recipient = {
-			liege ?= scope:actor
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:hand_over } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:hand_over }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_t_hand_over_artifact = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -635,29 +552,6 @@ qpq_ui_kind_t_clemency_bargain = {
 	}
 }
 
-qpq_ui_kind_t_electoral_capitulation = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		exists = scope:actor.primary_title
-		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-		NOT = { scope:recipient = scope:actor }
-	}
-	is_valid = {
-		exists = scope:actor.primary_title
-		scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-		NOT = { scope:recipient = scope:actor }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:electoral_capitulation } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:electoral_capitulation }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_t_mutual_defense_league = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -726,6 +620,9 @@ qpq_ui_kind_t_title_swap = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
 		scope:actor = { is_landed = yes }
 		scope:recipient = {
 			is_landed = yes
@@ -733,8 +630,32 @@ qpq_ui_kind_t_title_swap = {
 		}
 		exists = scope:actor.liege
 		scope:actor.liege = scope:recipient.liege
+
+			}
+			AND = {
+
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				exists = scope:actor.house
+				scope:recipient = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:actor.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:actor.house }
+								betrothed.house ?= scope:actor.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
 		scope:actor = { is_landed = yes }
 		scope:recipient = {
 			is_landed = yes
@@ -742,6 +663,27 @@ qpq_ui_kind_t_title_swap = {
 		}
 		exists = scope:actor.liege
 		scope:actor.liege = scope:recipient.liege
+
+			}
+			AND = {
+
+		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
+
+				exists = scope:actor.house
+				scope:recipient = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:actor.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:actor.house }
+								betrothed.house ?= scope:actor.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	effect = {
 		if = {
@@ -794,6 +736,17 @@ qpq_ui_kind_t_proxy_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 		scope:actor = { is_landed = yes }
@@ -801,14 +754,31 @@ qpq_ui_kind_t_proxy_war = {
 			is_independent_ruler = yes
 			is_landed = yes
 		}
+
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 		scope:actor = { is_landed = yes }
 		scope:recipient = {
 			is_independent_ruler = yes
 			is_landed = yes
+		}
+
+			}
 		}
 	}
 	effect = {
@@ -1022,6 +992,17 @@ qpq_ui_kind_t_extradition = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 		scope:actor = { is_landed = yes }
@@ -1029,14 +1010,31 @@ qpq_ui_kind_t_extradition = {
 			is_independent_ruler = yes
 			is_landed = yes
 		}
+
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
+		scope:recipient = {
+			liege ?= scope:actor
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 		scope:actor = { is_landed = yes }
 		scope:recipient = {
 			is_independent_ruler = yes
 			is_landed = yes
+		}
+
+			}
 		}
 	}
 	effect = {
@@ -1142,53 +1140,6 @@ qpq_ui_kind_t_defection_pact = {
 			qpq_ui_clear_leg_t_effect = yes
 		}
 		set_variable = { name = qpq_ui_t_kind value = flag:defection_pact }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_t_secret_clause = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
-
-		exists = scope:actor.house
-		scope:recipient = {
-			is_landed = yes
-			OR = {
-				any_spouse = { house ?= scope:actor.house }
-				any_close_family_member = {
-					OR = {
-						any_spouse = { house ?= scope:actor.house }
-						betrothed.house ?= scope:actor.house
-					}
-				}
-			}
-		}
-	}
-	is_valid = {
-		NOT = { scope:recipient.top_liege = scope:actor.top_liege }
-
-		exists = scope:actor.house
-		scope:recipient = {
-			is_landed = yes
-			OR = {
-				any_spouse = { house ?= scope:actor.house }
-				any_close_family_member = {
-					OR = {
-						any_spouse = { house ?= scope:actor.house }
-						betrothed.house ?= scope:actor.house
-					}
-				}
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_t_kind = flag:secret_clause } }
-			qpq_ui_clear_leg_t_effect = yes
-		}
-		set_variable = { name = qpq_ui_t_kind value = flag:secret_clause }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -2299,30 +2250,32 @@ qpq_ui_group_t_war = {
 				}
 			}
 			AND = {
-				scope:recipient = {
-					liege ?= scope:actor
-					is_landed = yes
-				}
-			}
-			AND = {
-				scope:recipient = {
-					liege ?= scope:actor
-					is_landed = yes
-				}
-			}
-			AND = {
 				scope:actor = {
 					liege ?= scope:recipient
 					is_landed = yes
 				}
 			}
 			AND = {
+				OR = {
+					AND = {
+
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+
+					}
+					AND = {
+
 				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 				scope:actor = { is_landed = yes }
 				scope:recipient = {
 					is_independent_ruler = yes
 					is_landed = yes
+				}
+
+					}
 				}
 			}
 			AND = {
@@ -2347,12 +2300,6 @@ qpq_ui_group_t_favours = {
 	saved_scopes = { actor recipient }
 	is_shown = {
 		OR = {
-			AND = {
-				scope:recipient = {
-					liege ?= scope:actor
-					is_landed = yes
-				}
-			}
 			AND = {
 				scope:recipient = {
 					liege ?= scope:actor
@@ -2402,32 +2349,26 @@ qpq_ui_group_t_family = {
 	is_shown = {
 		OR = {
 			AND = {
+				exists = scope:actor.primary_title
+				scope:actor.primary_title = { any_elector = { this = scope:recipient } }
+				NOT = { scope:actor = scope:recipient }
+			}
+			AND = {
 				scope:recipient = {
 					liege ?= scope:actor
 					is_landed = yes
 				}
+			}
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+			}
+			AND = {
+				OR = {
+					AND = {
 
-				exists = scope:actor.primary_title
-				scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-			}
-			AND = {
-				scope:recipient = {
-					liege ?= scope:actor
-					is_landed = yes
-				}
-			}
-			AND = {
-				scope:recipient = {
-					liege ?= scope:actor
-					is_landed = yes
-				}
-			}
-			AND = {
-				exists = scope:actor.primary_title
-				scope:actor.primary_title = { any_elector = { this = scope:recipient } }
-				NOT = { scope:recipient = scope:actor }
-			}
-			AND = {
 				scope:actor = { is_landed = yes }
 				scope:recipient = {
 					is_landed = yes
@@ -2435,19 +2376,23 @@ qpq_ui_group_t_family = {
 				}
 				exists = scope:actor.liege
 				scope:actor.liege = scope:recipient.liege
-			}
-			AND = {
+
+					}
+					AND = {
+
 				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
-				exists = scope:actor.house
-				scope:recipient = {
-					is_landed = yes
-					OR = {
-						any_spouse = { house ?= scope:actor.house }
-						any_close_family_member = {
+						exists = scope:actor.house
+						scope:recipient = {
+							is_landed = yes
 							OR = {
 								any_spouse = { house ?= scope:actor.house }
-								betrothed.house ?= scope:actor.house
+								any_close_family_member = {
+									OR = {
+										any_spouse = { house ?= scope:actor.house }
+										betrothed.house ?= scope:actor.house
+									}
+								}
 							}
 						}
 					}
@@ -2505,12 +2450,26 @@ qpq_ui_group_t_blood = {
 				}
 			}
 			AND = {
+				OR = {
+					AND = {
+
+				scope:recipient = {
+					liege ?= scope:actor
+					is_landed = yes
+				}
+
+					}
+					AND = {
+
 				NOT = { scope:recipient.top_liege = scope:actor.top_liege }
 
 				scope:actor = { is_landed = yes }
 				scope:recipient = {
 					is_independent_ruler = yes
 					is_landed = yes
+				}
+
+					}
 				}
 			}
 			AND = {
@@ -3085,6 +3044,30 @@ qpq_ui_offer_t_my_word = {
 	}
 }
 
+qpq_ui_offer_t_hook = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_hook_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_hook
+			AND = {
+				scope:actor = { has_usable_hook = scope:recipient }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_hook }
+			remove_variable = qpq_ui_t_o_hook
+		}
+		else = {
+			set_variable = qpq_ui_t_o_hook
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_offer_t_secret = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -3109,30 +3092,6 @@ qpq_ui_offer_t_secret = {
 		}
 		else = {
 			set_variable = qpq_ui_t_o_secret
-		}
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_offer_t_contract = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		qpq_ui_leg_t_allows_contract_trigger = yes
-		OR = {
-			has_variable = qpq_ui_t_o_contract
-			AND = {
-				scope:recipient = { liege ?= scope:actor }
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_t_o_contract }
-			remove_variable = qpq_ui_t_o_contract
-		}
-		else = {
-			set_variable = qpq_ui_t_o_contract
 		}
 		qpq_ui_refresh_effect = yes
 	}
@@ -3262,6 +3221,330 @@ qpq_ui_offer_t_church = {
 	}
 }
 
+qpq_ui_offer_t_ct_tax_down = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_tax_down_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_tax_down
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes > 0
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_tax_down }
+			remove_variable = qpq_ui_t_o_ct_tax_down
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_tax_down
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_levy_down = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_levy_down_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_levy_down
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies > 0
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_levy_down }
+			remove_variable = qpq_ui_t_o_ct_levy_down
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_levy_down
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_revocation = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_revocation_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_revocation
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_cannot_revoke_titles }
+				}
+				OR = { scope:recipient.faith = scope:actor.faith scope:actor.faith = { NOT = { has_doctrine_parameter = unlock_jizya_contract } } }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_revocation }
+			remove_variable = qpq_ui_t_o_ct_revocation
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_revocation
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_council = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_council_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_council
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = can_demand_council_seat }
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_council }
+			remove_variable = qpq_ui_t_o_ct_council
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_council
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_war = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_war_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_war
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_war_override }
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_war }
+			remove_variable = qpq_ui_t_o_ct_war
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_war
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_fort = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_fort_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_fort
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:fortification_rights = 0
+				}
+				scope:actor.culture = { has_innovation = innovation_battlements }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_fort }
+			remove_variable = qpq_ui_t_o_ct_fort
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_fort
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_coinage = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_coinage_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_coinage
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:coinage_rights = 0
+				}
+				scope:actor.culture = { has_innovation = innovation_currency_02 }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_coinage }
+			remove_variable = qpq_ui_t_o_ct_coinage
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_coinage
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_faith = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_faith_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_faith
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = religiously_protected }
+				}
+				NOT = { scope:recipient.faith = scope:actor.faith } scope:actor = { NOT = { rite = { rite_has_tenet = tenet_tax_nonbelievers } } NOT = { faith = { has_doctrine = special_doctrine_jizya } } }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_faith }
+			remove_variable = qpq_ui_t_o_ct_faith
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_faith
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_tax_up = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_tax_up_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_tax_up
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes < 4
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_tax_up }
+			remove_variable = qpq_ui_t_o_ct_tax_up
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_tax_up
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_t_ct_levy_up = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_t_allows_ct_levy_up_trigger = yes
+		OR = {
+			has_variable = qpq_ui_t_o_ct_levy_up
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies < 4
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_t_o_ct_levy_up }
+			remove_variable = qpq_ui_t_o_ct_levy_up
+		}
+		else = {
+			set_variable = qpq_ui_t_o_ct_levy_up
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_offer_t_restraint = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -3286,27 +3569,151 @@ qpq_ui_offer_t_restraint = {
 	}
 }
 
-qpq_ui_offer_t_hook = {
+qpq_ui_contract_goods_t = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		qpq_ui_leg_t_allows_hook_trigger = yes
 		OR = {
-			has_variable = qpq_ui_t_o_hook
+			has_variable = qpq_ui_t_o_ct_tax_down
 			AND = {
-				scope:actor = { has_usable_hook = scope:recipient }
+				qpq_ui_leg_t_allows_ct_tax_down_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes > 0
+				}
+			}
+			has_variable = qpq_ui_t_o_ct_levy_down
+			AND = {
+				qpq_ui_leg_t_allows_ct_levy_down_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies > 0
+				}
+			}
+			has_variable = qpq_ui_t_o_ct_revocation
+			AND = {
+				qpq_ui_leg_t_allows_ct_revocation_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_cannot_revoke_titles }
+				}
+				OR = { scope:recipient.faith = scope:actor.faith scope:actor.faith = { NOT = { has_doctrine_parameter = unlock_jizya_contract } } }
+			}
+			has_variable = qpq_ui_t_o_ct_council
+			AND = {
+				qpq_ui_leg_t_allows_ct_council_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = can_demand_council_seat }
+				}
+			}
+			has_variable = qpq_ui_t_o_ct_war
+			AND = {
+				qpq_ui_leg_t_allows_ct_war_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_war_override }
+				}
+			}
+			has_variable = qpq_ui_t_o_ct_fort
+			AND = {
+				qpq_ui_leg_t_allows_ct_fort_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:fortification_rights = 0
+				}
+				scope:actor.culture = { has_innovation = innovation_battlements }
+			}
+			has_variable = qpq_ui_t_o_ct_coinage
+			AND = {
+				qpq_ui_leg_t_allows_ct_coinage_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:coinage_rights = 0
+				}
+				scope:actor.culture = { has_innovation = innovation_currency_02 }
+			}
+			has_variable = qpq_ui_t_o_ct_faith
+			AND = {
+				qpq_ui_leg_t_allows_ct_faith_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = religiously_protected }
+				}
+				NOT = { scope:recipient.faith = scope:actor.faith } scope:actor = { NOT = { rite = { rite_has_tenet = tenet_tax_nonbelievers } } NOT = { faith = { has_doctrine = special_doctrine_jizya } } }
+			}
+			has_variable = qpq_ui_t_o_ct_tax_up
+			AND = {
+				qpq_ui_leg_t_allows_ct_tax_up_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes < 4
+				}
+			}
+			has_variable = qpq_ui_t_o_ct_levy_up
+			AND = {
+				qpq_ui_leg_t_allows_ct_levy_up_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies < 4
+				}
+			}
+			has_variable = qpq_ui_t_o_restraint
+			AND = {
+				qpq_ui_leg_t_allows_restraint_trigger = yes
+				scope:recipient = { liege ?= scope:actor }
 			}
 		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_t_o_hook }
-			remove_variable = qpq_ui_t_o_hook
-		}
-		else = {
-			set_variable = qpq_ui_t_o_hook
-		}
-		qpq_ui_refresh_effect = yes
 	}
 }
 
@@ -3479,31 +3886,6 @@ qpq_ui_kind_i_chartered_conquest = {
 	}
 }
 
-qpq_ui_kind_i_sanctioned_conquest = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:sanctioned_conquest } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:sanctioned_conquest }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_i_marcher_charge = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -3583,22 +3965,14 @@ qpq_ui_kind_i_electoral_purchase = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-
 		exists = scope:recipient.primary_title
 		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+		NOT = { scope:recipient = scope:actor }
 	}
 	is_valid = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-
 		exists = scope:recipient.primary_title
 		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+		NOT = { scope:recipient = scope:actor }
 	}
 	effect = {
 		if = {
@@ -3656,31 +4030,6 @@ qpq_ui_kind_i_agent_provocateur = {
 			qpq_ui_clear_leg_i_effect = yes
 		}
 		set_variable = { name = qpq_ui_i_kind value = flag:agent_provocateur }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_i_licensed_feud = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:licensed_feud } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:licensed_feud }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -3894,31 +4243,6 @@ qpq_ui_kind_i_marriage_by_command = {
 	}
 }
 
-qpq_ui_kind_i_hand_over = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	is_valid = {
-		scope:actor = {
-			liege ?= scope:recipient
-			is_landed = yes
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:hand_over } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:hand_over }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_i_hand_over_artifact = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -4089,29 +4413,6 @@ qpq_ui_kind_i_clemency_bargain = {
 	}
 }
 
-qpq_ui_kind_i_electoral_capitulation = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		exists = scope:recipient.primary_title
-		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-		NOT = { scope:actor = scope:recipient }
-	}
-	is_valid = {
-		exists = scope:recipient.primary_title
-		scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-		NOT = { scope:actor = scope:recipient }
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:electoral_capitulation } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:electoral_capitulation }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
 qpq_ui_kind_i_mutual_defense_league = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -4180,6 +4481,9 @@ qpq_ui_kind_i_title_swap = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
 		scope:recipient = { is_landed = yes }
 		scope:actor = {
 			is_landed = yes
@@ -4187,8 +4491,32 @@ qpq_ui_kind_i_title_swap = {
 		}
 		exists = scope:recipient.liege
 		scope:recipient.liege = scope:actor.liege
+
+			}
+			AND = {
+
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				exists = scope:recipient.house
+				scope:actor = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:recipient.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:recipient.house }
+								betrothed.house ?= scope:recipient.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
 		scope:recipient = { is_landed = yes }
 		scope:actor = {
 			is_landed = yes
@@ -4196,6 +4524,27 @@ qpq_ui_kind_i_title_swap = {
 		}
 		exists = scope:recipient.liege
 		scope:recipient.liege = scope:actor.liege
+
+			}
+			AND = {
+
+		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
+
+				exists = scope:recipient.house
+				scope:actor = {
+					is_landed = yes
+					OR = {
+						any_spouse = { house ?= scope:recipient.house }
+						any_close_family_member = {
+							OR = {
+								any_spouse = { house ?= scope:recipient.house }
+								betrothed.house ?= scope:recipient.house
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	effect = {
 		if = {
@@ -4248,6 +4597,17 @@ qpq_ui_kind_i_proxy_war = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 		scope:recipient = { is_landed = yes }
@@ -4255,14 +4615,31 @@ qpq_ui_kind_i_proxy_war = {
 			is_independent_ruler = yes
 			is_landed = yes
 		}
+
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 		scope:recipient = { is_landed = yes }
 		scope:actor = {
 			is_independent_ruler = yes
 			is_landed = yes
+		}
+
+			}
 		}
 	}
 	effect = {
@@ -4476,6 +4853,17 @@ qpq_ui_kind_i_extradition = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
+		OR = {
+			AND = {
+
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 		scope:recipient = { is_landed = yes }
@@ -4483,14 +4871,31 @@ qpq_ui_kind_i_extradition = {
 			is_independent_ruler = yes
 			is_landed = yes
 		}
+
+			}
+		}
 	}
 	is_valid = {
+		OR = {
+			AND = {
+
+		scope:actor = {
+			liege ?= scope:recipient
+			is_landed = yes
+		}
+
+			}
+			AND = {
+
 		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 		scope:recipient = { is_landed = yes }
 		scope:actor = {
 			is_independent_ruler = yes
 			is_landed = yes
+		}
+
+			}
 		}
 	}
 	effect = {
@@ -4596,53 +5001,6 @@ qpq_ui_kind_i_defection_pact = {
 			qpq_ui_clear_leg_i_effect = yes
 		}
 		set_variable = { name = qpq_ui_i_kind value = flag:defection_pact }
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_kind_i_secret_clause = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
-
-		exists = scope:recipient.house
-		scope:actor = {
-			is_landed = yes
-			OR = {
-				any_spouse = { house ?= scope:recipient.house }
-				any_close_family_member = {
-					OR = {
-						any_spouse = { house ?= scope:recipient.house }
-						betrothed.house ?= scope:recipient.house
-					}
-				}
-			}
-		}
-	}
-	is_valid = {
-		NOT = { scope:actor.top_liege = scope:recipient.top_liege }
-
-		exists = scope:recipient.house
-		scope:actor = {
-			is_landed = yes
-			OR = {
-				any_spouse = { house ?= scope:recipient.house }
-				any_close_family_member = {
-					OR = {
-						any_spouse = { house ?= scope:recipient.house }
-						betrothed.house ?= scope:recipient.house
-					}
-				}
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { NOT = { var:qpq_ui_i_kind = flag:secret_clause } }
-			qpq_ui_clear_leg_i_effect = yes
-		}
-		set_variable = { name = qpq_ui_i_kind value = flag:secret_clause }
 		qpq_ui_refresh_effect = yes
 	}
 }
@@ -5753,30 +6111,32 @@ qpq_ui_group_i_war = {
 				}
 			}
 			AND = {
-				scope:actor = {
-					liege ?= scope:recipient
-					is_landed = yes
-				}
-			}
-			AND = {
-				scope:actor = {
-					liege ?= scope:recipient
-					is_landed = yes
-				}
-			}
-			AND = {
 				scope:recipient = {
 					liege ?= scope:actor
 					is_landed = yes
 				}
 			}
 			AND = {
+				OR = {
+					AND = {
+
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+
+					}
+					AND = {
+
 				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 				scope:recipient = { is_landed = yes }
 				scope:actor = {
 					is_independent_ruler = yes
 					is_landed = yes
+				}
+
+					}
 				}
 			}
 			AND = {
@@ -5801,12 +6161,6 @@ qpq_ui_group_i_favours = {
 	saved_scopes = { actor recipient }
 	is_shown = {
 		OR = {
-			AND = {
-				scope:actor = {
-					liege ?= scope:recipient
-					is_landed = yes
-				}
-			}
 			AND = {
 				scope:actor = {
 					liege ?= scope:recipient
@@ -5856,32 +6210,26 @@ qpq_ui_group_i_family = {
 	is_shown = {
 		OR = {
 			AND = {
+				exists = scope:recipient.primary_title
+				scope:recipient.primary_title = { any_elector = { this = scope:actor } }
+				NOT = { scope:recipient = scope:actor }
+			}
+			AND = {
 				scope:actor = {
 					liege ?= scope:recipient
 					is_landed = yes
 				}
+			}
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+			}
+			AND = {
+				OR = {
+					AND = {
 
-				exists = scope:recipient.primary_title
-				scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-			}
-			AND = {
-				scope:actor = {
-					liege ?= scope:recipient
-					is_landed = yes
-				}
-			}
-			AND = {
-				scope:actor = {
-					liege ?= scope:recipient
-					is_landed = yes
-				}
-			}
-			AND = {
-				exists = scope:recipient.primary_title
-				scope:recipient.primary_title = { any_elector = { this = scope:actor } }
-				NOT = { scope:actor = scope:recipient }
-			}
-			AND = {
 				scope:recipient = { is_landed = yes }
 				scope:actor = {
 					is_landed = yes
@@ -5889,19 +6237,23 @@ qpq_ui_group_i_family = {
 				}
 				exists = scope:recipient.liege
 				scope:recipient.liege = scope:actor.liege
-			}
-			AND = {
+
+					}
+					AND = {
+
 				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
-				exists = scope:recipient.house
-				scope:actor = {
-					is_landed = yes
-					OR = {
-						any_spouse = { house ?= scope:recipient.house }
-						any_close_family_member = {
+						exists = scope:recipient.house
+						scope:actor = {
+							is_landed = yes
 							OR = {
 								any_spouse = { house ?= scope:recipient.house }
-								betrothed.house ?= scope:recipient.house
+								any_close_family_member = {
+									OR = {
+										any_spouse = { house ?= scope:recipient.house }
+										betrothed.house ?= scope:recipient.house
+									}
+								}
 							}
 						}
 					}
@@ -5959,12 +6311,26 @@ qpq_ui_group_i_blood = {
 				}
 			}
 			AND = {
+				OR = {
+					AND = {
+
+				scope:actor = {
+					liege ?= scope:recipient
+					is_landed = yes
+				}
+
+					}
+					AND = {
+
 				NOT = { scope:actor.top_liege = scope:recipient.top_liege }
 
 				scope:recipient = { is_landed = yes }
 				scope:actor = {
 					is_independent_ruler = yes
 					is_landed = yes
+				}
+
+					}
 				}
 			}
 			AND = {
@@ -6539,6 +6905,30 @@ qpq_ui_offer_i_my_word = {
 	}
 }
 
+qpq_ui_offer_i_hook = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_hook_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_hook
+			AND = {
+				scope:recipient = { has_usable_hook = scope:actor }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_hook }
+			remove_variable = qpq_ui_i_o_hook
+		}
+		else = {
+			set_variable = qpq_ui_i_o_hook
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_offer_i_secret = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -6563,30 +6953,6 @@ qpq_ui_offer_i_secret = {
 		}
 		else = {
 			set_variable = qpq_ui_i_o_secret
-		}
-		qpq_ui_refresh_effect = yes
-	}
-}
-
-qpq_ui_offer_i_contract = {
-	scope = character
-	saved_scopes = { actor recipient }
-	is_shown = {
-		qpq_ui_leg_i_allows_contract_trigger = yes
-		OR = {
-			has_variable = qpq_ui_i_o_contract
-			AND = {
-				scope:actor = { liege ?= scope:recipient }
-			}
-		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_i_o_contract }
-			remove_variable = qpq_ui_i_o_contract
-		}
-		else = {
-			set_variable = qpq_ui_i_o_contract
 		}
 		qpq_ui_refresh_effect = yes
 	}
@@ -6716,6 +7082,330 @@ qpq_ui_offer_i_church = {
 	}
 }
 
+qpq_ui_offer_i_ct_tax_down = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_tax_down_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_tax_down
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes > 0
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_tax_down }
+			remove_variable = qpq_ui_i_o_ct_tax_down
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_tax_down
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_levy_down = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_levy_down_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_levy_down
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies > 0
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_levy_down }
+			remove_variable = qpq_ui_i_o_ct_levy_down
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_levy_down
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_revocation = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_revocation_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_revocation
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_cannot_revoke_titles }
+				}
+				OR = { scope:actor.faith = scope:recipient.faith scope:recipient.faith = { NOT = { has_doctrine_parameter = unlock_jizya_contract } } }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_revocation }
+			remove_variable = qpq_ui_i_o_ct_revocation
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_revocation
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_council = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_council_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_council
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = can_demand_council_seat }
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_council }
+			remove_variable = qpq_ui_i_o_ct_council
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_council
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_war = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_war_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_war
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_war_override }
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_war }
+			remove_variable = qpq_ui_i_o_ct_war
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_war
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_fort = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_fort_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_fort
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:fortification_rights = 0
+				}
+				scope:recipient.culture = { has_innovation = innovation_battlements }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_fort }
+			remove_variable = qpq_ui_i_o_ct_fort
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_fort
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_coinage = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_coinage_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_coinage
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:coinage_rights = 0
+				}
+				scope:recipient.culture = { has_innovation = innovation_currency_02 }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_coinage }
+			remove_variable = qpq_ui_i_o_ct_coinage
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_coinage
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_faith = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_faith_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_faith
+			AND = {
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = religiously_protected }
+				}
+				NOT = { scope:actor.faith = scope:recipient.faith } scope:recipient = { NOT = { rite = { rite_has_tenet = tenet_tax_nonbelievers } } NOT = { faith = { has_doctrine = special_doctrine_jizya } } }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_faith }
+			remove_variable = qpq_ui_i_o_ct_faith
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_faith
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_tax_up = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_tax_up_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_tax_up
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes < 4
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_tax_up }
+			remove_variable = qpq_ui_i_o_ct_tax_up
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_tax_up
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
+qpq_ui_offer_i_ct_levy_up = {
+	scope = character
+	saved_scopes = { actor recipient }
+	is_shown = {
+		qpq_ui_leg_i_allows_ct_levy_up_trigger = yes
+		OR = {
+			has_variable = qpq_ui_i_o_ct_levy_up
+			AND = {
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies < 4
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_variable = qpq_ui_i_o_ct_levy_up }
+			remove_variable = qpq_ui_i_o_ct_levy_up
+		}
+		else = {
+			set_variable = qpq_ui_i_o_ct_levy_up
+		}
+		qpq_ui_refresh_effect = yes
+	}
+}
+
 qpq_ui_offer_i_restraint = {
 	scope = character
 	saved_scopes = { actor recipient }
@@ -6740,27 +7430,151 @@ qpq_ui_offer_i_restraint = {
 	}
 }
 
-qpq_ui_offer_i_hook = {
+qpq_ui_contract_goods_i = {
 	scope = character
 	saved_scopes = { actor recipient }
 	is_shown = {
-		qpq_ui_leg_i_allows_hook_trigger = yes
 		OR = {
-			has_variable = qpq_ui_i_o_hook
+			has_variable = qpq_ui_i_o_ct_tax_down
 			AND = {
-				scope:recipient = { has_usable_hook = scope:actor }
+				qpq_ui_leg_i_allows_ct_tax_down_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes > 0
+				}
+			}
+			has_variable = qpq_ui_i_o_ct_levy_down
+			AND = {
+				qpq_ui_leg_i_allows_ct_levy_down_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies > 0
+				}
+			}
+			has_variable = qpq_ui_i_o_ct_revocation
+			AND = {
+				qpq_ui_leg_i_allows_ct_revocation_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_cannot_revoke_titles }
+				}
+				OR = { scope:actor.faith = scope:recipient.faith scope:recipient.faith = { NOT = { has_doctrine_parameter = unlock_jizya_contract } } }
+			}
+			has_variable = qpq_ui_i_o_ct_council
+			AND = {
+				qpq_ui_leg_i_allows_ct_council_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = can_demand_council_seat }
+				}
+			}
+			has_variable = qpq_ui_i_o_ct_war
+			AND = {
+				qpq_ui_leg_i_allows_ct_war_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = vassal_contract_war_override }
+				}
+			}
+			has_variable = qpq_ui_i_o_ct_fort
+			AND = {
+				qpq_ui_leg_i_allows_ct_fort_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:fortification_rights = 0
+				}
+				scope:recipient.culture = { has_innovation = innovation_battlements }
+			}
+			has_variable = qpq_ui_i_o_ct_coinage
+			AND = {
+				qpq_ui_leg_i_allows_ct_coinage_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:coinage_rights = 0
+				}
+				scope:recipient.culture = { has_innovation = innovation_currency_02 }
+			}
+			has_variable = qpq_ui_i_o_ct_faith
+			AND = {
+				qpq_ui_leg_i_allows_ct_faith_trigger = yes
+				scope:actor = {
+					liege ?= scope:recipient
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal government_has_flag = government_is_clan }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					NOT = { vassal_contract_has_flag = religiously_protected }
+				}
+				NOT = { scope:actor.faith = scope:recipient.faith } scope:recipient = { NOT = { rite = { rite_has_tenet = tenet_tax_nonbelievers } } NOT = { faith = { has_doctrine = special_doctrine_jizya } } }
+			}
+			has_variable = qpq_ui_i_o_ct_tax_up
+			AND = {
+				qpq_ui_leg_i_allows_ct_tax_up_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_taxes < 4
+				}
+			}
+			has_variable = qpq_ui_i_o_ct_levy_up
+			AND = {
+				qpq_ui_leg_i_allows_ct_levy_up_trigger = yes
+				scope:recipient = {
+					liege ?= scope:actor
+					is_ruler = yes
+					is_tributary = no
+					OR = { government_has_flag = government_is_feudal government_has_flag = government_is_japan_feudal }
+					vassal_contract_has_modifiable_obligations = yes
+					subject_contract_is_blocked_from_modification = no
+					vassal_contract_obligation_level:feudal_government_levies < 4
+				}
+			}
+			has_variable = qpq_ui_i_o_restraint
+			AND = {
+				qpq_ui_leg_i_allows_restraint_trigger = yes
+				scope:actor = { liege ?= scope:recipient }
 			}
 		}
-	}
-	effect = {
-		if = {
-			limit = { has_variable = qpq_ui_i_o_hook }
-			remove_variable = qpq_ui_i_o_hook
-		}
-		else = {
-			set_variable = qpq_ui_i_o_hook
-		}
-		qpq_ui_refresh_effect = yes
 	}
 }
 

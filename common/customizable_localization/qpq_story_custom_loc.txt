@@ -407,14 +407,14 @@ QpqOwesNothing = {
 	text = {
 		trigger = {
 			exists = var:qpq_main
-			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
+			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } qpq_story_has_contract_terms_trigger = yes AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
 		}
 		localization_key = qpq_sl_owed_nothing
 	}
 	text = {
 		trigger = {
 			NOT = { exists = var:qpq_main }
-			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
+			NOR = { AND = { exists = var:qpq_gold_due var:qpq_gold_due > 0 } AND = { exists = var:qpq_stipend } AND = { exists = var:qpq_offer_title } AND = { exists = var:qpq_offer_artifact } AND = { exists = var:qpq_offer_contract } qpq_story_has_contract_terms_trigger = yes AND = { exists = var:qpq_offer_succession } AND = { exists = var:qpq_offer_office } AND = { exists = var:qpq_offer_restraint } }
 		}
 		localization_key = qpq_sl_owe_nothing
 	}
