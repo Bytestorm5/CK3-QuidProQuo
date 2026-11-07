@@ -18,7 +18,7 @@ Hand-written companions:
 """
 import os
 import re
-from qpq_kinds import KINDS, GROUPS
+from qpq_kinds import DURATION_GOODS, KINDS, GROUPS, LASTING_TERM, is_instant
 from qpq_contracts import CONTRACT_DEMANDS, CONTRACT_KEYS
 import qpq_goals as goals
 
@@ -217,6 +217,9 @@ def gen_scripted_guis(block, fmt_shown, OFFER_DEFS, write):
         # The term: how long the deed has, or how long the promise holds, a year or five at a time
         lo, hi = goals.TERM_YEARS
         out += "qpq_ui_term_shown_%s = {\n\tscope = character\n\tis_shown = { qpq_ui_leg_%s_has_term_trigger = yes }\n}\n\n" % (L, L)
+        # with no deed to set it on, the term gets a row of its own among the goods
+        out += ("qpq_ui_goods_term_%s = {\n\tscope = character\n\tis_shown = {\n\t\tvar:qpq_ui_%s_kind = flag:none\n"
+                "\t\tqpq_ui_leg_%s_has_term_trigger = yes\n\t}\n}\n\n") % (L, L, L)
         for n in (-5, -1, 1, 5):
             name = "qpq_ui_term_%s_%s_%d" % ("up" if n > 0 else "down", L, abs(n))
             edge = ("var:qpq_ui_%s_years_shown < %d" % (L, hi)) if n > 0 else ("var:qpq_ui_%s_years_shown > %d" % (L, lo))
@@ -441,16 +444,23 @@ def compute_kind(k, L, block):
     elif k["target"] == "title":
         s += "\t\t\tif = {\n\t\t\t\tlimit = {\n\t\t\t\t\texists = scope:target\n\t\t\t\t\tscope:target = { exists = holder }\n\t\t\t\t}\n"
         s += "\t\t\t\tset_variable = { name = qpq_ui_%s_target value = scope:target.holder }\n\t\t\t}\n" % L
-    if k["key"] == "barter":
-        s += "\t\t\tset_variable = { name = qpq_ui_%s_term value = %d }\n" % (L, k["term"])
-    else:
-        # the term chosen, or the deed's usual one (in whole years); everything weighed below sees it
-        s += ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%(L)s_years }\n"
+    # the term chosen, or the deed's usual one (in whole years); everything weighed below sees it
+    def chosen_term(T):
+        return ("\t\t\tif = {\n\t\t\t\tlimit = { has_variable = qpq_ui_%(L)s_years }\n"
               "\t\t\t\tset_variable = { name = qpq_ui_%(L)s_term value = { value = var:qpq_ui_%(L)s_years multiply = 12 } }\n\t\t\t}\n"
               "\t\t\telse = {\n\t\t\t\tset_variable = { name = qpq_ui_%(L)s_term value = %(T)d }\n\t\t\t}\n"
               "\t\t\tset_variable = {\n\t\t\t\tname = qpq_ui_%(L)s_years_shown\n\t\t\t\tvalue = {\n\t\t\t\t\tvalue = var:qpq_ui_%(L)s_term\n"
               "\t\t\t\t\tdivide = 12\n\t\t\t\t\tround = yes\n\t\t\t\t\tmin = 1\n\t\t\t\t}\n\t\t\t}\n"
-              "\t\t\tsave_scope_value_as = { name = qpq_term_months value = var:qpq_ui_%(L)s_term }\n") % {"L": L, "T": k["term"]}
+              "\t\t\tsave_scope_value_as = { name = qpq_term_months value = var:qpq_ui_%(L)s_term }\n") % {"L": L, "T": T}
+    if k["key"] == "barter":
+        # no deed, but what lasts until the deadline gives it one
+        s += "\t\t\tif = {\n\t\t\t\tlimit = { qpq_ui_leg_%s_has_lasting_goods_trigger = yes }\n" % L
+        s += chosen_term(LASTING_TERM)
+        s += "\t\t\t}\n\t\t\telse = {\n\t\t\t\tset_variable = { name = qpq_ui_%s_term value = %d }\n\t\t\t}\n" % (L, k["term"])
+    elif is_instant(k):
+        s += "\t\t\tset_variable = { name = qpq_ui_%s_term value = %d }\n" % (L, k["term"])
+    else:
+        s += chosen_term(k["term"])
     s += "\t\t\tset_variable = { name = qpq_ui_%s_payer_tier value = qpq_%s_payer_tier_value }\n" % (L, key)
     s += "\t\t\tset_variable = { name = qpq_ui_%s_agent_tier value = qpq_%s_agent_tier_value }\n" % (L, key)
     def price_block(fair):
@@ -493,6 +503,9 @@ def compute_kind(k, L, block):
             s += setv("char", "qpq_%s_character_value" % key)
             s += circ_guarded(k, L, setv("circ", "qpq_%s_circumstance_value" % key))
             s += setv("refuse", "qpq_%s_refusal_value" % key)
+            if k.get("relief"):
+                # what the circumstances above already took off for the goods alone
+                s += "\t\t\tif = {\n\t\t\t\tlimit = { %s }\n\t%s\t\t\t}\n" % (k["relief_when"], setv("relief", k["relief"]))
         else:
             s += setv("ask", "qpq_%s_demand_value" % key)
             s += setv("char", "0") + setv("circ", "0") + setv("refuse", "0")
@@ -694,6 +707,17 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
 
     # Put the two legs together
     eff += "qpq_ui_deal_finish_effect = {\n\tqpq_deal_orient_normal_effect = yes\n"
+    # Payment softening a deed's penalty can only be settled now: it is what they come away with on the whole deal,
+    # your goods and the deed you do, less the goods they hand back. Goods swapped both ways soften nothing.
+    for k in KINDS:
+        if k.get("relief"):
+            eff += ("\tif = {\n\t\tlimit = {\n\t\t\thas_variable = qpq_ui_t_a_relief\n\t\t\tvar:qpq_ui_t_ekind = flag:%s\n\t\t}\n"
+                    "\t\tchange_variable = {\n\t\t\tname = qpq_ui_t_a_circ\n\t\t\tadd = {\n\t\t\t\tvalue = var:qpq_ui_t_a_offers\n"
+                    "\t\t\t\tif = {\n\t\t\t\t\tlimit = { has_variable = qpq_ui_i_ekind }\n"
+                    "\t\t\t\t\tadd = var:qpq_ui_i_a_ask\n\t\t\t\t\tadd = var:qpq_ui_i_a_goal\n\t\t\t\t\tadd = var:qpq_ui_i_a_char\n"
+                    "\t\t\t\t\tadd = var:qpq_ui_i_a_risk\n\t\t\t\t\tadd = var:qpq_ui_i_a_circ\n\t\t\t\t\tadd = var:qpq_ui_i_a_offers\n"
+                    "\t\t\t\t}\n\t\t\t\tmultiply = 2\n\t\t\t\tmin = 0\n\t\t\t\tmax = %s\n"
+                    "\t\t\t\tsubtract = var:qpq_ui_t_a_relief\n\t\t\t}\n\t\t}\n\t}\n") % (k["key"], k["relief_max"])
     eff += "\tset_variable = { name = qpq_ui_acc_ask value = 0 }\n\tset_variable = { name = qpq_ui_acc_offers value = 0 }\n"
     for part in ("other", "goal", "char", "dread", "circ", "refuse", "risk", "opinion", "public", "cap", "allow", "allow_down"):
         eff += "\tset_variable = { name = qpq_ui_acc_%s value = 0 }\n" % part
@@ -772,7 +796,7 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
           "qpq_ui_acc_offers", "qpq_ui_acc_other", "qpq_ui_acc_total", "qpq_ui_acc_cap", "qpq_ui_acc_allow", "qpq_ui_acc_allow_down", "qpq_ui_acc_risk",
           "qpq_ui_acc_before_cmd", "qpq_ui_acc_cmd", "qpq_ui_acc_goal", "qpq_ui_acc_char", "qpq_ui_acc_dread", "qpq_ui_acc_circ", "qpq_ui_acc_refuse",
           "qpq_ui_acc_opinion", "qpq_ui_acc_public", "qpq_ui_cmd_ok", "qpq_ui_cmd_level", "qpq_ui_cmd_expect",
-          "qpq_ui_cmd_margin"]
+          "qpq_ui_cmd_margin", "qpq_ui_t_a_relief"]
     for L in LEGS:
         gv += ["qpq_ui_%s_%s" % (L, v) for v in leg_vars]
         gv += ["qpq_ui_ref_%s_%s" % (L, w) for w in WHYS[L]]
@@ -895,13 +919,24 @@ def gen_ui_script(block, fmt_shown, OFFER_DEFS, write):
             trg += "\t}\n}\n\n"
         # a promise kept for its term, rather than a deed to be done within it
         trg += "qpq_ui_leg_%s_is_restraint_trigger = {\n\tOR = {\n" % L
-        for k in DEEDS:
+        for k in KINDS:
             if k["mode"] == "restraint":
                 trg += "\t\t%s\n" % vekind(L, k)
         trg += "\t}\n}\n\n"
-        # a deed with a term to set (barter carries only goods, so it has none)
+        # goods that last until the deadline, which give even a leg with no deed a term
+        trg += "qpq_ui_leg_%s_has_lasting_goods_trigger = {\n\tOR = {\n" % L
+        for o in DURATION_GOODS:
+            trg += "\t\thas_variable = qpq_ui_%s_o_%s\n" % (L, o)
+        trg += "\t}\n}\n\n"
+        # a term to set: any deed, and goods with nothing that lasts have none
         trg += ("qpq_ui_leg_%s_has_term_trigger = {\n\thas_variable = qpq_ui_%s_ekind\n"
-                "\tNOT = { var:qpq_ui_%s_ekind = flag:barter }\n}\n\n") % (L, L, L)
+                "\tOR = {\n\t\tNOT = { var:qpq_ui_%s_ekind = flag:barter }\n"
+                "\t\tqpq_ui_leg_%s_has_lasting_goods_trigger = yes\n\t}\n") % (L, L, L, L)
+        # a deed done the moment it is sealed has no deadline
+        for k in DEEDS:
+            if is_instant(k):
+                trg += "\tNOT = { %s }\n" % vekind(L, k)
+        trg += "}\n\n"
         trg += "qpq_ui_leg_%s_has_goods_trigger = {\n\tOR = {\n" % L
         for o in UI_OFFERS:
             trg += "\t\thas_variable = qpq_ui_%s_o_%s\n" % (L, o)
@@ -1072,7 +1107,8 @@ def gen_ui_custom_loc(write):
                 (restr, fmt % ("FOR", L.upper())),
                 (one, fmt % ("WITHIN", "ONE")),
             ], fmt % ("WITHIN", L.upper()))
-        out += cl("QpqUiTermInfo_%s" % L, [(restr, "QPQ_UI_TERM_INFO_RESTRAINT_%s" % L.upper())], "QPQ_UI_TERM_INFO_DEADLINE_%s" % L.upper())
+        out += cl("QpqUiTermInfo_%s" % L, [("var:qpq_ui_%s_ekind ?= flag:barter" % L, "QPQ_UI_TERM_INFO_LASTING"),
+                                           (restr, "QPQ_UI_TERM_INFO_RESTRAINT_%s" % L.upper())], "QPQ_UI_TERM_INFO_DEADLINE_%s" % L.upper())
         out += cl("QpqUiGoldLine_%s" % L, [
             ("NOT = { has_variable = qpq_ui_%s_o_gold }" % L, "qpq_empty"),
             ("var:qpq_ui_%s_timing ?= flag:on_delivery" % L, "QPQ_UI_GOLD_ON_DELIVERY_%s" % L.upper()),
@@ -1203,11 +1239,18 @@ def gen_deal_events(write):
                   "\t\t\t\t\tOR = {\n%s\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tdesc = qpq_deal.1.term_for%s\n\t\t\t}\n") % (
                 deed_leg, one, restraint, suffix or "_" + deed_leg)
             s += ("\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = {\n\t\t\t\t\texists = scope:qpq_deal_%s_years\n\t\t\t\t\t%s\n"
-                  "\t\t\t\t}\n\t\t\t\tdesc = qpq_deal.1.term_within%s\n\t\t\t}\n") % (deed_leg, one, suffix or "_" + deed_leg)
+                  "\t\t\t\t\tNOT = { scope:qpq_deal_%s_kind ?= flag:barter }\n"
+                  "\t\t\t\t}\n\t\t\t\tdesc = qpq_deal.1.term_within%s\n\t\t\t}\n") % (deed_leg, one, deed_leg, suffix or "_" + deed_leg)
         s += "\t\t\tdesc = qpq_empty\n\t\t}\n"
         s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_o_gold ?= yes }\n\t\t\tdesc = qpq_deal.1.gold_%s\n\t\t}\n" % (goods_leg, goods_leg)
         for o in HUB50_TERMS:
             s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_o_%s ?= yes }\n\t\t\tdesc = qpq_hub.50.term_%s\n\t\t}\n" % (goods_leg, o, o)
+        s += "\t\tfirst_valid = {\n"
+        for one, suffix in (("scope:qpq_deal_%s_years = 1" % goods_leg, "_one"), ("always = yes", "_" + goods_leg)):
+            s += ("\t\t\ttriggered_desc = {\n\t\t\t\ttrigger = {\n\t\t\t\t\texists = scope:qpq_deal_%s_years\n\t\t\t\t\t%s\n"
+                  "\t\t\t\t\tscope:qpq_deal_%s_kind ?= flag:barter\n\t\t\t\t}\n"
+                  "\t\t\t\tdesc = qpq_deal.1.term_for%s\n\t\t\t}\n") % (goods_leg, one, goods_leg, suffix)
+        s += "\t\t\tdesc = qpq_empty\n\t\t}\n"
         for x in HUB50_EXTRAS:
             s += "\t\ttriggered_desc = {\n\t\t\ttrigger = { scope:qpq_deal_%s_%s ?= yes }\n\t\t\tdesc = qpq_hub.50.term_%s\n\t\t}\n" % (deed_leg, x, x)
         s += "\t\ttriggered_desc = {\n\t\t\ttrigger = {\n\t\t\t\tNOT = { exists = scope:qpq_deal_%s_kind }\n\t\t\t\tNOT = { scope:qpq_deal_%s_o_gold ?= yes }\n" % (deed_leg, goods_leg)

@@ -265,7 +265,17 @@ NO_CLAIM = [o for o in ALL_OFFERS if o != "claim"]
 AGENT_DEMANDS = (["gold", "on_delivery", "split", "stipend", "land", "office", "release_hook",
                   "my_word", "clemency", "artifact", "church"] + CONTRACT_DEMANDS)
 
+# Goods that last until the deadline, and so weigh by the term (qpq_goods_term_mult_value). With no deed in the
+# leg they still give it a deadline: LASTING_TERM unless the panel sets another.
+DURATION_GOODS = ["office", "arms", "restraint"]
+LASTING_TERM = 60
+
 KINDS = []
+
+
+def is_instant(k):
+    """A deed done the moment it is sealed: it has no deadline, so no term to set or to weigh."""
+    return str(k.get("deliver", "")).strip() == "always = yes"
 
 
 def K(**kw):
@@ -3387,11 +3397,16 @@ scope:qpq_payer = {
 """,
   deliver="always = yes", exposed="")
 
+# Vanilla's -200 for a demand with nothing behind it
+TRIBUTE_NO_CB = "NOT = { scope:recipient = { has_government = herder_government } } scope:actor = { NOT = { has_any_cb_on = scope:recipient } }"
+
 K(key="accept_the_yoke", cat="F", group="tribute", secret="bribery", icon="become_tributary_interaction",
-  name="Accept the Yoke",
+  name="Become a Tributary",
   ask="become [qpq_payer.GetShortUINamePossessive] tributary",
-  desc="An [independent_ruler|E] becomes your [tributary|E], paying [tribute|E] in return for what you give. A ruler stronger than you will hardly bend the knee.",
+  desc="An [independent_ruler|E] becomes your [tributary|E]: they pay you [tribute|E] and keep their realm, and do not become your [vassal|E]. They weigh it as they would a demand for tribute: they want a [casus_belli|E] behind it, though what you pay or do in return can make up for most of one, and a king or emperor is very hard to persuade.",
   payer_base=0, agent_base=1, target="none", term=12, effort=30,
+  # the panel settles this once both legs are priced: see qpq_ui_deal_finish_effect
+  relief="qpq_tribute_paid_relief_value", relief_when=TRIBUTE_NO_CB, relief_max="qpq_tribute_paid_relief_max_value",
   rel="""
 scope:actor = {
     is_landed = yes
@@ -3405,8 +3420,63 @@ scope:recipient = {
 }
 """,
   valid=[("qpq_valid_can_be_tributary", "scope:recipient = { can_be_tributary_of = scope:actor }")],
-  demand=[("-40", "scope:recipient = { max_military_strength > scope:actor.max_military_strength }", "QPQ_REASON_STRONGER_THAN_YOU"),
-          ("15", "scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 3 } }", "QPQ_REASON_OUTMATCHED")],
+  # demand_tributary_interaction, as far as it applies outside the nomad, Mandala and hegemon rules
+  demand=[("qpq_tribute_boldness_value", "NOT = { scope:recipient.ai_boldness = 0 }", "QPQ_REASON_TRIB_BOLD"),
+          ("qpq_tribute_greed_value", "scope:recipient.ai_greed > 0", "QPQ_REASON_TRIB_GREED"),
+          ("40", "scope:recipient = { is_obedient_to = scope:actor }", "QPQ_REASON_TRIB_OBEDIENT"),
+          ("dominant_negative_ai_value", TRIBUTE_NO_CB, "QPQ_REASON_TRIB_NO_CB"),
+          # the one change from vanilla: a demand with nothing behind it is empty, and payment puts something behind it
+          ("qpq_tribute_paid_relief_value", TRIBUTE_NO_CB, "QPQ_REASON_TRIB_PAID"),
+          ("qpq_tribute_demand_threat_value", "always = yes", "QPQ_REASON_TRIB_POWER"),
+          ("-100", "scope:recipient = { highest_held_title_tier = tier_kingdom }", "QPQ_REASON_TRIB_RANK"),
+          ("-200", "scope:recipient = { highest_held_title_tier >= tier_empire }", "QPQ_REASON_TRIB_RANK"),
+          ("-100", "scope:recipient = { has_relation_rival = scope:actor NOT = { has_relation_nemesis = scope:actor } }", "QPQ_REASON_TRIB_RIVAL"),
+          ("-200", "scope:recipient = { has_relation_nemesis = scope:actor }", "QPQ_REASON_TRIB_NEMESIS"),
+          ("10", "scope:recipient.dynasty ?= scope:actor.dynasty", "QPQ_REASON_TRIB_DYNASTY"),
+          ("qpq_tribute_foreign_faith_value", "NOT = { scope:actor.faith = scope:recipient.faith } scope:actor = { NOT = { rite = { rite_has_doctrine = doctrine_pluralism_pluralistic } } }", "QPQ_REASON_TRIB_FAITH"),
+          ("30", "scope:recipient = { NOT = { any_neighboring_top_suzerain_realm_owner = { this != scope:actor } } NOT = { any_realm_county = { is_coastal_county = yes } } }", "QPQ_REASON_TRIB_ENCIRCLED"),
+          ("qpq_tribute_foreign_culture_value", "scope:actor = { NOT = { has_same_culture_as = scope:recipient } culture = { cultural_acceptance = { target = scope:recipient.culture value < 50 } } }", "QPQ_REASON_TRIB_CULTURE"),
+          ("5", "scope:actor = { knows_language_of_culture = scope:recipient.culture }", "QPQ_REASON_TRIB_LANGUAGE"),
+          ("-15", "scope:actor = { has_legitimacy_flag = slightly_reduced_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("-25", "scope:actor = { has_legitimacy_flag = reduced_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("-50", "scope:actor = { has_legitimacy_flag = very_reduced_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("-75", "scope:actor = { has_legitimacy_flag = massively_reduced_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("25", "scope:actor = { has_legitimacy_flag = increased_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("50", "scope:actor = { has_legitimacy_flag = very_increased_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY"),
+          ("75", "scope:actor = { has_legitimacy_flag = extra_increased_tributarization_acceptance }", "QPQ_REASON_TRIB_LEGITIMACY")],
+  # to the one who would be suzerain: become_tributary_interaction
+  worth="""
+value = 50
+if = {
+    limit = { scope:recipient = { tier_difference = { target = scope:actor value > 1 } } }
+    add = 20
+}
+if = {
+    limit = { scope:recipient = { NOT = { any_neighboring_top_liege_realm_owner = { this = scope:actor } } } }
+    add = -15
+}
+if = {
+    limit = { scope:actor = { has_relation_rival = scope:recipient NOT = { has_relation_nemesis = scope:recipient } } }
+    add = -10
+}
+if = {
+    limit = { scope:actor = { has_relation_nemesis = scope:recipient } }
+    add = -100
+}
+if = {
+    limit = { scope:actor.dynasty ?= scope:recipient.dynasty }
+    add = 10
+}
+if = {
+    limit = { scope:recipient = { has_variable = conqueror } }
+    add = -1000
+}
+add = {
+    value = scope:actor.ai_greed
+    multiply = 0.75
+    min = 0
+}
+""",
   on_seal="""
 if = {
     limit = {
@@ -3421,9 +3491,9 @@ if = {
   deliver="always = yes", exposed="")
 
 K(key="cast_off_the_yoke", cat="F", group="tribute", secret="betrayal", icon="cease_paying_tributary_interaction",
-  name="Cast Off the Yoke",
-  ask="stop paying tribute to [qpq_target.GetTitledFirstName]",
-  desc="Pay another ruler's [tributary|E] to stop paying their [suzerain|E]. If it comes out, the suzerain knows whose gold it was.",
+  name="Reject a Suzerain",
+  ask="reject [qpq_target.GetTitledFirstName] as their suzerain and stop paying tribute",
+  desc="Pay another ruler's [tributary|E] to reject their [suzerain|E] and stop paying [tribute|E]. They weigh it as they would ceasing tribute on their own, so a tributary afraid of its suzerain will want a great deal. If it comes out, the suzerain knows whose gold it was.",
   payer_base=2, agent_base=2, target="derived", derive="scope:recipient.suzerain", term=12, effort=25,
   rel="""
 scope:actor = { is_landed = yes }
@@ -3434,6 +3504,13 @@ scope:recipient = {
     NOT = { suzerain = scope:actor }
 }
 """,
+  # cease_paying_tribute_interaction's ai_will_do, as far as it applies outside the nomad and Mandala rules
+  base_ask=-25,
+  demand=[("qpq_tribute_cease_threat_value", "always = yes", "QPQ_REASON_TRIB_POWER"),
+          ("30", "scope:recipient = { has_relation_rival = scope:recipient.suzerain NOT = { has_relation_nemesis = scope:recipient.suzerain } }", "QPQ_REASON_TRIB_RIVAL"),
+          ("50", "scope:recipient = { has_relation_nemesis = scope:recipient.suzerain }", "QPQ_REASON_TRIB_NEMESIS"),
+          ("25", "scope:recipient.faith = { NOT = { faith_is_in_same_rf = { FAITH = scope:recipient.suzerain.faith } } }", "QPQ_REASON_TRIB_OTHER_RELIGION"),
+          ("-100", "scope:recipient = { any_memory = { has_memory_type = suzerain_defended_me_in_war has_memory_participant = scope:recipient.suzerain memory_age_years < 10 } }", "QPQ_REASON_TRIB_DEFENDED")],
   on_seal="""
 scope:qpq_agent = {
     if = {
@@ -3444,7 +3521,7 @@ scope:qpq_agent = {
 if = {
     limit = { exists = scope:qpq_target }
     scope:qpq_target = {
-        add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion opinion = -60 }
+        add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion }
     }
 }
 """,
@@ -3467,9 +3544,10 @@ K(key="barter", cat="E", group="favours", secret="exchange", icon="icon_gold", c
   name="Exchange of Goods",
   ask="hand over what was agreed, and nothing more",
   desc="No deed on either side: only goods change hands, [gold|E] for land, favours for favours.",
-  payer_base=0, agent_base=0, target="none", term=1, effort=0,
+  payer_base=0, agent_base=0, target="none", term=1, effort=0, mode="restraint",
   rel="NOT = { scope:actor = scope:recipient }",
-  deliver="always = yes",
+  # done at the next monthly check, unless something in it lasts: then it holds until the deadline
+  deliver="NOR = { has_variable = qpq_offer_office has_variable = qpq_offer_restraint has_variable = qpq_gave_arms }",
   exposed="")
 
 
@@ -3480,8 +3558,8 @@ GROUPS = [
     ("blood", "Blood and abduction"),
     ("shadows", "Factions and spies"),
     ("abroad", "Betrayal abroad"),
-    ("church_favours", "Church favours"),
-    ("church_weapons", "The Church as a weapon"),
+    ("church_favours", "Favours of the faith"),
+    ("church_weapons", "The faith as a weapon"),
     ("tribute", "Tribute and overlordship"),
     ("wartime", "In time of war"),
 ]

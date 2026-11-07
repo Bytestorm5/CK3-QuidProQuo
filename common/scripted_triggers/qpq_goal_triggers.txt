@@ -1348,42 +1348,6 @@ qpq_stay_out_goal_sw_refuses_trigger = {
 	}
 }
 
-qpq_accept_the_yoke_goal_refuses_trigger = {
-	OR = {
-		scope:recipient = { has_relation_rival = scope:actor }
-	}
-}
-
-qpq_accept_the_yoke_goal_sw_refuses_trigger = {
-	OR = {
-		scope:actor = { has_relation_rival = scope:recipient }
-	}
-}
-
-qpq_cast_off_the_yoke_goal_refuses_trigger = {
-	OR = {
-		AND = {
-		exists = scope:recipient.suzerain
-		scope:recipient = { is_close_family_of = scope:recipient.suzerain }
-	}
-		AND = {
-		exists = scope:recipient.suzerain
-		AND = {
-				scope:recipient = { is_allied_to = scope:recipient.suzerain }
-				scope:recipient = { opinion = { target = scope:recipient.suzerain value >= 30 } }
-			}
-	}
-		AND = {
-		exists = scope:recipient.suzerain
-		OR = {
-				scope:recipient = { has_relation_friend = scope:recipient.suzerain }
-				scope:recipient = { has_relation_lover = scope:recipient.suzerain }
-				scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
-			}
-	}
-	}
-}
-
 qpq_cast_off_the_yoke_goal_sw_refuses_trigger = {
 	OR = {
 		AND = {

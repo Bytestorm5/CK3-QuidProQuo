@@ -16,10 +16,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.stdout.reconfigure(encoding="utf-8")
 from qpq_contracts import POINTS_PER_SCORE  # noqa: E402
-from qpq_kinds import KINDS  # noqa: E402
+from qpq_kinds import DURATION_GOODS, KINDS  # noqa: E402
 from qpq_sim import Library, Panel, SimError, find_vanilla, offered_pairs, standard_world  # noqa: E402
 from qpq_ui_gen import UI_OFFERS  # noqa: E402
 
+TERMS = (1, 2, 5, 10, 20)
 # Lord pairs to try, most typical first: the first where the good is on offer is the one reported
 PAIRS = [("king", "duke"), ("duke", "king"), ("duke", "count"), ("king", "foe"), ("duke", "duke2"),
          ("pope", "king"), ("king", "pope"), ("pope", "duke2"), ("duke2", "pope")]
@@ -59,6 +60,18 @@ def good_value(good, leg):
     return None, None
 
 
+def over_term(good, leg, years):
+    """A good that lasts until the deadline: its worth over a term of YEARS, with no deed in play."""
+    me, them = ("king", "duke") if leg == "t" else ("duke", "king")
+    p, W = prepared(me, them)
+    p.deed(leg, None)
+    base = p.var("acc_total", 0.0)
+    p.offer(leg, good)
+    p.me.vars["qpq_ui_%s_years" % leg] = float(years)
+    p.click("qpq_ui_refresh")
+    return p.var("acc_total", 0.0) - base, them
+
+
 def units(pts):
     return "%+7.1f  %+5.1f" % (pts, pts / POINTS_PER_SCORE)
 
@@ -73,11 +86,19 @@ def main():
     print("Anchor: 1 contract score point = %d acceptance points\n" % POINTS_PER_SCORE)
     print("GOODS                 AI gets it: points  score   | AI gives it: points  score")
     for good in UI_OFFERS[1:]:
+        if good in DURATION_GOODS:
+            continue
         gets, a = good_value(good, "t")
         gives, b = good_value(good, "i")
         left = "%s (%s)" % (units(gets), a) if gets is not None else "not on offer"
         right = "%s (%s)" % (units(gives), b) if gives is not None else "not on offer"
         print("%-20s  %-28s | %s" % (good, left, right))
+
+    print("\nGOODS THAT LAST UNTIL THE DEADLINE, by the term")
+    print("                      " + "".join("%14s" % ("%d yr" % y) for y in TERMS))
+    for good in DURATION_GOODS:
+        print("%-20s  gets it %s" % (good, "".join("%14s" % units(over_term(good, "t", y)[0]).split()[0] for y in TERMS)))
+        print("%-20s gives it %s" % ("", "".join("%14s" % units(over_term(good, "i", y)[0]).split()[0] for y in TERMS)))
 
     print("\nDEEDS (what the AI asks to do it, before goods)   points  score  tier  (who)")
     rows = []

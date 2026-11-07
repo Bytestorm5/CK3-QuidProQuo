@@ -4508,7 +4508,7 @@ qpq_k_bought_freedom_exposed_effect = {
 	# nothing
 }
 
-#### Accept the Yoke
+#### Become a Tributary
 qpq_k_accept_the_yoke_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -4561,7 +4561,7 @@ qpq_k_accept_the_yoke_exposed_effect = {
 	# nothing
 }
 
-#### Cast Off the Yoke
+#### Reject a Suzerain
 qpq_k_cast_off_the_yoke_seal_from_scopes_effect = {
 	scope:actor = { save_scope_as = qpq_payer }
 	scope:recipient = { save_scope_as = qpq_agent }
@@ -4595,7 +4595,7 @@ qpq_k_cast_off_the_yoke_on_seal_effect = {
 	if = {
 		limit = { exists = scope:qpq_target }
 		scope:qpq_target = {
-			add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion opinion = -60 }
+			add_opinion = { target = scope:qpq_agent modifier = tributary_ceased_payments_opinion }
 		}
 	}
 }

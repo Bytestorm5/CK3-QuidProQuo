@@ -1098,6 +1098,10 @@ QpqUiTermInfo_t = {
 	type = character
 	log_loc_errors = no
 	text = {
+		trigger = { var:qpq_ui_t_ekind ?= flag:barter }
+		localization_key = QPQ_UI_TERM_INFO_LASTING
+	}
+	text = {
 		trigger = { qpq_ui_leg_t_is_restraint_trigger = yes }
 		localization_key = QPQ_UI_TERM_INFO_RESTRAINT_T
 	}
@@ -2221,6 +2225,10 @@ QpqUiTermShort_i = {
 QpqUiTermInfo_i = {
 	type = character
 	log_loc_errors = no
+	text = {
+		trigger = { var:qpq_ui_i_ekind ?= flag:barter }
+		localization_key = QPQ_UI_TERM_INFO_LASTING
+	}
 	text = {
 		trigger = { qpq_ui_leg_i_is_restraint_trigger = yes }
 		localization_key = QPQ_UI_TERM_INFO_RESTRAINT_I

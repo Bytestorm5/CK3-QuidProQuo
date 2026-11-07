@@ -292,6 +292,31 @@ qpq_offer_claim_points_value = {
 }
 
 # A council seat is worth what the holder can do in it: their skills, and their ambition. Nothing if they already sit.
+# A good that lasts until the deadline weighs by how long that is, in the shape a promise does (see term_values in
+# tools/qpq_gen.py) against five years: 0.6 at one year, half again for every five years past five, 2.5 at twenty.
+# No term yet (an AI's proposal, the classic window): as five years.
+qpq_goods_term_mult_value = {
+	value = 1
+	if = {
+		limit = { exists = scope:qpq_term_months }
+		if = {
+			limit = { scope:qpq_term_months <= 60 }
+			value = scope:qpq_term_months
+			divide = 60
+			multiply = 0.5
+			add = 0.5
+		}
+		else = {
+			value = scope:qpq_term_months
+			subtract = 60
+			divide = 60
+			multiply = 0.5
+			add = 1
+		}
+	}
+}
+
+# A seat for the term, never above the right to one for good (Council Guarantee: qpq_ct_council_gain_value)
 qpq_offer_office_points_value = {
 	value = 8
 	add = {
@@ -306,6 +331,8 @@ qpq_offer_office_points_value = {
 		limit = { scope:recipient = { has_trait = ambitious } }
 		add = 8
 	}
+	multiply = qpq_goods_term_mult_value
+	max = 45
 	if = {
 		limit = { scope:recipient = { is_councillor_of = scope:actor } }
 		multiply = 0
@@ -377,12 +404,15 @@ qpq_offer_clemency_points_value = {
 
 # Men lent are worth their number against the borrower's own, and most to one at war
 qpq_offer_arms_points_value = {
-	value = 6
-	add = {
-		value = scope:actor.max_military_strength
-		divide = { value = scope:recipient.max_military_strength min = 1 }
-		multiply = 12
-		max = 24
+	value = {
+		value = 6
+		add = {
+			value = scope:actor.max_military_strength
+			divide = { value = scope:recipient.max_military_strength min = 1 }
+			multiply = 12
+			max = 24
+		}
+		multiply = qpq_goods_term_mult_value
 	}
 	if = {
 		limit = { scope:recipient = { is_at_war = yes } }
@@ -433,6 +463,8 @@ qpq_offer_restraint_points_value = {
 		limit = { scope:recipient = { has_trait = paranoid } }
 		add = 5
 	}
+	multiply = qpq_goods_term_mult_value
+	max = 15
 }
 
 ############################################################

@@ -130,6 +130,7 @@ class Dynasty(Obj):
 
 class Title(Obj):
     KIND = "title"
+    coastal = False
     tier = 2                   # 1 barony .. 5 empire (vanilla tier_* values)
     holder = None
     held_years = 10
@@ -243,6 +244,7 @@ class Character(Obj):
     powerful_vassal = False
     contract_reign_days = 3650  # days_since_vassal_contract_liege_dynasty_reign_start
     obligations = None         # {contract: level}; contract_level gives the defaults
+    cbs_on = ()                # characters they hold a casus belli on
     opinion_modifiers = ()     # (target, modifier)
     preferred_heir_of = ()     # lieges whose preferred heir they were
     joined_faction = None
@@ -1025,6 +1027,7 @@ CHAR_LINKS = {
     "is_incapable": lambda r, c: False,
     "is_councillor": lambda r, c: c.councillor_of is not None,
     "is_tributary": lambda r, c: c.suzerain is not None,
+    "military_power": lambda r, c: float(c.current_strength),
     "vassal_contract_has_modifiable_obligations": lambda r, c: c.liege is not None,
     "subject_contract_is_blocked_from_modification": lambda r, c: False,
     "joined_faction": lambda r, c: c.joined_faction,
@@ -1363,6 +1366,22 @@ def _t_vassal_contract_has_flag(run, fr, n):
     return term is not None and contract_level(fr[0], term) > 0
 
 
+def _t_has_any_cb_on(run, fr, n):
+    return run.resolve(n.value, fr, n) in fr[0].cbs_on
+
+
+def _t_has_same_culture_as(run, fr, n):
+    return fr[0].culture is run.resolve(n.value, fr, n)
+
+
+def _t_tier_difference(run, fr, n):
+    b = _block(n)
+    other = run.resolve(b["target"].value, fr, b["target"])
+    def tier(c):
+        return max((t.tier for t in c.titles), default=0)
+    return _cmp(tier(fr[0]) - tier(other), b["value"].op, float(b["value"].value))
+
+
 def _t_has_innovation(run, fr, n):
     return n.value in fr[0].innovations
 
@@ -1438,6 +1457,16 @@ TRIGGERS = {
     "government_has_flag": _t_government_has_flag,
     "vassal_contract_has_flag": _t_vassal_contract_has_flag,
     "has_innovation": _t_has_innovation,
+    "has_any_cb_on": _t_has_any_cb_on,
+    "has_same_culture_as": _t_has_same_culture_as,
+    "tier_difference": _t_tier_difference,
+    "is_obedient_to": lambda run, fr, n: False,
+    "has_government": lambda run, fr, n: False,
+    "knows_language_of_culture": lambda run, fr, n: False,
+    "has_legitimacy_flag": lambda run, fr, n: False,
+    "has_cultural_pillar": lambda run, fr, n: False,
+    "cultural_acceptance": lambda run, fr, n: False,
+    "is_coastal_county": lambda run, fr, n: fr[0].coastal,
     "rite_has_tenet": lambda run, fr, n: False,
     "has_game_rule": _t_has_game_rule,
     "has_claim_on": _t_has_claim_on,
@@ -1493,7 +1522,7 @@ TRIGGERS = {
     "save_temporary_scope_as": lambda r, fr, n: r.scopes.__setitem__(n.value, fr[0]) or True,
     "has_dlc_feature": lambda r, fr, n: r.w.dlc_features is None or n.value in r.w.dlc_features,
     "rite_has_doctrine": _t_has_doctrine,
-    "is_in_family": lambda r, fr, n: fr[0].family == n.value,
+    "is_in_family": lambda r, fr, n: (fr[0].religion if isinstance(fr[0], Faith) else fr[0]).family == n.value,
     "has_trait_with_flag": lambda r, fr, n: any(n.value in r.lib.trait_flags.get(t, ()) for t in fr[0].traits),
     "rite_has_parameter": _t_has_doctrine_parameter,
 }
@@ -1564,6 +1593,9 @@ ITERS = {
     "war_participant": lambda r, w, b, fr: list(w.attackers) + list(w.defenders),
     "clerical_elector_title": lambda r, c, b, fr: [],
     "elector": lambda r, t, b, fr: list(t.electors),
+    "claimant": lambda r, t, b, fr: [x for x in r.w.chars if t in x.claims],
+    "neighboring_top_suzerain_realm_owner": _i_neighbor_realms,
+    "memory": lambda r, c, b, fr: [],
     "tributary": lambda r, c, b, fr: [x for x, s in r.w.tributaries.items() if s is c],
     "councillor": lambda r, c, b, fr: [x for x in r.w.chars if x.councillor_of is c],
     "living_character": lambda r, c, b, fr: [x for x in r.w.chars if x.alive],
@@ -1732,6 +1764,7 @@ def _e_remove_character_flag(run, fr, n):
 EFFECTS = {
     "vassal_contract_set_obligation_level": _e_vassal_contract_set_obligation_level,
     "add_hook": _e_add_hook,
+    "end_story": lambda run, fr, n: None,
     "random_list": _e_random_list,
     "set_variable": _e_set_variable,
     "change_variable": _e_change_variable,

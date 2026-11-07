@@ -8547,7 +8547,11 @@ qpq_price_of_loyalty_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_office ?= yes }
-		add = 12
+		add = {
+			value = 12
+			multiply = qpq_goods_term_mult_value
+			max = 60
+		}
 	}
 	if = {
 		limit = { scope:qpq_o_release_hook ?= yes }
@@ -8677,7 +8681,10 @@ qpq_price_of_loyalty_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_arms ?= yes }
-		add = 15
+		add = {
+			value = 15
+			multiply = qpq_goods_term_mult_value
+		}
 		if = {
 			limit = { scope:recipient = { is_at_war = yes } }
 			add = 15
@@ -8699,10 +8706,14 @@ qpq_price_of_loyalty_goods_cost_value = {
 	}
 	if = {
 		limit = { scope:qpq_o_restraint ?= yes }
-		add = 5
-		if = {
-			limit = { scope:recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 1.5 } } }
-			add = 5
+		add = {
+			value = 5
+			if = {
+				limit = { scope:recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 1.5 } } }
+				add = 5
+			}
+			multiply = qpq_goods_term_mult_value
+			max = 15
 		}
 	}
 	min = 0
@@ -29378,31 +29389,9 @@ qpq_heavier_tribute_price_value = {
 }
 qpq_heavier_tribute_time_value = {
 	value = 0
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		value = qpq_heavier_tribute_base_demand_value
-		multiply = {
-			value = 12
-			divide = scope:qpq_term_months
-			subtract = 1
-			multiply = 0.5
-			min = -0.3
-			max = 1.5
-		}
-	}
 }
 qpq_heavier_tribute_term_worth_mult_value = {
 	value = 1
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		add = {
-			value = 12
-			subtract = scope:qpq_term_months
-			multiply = 0.0025
-		}
-	}
-	min = 0.6
-	max = 1.15
 }
 qpq_heavier_tribute_wait_value = {
 	value = 12
@@ -29740,31 +29729,9 @@ qpq_lighter_tribute_price_value = {
 }
 qpq_lighter_tribute_time_value = {
 	value = 0
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		value = qpq_lighter_tribute_base_demand_value
-		multiply = {
-			value = 12
-			divide = scope:qpq_term_months
-			subtract = 1
-			multiply = 0.5
-			min = -0.3
-			max = 1.5
-		}
-	}
 }
 qpq_lighter_tribute_term_worth_mult_value = {
 	value = 1
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		add = {
-			value = 12
-			subtract = scope:qpq_term_months
-			multiply = 0.0025
-		}
-	}
-	min = 0.6
-	max = 1.15
 }
 qpq_lighter_tribute_wait_value = {
 	value = 12
@@ -30102,31 +30069,9 @@ qpq_bought_freedom_price_value = {
 }
 qpq_bought_freedom_time_value = {
 	value = 0
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		value = qpq_bought_freedom_base_demand_value
-		multiply = {
-			value = 12
-			divide = scope:qpq_term_months
-			subtract = 1
-			multiply = 0.5
-			min = -0.3
-			max = 1.5
-		}
-	}
 }
 qpq_bought_freedom_term_worth_mult_value = {
 	value = 1
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		add = {
-			value = 12
-			subtract = scope:qpq_term_months
-			multiply = 0.0025
-		}
-	}
-	min = 0.6
-	max = 1.15
 }
 qpq_bought_freedom_wait_value = {
 	value = 12
@@ -30438,7 +30383,7 @@ qpq_bought_freedom_ai_acceptance_value = {
 	add = qpq_bought_freedom_refusal_value
 }
 
-#### Accept the Yoke
+#### Become a Tributary
 qpq_accept_the_yoke_payer_tier_value = {
 	value = 0
 	min = 0
@@ -30464,31 +30409,9 @@ qpq_accept_the_yoke_price_value = {
 }
 qpq_accept_the_yoke_time_value = {
 	value = 0
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		value = qpq_accept_the_yoke_base_demand_value
-		multiply = {
-			value = 12
-			divide = scope:qpq_term_months
-			subtract = 1
-			multiply = 0.5
-			min = -0.3
-			max = 1.5
-		}
-	}
 }
 qpq_accept_the_yoke_term_worth_mult_value = {
 	value = 1
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		add = {
-			value = 12
-			subtract = scope:qpq_term_months
-			multiply = 0.0025
-		}
-	}
-	min = 0.6
-	max = 1.15
 }
 qpq_accept_the_yoke_wait_value = {
 	value = 12
@@ -30708,15 +30631,135 @@ qpq_accept_the_yoke_circumstance_value = {
 	value = 0
 	if = {
 		limit = {
-			scope:recipient = { max_military_strength > scope:actor.max_military_strength }
+			NOT = { scope:recipient.ai_boldness = 0 }
 		}
-		add = -40
+		add = qpq_tribute_boldness_value
 	}
 	if = {
 		limit = {
-			scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 3 } }
+			scope:recipient.ai_greed > 0
 		}
-		add = 15
+		add = qpq_tribute_greed_value
+	}
+	if = {
+		limit = {
+			scope:recipient = { is_obedient_to = scope:actor }
+		}
+		add = 40
+	}
+	if = {
+		limit = {
+			NOT = { scope:recipient = { has_government = herder_government } } scope:actor = { NOT = { has_any_cb_on = scope:recipient } }
+		}
+		add = dominant_negative_ai_value
+	}
+	if = {
+		limit = {
+			NOT = { scope:recipient = { has_government = herder_government } } scope:actor = { NOT = { has_any_cb_on = scope:recipient } }
+		}
+		add = qpq_tribute_paid_relief_value
+	}
+	if = {
+		limit = {
+			always = yes
+		}
+		add = qpq_tribute_demand_threat_value
+	}
+	if = {
+		limit = {
+			scope:recipient = { highest_held_title_tier = tier_kingdom }
+		}
+		add = -100
+	}
+	if = {
+		limit = {
+			scope:recipient = { highest_held_title_tier >= tier_empire }
+		}
+		add = -200
+	}
+	if = {
+		limit = {
+			scope:recipient = { has_relation_rival = scope:actor NOT = { has_relation_nemesis = scope:actor } }
+		}
+		add = -100
+	}
+	if = {
+		limit = {
+			scope:recipient = { has_relation_nemesis = scope:actor }
+		}
+		add = -200
+	}
+	if = {
+		limit = {
+			scope:recipient.dynasty ?= scope:actor.dynasty
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			NOT = { scope:actor.faith = scope:recipient.faith } scope:actor = { NOT = { rite = { rite_has_doctrine = doctrine_pluralism_pluralistic } } }
+		}
+		add = qpq_tribute_foreign_faith_value
+	}
+	if = {
+		limit = {
+			scope:recipient = { NOT = { any_neighboring_top_suzerain_realm_owner = { this != scope:actor } } NOT = { any_realm_county = { is_coastal_county = yes } } }
+		}
+		add = 30
+	}
+	if = {
+		limit = {
+			scope:actor = { NOT = { has_same_culture_as = scope:recipient } culture = { cultural_acceptance = { target = scope:recipient.culture value < 50 } } }
+		}
+		add = qpq_tribute_foreign_culture_value
+	}
+	if = {
+		limit = {
+			scope:actor = { knows_language_of_culture = scope:recipient.culture }
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = slightly_reduced_tributarization_acceptance }
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = reduced_tributarization_acceptance }
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = very_reduced_tributarization_acceptance }
+		}
+		add = -50
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = massively_reduced_tributarization_acceptance }
+		}
+		add = -75
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = increased_tributarization_acceptance }
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = very_increased_tributarization_acceptance }
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			scope:actor = { has_legitimacy_flag = extra_increased_tributarization_acceptance }
+		}
+		add = 75
 	}
 }
 qpq_accept_the_yoke_refusal_value = {
@@ -30725,7 +30768,6 @@ qpq_accept_the_yoke_refusal_value = {
 		limit = {
 			OR = {
 				qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_accept_the_yoke_agent_tier_value }
-				qpq_accept_the_yoke_goal_refuses_trigger = yes
 				always = no
 			}
 		}
@@ -30733,8 +30775,36 @@ qpq_accept_the_yoke_refusal_value = {
 	}
 }
 qpq_accept_the_yoke_worth_value = {
-	value = 24
-	multiply = qpq_accept_the_yoke_term_worth_mult_value
+	value = 50
+	if = {
+		limit = { scope:recipient = { tier_difference = { target = scope:actor value > 1 } } }
+		add = 20
+	}
+	if = {
+		limit = { scope:recipient = { NOT = { any_neighboring_top_liege_realm_owner = { this = scope:actor } } } }
+		add = -15
+	}
+	if = {
+		limit = { scope:actor = { has_relation_rival = scope:recipient NOT = { has_relation_nemesis = scope:recipient } } }
+		add = -10
+	}
+	if = {
+		limit = { scope:actor = { has_relation_nemesis = scope:recipient } }
+		add = -100
+	}
+	if = {
+		limit = { scope:actor.dynasty ?= scope:recipient.dynasty }
+		add = 10
+	}
+	if = {
+		limit = { scope:recipient = { has_variable = conqueror } }
+		add = -1000
+	}
+	add = {
+		value = scope:actor.ai_greed
+		multiply = 0.75
+		min = 0
+	}
 }
 qpq_accept_the_yoke_payer_risk_value = {
 	value = qpq_accept_the_yoke_payer_tier_value
@@ -30780,7 +30850,6 @@ qpq_accept_the_yoke_goodwill_value = {
 			value = qpq_accept_the_yoke_ask_value
 			add = qpq_accept_the_yoke_character_value
 			add = qpq_accept_the_yoke_circumstance_value
-			add = qpq_accept_the_yoke_goal_value
 			multiply = -1
 			min = 0
 		}
@@ -30792,14 +30861,12 @@ qpq_accept_the_yoke_goodwill_value = {
 			value = qpq_accept_the_yoke_ask_value
 			add = qpq_accept_the_yoke_character_value
 			add = qpq_accept_the_yoke_circumstance_value
-			add = qpq_accept_the_yoke_goal_value
 			max = 0
 		}
 	}
 }
 qpq_accept_the_yoke_proposer_view_value = {
 	value = qpq_accept_the_yoke_worth_value
-	add = qpq_accept_the_yoke_goal_sw_value
 	add = qpq_accept_the_yoke_payer_character_value
 	add = qpq_accept_the_yoke_payer_risk_value
 	add = {
@@ -30813,86 +30880,10 @@ qpq_accept_the_yoke_ai_acceptance_value = {
 	add = qpq_accept_the_yoke_goodwill_value
 	add = qpq_accept_the_yoke_character_value
 	add = qpq_accept_the_yoke_circumstance_value
-	add = qpq_accept_the_yoke_goal_value
 	add = qpq_accept_the_yoke_refusal_value
 }
 
-qpq_accept_the_yoke_goal_value = {
-	value = 0
-	if = {
-		limit = { scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 1.2 } } }
-		add = 10
-	}
-	if = {
-		limit = { scope:actor = { max_military_strength < { value = scope:recipient.max_military_strength multiply = 0.5 } } }
-		add = -10
-	}
-	if = {
-		limit = { scope:recipient = { is_at_war = yes } }
-		add = 8
-	}
-	if = {
-		limit = { scope:recipient.faith = scope:actor.faith }
-		add = 6
-	}
-	if = {
-		limit = { scope:recipient.culture = scope:actor.culture }
-		add = 4
-	}
-	if = {
-		limit = { scope:recipient = { has_relation_rival = scope:actor } }
-		add = -30
-	}
-	if = {
-		limit = { scope:recipient = { has_trait = trusting } }
-		add = 4
-	}
-	if = {
-		limit = { scope:recipient = { has_trait = paranoid } }
-		add = -8
-	}
-}
-
-qpq_accept_the_yoke_goal_sw_value = {
-	value = {
-		value = 0
-		if = {
-			limit = { scope:recipient = { max_military_strength > { value = scope:actor.max_military_strength multiply = 1.2 } } }
-			add = 10
-		}
-		if = {
-			limit = { scope:recipient = { max_military_strength < { value = scope:actor.max_military_strength multiply = 0.5 } } }
-			add = -10
-		}
-		if = {
-			limit = { scope:actor = { is_at_war = yes } }
-			add = 8
-		}
-		if = {
-			limit = { scope:actor.faith = scope:recipient.faith }
-			add = 6
-		}
-		if = {
-			limit = { scope:actor.culture = scope:recipient.culture }
-			add = 4
-		}
-		if = {
-			limit = { scope:actor = { has_relation_rival = scope:recipient } }
-			add = -30
-		}
-		if = {
-			limit = { scope:actor = { has_trait = trusting } }
-			add = 4
-		}
-		if = {
-			limit = { scope:actor = { has_trait = paranoid } }
-			add = -8
-		}
-	}
-	multiply = qpq_accept_the_yoke_term_worth_mult_value
-}
-
-#### Cast Off the Yoke
+#### Reject a Suzerain
 qpq_cast_off_the_yoke_payer_tier_value = {
 	value = 2
 	if = {
@@ -30945,31 +30936,9 @@ qpq_cast_off_the_yoke_price_value = {
 }
 qpq_cast_off_the_yoke_time_value = {
 	value = 0
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		value = qpq_cast_off_the_yoke_base_demand_value
-		multiply = {
-			value = 12
-			divide = scope:qpq_term_months
-			subtract = 1
-			multiply = 0.5
-			min = -0.3
-			max = 1.5
-		}
-	}
 }
 qpq_cast_off_the_yoke_term_worth_mult_value = {
 	value = 1
-	if = {
-		limit = { exists = scope:qpq_term_months }
-		add = {
-			value = 12
-			subtract = scope:qpq_term_months
-			multiply = 0.0025
-		}
-	}
-	min = 0.6
-	max = 1.15
 }
 qpq_cast_off_the_yoke_wait_value = {
 	value = 12
@@ -31018,10 +30987,7 @@ qpq_cast_off_the_yoke_gold_points_value = {
 	round = yes
 }
 qpq_cast_off_the_yoke_base_demand_value = {
-	value = qpq_cast_off_the_yoke_agent_tier_value
-	multiply = -18
-	add = -12
-	add = -25
+	value = -25
 }
 qpq_cast_off_the_yoke_demand_value = {
 	value = qpq_cast_off_the_yoke_base_demand_value
@@ -31187,6 +31153,36 @@ qpq_cast_off_the_yoke_dread_value = {
 }
 qpq_cast_off_the_yoke_circumstance_value = {
 	value = 0
+	if = {
+		limit = {
+			always = yes
+		}
+		add = qpq_tribute_cease_threat_value
+	}
+	if = {
+		limit = {
+			scope:recipient = { has_relation_rival = scope:recipient.suzerain NOT = { has_relation_nemesis = scope:recipient.suzerain } }
+		}
+		add = 30
+	}
+	if = {
+		limit = {
+			scope:recipient = { has_relation_nemesis = scope:recipient.suzerain }
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			scope:recipient.faith = { NOT = { faith_is_in_same_rf = { FAITH = scope:recipient.suzerain.faith } } }
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			scope:recipient = { any_memory = { has_memory_type = suzerain_defended_me_in_war has_memory_participant = scope:recipient.suzerain memory_age_years < 10 } }
+		}
+		add = -100
+	}
 }
 qpq_cast_off_the_yoke_refusal_value = {
 	value = 0
@@ -31194,7 +31190,6 @@ qpq_cast_off_the_yoke_refusal_value = {
 		limit = {
 			OR = {
 				qpq_ai_refuses_trigger = { AGENT = scope:recipient PAYER = scope:actor TIER = qpq_cast_off_the_yoke_agent_tier_value }
-				qpq_cast_off_the_yoke_goal_refuses_trigger = yes
 				always = no
 			}
 		}
@@ -31248,7 +31243,6 @@ qpq_cast_off_the_yoke_goodwill_value = {
 			value = qpq_cast_off_the_yoke_ask_value
 			add = qpq_cast_off_the_yoke_character_value
 			add = qpq_cast_off_the_yoke_circumstance_value
-			add = qpq_cast_off_the_yoke_goal_value
 			multiply = -1
 			min = 0
 		}
@@ -31260,7 +31254,6 @@ qpq_cast_off_the_yoke_goodwill_value = {
 			value = qpq_cast_off_the_yoke_ask_value
 			add = qpq_cast_off_the_yoke_character_value
 			add = qpq_cast_off_the_yoke_circumstance_value
-			add = qpq_cast_off_the_yoke_goal_value
 			max = 0
 		}
 	}
@@ -31281,83 +31274,7 @@ qpq_cast_off_the_yoke_ai_acceptance_value = {
 	add = qpq_cast_off_the_yoke_goodwill_value
 	add = qpq_cast_off_the_yoke_character_value
 	add = qpq_cast_off_the_yoke_circumstance_value
-	add = qpq_cast_off_the_yoke_goal_value
 	add = qpq_cast_off_the_yoke_refusal_value
-}
-
-qpq_cast_off_the_yoke_goal_value = {
-	value = 0
-	if = {
-		limit = { exists = scope:recipient.suzerain }
-		if = {
-			limit = { scope:recipient = { has_relation_rival = scope:recipient.suzerain } }
-			add = 18
-		}
-		if = {
-			limit = { scope:recipient = { has_relation_nemesis = scope:recipient.suzerain } }
-			add = 10
-		}
-		add = {
-			value = "scope:recipient.opinion(scope:recipient.suzerain)"
-			multiply = -0.2
-			min = -15
-			max = 15
-		}
-		if = {
-			limit = { scope:recipient = { is_allied_to = scope:recipient.suzerain } }
-			add = -25
-		}
-		if = {
-			limit = { scope:recipient = { is_close_family_of = scope:recipient.suzerain } }
-			add = -25
-		}
-		if = {
-			limit = {
-				OR = {
-					scope:recipient = { has_relation_friend = scope:recipient.suzerain }
-					scope:recipient = { has_relation_lover = scope:recipient.suzerain }
-					scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
-				}
-			}
-			add = -20
-		}
-		if = {
-			limit = { scope:recipient = { has_relation_victim = scope:recipient.suzerain } }
-			add = 6
-		}
-		if = {
-			limit = { scope:recipient.suzerain = { is_liege_or_above_of = scope:recipient } }
-			add = -6
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = sadistic } }
-			add = 8
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = vengeful } }
-			add = 6
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = callous } }
-			add = 5
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = deceitful } }
-			add = 3
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = compassionate } }
-			add = -8
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = forgiving } }
-			add = -6
-		}
-		if = {
-			limit = { scope:recipient = { has_trait = honest } }
-			add = -4
-		}
-	}
 }
 
 qpq_cast_off_the_yoke_goal_sw_value = {
@@ -31466,7 +31383,7 @@ qpq_barter_wait_value = {
 		limit = { exists = scope:qpq_term_months }
 		value = scope:qpq_term_months
 	}
-	multiply = 0.5
+	multiply = 1
 	divide = 12
 	multiply = -1.5
 	add = -3

@@ -24,13 +24,13 @@ import sys
 import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_sim import (Library, Panel, Run, Story, contract_level, find_vanilla, offered_pairs, kind_names,  # noqa: E402
+from qpq_sim import (Flag, Library, Panel, Run, Story, contract_level, find_vanilla, offered_pairs, kind_names,  # noqa: E402
                      scenario, standard_world)
 from qpq_contracts import CONTRACT_GOODS, TERMS, step_points  # noqa: E402
 
 TESTS = []
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_kinds import KINDS  # noqa: E402
+from qpq_kinds import KINDS, is_instant  # noqa: E402
 AGENT_PROPOSED = {k["key"] for k in KINDS if k["initiator"] != "payer"}
 
 
@@ -490,21 +490,286 @@ def contract_goods_change_the_contract(lib, check):
     check(contract_level(W["foe"], "feudal_government_taxes") == 2, "a contract changed between strangers")
 
 
+def good_with_deed(lib, me, them, leg, good, years):
+    """What ticking GOOD adds to the AI's answer, on a deed of YEARS. Goods that last need a deed to last for."""
+    p, W = contract_panel(lib, me, them)
+    p.deed(leg, "marcher_charge")
+    cands = p.candidates(leg)
+    if cands:
+        p.pick(leg, cands[0])
+    p.me.vars["qpq_ui_%s_years" % leg] = float(years)
+    p.click("qpq_ui_refresh")
+    base = total(p)
+    p.offer(leg, good)
+    return total(p) - base
+
+
+@test
+def goods_last_as_long_as_the_deal(lib, check):
+    """Lending men, a seat or a promise for twenty years is not the price of one year, at either end of the deal."""
+    for good in ("arms", "office", "restraint"):
+        gets = [good_with_deed(lib, "king", "duke", "t", good, y) for y in (1, 5, 20)]
+        gives = [-good_with_deed(lib, "duke", "king", "i", good, y) for y in (1, 5, 20)]
+        check(gets[0] < gets[1] <= gets[2], "%s is worth %s to the one who gets it at 1, 5 and 20 years" % (good, gets))
+        check(gives[0] < gives[1] <= gives[2], "%s costs %s to the one who gives it at 1, 5 and 20 years" % (good, gives))
+    a = good_with_deed(lib, "duke", "king", "i", "arms", 5)
+    check(abs(a + 15 * 1.25) < 0.01, "five years of Arms should cost what it did: %s" % a)
+    a = good_with_deed(lib, "duke", "king", "i", "arms", 20)
+    check(abs(a + 15 * 2.5 * 1.25) < 0.01, "twenty years of Arms should cost 2.5 times as much: %s" % a)
+
+
 @test
 def permanent_outweighs_promised(lib, check):
-    """The anchor's first rule: a promise that lapses at the deadline is worth no more than the same protection
-    written into the contract for good."""
+    """The anchor's first rule: however long the term, a good that lapses at the deadline is worth no more, and costs
+    no more, than the same thing written into the contract for good."""
+    for temporary, permanent in (("restraint", "ct_revocation"), ("office", "ct_council")):
+        for years in (1, 5, 10, 20):
+            a, b = good_with_deed(lib, "king", "duke", "t", temporary, years), good_with_deed(lib, "king", "duke", "t", permanent, years)
+            check(a <= b, "%s for %d years is worth %s, %s for good %s" % (temporary, years, a, permanent, b))
+            a, b = good_with_deed(lib, "duke", "king", "i", temporary, years), good_with_deed(lib, "duke", "king", "i", permanent, years)
+            check(a >= b, "%s for %d years costs %s, %s for good %s" % (temporary, years, -a, permanent, -b))
+    # even for one who fears most what it guards against, and is strongest against
+    def fearful(w, W):
+        W["duke"].traits = set(W["duke"].traits) | {"paranoid", "ambitious"}
+        W["duke"].diplomacy = W["duke"].martial = W["duke"].stewardship = W["duke"].intrigue = 30
+    for temporary, cap in (("restraint", 15), ("office", 45)):
+        p, W = contract_panel(lib, "king", "duke", fearful)
+        p.deed("t", "marcher_charge")
+        c = p.candidates("t")
+        if c:
+            p.pick("t", c[0])
+        p.me.vars["qpq_ui_t_years"] = 20.0
+        p.click("qpq_ui_refresh")
+        base = total(p)
+        p.offer("t", temporary)
+        check(total(p) - base <= cap, "%s for twenty years to the keenest vassal: %s, above %s" % (temporary, total(p) - base, cap))
+
+
+@test
+def goods_that_last_give_a_deadline(lib, check):
+    """500 gold for troops has no deed in it, but the troops are not an instant transfer: a deadline is in play.
+    The leg gets a term to set and stays open until then. What is handed over at once has none."""
+    def gold_for(good):
+        p, W = contract_panel(lib, "duke", "king")
+        p.deed("t", None)
+        p.gold("t", 500)
+        p.deed("i", None)
+        p.offer("i", good)
+        return p
+    for good in ("arms", "office", "restraint"):
+        p = gold_for(good)
+        check(("qpq_ui_i_o_" + good) in p.me.vars, "%s cannot be had with no deed" % good)
+        check(p.shown("qpq_ui_term_shown_i"), "%s with no deed has no term to set" % good)
+        check(p.shown("qpq_ui_goods_term_i"), "%s with no deed has no row to set the term from" % good)
+        check(p.var("i_term") == 60, "%s with no deed runs %s months by default, not five years" % (good, p.var("i_term")))
+        check(not p.shown("qpq_ui_term_shown_t"), "the gold paid for %s has a term of its own" % good)
+        check(p.var("t_term") == 1, "the gold paid for %s does not change hands at once" % good)
+        at_five = total(p)
+        check(p.shown("qpq_ui_term_up_i_5"), "%s: the term cannot be raised" % good)
+        p.me.vars["qpq_ui_i_years"] = 20.0
+        p.click("qpq_ui_refresh")
+        check(p.var("i_term") == 240, "%s: a term of twenty years is %s months" % (good, p.var("i_term")))
+        check(total(p) <= at_five, "%s for twenty years costs the giver less than for five: %s, %s" % (good, total(p), at_five))
+        # it weighs the same as on a deed of that length
+        a = good_with_deed(lib, "king", "duke", "t", good, 20)
+        p2, W = contract_panel(lib, "king", "duke")
+        p2.deed("t", None)
+        base = total(p2)
+        p2.offer("t", good)
+        p2.me.vars["qpq_ui_t_years"] = 20.0
+        p2.click("qpq_ui_refresh")
+        check(abs(total(p2) - base - a) < 0.01, "%s for twenty years: %s with no deed, %s with one" % (good, total(p2) - base, a))
+        # take it back off and the leg is instant again
+        p.offer("i", good)
+        check(not p.shown("qpq_ui_term_shown_i"), "%s removed, and the leg still has a term" % good)
+    # nothing that lasts: no term, done at the next check
     p, W = contract_panel(lib, "king", "duke")
     p.deed("t", None)
-    base = total(p)
-    p.offer("t", "restraint")
-    promise = total(p) - base
-    p, W = contract_panel(lib, "king", "duke")
-    p.deed("t", None)
-    base = total(p)
     p.offer("t", "ct_revocation")
-    permanent = total(p) - base
-    check(promise <= permanent, "Promise of Safety is worth %s, permanent Revocation Protection %s" % (promise, permanent))
+    check(not p.shown("qpq_ui_term_shown_t"), "a right granted for good has a term to set")
+    check(p.var("t_term") == 1, "goods with nothing that lasts do not change hands at once")
+    # a deed's term is not doubled up among the goods
+    p, W = contract_panel(lib, "king", "duke")
+    p.deed("t", "marcher_charge")
+    p.offer("t", "arms")
+    check(p.shown("qpq_ui_term_shown_t") and not p.shown("qpq_ui_goods_term_t"), "a deed's term shown twice")
+
+
+@test
+def a_lasting_exchange_holds_until_the_deadline(lib, check):
+    """Run through the real monthly tick: an exchange with something that lasts stays open for its whole term and is
+    then fulfilled, not breached. One with nothing that lasts is done at the first check."""
+    def months_until_closed(term, **lasting):
+        w, W = standard_world(player="nobody")
+        s = Story("deal")
+        s.owner = W["duke"]
+        s.vars.update(qpq_kind=Flag("barter"), qpq_payer=W["duke"], qpq_agent=W["king"], qpq_months_left=float(term),
+                      qpq_term=float(term), qpq_payer_tier=0.0, qpq_agent_tier=0.0)
+        s.vars.update(lasting)
+        for month in range(1, term + 3):
+            r = Run(lib, w, W["duke"], {})
+            r.eff(lib.effects["qpq_story_tick_effect"], (s, None))
+            check(not r.errors, "month %d of an exchange: %s" % (month, r.errors[:2]))
+            if s.vars.get("qpq_closed") is not None:
+                return month, s.vars["qpq_closed"].name
+        return None, None
+    check(months_until_closed(60) == (1, "delivered"), "nothing lasting: closed %s" % (months_until_closed(60),))
+    for var in ("qpq_gave_arms", "qpq_offer_restraint"):
+        got = months_until_closed(24, **{var: True})
+        check(got == (24, "delivered"), "%s for 24 months: closed %s" % (var, got))
+
+
+@test
+def becoming_a_tributary_weighs_as_vanilla(lib, check):
+    """demand_tributary_interaction's numbers, on the same scale: base -60, -200 with no casus belli, rank, rivalry."""
+    def circ(setup=None, me="king", them="third"):
+        p, W = panel(lib, me, them, setup=setup)
+        p.deed("t", "accept_the_yoke")
+        check(not p.errors, "script errors: %s" % p.errors[:2])
+        return p.var("t_a_ask"), p.var("t_a_circ"), p
+    ask, base, _ = circ()
+    check(ask == -60, "the base ask should be vanilla's -60: %s" % ask)
+    def with_cb(w, W):
+        W["king"].cbs_on = (W["third"],)
+    _, cb, _ = circ(with_cb)
+    check(abs(cb - base - 200) < 0.01, "a casus belli should lift vanilla's -200: %s against %s" % (cb, base))
+    def rival(w, W):
+        w.relate(W["third"], "rival", W["king"])
+    _, r, _ = circ(rival)
+    check(abs(r - base + 100) < 0.01, "a rival should cost vanilla's -100: %s against %s" % (r, base))
+    def empire(w, W):
+        W["third"].titles[0].tier = 5
+    _, e, _ = circ(empire)
+    check(abs(e - base + 100) < 0.01, "an emperor should cost -200 where a king costs -100: %s against %s" % (e, base))
+
+
+@test
+def payment_stands_in_for_a_casus_belli(lib, check):
+    """The one change from vanilla: goods paid also take 2 a point off the -200 for no casus belli, down to -50."""
+    def paid(amount, setup=None):
+        p, W = panel(lib, "king", "third", setup=setup)
+        p.deed("t", "accept_the_yoke")
+        unpaid = p.var("t_a_circ")
+        if amount:
+            p.gold("t", amount)
+        check(not p.errors, "script errors: %s" % p.errors[:2])
+        return p.var("t_a_circ") - unpaid, p.var("t_a_offers"), p.var("acc_total", 0)
+    # it grows with the payment: a token sum cannot lift the penalty
+    relief, points, _ = paid(10)
+    check(points > 0 and abs(relief - 2 * points) < 0.01, "10 gold, %s points, should lift twice that: %s" % (points, relief))
+    check(relief < 10, "a token sum lifted %s of the penalty" % relief)
+    # and it stops at -50, so a casus belli is still worth having
+    relief, points, total_paid = paid(100000)
+    check(abs(relief - 150) < 0.01, "the penalty should stop at -50: lifted %s" % relief)
+    check(total_paid <= 0, "gold alone bought a king's freedom: %s" % total_paid)
+    def with_cb(w, W):
+        W["king"].cbs_on = (W["third"],)
+    check(paid(100000, with_cb)[0] == 0, "there is no penalty to lift with a casus belli: %s" % paid(100000, with_cb)[0])
+    # a lesser ruler can be bought, at a price
+    def lesser(w, W):
+        W["third"].titles[0].tier = 3
+        W["third"].current_strength = W["third"].max_strength = 800
+    check(paid(0, lesser)[2] <= 0, "a lesser ruler gave in for nothing: %s" % paid(0, lesser)[2])
+    check(paid(10, lesser)[2] <= 0, "a lesser ruler gave in for 10 gold: %s" % paid(10, lesser)[2])
+    check(paid(100000, lesser)[2] > 0, "a lesser ruler could not be bought: %s" % paid(100000, lesser)[2])
+
+
+@test
+def what_you_do_in_return_is_payment_too(lib, check):
+    """A deed you do for them softens the same penalty, by what it is worth to them; goods handed back take it away."""
+    def relief(i_deed=None, mine=0, theirs=0, setup=None):
+        p, W = panel(lib, "king", "third", setup=setup, king=dict(gold=100000), third=dict(gold=100000))
+        p.deed("t", "accept_the_yoke")
+        unpaid = p.var("t_a_circ")
+        if mine:
+            p.gold("t", mine)
+        if i_deed:
+            p.deed("i", i_deed)
+        elif theirs:
+            p.deed("i", None)
+        if theirs:
+            p.gold("i", theirs)
+        check(not p.errors, "script errors: %s" % p.errors[:2])
+        return p.var("t_a_circ") - unpaid, p
+    # worth 39 to them, on the numbers in the standard world: an alliance they want, less their risk
+    r, p = relief("secret_alliance")
+    net = p.var("i_a_ask") + p.var("i_a_goal") + p.var("i_a_char") + p.var("i_a_risk") + p.var("i_a_circ")
+    check(net > 0 and abs(r - 2 * net) < 0.01, "a deed worth %s to them should lift twice that: %s" % (net, r))
+    # a deed that is nothing but a risk to them lifts nothing, and adds nothing to the penalty
+    check(relief("proxy_war")[0] == 0, "a deed worth nothing to them moved the penalty: %s" % relief("proxy_war")[0])
+    # with goods it adds up, and still stops at -50
+    both = relief("secret_alliance", mine=100)[0]
+    check(both > r, "goods on top of a deed should lift more: %s against %s" % (both, r))
+    check(relief("secret_alliance", mine=100000)[0] == 150, "the penalty should stop at -50: %s" % relief("secret_alliance", mine=100000)[0])
+    # with a casus belli there is nothing to lift
+    def with_cb(w, W):
+        W["king"].cbs_on = (W["third"],)
+    check(relief("secret_alliance", setup=with_cb)[0] == 0, "a deed lifted a penalty that does not apply: %s" % relief("secret_alliance", setup=with_cb)[0])
+    # gold paid and handed straight back is no payment
+    check(relief(mine=1000, theirs=1000)[0] == 0, "gold swapped both ways softened the penalty: %s" % relief(mine=1000, theirs=1000)[0])
+    check(relief(mine=1000, theirs=500)[0] < relief(mine=1000)[0], "goods handed back should reduce it: %s" % relief(mine=1000, theirs=500)[0])
+
+
+@test
+def getting_a_tributary_weighs_as_vanilla(lib, check):
+    """become_tributary_interaction's numbers, to the one who would be suzerain: base +50, so it is welcome for free
+    unless they are a nemesis."""
+    def total_for(setup=None):
+        p, W = panel(lib, "third", "king", setup=setup)
+        p.deed("i", "accept_the_yoke")
+        check(not p.errors, "script errors: %s" % p.errors[:2])
+        return total(p)
+    base = total_for()
+    check(base > 0, "an AI turns down a free tributary: %s" % base)
+    def nemesis(w, W):
+        w.relate(W["king"], "nemesis", W["third"])
+    check(total_for(nemesis) < base - 90, "a nemesis should be refused: %s against %s" % (total_for(nemesis), base))
+
+
+@test
+def rejecting_a_suzerain_weighs_as_vanilla(lib, check):
+    """cease_paying_tribute_interaction's ai_will_do: base -25, and fear of the suzerain counts double."""
+    def parts(setup=None):
+        p, W = panel(lib, "foe", "chief", setup=setup)
+        p.deed("t", "cast_off_the_yoke")
+        check(not p.errors, "script errors: %s" % p.errors[:2])
+        return p.var("t_a_ask"), p.var("t_a_circ"), p.var("t_a_goal", 0)
+    ask, circ, goal = parts()
+    check(ask == -25, "the base should be vanilla's -25: %s" % ask)
+    check(not goal, "the tributary's own wishes are counted twice: goal %s" % goal)
+    # chief 700 against king 6000: (700 / 6000 - 1) * -50 = +44.2, times -2
+    check(abs(circ + 88.33) < 0.5, "a tributary of 700 under a suzerain of 6000 should be -88.3: %s" % circ)
+    def rival(w, W):
+        w.relate(W["chief"], "rival", W["king"])
+    check(abs(parts(rival)[1] - circ - 30) < 0.01, "a rival suzerain should give vanilla's +30: %s" % parts(rival)[1])
+    def strong(w, W):
+        W["chief"].current_strength = 12000
+        W["chief"].max_strength = 12000
+    check(parts(strong)[1] > 0, "a tributary far stronger than its suzerain is still afraid: %s" % parts(strong)[1])
+
+
+@test
+def deeds_done_at_sealing_have_no_term(lib, check):
+    """A tribute deed takes effect when sealed: no term to set, and a long one is no discount."""
+    for me, them, kind in (("king", "third", "accept_the_yoke"), ("foe", "chief", "cast_off_the_yoke")):
+        p, W = panel(lib, me, them)
+        p.deed("t", kind)
+        check(not p.shown("qpq_ui_term_shown_t"), "%s has a term to set" % kind)
+        base = p.var("t_a_ask")
+        p.me.vars["qpq_ui_t_years"] = 20.0
+        p.click("qpq_ui_refresh")
+        check(p.var("t_a_ask") == base, "%s asks %s at twenty years, %s usually" % (kind, p.var("t_a_ask"), base))
+
+
+@test
+def absolution_only_from_faiths_with_it(lib, check):
+    """Which heads of faith can give absolution follows vanilla's doctrines, not every head of a faith."""
+    def has(me, them):
+        p, W = panel(lib, me, them)
+        p.deed("i", None)
+        return p.shown("qpq_ui_offer_i_church")
+    check(has("duke2", "pope"), "the Pope cannot give absolution")
+    check(not has("foe", "caliph"), "a caliph can give absolution")
 
 
 @test
@@ -629,11 +894,12 @@ def judged_by_their_own_lights(lib, check):
     check(a == b, "a deed done for them changes with the player's wealth: %r vs %r" % (a, b))
     check(a[0] == c[0] and a[1]["i"] == c[1]["i"], "a deed done for them changes with what it costs the doer: %r vs %r" % (a, c))
     # every deed: what it is worth to the AI paying for it is the same whoever offers to do it (a betrayal in war
-    # excepted: that is worth the strength the doer takes off the enemy)
+    # excepted: that is worth the strength the doer takes off the enemy; and a tributary, where who it is is the deed,
+    # as become_tributary_interaction weighs it)
     w, W = standard_world(player="nobody")
     doers = [W[n] for n in ("duke", "count", "courtier", "foe", "pope")]
     for name in sorted(v for v in lib.values if v.startswith("qpq_") and v.endswith("_worth_value")):
-        if name[4:-12] in ("turncoat", "faithless_ally"):
+        if name[4:-12] in ("turncoat", "faithless_ally", "accept_the_yoke"):
             continue
         # the deed's own orientation: its proposer is scope:actor (the payer, or for an agent-proposed deed the doer)
         agent_init = name[4:-12] in AGENT_PROPOSED
@@ -827,6 +1093,8 @@ def time_weighs_on_deeds(lib, check):
     binds. The usual term sits in between."""
     for kind in kind_names(lib, "t"):
         mode = next(k["mode"] for k in KINDS if k["key"] == kind)
+        if is_instant(next(k for k in KINDS if k["key"] == kind)):
+            continue
         for me, them in offered_pairs(lib, "t", kind)[:1]:
             ask = {y: with_term(lib, me, them, "t", kind, y).var("t_a_ask") for y in (1, None, 10, 20)}
             line = "%s %s->%s (%s): %r" % (kind, me, them, mode, ask)

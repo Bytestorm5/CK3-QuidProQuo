@@ -37722,7 +37722,7 @@ qpq_bought_freedom_interaction = {
 	}
 }
 
-##### Accept the Yoke (Catalogue F)
+##### Become a Tributary (Catalogue F)
 qpq_accept_the_yoke_interaction = {
 	category = interaction_category_diplomacy
 	hidden = yes
@@ -38294,23 +38294,114 @@ qpq_accept_the_yoke_interaction = {
 			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
-			add = -40
-			scope:recipient = { max_military_strength > scope:actor.max_military_strength }
-			desc = QPQ_REASON_STRONGER_THAN_YOU
+			add = qpq_tribute_boldness_value
+			NOT = { scope:recipient.ai_boldness = 0 }
+			desc = QPQ_REASON_TRIB_BOLD
 		}
 		modifier = {
-			add = 15
-			scope:actor = { max_military_strength > { value = scope:recipient.max_military_strength multiply = 3 } }
-			desc = QPQ_REASON_OUTMATCHED
+			add = qpq_tribute_greed_value
+			scope:recipient.ai_greed > 0
+			desc = QPQ_REASON_TRIB_GREED
 		}
 		modifier = {
-			add = qpq_accept_the_yoke_goal_value
-			desc = QPQ_REASON_GOALS
+			add = 40
+			scope:recipient = { is_obedient_to = scope:actor }
+			desc = QPQ_REASON_TRIB_OBEDIENT
 		}
 		modifier = {
-			add = -1000
-			scope:recipient = { has_relation_rival = scope:actor }
-			desc = QPQ_REASON_REFUSES_RIVAL_YOU
+			add = dominant_negative_ai_value
+			NOT = { scope:recipient = { has_government = herder_government } } scope:actor = { NOT = { has_any_cb_on = scope:recipient } }
+			desc = QPQ_REASON_TRIB_NO_CB
+		}
+		modifier = {
+			add = qpq_tribute_paid_relief_value
+			NOT = { scope:recipient = { has_government = herder_government } } scope:actor = { NOT = { has_any_cb_on = scope:recipient } }
+			desc = QPQ_REASON_TRIB_PAID
+		}
+		modifier = {
+			add = qpq_tribute_demand_threat_value
+			always = yes
+			desc = QPQ_REASON_TRIB_POWER
+		}
+		modifier = {
+			add = -100
+			scope:recipient = { highest_held_title_tier = tier_kingdom }
+			desc = QPQ_REASON_TRIB_RANK
+		}
+		modifier = {
+			add = -200
+			scope:recipient = { highest_held_title_tier >= tier_empire }
+			desc = QPQ_REASON_TRIB_RANK
+		}
+		modifier = {
+			add = -100
+			scope:recipient = { has_relation_rival = scope:actor NOT = { has_relation_nemesis = scope:actor } }
+			desc = QPQ_REASON_TRIB_RIVAL
+		}
+		modifier = {
+			add = -200
+			scope:recipient = { has_relation_nemesis = scope:actor }
+			desc = QPQ_REASON_TRIB_NEMESIS
+		}
+		modifier = {
+			add = 10
+			scope:recipient.dynasty ?= scope:actor.dynasty
+			desc = QPQ_REASON_TRIB_DYNASTY
+		}
+		modifier = {
+			add = qpq_tribute_foreign_faith_value
+			NOT = { scope:actor.faith = scope:recipient.faith } scope:actor = { NOT = { rite = { rite_has_doctrine = doctrine_pluralism_pluralistic } } }
+			desc = QPQ_REASON_TRIB_FAITH
+		}
+		modifier = {
+			add = 30
+			scope:recipient = { NOT = { any_neighboring_top_suzerain_realm_owner = { this != scope:actor } } NOT = { any_realm_county = { is_coastal_county = yes } } }
+			desc = QPQ_REASON_TRIB_ENCIRCLED
+		}
+		modifier = {
+			add = qpq_tribute_foreign_culture_value
+			scope:actor = { NOT = { has_same_culture_as = scope:recipient } culture = { cultural_acceptance = { target = scope:recipient.culture value < 50 } } }
+			desc = QPQ_REASON_TRIB_CULTURE
+		}
+		modifier = {
+			add = 5
+			scope:actor = { knows_language_of_culture = scope:recipient.culture }
+			desc = QPQ_REASON_TRIB_LANGUAGE
+		}
+		modifier = {
+			add = -15
+			scope:actor = { has_legitimacy_flag = slightly_reduced_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = -25
+			scope:actor = { has_legitimacy_flag = reduced_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = -50
+			scope:actor = { has_legitimacy_flag = very_reduced_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = -75
+			scope:actor = { has_legitimacy_flag = massively_reduced_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = 25
+			scope:actor = { has_legitimacy_flag = increased_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = 50
+			scope:actor = { has_legitimacy_flag = very_increased_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
+		}
+		modifier = {
+			add = 75
+			scope:actor = { has_legitimacy_flag = extra_increased_tributarization_acceptance }
+			desc = QPQ_REASON_TRIB_LEGITIMACY
 		}
 	}
 
@@ -38336,7 +38427,7 @@ qpq_accept_the_yoke_interaction = {
 	}
 }
 
-##### Cast Off the Yoke (Catalogue F)
+##### Reject a Suzerain (Catalogue F)
 qpq_cast_off_the_yoke_interaction = {
 	category = interaction_category_diplomacy
 	hidden = yes
@@ -38901,39 +38992,29 @@ qpq_cast_off_the_yoke_interaction = {
 			desc = QPQ_REASON_GOODWILL
 		}
 		modifier = {
-			add = qpq_cast_off_the_yoke_goal_value
-			desc = QPQ_REASON_GOALS
+			add = qpq_tribute_cease_threat_value
+			always = yes
+			desc = QPQ_REASON_TRIB_POWER
 		}
 		modifier = {
-			add = -1000
-			AND = {
-				exists = scope:recipient.suzerain
-				scope:recipient = { is_close_family_of = scope:recipient.suzerain }
-			}
-			desc = QPQ_REASON_REFUSES_KIN
+			add = 30
+			scope:recipient = { has_relation_rival = scope:recipient.suzerain NOT = { has_relation_nemesis = scope:recipient.suzerain } }
+			desc = QPQ_REASON_TRIB_RIVAL
 		}
 		modifier = {
-			add = -1000
-			AND = {
-				exists = scope:recipient.suzerain
-				AND = {
-						scope:recipient = { is_allied_to = scope:recipient.suzerain }
-						scope:recipient = { opinion = { target = scope:recipient.suzerain value >= 30 } }
-					}
-			}
-			desc = QPQ_REASON_REFUSES_LIKED_ALLY
+			add = 50
+			scope:recipient = { has_relation_nemesis = scope:recipient.suzerain }
+			desc = QPQ_REASON_TRIB_NEMESIS
 		}
 		modifier = {
-			add = -1000
-			AND = {
-				exists = scope:recipient.suzerain
-				OR = {
-						scope:recipient = { has_relation_friend = scope:recipient.suzerain }
-						scope:recipient = { has_relation_lover = scope:recipient.suzerain }
-						scope:recipient = { has_relation_best_friend = scope:recipient.suzerain }
-					}
-			}
-			desc = QPQ_REASON_REFUSES_FRIEND
+			add = 25
+			scope:recipient.faith = { NOT = { faith_is_in_same_rf = { FAITH = scope:recipient.suzerain.faith } } }
+			desc = QPQ_REASON_TRIB_OTHER_RELIGION
+		}
+		modifier = {
+			add = -100
+			scope:recipient = { any_memory = { has_memory_type = suzerain_defended_me_in_war has_memory_participant = scope:recipient.suzerain memory_age_years < 10 } }
+			desc = QPQ_REASON_TRIB_DEFENDED
 		}
 	}
 

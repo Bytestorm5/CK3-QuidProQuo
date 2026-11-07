@@ -1796,6 +1796,25 @@ window = {
 						}
 					}
 
+					hbox = {
+						visible = "[GetScriptedGui('qpq_ui_goods_term_t').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_GOODS_TERM_T"
+						}
+
+						button_edit_text = {
+							
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_them' )]"
+						}
+
+					}
+
 				text_single = {
 					visible = "[GetScriptedGui('qpq_ui_me_empty').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 					layoutpolicy_horizontal = expanding
@@ -2608,6 +2627,25 @@ window = {
 							tooltip = "QPQ_UI_REMOVE"
 							onclick = "[GetScriptedGui('qpq_ui_offer_i_restraint').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', GetPlayer.MakeScope.Var('qpq_ui_recipient').Char.MakeScope ).End )]"
 						}
+					}
+
+					hbox = {
+						visible = "[GetScriptedGui('qpq_ui_goods_term_i').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						spacing = 4
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_GOODS_TERM_I"
+						}
+
+						button_edit_text = {
+							
+							size = { 28 28 }
+							tooltip = "QPQ_UI_EDIT"
+							onclick = "[GetVariableSystem.Set( 'qpq_popup', 'deed_me' )]"
+						}
+
 					}
 
 				text_single = {

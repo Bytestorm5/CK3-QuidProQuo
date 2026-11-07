@@ -1073,6 +1073,7 @@ qpq_deal.1 = {
 				trigger = {
 					exists = scope:qpq_deal_i_years
 					scope:qpq_deal_i_years = 1
+					NOT = { scope:qpq_deal_i_kind ?= flag:barter }
 				}
 				desc = qpq_deal.1.term_within_one
 			}
@@ -1104,6 +1105,7 @@ qpq_deal.1 = {
 				trigger = {
 					exists = scope:qpq_deal_i_years
 					always = yes
+					NOT = { scope:qpq_deal_i_kind ?= flag:barter }
 				}
 				desc = qpq_deal.1.term_within_i
 			}
@@ -1208,6 +1210,25 @@ qpq_deal.1 = {
 		triggered_desc = {
 			trigger = { scope:qpq_deal_t_o_restraint ?= yes }
 			desc = qpq_hub.50.term_restraint
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					scope:qpq_deal_t_years = 1
+					scope:qpq_deal_t_kind ?= flag:barter
+				}
+				desc = qpq_deal.1.term_for_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_t_years
+					always = yes
+					scope:qpq_deal_t_kind ?= flag:barter
+				}
+				desc = qpq_deal.1.term_for_t
+			}
+			desc = qpq_empty
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_i_qpq_x_armed ?= yes }
@@ -1540,6 +1561,7 @@ qpq_deal.1 = {
 				trigger = {
 					exists = scope:qpq_deal_t_years
 					scope:qpq_deal_t_years = 1
+					NOT = { scope:qpq_deal_t_kind ?= flag:barter }
 				}
 				desc = qpq_deal.1.term_within_one
 			}
@@ -1571,6 +1593,7 @@ qpq_deal.1 = {
 				trigger = {
 					exists = scope:qpq_deal_t_years
 					always = yes
+					NOT = { scope:qpq_deal_t_kind ?= flag:barter }
 				}
 				desc = qpq_deal.1.term_within_t
 			}
@@ -1675,6 +1698,25 @@ qpq_deal.1 = {
 		triggered_desc = {
 			trigger = { scope:qpq_deal_i_o_restraint ?= yes }
 			desc = qpq_hub.50.term_restraint
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					scope:qpq_deal_i_years = 1
+					scope:qpq_deal_i_kind ?= flag:barter
+				}
+				desc = qpq_deal.1.term_for_one
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:qpq_deal_i_years
+					always = yes
+					scope:qpq_deal_i_kind ?= flag:barter
+				}
+				desc = qpq_deal.1.term_for_i
+			}
+			desc = qpq_empty
 		}
 		triggered_desc = {
 			trigger = { scope:qpq_deal_t_qpq_x_armed ?= yes }

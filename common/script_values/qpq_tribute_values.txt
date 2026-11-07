@@ -1,0 +1,246 @@
+﻿# Being made a tributary, and ceasing to be one, weigh as vanilla weighs them (00_tributary_interactions.txt).
+# Acceptance is on the same scale there as here: they agree above 0.
+
+# demand_tributary_interaction: the one asked, against the one who would be suzerain
+qpq_tribute_demand_threat_value = {
+	value = 0
+	# their claims on what the one judging holds
+	scope:recipient = {
+		every_held_title = {
+			limit = {
+				tier >= tier_county
+				any_claimant = { this = scope:actor }
+			}
+			add = {
+				value = low_positive_ai_value
+				multiply = 1
+				multiply = {
+					value = tier
+					add = -1
+				}
+			}
+		}
+	}
+	# about even
+	if = {
+		limit = {
+			scope:recipient.current_power_ninety_percent_value < scope:actor.military_power
+			scope:recipient.military_power > scope:actor.current_power_ninety_percent_value
+		}
+		add = {
+			value = 10
+			multiply = 1
+		}
+	}
+	# stronger than the other
+	if = {
+		limit = { scope:recipient.current_power_ninety_percent_value > scope:actor.military_power }
+		add = {
+			value = scope:actor.military_power
+			divide = {
+				value = scope:recipient.military_power
+				min = 1
+			}
+			subtract = 1
+			multiply = 50
+			max = 50
+			multiply = 1
+		}
+	}
+	# weaker than the other
+	if = {
+		limit = { scope:recipient.current_power_ninety_percent_value < scope:actor.military_power }
+		add = {
+			value = scope:recipient.military_power
+			divide = {
+				value = scope:actor.military_power
+				min = 1
+			}
+			subtract = 1
+			multiply = -50
+			min = -50
+			multiply = 1
+		}
+	}
+	# weaker alone, but not with allies
+	if = {
+		limit = {
+			scope:recipient = { any_ally = { exists = this } }
+			scope:recipient.current_power_ninety_percent_value < scope:actor.military_power
+			scope:recipient.current_power_with_allies_value > scope:actor.current_power_with_allies_value
+		}
+		add = {
+			value = scope:recipient.current_power_with_allies_value
+			divide = {
+				value = scope:actor.current_power_with_allies_value
+				min = 1
+			}
+			subtract = 1
+			multiply = -50
+			min = -50
+			multiply = 1
+		}
+	}
+	# stronger alone, but not against theirs
+	if = {
+		limit = {
+			scope:actor = { any_ally = { exists = this } }
+			scope:recipient.current_power_ninety_percent_value > scope:actor.military_power
+			scope:recipient.current_power_with_allies_value < scope:actor.current_power_with_allies_value
+		}
+		add = {
+			value = scope:actor.current_power_with_allies_value
+			divide = {
+				value = scope:recipient.current_power_with_allies_value
+				min = 1
+			}
+			subtract = 1
+			multiply = 50
+			max = 50
+			multiply = 1
+		}
+	}
+}
+
+# cease_paying_tribute_interaction: the tributary, against its suzerain. Fear of them counts double here
+qpq_tribute_cease_threat_value = {
+	value = 0
+	# their claims on what the one judging holds
+	scope:recipient = {
+		every_held_title = {
+			limit = {
+				tier >= tier_county
+				any_claimant = { this = scope:recipient.suzerain }
+			}
+			add = {
+				value = low_positive_ai_value
+				multiply = -2
+				multiply = {
+					value = tier
+					add = -1
+				}
+			}
+		}
+	}
+	# about even
+	if = {
+		limit = {
+			scope:recipient.current_power_ninety_percent_value < scope:recipient.suzerain.military_power
+			scope:recipient.military_power > scope:recipient.suzerain.current_power_ninety_percent_value
+		}
+		add = {
+			value = 10
+			multiply = -2
+		}
+	}
+	# stronger than the other
+	if = {
+		limit = { scope:recipient.current_power_ninety_percent_value > scope:recipient.suzerain.military_power }
+		add = {
+			value = scope:recipient.suzerain.military_power
+			divide = {
+				value = scope:recipient.military_power
+				min = 1
+			}
+			subtract = 1
+			multiply = 50
+			max = 50
+			multiply = -2
+		}
+	}
+	# weaker than the other
+	if = {
+		limit = { scope:recipient.current_power_ninety_percent_value < scope:recipient.suzerain.military_power }
+		add = {
+			value = scope:recipient.military_power
+			divide = {
+				value = scope:recipient.suzerain.military_power
+				min = 1
+			}
+			subtract = 1
+			multiply = -50
+			min = -50
+			multiply = -2
+		}
+	}
+	# weaker alone, but not with allies
+	if = {
+		limit = {
+			scope:recipient = { any_ally = { exists = this } }
+			scope:recipient.current_power_ninety_percent_value < scope:recipient.suzerain.military_power
+			scope:recipient.current_power_with_allies_value > scope:recipient.suzerain.current_power_with_allies_value
+		}
+		add = {
+			value = scope:recipient.current_power_with_allies_value
+			divide = {
+				value = scope:recipient.suzerain.current_power_with_allies_value
+				min = 1
+			}
+			subtract = 1
+			multiply = -50
+			min = -50
+			multiply = -2
+		}
+	}
+	# stronger alone, but not against theirs
+	if = {
+		limit = {
+			scope:recipient.suzerain = { any_ally = { exists = this } }
+			scope:recipient.current_power_ninety_percent_value > scope:recipient.suzerain.military_power
+			scope:recipient.current_power_with_allies_value < scope:recipient.suzerain.current_power_with_allies_value
+		}
+		add = {
+			value = scope:recipient.suzerain.current_power_with_allies_value
+			divide = {
+				value = scope:recipient.current_power_with_allies_value
+				min = 1
+			}
+			subtract = 1
+			multiply = 50
+			max = 50
+			multiply = -2
+		}
+	}
+}
+
+# demand_tributary_interaction: a bold ruler bends less, a greedy one parts with less
+qpq_tribute_boldness_value = {
+	value = scope:recipient.ai_boldness
+	multiply = -1
+	divide = 2
+}
+qpq_tribute_greed_value = {
+	value = scope:recipient.ai_greed
+	multiply = -1
+	divide = 4
+}
+qpq_tribute_foreign_faith_value = {
+	value = -25
+	if = {
+		limit = { scope:actor.faith = { faith_hostility_level = { target = scope:recipient.faith value >= faith_hostile_level } } }
+		add = -10
+	}
+	if = {
+		limit = { scope:actor.faith = { faith_hostility_level = { target = scope:recipient.faith value >= faith_evil_level } } }
+		add = -25
+	}
+}
+qpq_tribute_foreign_culture_value = {
+	value = -10
+	if = {
+		limit = { scope:actor.culture = { has_cultural_pillar = ethos_bellicose } }
+		add = -10
+	}
+}
+
+# Vanilla has no payment to weigh. Each point of what they get for the deed also takes 2 off the -200 for having no
+# casus belli, down to -50: it grows with the payment, so a token sum cannot lift the penalty. This is the goods
+# alone; the deal panel adds the deed done in return and takes off goods handed back (qpq_ui_deal_finish_effect).
+qpq_tribute_paid_relief_max_value = 150
+
+qpq_tribute_paid_relief_value = {
+	value = qpq_accept_the_yoke_offer_points_value
+	multiply = 2
+	min = 0
+	max = qpq_tribute_paid_relief_max_value
+}

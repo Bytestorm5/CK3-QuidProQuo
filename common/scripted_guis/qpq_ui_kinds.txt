@@ -2130,6 +2130,14 @@ qpq_ui_term_shown_t = {
 	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
 }
 
+qpq_ui_goods_term_t = {
+	scope = character
+	is_shown = {
+		var:qpq_ui_t_kind = flag:none
+		qpq_ui_leg_t_has_term_trigger = yes
+	}
+}
+
 qpq_ui_term_down_t_5 = {
 	scope = character
 	is_shown = { qpq_ui_leg_t_has_term_trigger = yes }
@@ -6076,6 +6084,14 @@ qpq_ui_secret_clear_i = {
 qpq_ui_term_shown_i = {
 	scope = character
 	is_shown = { qpq_ui_leg_i_has_term_trigger = yes }
+}
+
+qpq_ui_goods_term_i = {
+	scope = character
+	is_shown = {
+		var:qpq_ui_i_kind = flag:none
+		qpq_ui_leg_i_has_term_trigger = yes
+	}
 }
 
 qpq_ui_term_down_i_5 = {

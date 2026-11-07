@@ -1674,12 +1674,29 @@ qpq_ui_leg_t_is_restraint_trigger = {
 		var:qpq_ui_t_ekind = flag:council_lobbying
 		var:qpq_ui_t_ekind = flag:join_war
 		var:qpq_ui_t_ekind = flag:stay_out
+		var:qpq_ui_t_ekind = flag:barter
+	}
+}
+
+qpq_ui_leg_t_has_lasting_goods_trigger = {
+	OR = {
+		has_variable = qpq_ui_t_o_office
+		has_variable = qpq_ui_t_o_arms
+		has_variable = qpq_ui_t_o_restraint
 	}
 }
 
 qpq_ui_leg_t_has_term_trigger = {
 	has_variable = qpq_ui_t_ekind
-	NOT = { var:qpq_ui_t_ekind = flag:barter }
+	OR = {
+		NOT = { var:qpq_ui_t_ekind = flag:barter }
+		qpq_ui_leg_t_has_lasting_goods_trigger = yes
+	}
+	NOT = { var:qpq_ui_t_ekind = flag:heavier_tribute }
+	NOT = { var:qpq_ui_t_ekind = flag:lighter_tribute }
+	NOT = { var:qpq_ui_t_ekind = flag:bought_freedom }
+	NOT = { var:qpq_ui_t_ekind = flag:accept_the_yoke }
+	NOT = { var:qpq_ui_t_ekind = flag:cast_off_the_yoke }
 }
 
 qpq_ui_leg_t_has_goods_trigger = {
@@ -4723,12 +4740,29 @@ qpq_ui_leg_i_is_restraint_trigger = {
 		var:qpq_ui_i_ekind = flag:council_lobbying
 		var:qpq_ui_i_ekind = flag:join_war
 		var:qpq_ui_i_ekind = flag:stay_out
+		var:qpq_ui_i_ekind = flag:barter
+	}
+}
+
+qpq_ui_leg_i_has_lasting_goods_trigger = {
+	OR = {
+		has_variable = qpq_ui_i_o_office
+		has_variable = qpq_ui_i_o_arms
+		has_variable = qpq_ui_i_o_restraint
 	}
 }
 
 qpq_ui_leg_i_has_term_trigger = {
 	has_variable = qpq_ui_i_ekind
-	NOT = { var:qpq_ui_i_ekind = flag:barter }
+	OR = {
+		NOT = { var:qpq_ui_i_ekind = flag:barter }
+		qpq_ui_leg_i_has_lasting_goods_trigger = yes
+	}
+	NOT = { var:qpq_ui_i_ekind = flag:heavier_tribute }
+	NOT = { var:qpq_ui_i_ekind = flag:lighter_tribute }
+	NOT = { var:qpq_ui_i_ekind = flag:bought_freedom }
+	NOT = { var:qpq_ui_i_ekind = flag:accept_the_yoke }
+	NOT = { var:qpq_ui_i_ekind = flag:cast_off_the_yoke }
 }
 
 qpq_ui_leg_i_has_goods_trigger = {

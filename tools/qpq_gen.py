@@ -9,7 +9,7 @@ import sys
 import textwrap
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_kinds import KINDS, GROUPS, SECRET_CATEGORIES, TIER_NAMES  # noqa: E402
+from qpq_kinds import KINDS, GROUPS, SECRET_CATEGORIES, TIER_NAMES, is_instant  # noqa: E402
 import qpq_ui_gen  # noqa: E402
 from qpq_flavor import FLAVOR, GROUP_FLAVOR  # noqa: E402
 import qpq_goals as goals  # noqa: E402
@@ -138,6 +138,8 @@ def gen_values():
         # What the Ask costs the agent. A plain exchange of goods asks no deed of anyone.
         if key == "barter":
             out += "qpq_%s_base_demand_value = {\n\tvalue = 0\n}\n" % key
+        elif k.get("base_ask") is not None:
+            out += "qpq_%s_base_demand_value = {\n\tvalue = %d\n}\n" % (key, k["base_ask"])
         else:
             out += ("qpq_%s_base_demand_value = {\n\tvalue = qpq_%s_agent_tier_value\n\tmultiply = -18\n\tadd = -12\n"
                     "\tadd = %d\n}\n") % (key, key, -k["effort"])
@@ -215,6 +217,8 @@ def gen_values():
                     "\tmultiply = qpq_%s_term_worth_mult_value\n") % key
         elif key == "barter" or (archs & WISH_ARCHETYPES and key not in INTRINSIC):
             out += "\tvalue = 0\n"
+        elif k.get("worth"):
+            out += block(k["worth"], 1)
         else:
             # a share of the deed's own size (its base tier and effort), the same whoever does it: never what it
             # happens to cost the one offering to do it
@@ -321,7 +325,7 @@ TERM_YEARS = goals.TERM_YEARS
 def term_values(k):
     key, T0, mode = k["key"], k["term"], k["mode"]
     out = ""
-    if key == "barter":
+    if key == "barter" or is_instant(k):
         out += "qpq_%s_time_value = {\n\tvalue = 0\n}\n" % key
         out += "qpq_%s_term_worth_mult_value = {\n\tvalue = 1\n}\n" % key
     elif mode == "restraint":
@@ -351,6 +355,10 @@ def term_values(k):
     return out
 
 
+COUNCIL = next(g for g in contracts.CONTRACT_GOODS if g["key"] == "ct_council")
+REVOCATION = next(g for g in contracts.CONTRACT_GOODS if g["key"] == "ct_revocation")
+
+
 def goods_cost_body(G, R, price):
     """Script value body: what handing over the goods ticked (scope:qpq_o_*) costs G, who gives them to R, in
     acceptance points before loss aversion. Gold is five points a month of G's own stake, however much: no flat
@@ -372,7 +380,8 @@ def goods_cost_body(G, R, price):
     # a county, dearer when it is one of their last
     s += good("land", "\t\tadd = %s\n" % ("qpq_goods_land_cost_value" if G == "scope:actor" else "qpq_goods_land_cost_rec_value"))
     s += good("claim", "\t\tadd = 6\n")
-    s += good("office", "\t\tadd = 12\n")
+    # what lasts until the deadline weighs by the term, never above the contract right that lasts for good
+    s += good("office", "\t\tadd = {\n\t\t\tvalue = 12\n\t\t\tmultiply = qpq_goods_term_mult_value\n\t\t\tmax = %d\n\t\t}\n" % contracts.step_points(COUNCIL, 0, 1)[1])
     s += good("release_hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
     # calling in a hook spends it
     s += good("hook", "\t\tadd = 14\n\t\tif = {\n\t\t\tlimit = { %s = { has_strong_hook = %s } }\n\t\t\tadd = 31\n\t\t}\n" % (G, R))
@@ -388,12 +397,12 @@ def goods_cost_body(G, R, price):
             (("tier_county", 6), ("tier_duchy", 16), ("tier_kingdom", 28), ("tier_empire", 40)))).replace("\t\telse_if", "\t\telse_if"))
     s += good("clemency", "\t\tadd = 25\n")
     # about what lowering their levies a level would cost for good (a contract score point): the men are gone for the term
-    s += good("arms", "\t\tadd = 15\n\t\tif = {\n\t\t\tlimit = { %s = { is_at_war = yes } }\n\t\t\tadd = 15\n\t\t}\n" % G)
+    s += good("arms", "\t\tadd = {\n\t\t\tvalue = 15\n\t\t\tmultiply = qpq_goods_term_mult_value\n\t\t}\n\t\tif = {\n\t\t\tlimit = { %s = { is_at_war = yes } }\n\t\t\tadd = 15\n\t\t}\n" % G)
     s += good("artifact", "\t\tif = {\n\t\t\tlimit = { exists = scope:qpq_gift_artifact_cost }\n\t\t\tadd = scope:qpq_gift_artifact_cost\n\t\t}\n"
                           "\t\telse = {\n\t\t\tadd = 20\n\t\t}\n")
     s += good("church", "\t\tadd = 10\n")
-    s += good("restraint", "\t\tadd = 5\n\t\tif = {\n\t\t\tlimit = { %s = { max_military_strength > { value = %s.max_military_strength multiply = 1.5 } } }\n"
-                           "\t\t\tadd = 5\n\t\t}\n" % (G, R))
+    s += good("restraint", "\t\tadd = {\n\t\t\tvalue = 5\n\t\t\tif = {\n\t\t\t\tlimit = { %s = { max_military_strength > { value = %s.max_military_strength multiply = 1.5 } } }\n"
+                           "\t\t\t\tadd = 5\n\t\t\t}\n\t\t\tmultiply = qpq_goods_term_mult_value\n\t\t\tmax = %d\n\t\t}\n" % (G, R, contracts.step_points(REVOCATION, 0, 1)[1]))
     s += "\tmin = 0\n"
     return s
 

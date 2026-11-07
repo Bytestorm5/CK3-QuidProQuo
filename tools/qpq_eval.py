@@ -18,7 +18,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from qpq_kinds import KINDS  # noqa: E402
+from qpq_kinds import KINDS, is_instant  # noqa: E402
 from qpq_sim import (Library, Loc, Refused, SimError, find_vanilla, kind_names, offered_pairs,  # noqa: E402
                      scenario)
 
@@ -104,7 +104,7 @@ def leg_text(p, L, me, them):
         names = {"qpq_payer": payer.name, "qpq_agent": doer.name, "qpq_target": tgt.name if tgt is not None else "the target",
                  "qpq_target_title": title.name if title is not None else "the title"}
         yrs, usual = p.years(L), max(1, round(k["term"] / 12))
-        term = "%s %d year%s (the usual term for this deed is %d year%s)." % (
+        term = "Done the moment it is sealed." if is_instant(k) else "%s %d year%s (the usual term for this deed is %d year%s)." % (
             "A promise kept for" if k["mode"] == "restraint" else "To be done within", yrs, "" if yrs == 1 else "s",
             usual, "" if usual == 1 else "s")
         deed = "%s, that is: %s %s. (%s In this text, 'you' is %s.)%s %s Scandal tier for %s: %s, for %s: %s" % (
@@ -214,7 +214,7 @@ def make_case(lib, rng, kinds_t, kinds_i, idx):
                         w.relate(them, tweaks["target_rel"], target)
                         w.opinion(them, target, -70 if tweaks["target_rel"] == "rival" else 70)
                 # the term: often the usual one, otherwise anything from a year to twenty
-                if rng.random() < 0.4:
+                if rng.random() < 0.4 and not is_instant(KIND[k]):
                     p.term(L, rng.choice([1, 2, 3, 5, 10, 15, 20]))
             # payment: the leg that is paid in gold is the other side's goods
             paid = [L for L, _k in legs]

@@ -55,7 +55,7 @@ KIND_GOALS = {
     "consecration_rites": ["faith"], "council_lobbying": ["faith"], "name_in_the_khutba": ["faith"],
     "absolution_by_concession": ["faith"],
     # tribute
-    "accept_the_yoke": ["pact"], "cast_off_the_yoke": ["harm"],
+    "cast_off_the_yoke": ["harm"],
     # in time of war: judged on the war itself (see WAR_SIDE)
     "join_war": ["war_side"], "stay_out": ["harm", "war_side"],
 }
@@ -339,10 +339,16 @@ def sw(text):
 LOSS_SCALE = {"title_swap": 4}
 
 
+# Whoever does these judges them as vanilla does, in their demand list: to the one paying, the goals still speak
+DOER_JUDGES_AS_VANILLA = {"cast_off_the_yoke"}
+
+
 def goal_value(k, swapped=False):
     """Script value text for the Ask's goals, or None."""
     archs = KIND_GOALS.get(k["key"])
     if not archs:
+        return None
+    if not swapped and k["key"] in DOER_JUDGES_AS_VANILLA:
         return None
     T = third_party(k)
     if T is None and any(a in ("war", "harm", "favour") for a in archs):

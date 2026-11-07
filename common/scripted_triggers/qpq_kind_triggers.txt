@@ -924,7 +924,7 @@ qpq_k_bought_freedom_can_perform_trigger = {
 	always = no
 }
 
-#### Accept the Yoke
+#### Become a Tributary
 qpq_k_accept_the_yoke_delivered_trigger = {
 	always = yes
 }
@@ -938,7 +938,7 @@ qpq_k_accept_the_yoke_can_perform_trigger = {
 	always = no
 }
 
-#### Cast Off the Yoke
+#### Reject a Suzerain
 qpq_k_cast_off_the_yoke_delivered_trigger = {
 	always = yes
 }
@@ -954,7 +954,7 @@ qpq_k_cast_off_the_yoke_can_perform_trigger = {
 
 #### Exchange of Goods
 qpq_k_barter_delivered_trigger = {
-	always = yes
+	NOR = { has_variable = qpq_offer_office has_variable = qpq_offer_restraint has_variable = qpq_gave_arms }
 }
 qpq_k_barter_breached_trigger = {
 	always = no
@@ -1408,6 +1408,7 @@ qpq_kind_is_restraint_trigger = {
 		var:qpq_kind = flag:council_lobbying
 		var:qpq_kind = flag:join_war
 		var:qpq_kind = flag:stay_out
+		var:qpq_kind = flag:barter
 	}
 }
 

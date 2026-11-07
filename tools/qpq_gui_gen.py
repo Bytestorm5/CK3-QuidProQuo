@@ -150,14 +150,14 @@ def gen_gui(write):
 						visible = "%s"
 						layoutpolicy_horizontal = expanding
 						spacing = 4
-%s%s
+%s%s%s
+					}
+""" % (visible, text_widget, edit, ("""
 						button_cancel_small = {
 							size = { 28 28 }
 							tooltip = "QPQ_UI_REMOVE"
 							onclick = "%s"
-						}
-					}
-""" % (visible, text_widget, edit, remove_click)
+						}""" % remove_click) if remove_click else "")
 
     def info_col(side):
         D, G = SIDES[side]["D"], SIDES[side]["G"]
@@ -232,6 +232,13 @@ def gen_gui(write):
             else:
                 s += row("[GetPlayer.MakeScope.Var('qpq_ui_%s_o_%s').IsSet]" % (G, o), text, None, None,
                          sg("qpq_ui_offer_%s_%s" % (G, o), "Execute"))
+        # how long the goods that last will last, with no deed to set it on: set in the pop-out of this leg's deed
+        s += row(sg("qpq_ui_goods_term_%s" % G, "IsShown", GS_ROOT), """
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							text = "QPQ_UI_BULLET_GOODS_TERM_%s"
+						}
+""" % G.upper(), "deed_" + ("them" if side == "me" else "me"), None, None)
         s += """
 				text_single = {
 					visible = "%s"

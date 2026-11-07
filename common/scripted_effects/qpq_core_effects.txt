@@ -944,6 +944,7 @@ qpq_ai_consider_breach_effect = {
 	if = {
 		limit = {
 			qpq_story_is_active_trigger = yes
+			NOT = { var:qpq_kind = flag:barter }
 			scope:qpq_agent = {
 				OR = {
 					has_trait = deceitful

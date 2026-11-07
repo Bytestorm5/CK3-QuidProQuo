@@ -75,8 +75,8 @@ FLAVOR = {
     "heavier_tribute": "Your people prosper under my protection, and protection has its price. Let the tribute rise with your fortunes.",
     "lighter_tribute": "The harvests have failed and my treasury is bare. Ease the tribute a little, and I will not forget the kindness.",
     "bought_freedom": "Every year I send you gold, and every year my people curse your name. Name a price for our freedom, and be rid of the cursing.",
-    "accept_the_yoke": "My armies are close, and my friendship is worth more than your pride. Send tribute, and you will have both.",
-    "cast_off_the_yoke": "You pay tribute to a master who does nothing for you. Stop paying, and let my gold cover what you lose.",
+    "accept_the_yoke": "My armies are close, and my friendship is worth more than your pride. Keep your realm and your crown. Send me tribute each year, and you will have both.",
+    "cast_off_the_yoke": "You pay tribute to a suzerain who does nothing for you. Reject them, stop paying, and let my gold cover what it costs you.",
     # ---------------- Catalogue G: in time of war
     "join_war": "My war is just and my enemies are many. March beside me until it is won, and you will share in what we take.",
     "stay_out": "When my enemies send for you, find a reason to stay at home. This war need not be yours.",
